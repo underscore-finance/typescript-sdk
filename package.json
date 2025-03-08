@@ -1,0 +1,31 @@
+{
+  "name": "@underscore-finance/sdk",
+  "version": "0.0.1",
+  "description": "SDK for interacting with Underscore Finance Smart Contracts with TypeScript",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Underscore Finance",
+  "license": "BSL-1.0",
+  "bugs": {
+    "url": "https://github.com/underscore-finance/sdk/issues"
+  },
+  "homepage": "https://github.com/underscore-finance/sdk#readme",
+  "type": "module",
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-universe": "^14.0.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "@dappql/async": "^1.0.2",
+    "viem": "^2.23.7"
+  }
+}
