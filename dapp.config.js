@@ -8,6 +8,269 @@ export default {
   isModule: true,
   isSdk: true,
   contracts: {
+    ERC20: {
+      abi: [
+        {
+          type: 'event',
+          name: 'Transfer',
+          inputs: [
+            {
+              name: 'sender',
+              type: 'address',
+              indexed: true,
+            },
+            {
+              name: 'receiver',
+              type: 'address',
+              indexed: true,
+            },
+            {
+              name: 'amount',
+              type: 'uint256',
+              indexed: false,
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: 'event',
+          name: 'Approval',
+          inputs: [
+            {
+              name: 'owner',
+              type: 'address',
+              indexed: true,
+            },
+            {
+              name: 'spender',
+              type: 'address',
+              indexed: true,
+            },
+            {
+              name: 'amount',
+              type: 'uint256',
+              indexed: false,
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: 'function',
+          name: 'name',
+          stateMutability: 'pure',
+          inputs: [],
+          outputs: [
+            {
+              name: '',
+              type: 'string',
+            },
+          ],
+        },
+        {
+          type: 'function',
+          name: 'symbol',
+          stateMutability: 'pure',
+          inputs: [],
+          outputs: [
+            {
+              name: '',
+              type: 'string',
+            },
+          ],
+        },
+        {
+          type: 'function',
+          name: 'decimals',
+          stateMutability: 'pure',
+          inputs: [],
+          outputs: [
+            {
+              name: '',
+              type: 'uint8',
+            },
+          ],
+        },
+        {
+          type: 'function',
+          name: 'transfer',
+          stateMutability: 'nonpayable',
+          inputs: [
+            {
+              name: '_recipient',
+              type: 'address',
+            },
+            {
+              name: '_amount',
+              type: 'uint256',
+            },
+          ],
+          outputs: [
+            {
+              name: '',
+              type: 'bool',
+            },
+          ],
+        },
+        {
+          type: 'function',
+          name: 'transferFrom',
+          stateMutability: 'nonpayable',
+          inputs: [
+            {
+              name: '_sender',
+              type: 'address',
+            },
+            {
+              name: '_recipient',
+              type: 'address',
+            },
+            {
+              name: '_amount',
+              type: 'uint256',
+            },
+          ],
+          outputs: [
+            {
+              name: '',
+              type: 'bool',
+            },
+          ],
+        },
+        {
+          type: 'function',
+          name: 'approve',
+          stateMutability: 'nonpayable',
+          inputs: [
+            {
+              name: '_spender',
+              type: 'address',
+            },
+            {
+              name: '_amount',
+              type: 'uint256',
+            },
+          ],
+          outputs: [
+            {
+              name: '',
+              type: 'bool',
+            },
+          ],
+        },
+        {
+          type: 'function',
+          name: 'permit',
+          stateMutability: 'nonpayable',
+          inputs: [
+            {
+              name: '_owner',
+              type: 'address',
+            },
+            {
+              name: '_spender',
+              type: 'address',
+            },
+            {
+              name: '_amount',
+              type: 'uint256',
+            },
+            {
+              name: '_expiry',
+              type: 'uint256',
+            },
+            {
+              name: '_signature',
+              type: 'bytes',
+            },
+          ],
+          outputs: [
+            {
+              name: '',
+              type: 'bool',
+            },
+          ],
+        },
+        {
+          type: 'function',
+          name: 'totalSupply',
+          stateMutability: 'view',
+          inputs: [],
+          outputs: [
+            {
+              name: '',
+              type: 'uint256',
+            },
+          ],
+        },
+        {
+          type: 'function',
+          name: 'balanceOf',
+          stateMutability: 'view',
+          inputs: [
+            {
+              name: 'arg0',
+              type: 'address',
+            },
+          ],
+          outputs: [
+            {
+              name: '',
+              type: 'uint256',
+            },
+          ],
+        },
+        {
+          type: 'function',
+          name: 'allowance',
+          stateMutability: 'view',
+          inputs: [
+            {
+              name: 'arg0',
+              type: 'address',
+            },
+            {
+              name: 'arg1',
+              type: 'address',
+            },
+          ],
+          outputs: [
+            {
+              name: '',
+              type: 'uint256',
+            },
+          ],
+        },
+        {
+          type: 'function',
+          name: 'nonces',
+          stateMutability: 'view',
+          inputs: [
+            {
+              name: 'arg0',
+              type: 'address',
+            },
+          ],
+          outputs: [
+            {
+              name: '',
+              type: 'uint256',
+            },
+          ],
+        },
+        {
+          type: 'function',
+          name: 'DOMAIN_SEPARATOR',
+          stateMutability: 'view',
+          inputs: [],
+          outputs: [
+            {
+              name: '',
+              type: 'bytes32',
+            },
+          ],
+        },
+      ],
+    },
     AddyRegistry: { address: '0x49B08551e452cA99da7dE9B3a60E39e5f10C13CD' },
     AgentFactory: { address: '0x7bA5A18b88fFc9bB569d5A7e311c1607a0737a25' },
     WalletFunds: { address: '0x6A5263B0645c7dFd2788eF46f95f210E947e0743' },

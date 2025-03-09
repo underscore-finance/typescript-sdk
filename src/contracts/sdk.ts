@@ -9,6 +9,7 @@ import * as AddyRegistry from './AddyRegistry.js'
 import * as AgentFactory from './AgentFactory.js'
 import * as AgentTemplate from './AgentTemplate.js'
 import * as ChainlinkFeeds from './ChainlinkFeeds.js'
+import * as ERC20 from './ERC20.js'
 import * as LegoAaveV3 from './LegoAaveV3.js'
 import * as LegoAeroClassic from './LegoAeroClassic.js'
 import * as LegoAeroSlipstream from './LegoAeroSlipstream.js'
@@ -35,6 +36,8 @@ export type SDK = {
   AgentFactory: AgentFactory.SDK
   Agent: (address: `0x${string}`) => AgentTemplate.SDK
   ChainlinkFeeds: ChainlinkFeeds.SDK
+  ERC20: (address: `0x${string}`) => ERC20.SDK
+
   LegoAaveV3: LegoAaveV3.SDK
   LegoAeroClassic: LegoAeroClassic.SDK
   LegoAeroSlipstream: LegoAeroSlipstream.SDK
@@ -62,6 +65,7 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     AddyRegistry: AddyRegistry.toSdk(publicClient, walletClient),
     AgentFactory: AgentFactory.toSdk(publicClient, walletClient),
     ChainlinkFeeds: ChainlinkFeeds.toSdk(publicClient, walletClient),
+    ERC20: (address: `0x${string}`) => ERC20.toSdk(address, publicClient, walletClient),
     LegoAaveV3: LegoAaveV3.toSdk(publicClient, walletClient),
     LegoAeroClassic: LegoAeroClassic.toSdk(publicClient, walletClient),
     LegoAeroSlipstream: LegoAeroSlipstream.toSdk(publicClient, walletClient),
