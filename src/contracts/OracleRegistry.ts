@@ -9,928 +9,927 @@ import { PublicClient, WalletClient } from 'viem'
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
 
-
 export const abi = [
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "addr",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "oraclePartnerId",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "description",
-                "type": "string"
-            }
-        ],
-        "name": "NewOraclePartnerRegistered",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "newAddr",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "name": "prevAddr",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "oraclePartnerId",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "version",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "description",
-                "type": "string"
-            }
-        ],
-        "name": "OraclePartnerAddrUpdated",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "prevAddr",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "oraclePartnerId",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "version",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "description",
-                "type": "string"
-            }
-        ],
-        "name": "OraclePartnerAddrDisabled",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "name": "numIds",
-                "type": "uint256"
-            }
-        ],
-        "name": "PriorityOraclePartnerIdsModified",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "name": "staleTime",
-                "type": "uint256"
-            }
-        ],
-        "name": "StaleTimeSet",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "addr",
-                "type": "address"
-            }
-        ],
-        "name": "LocalGovernorSet",
-        "type": "event"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_address",
-                "type": "address"
-            }
-        ],
-        "name": "isGovernor",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_newGovernor",
-                "type": "address"
-            }
-        ],
-        "name": "isValidLocalGovernor",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_newGovernor",
-                "type": "address"
-            }
-        ],
-        "name": "setLocalGovernor",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "localGovernor",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            }
-        ],
-        "name": "getPrice",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_shouldRaise",
-                "type": "bool"
-            }
-        ],
-        "name": "getPrice",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_amount",
-                "type": "uint256"
-            }
-        ],
-        "name": "getUsdValue",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_amount",
-                "type": "uint256"
-            },
-            {
-                "name": "_shouldRaise",
-                "type": "bool"
-            }
-        ],
-        "name": "getUsdValue",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_usdValue",
-                "type": "uint256"
-            }
-        ],
-        "name": "getAssetAmount",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_usdValue",
-                "type": "uint256"
-            },
-            {
-                "name": "_shouldRaise",
-                "type": "bool"
-            }
-        ],
-        "name": "getAssetAmount",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            }
-        ],
-        "name": "hasPriceFeed",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_amount",
-                "type": "uint256"
-            }
-        ],
-        "name": "getEthUsdValue",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_amount",
-                "type": "uint256"
-            },
-            {
-                "name": "_shouldRaise",
-                "type": "bool"
-            }
-        ],
-        "name": "getEthUsdValue",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_usdValue",
-                "type": "uint256"
-            }
-        ],
-        "name": "getEthAmount",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_usdValue",
-                "type": "uint256"
-            },
-            {
-                "name": "_shouldRaise",
-                "type": "bool"
-            }
-        ],
-        "name": "getEthAmount",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_addr",
-                "type": "address"
-            }
-        ],
-        "name": "isValidNewOraclePartnerAddr",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_addr",
-                "type": "address"
-            },
-            {
-                "name": "_description",
-                "type": "string"
-            }
-        ],
-        "name": "registerNewOraclePartner",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_oracleId",
-                "type": "uint256"
-            },
-            {
-                "name": "_newAddr",
-                "type": "address"
-            }
-        ],
-        "name": "isValidOraclePartnerUpdate",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_oracleId",
-                "type": "uint256"
-            },
-            {
-                "name": "_newAddr",
-                "type": "address"
-            }
-        ],
-        "name": "updateOraclePartnerAddr",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_oracleId",
-                "type": "uint256"
-            }
-        ],
-        "name": "isValidOraclePartnerDisable",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_oracleId",
-                "type": "uint256"
-            }
-        ],
-        "name": "disableOraclePartnerAddr",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "getPriorityOraclePartnerIds",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256[]"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_priorityIds",
-                "type": "uint256[]"
-            }
-        ],
-        "name": "areValidPriorityOraclePartnerIds",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_priorityIds",
-                "type": "uint256[]"
-            }
-        ],
-        "name": "setPriorityOraclePartnerIds",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_staleTime",
-                "type": "uint256"
-            }
-        ],
-        "name": "isValidStaleTime",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_staleTime",
-                "type": "uint256"
-            }
-        ],
-        "name": "setStaleTime",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_addr",
-                "type": "address"
-            }
-        ],
-        "name": "isValidOraclePartnerAddr",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_oracleId",
-                "type": "uint256"
-            }
-        ],
-        "name": "isValidOraclePartnerId",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_addr",
-                "type": "address"
-            }
-        ],
-        "name": "getOraclePartnerId",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_oracleId",
-                "type": "uint256"
-            }
-        ],
-        "name": "getOraclePartnerAddr",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_oracleId",
-                "type": "uint256"
-            }
-        ],
-        "name": "getOraclePartnerInfo",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "addr",
-                        "type": "address"
-                    },
-                    {
-                        "name": "version",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "lastModified",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "description",
-                        "type": "string"
-                    }
-                ],
-                "name": "",
-                "type": "tuple"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_oracleId",
-                "type": "uint256"
-            }
-        ],
-        "name": "getOraclePartnerDescription",
-        "outputs": [
-            {
-                "name": "",
-                "type": "string"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "getNumOraclePartners",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "getLastOraclePartnerAddr",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "getLastOraclePartnerId",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "arg0",
-                "type": "uint256"
-            }
-        ],
-        "name": "oraclePartnerInfo",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "addr",
-                        "type": "address"
-                    },
-                    {
-                        "name": "version",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "lastModified",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "description",
-                        "type": "string"
-                    }
-                ],
-                "name": "",
-                "type": "tuple"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "arg0",
-                "type": "address"
-            }
-        ],
-        "name": "oraclePartnerAddrToId",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "numOraclePartners",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "arg0",
-                "type": "uint256"
-            }
-        ],
-        "name": "priorityOraclePartnerIds",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "staleTime",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "ADDY_REGISTRY",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "ETH",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "MIN_STALE_TIME",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "MAX_STALE_TIME",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_ethAddr",
-                "type": "address"
-            },
-            {
-                "name": "_minStaleTime",
-                "type": "uint256"
-            },
-            {
-                "name": "_maxStaleTime",
-                "type": "uint256"
-            },
-            {
-                "name": "_addyRegistry",
-                "type": "address"
-            }
-        ],
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-    }
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'oraclePartnerId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+    ],
+    name: 'NewOraclePartnerRegistered',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'newAddr',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'prevAddr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'oraclePartnerId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'version',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+    ],
+    name: 'OraclePartnerAddrUpdated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'prevAddr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'oraclePartnerId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'version',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+    ],
+    name: 'OraclePartnerAddrDisabled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'numIds',
+        type: 'uint256',
+      },
+    ],
+    name: 'PriorityOraclePartnerIdsModified',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'staleTime',
+        type: 'uint256',
+      },
+    ],
+    name: 'StaleTimeSet',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+    ],
+    name: 'LocalGovernorSet',
+    type: 'event',
+  },
+  {
+    inputs: [
+      {
+        name: '_address',
+        type: 'address',
+      },
+    ],
+    name: 'isGovernor',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_newGovernor',
+        type: 'address',
+      },
+    ],
+    name: 'isValidLocalGovernor',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_newGovernor',
+        type: 'address',
+      },
+    ],
+    name: 'setLocalGovernor',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'localGovernor',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    name: 'getPrice',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_shouldRaise',
+        type: 'bool',
+      },
+    ],
+    name: 'getPrice',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'getUsdValue',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_shouldRaise',
+        type: 'bool',
+      },
+    ],
+    name: 'getUsdValue',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_usdValue',
+        type: 'uint256',
+      },
+    ],
+    name: 'getAssetAmount',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_usdValue',
+        type: 'uint256',
+      },
+      {
+        name: '_shouldRaise',
+        type: 'bool',
+      },
+    ],
+    name: 'getAssetAmount',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    name: 'hasPriceFeed',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'getEthUsdValue',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_shouldRaise',
+        type: 'bool',
+      },
+    ],
+    name: 'getEthUsdValue',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_usdValue',
+        type: 'uint256',
+      },
+    ],
+    name: 'getEthAmount',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_usdValue',
+        type: 'uint256',
+      },
+      {
+        name: '_shouldRaise',
+        type: 'bool',
+      },
+    ],
+    name: 'getEthAmount',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+    ],
+    name: 'isValidNewOraclePartnerAddr',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+      {
+        name: '_description',
+        type: 'string',
+      },
+    ],
+    name: 'registerNewOraclePartner',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_oracleId',
+        type: 'uint256',
+      },
+      {
+        name: '_newAddr',
+        type: 'address',
+      },
+    ],
+    name: 'isValidOraclePartnerUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_oracleId',
+        type: 'uint256',
+      },
+      {
+        name: '_newAddr',
+        type: 'address',
+      },
+    ],
+    name: 'updateOraclePartnerAddr',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_oracleId',
+        type: 'uint256',
+      },
+    ],
+    name: 'isValidOraclePartnerDisable',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_oracleId',
+        type: 'uint256',
+      },
+    ],
+    name: 'disableOraclePartnerAddr',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getPriorityOraclePartnerIds',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_priorityIds',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'areValidPriorityOraclePartnerIds',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_priorityIds',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'setPriorityOraclePartnerIds',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_staleTime',
+        type: 'uint256',
+      },
+    ],
+    name: 'isValidStaleTime',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_staleTime',
+        type: 'uint256',
+      },
+    ],
+    name: 'setStaleTime',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+    ],
+    name: 'isValidOraclePartnerAddr',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_oracleId',
+        type: 'uint256',
+      },
+    ],
+    name: 'isValidOraclePartnerId',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+    ],
+    name: 'getOraclePartnerId',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_oracleId',
+        type: 'uint256',
+      },
+    ],
+    name: 'getOraclePartnerAddr',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_oracleId',
+        type: 'uint256',
+      },
+    ],
+    name: 'getOraclePartnerInfo',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'addr',
+            type: 'address',
+          },
+          {
+            name: 'version',
+            type: 'uint256',
+          },
+          {
+            name: 'lastModified',
+            type: 'uint256',
+          },
+          {
+            name: 'description',
+            type: 'string',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_oracleId',
+        type: 'uint256',
+      },
+    ],
+    name: 'getOraclePartnerDescription',
+    outputs: [
+      {
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getNumOraclePartners',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getLastOraclePartnerAddr',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getLastOraclePartnerId',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    name: 'oraclePartnerInfo',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'addr',
+            type: 'address',
+          },
+          {
+            name: 'version',
+            type: 'uint256',
+          },
+          {
+            name: 'lastModified',
+            type: 'uint256',
+          },
+          {
+            name: 'description',
+            type: 'string',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'oraclePartnerAddrToId',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'numOraclePartners',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    name: 'priorityOraclePartnerIds',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'staleTime',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'ADDY_REGISTRY',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'ETH',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MIN_STALE_TIME',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MAX_STALE_TIME',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_ethAddr',
+        type: 'address',
+      },
+      {
+        name: '_minStaleTime',
+        type: 'uint256',
+      },
+      {
+        name: '_maxStaleTime',
+        type: 'uint256',
+      },
+      {
+        name: '_addyRegistry',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+  },
 ] as const
 
-export const deployAddress: Address | undefined = undefined
+export const deployAddress: Address | undefined = '0xc56add9377Bc3a39f1B928Abc7440E43B6b10e1f'
 
 export type Contract = {
   calls: {
@@ -953,12 +952,16 @@ export type Contract = {
     isValidOraclePartnerId: (oracleId: bigint) => Promise<boolean>
     getOraclePartnerId: (addr: `0x${string}`) => Promise<bigint>
     getOraclePartnerAddr: (oracleId: bigint) => Promise<`0x${string}`>
-    getOraclePartnerInfo: (oracleId: bigint) => Promise<{ addr: `0x${string}`; version: bigint; lastModified: bigint; description: string }>
+    getOraclePartnerInfo: (
+      oracleId: bigint,
+    ) => Promise<{ addr: `0x${string}`; version: bigint; lastModified: bigint; description: string }>
     getOraclePartnerDescription: (oracleId: bigint) => Promise<string>
     getNumOraclePartners: () => Promise<bigint>
     getLastOraclePartnerAddr: () => Promise<`0x${string}`>
     getLastOraclePartnerId: () => Promise<bigint>
-    oraclePartnerInfo: (arg0: bigint) => Promise<{ addr: `0x${string}`; version: bigint; lastModified: bigint; description: string }>
+    oraclePartnerInfo: (
+      arg0: bigint,
+    ) => Promise<{ addr: `0x${string}`; version: bigint; lastModified: bigint; description: string }>
     oraclePartnerAddrToId: (arg0: `0x${string}`) => Promise<bigint>
     numOraclePartners: () => Promise<bigint>
     priorityOraclePartnerIds: (arg0: bigint) => Promise<bigint>
@@ -978,8 +981,19 @@ export type Contract = {
   }
   events: {
     NewOraclePartnerRegistered: (addr: `0x${string}`, oraclePartnerId: bigint, description: string) => Promise<void>
-    OraclePartnerAddrUpdated: (newAddr: `0x${string}`, prevAddr: `0x${string}`, oraclePartnerId: bigint, version: bigint, description: string) => Promise<void>
-    OraclePartnerAddrDisabled: (prevAddr: `0x${string}`, oraclePartnerId: bigint, version: bigint, description: string) => Promise<void>
+    OraclePartnerAddrUpdated: (
+      newAddr: `0x${string}`,
+      prevAddr: `0x${string}`,
+      oraclePartnerId: bigint,
+      version: bigint,
+      description: string,
+    ) => Promise<void>
+    OraclePartnerAddrDisabled: (
+      prevAddr: `0x${string}`,
+      oraclePartnerId: bigint,
+      version: bigint,
+      description: string,
+    ) => Promise<void>
     PriorityOraclePartnerIdsModified: (numIds: bigint) => Promise<void>
     StaleTimeSet: (staleTime: bigint) => Promise<void>
     LocalGovernorSet: (addr: `0x${string}`) => Promise<void>
@@ -995,10 +1009,7 @@ export type Request<M extends Calls> = {
   deployAddress: Address | undefined
   defaultValue: Awaited<ReturnType<Contract['calls'][M]>> | undefined
   getAbi: () => typeof abi
-  with: (options: {
-    contractAddress?: Address
-    defaultValue?: Awaited<ReturnType<Contract['calls'][M]>>
-  }) => Request<M>
+  with: (options: { contractAddress?: Address; defaultValue?: Awaited<ReturnType<Contract['calls'][M]>> }) => Request<M>
   defaultTo: (defaultValue: Awaited<ReturnType<Contract['calls'][M]>>) => Request<M>
   at: (address: Address) => Request<M>
 }
@@ -1008,87 +1019,101 @@ function getRequest<M extends Calls>(
   method: M,
   args: ExtractArgs<Contract['calls'][M]>,
   contractAddressOrOptions?:
-  | Address
-  | {
-    contractAddress?: Address
-    defaultValue?: Awaited<ReturnType<Contract['calls'][M]>>
-    },
-  ): Request<M> {
-    const address =
-      typeof contractAddressOrOptions === 'string' ? contractAddressOrOptions : contractAddressOrOptions?.contractAddress
-    const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
-
-    const call = {
-      contractName: 'OracleRegistry' as const,
-      method,
-      args,
-      address,
-      deployAddress,
-      defaultValue,
-      getAbi: () => abi,
-      with: (options: {
+    | Address
+    | {
         contractAddress?: Address
         defaultValue?: Awaited<ReturnType<Contract['calls'][M]>>
-      }) => {
-          call.address = options.contractAddress
-          call.defaultValue = options.defaultValue
-          return call as Request<M>
       },
-      defaultTo: (defaultValue: Awaited<ReturnType<Contract['calls'][M]>>) => {
-        call.defaultValue = defaultValue
-        return call as Request<M>
-      },
-      at: (address: Address) => {
-        call.address = address
-        return call as Request<M>
-      },
-    } as Request<M>
+): Request<M> {
+  const address =
+    typeof contractAddressOrOptions === 'string' ? contractAddressOrOptions : contractAddressOrOptions?.contractAddress
+  const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
 
-    return call
+  const call = {
+    contractName: 'OracleRegistry' as const,
+    method,
+    args,
+    address,
+    deployAddress,
+    defaultValue,
+    getAbi: () => abi,
+    with: (options: { contractAddress?: Address; defaultValue?: Awaited<ReturnType<Contract['calls'][M]>> }) => {
+      call.address = options.contractAddress
+      call.defaultValue = options.defaultValue
+      return call as Request<M>
+    },
+    defaultTo: (defaultValue: Awaited<ReturnType<Contract['calls'][M]>>) => {
+      call.defaultValue = defaultValue
+      return call as Request<M>
+    },
+    at: (address: Address) => {
+      call.address = address
+      return call as Request<M>
+    },
+  } as Request<M>
+
+  return call
 }
 
 type CallType = {
-  [K in Calls]: (
-    ...args: ExtractArgs<Contract['calls'][K]>
-  ) => ReturnType<typeof getRequest<K>>
+  [K in Calls]: (...args: ExtractArgs<Contract['calls'][K]>) => ReturnType<typeof getRequest<K>>
 }
 
 export const call: CallType = {
-		isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => getRequest('isGovernor', args),
-		isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) => getRequest('isValidLocalGovernor', args),
-		localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => getRequest('localGovernor', args),
-		getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => getRequest('getPrice', args),
-		getUsdValue: (...args: ExtractArgs<Contract['calls']['getUsdValue']>) => getRequest('getUsdValue', args),
-		getAssetAmount: (...args: ExtractArgs<Contract['calls']['getAssetAmount']>) => getRequest('getAssetAmount', args),
-		hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) => getRequest('hasPriceFeed', args),
-		getEthUsdValue: (...args: ExtractArgs<Contract['calls']['getEthUsdValue']>) => getRequest('getEthUsdValue', args),
-		getEthAmount: (...args: ExtractArgs<Contract['calls']['getEthAmount']>) => getRequest('getEthAmount', args),
-		isValidNewOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['isValidNewOraclePartnerAddr']>) => getRequest('isValidNewOraclePartnerAddr', args),
-		isValidOraclePartnerUpdate: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerUpdate']>) => getRequest('isValidOraclePartnerUpdate', args),
-		isValidOraclePartnerDisable: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerDisable']>) => getRequest('isValidOraclePartnerDisable', args),
-		getPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['getPriorityOraclePartnerIds']>) => getRequest('getPriorityOraclePartnerIds', args),
-		areValidPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['areValidPriorityOraclePartnerIds']>) => getRequest('areValidPriorityOraclePartnerIds', args),
-		isValidStaleTime: (...args: ExtractArgs<Contract['calls']['isValidStaleTime']>) => getRequest('isValidStaleTime', args),
-		isValidOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerAddr']>) => getRequest('isValidOraclePartnerAddr', args),
-		isValidOraclePartnerId: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerId']>) => getRequest('isValidOraclePartnerId', args),
-		getOraclePartnerId: (...args: ExtractArgs<Contract['calls']['getOraclePartnerId']>) => getRequest('getOraclePartnerId', args),
-		getOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['getOraclePartnerAddr']>) => getRequest('getOraclePartnerAddr', args),
-		getOraclePartnerInfo: (...args: ExtractArgs<Contract['calls']['getOraclePartnerInfo']>) => getRequest('getOraclePartnerInfo', args),
-		getOraclePartnerDescription: (...args: ExtractArgs<Contract['calls']['getOraclePartnerDescription']>) => getRequest('getOraclePartnerDescription', args),
-		getNumOraclePartners: (...args: ExtractArgs<Contract['calls']['getNumOraclePartners']>) => getRequest('getNumOraclePartners', args),
-		getLastOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['getLastOraclePartnerAddr']>) => getRequest('getLastOraclePartnerAddr', args),
-		getLastOraclePartnerId: (...args: ExtractArgs<Contract['calls']['getLastOraclePartnerId']>) => getRequest('getLastOraclePartnerId', args),
-		oraclePartnerInfo: (...args: ExtractArgs<Contract['calls']['oraclePartnerInfo']>) => getRequest('oraclePartnerInfo', args),
-		oraclePartnerAddrToId: (...args: ExtractArgs<Contract['calls']['oraclePartnerAddrToId']>) => getRequest('oraclePartnerAddrToId', args),
-		numOraclePartners: (...args: ExtractArgs<Contract['calls']['numOraclePartners']>) => getRequest('numOraclePartners', args),
-		priorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['priorityOraclePartnerIds']>) => getRequest('priorityOraclePartnerIds', args),
-		staleTime: (...args: ExtractArgs<Contract['calls']['staleTime']>) => getRequest('staleTime', args),
-		ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => getRequest('ADDY_REGISTRY', args),
-		ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => getRequest('ETH', args),
-		MIN_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MIN_STALE_TIME']>) => getRequest('MIN_STALE_TIME', args),
-		MAX_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MAX_STALE_TIME']>) => getRequest('MAX_STALE_TIME', args),
+  isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => getRequest('isGovernor', args),
+  isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) =>
+    getRequest('isValidLocalGovernor', args),
+  localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => getRequest('localGovernor', args),
+  getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => getRequest('getPrice', args),
+  getUsdValue: (...args: ExtractArgs<Contract['calls']['getUsdValue']>) => getRequest('getUsdValue', args),
+  getAssetAmount: (...args: ExtractArgs<Contract['calls']['getAssetAmount']>) => getRequest('getAssetAmount', args),
+  hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) => getRequest('hasPriceFeed', args),
+  getEthUsdValue: (...args: ExtractArgs<Contract['calls']['getEthUsdValue']>) => getRequest('getEthUsdValue', args),
+  getEthAmount: (...args: ExtractArgs<Contract['calls']['getEthAmount']>) => getRequest('getEthAmount', args),
+  isValidNewOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['isValidNewOraclePartnerAddr']>) =>
+    getRequest('isValidNewOraclePartnerAddr', args),
+  isValidOraclePartnerUpdate: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerUpdate']>) =>
+    getRequest('isValidOraclePartnerUpdate', args),
+  isValidOraclePartnerDisable: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerDisable']>) =>
+    getRequest('isValidOraclePartnerDisable', args),
+  getPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['getPriorityOraclePartnerIds']>) =>
+    getRequest('getPriorityOraclePartnerIds', args),
+  areValidPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['areValidPriorityOraclePartnerIds']>) =>
+    getRequest('areValidPriorityOraclePartnerIds', args),
+  isValidStaleTime: (...args: ExtractArgs<Contract['calls']['isValidStaleTime']>) =>
+    getRequest('isValidStaleTime', args),
+  isValidOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerAddr']>) =>
+    getRequest('isValidOraclePartnerAddr', args),
+  isValidOraclePartnerId: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerId']>) =>
+    getRequest('isValidOraclePartnerId', args),
+  getOraclePartnerId: (...args: ExtractArgs<Contract['calls']['getOraclePartnerId']>) =>
+    getRequest('getOraclePartnerId', args),
+  getOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['getOraclePartnerAddr']>) =>
+    getRequest('getOraclePartnerAddr', args),
+  getOraclePartnerInfo: (...args: ExtractArgs<Contract['calls']['getOraclePartnerInfo']>) =>
+    getRequest('getOraclePartnerInfo', args),
+  getOraclePartnerDescription: (...args: ExtractArgs<Contract['calls']['getOraclePartnerDescription']>) =>
+    getRequest('getOraclePartnerDescription', args),
+  getNumOraclePartners: (...args: ExtractArgs<Contract['calls']['getNumOraclePartners']>) =>
+    getRequest('getNumOraclePartners', args),
+  getLastOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['getLastOraclePartnerAddr']>) =>
+    getRequest('getLastOraclePartnerAddr', args),
+  getLastOraclePartnerId: (...args: ExtractArgs<Contract['calls']['getLastOraclePartnerId']>) =>
+    getRequest('getLastOraclePartnerId', args),
+  oraclePartnerInfo: (...args: ExtractArgs<Contract['calls']['oraclePartnerInfo']>) =>
+    getRequest('oraclePartnerInfo', args),
+  oraclePartnerAddrToId: (...args: ExtractArgs<Contract['calls']['oraclePartnerAddrToId']>) =>
+    getRequest('oraclePartnerAddrToId', args),
+  numOraclePartners: (...args: ExtractArgs<Contract['calls']['numOraclePartners']>) =>
+    getRequest('numOraclePartners', args),
+  priorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['priorityOraclePartnerIds']>) =>
+    getRequest('priorityOraclePartnerIds', args),
+  staleTime: (...args: ExtractArgs<Contract['calls']['staleTime']>) => getRequest('staleTime', args),
+  ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => getRequest('ADDY_REGISTRY', args),
+  ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => getRequest('ETH', args),
+  MIN_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MIN_STALE_TIME']>) => getRequest('MIN_STALE_TIME', args),
+  MAX_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MAX_STALE_TIME']>) => getRequest('MAX_STALE_TIME', args),
 }
-
 
 export type Mutations = keyof Contract['mutations']
 function getMutation<M extends Mutations>(functionName: M) {
@@ -1101,7 +1126,7 @@ function getMutation<M extends Mutations>(functionName: M) {
   }
 }
 
-export const mutation:  {
+export const mutation: {
   [K in Mutations]: {
     contractName: 'OracleRegistry'
     deployAddress: Address | undefined
@@ -1110,103 +1135,202 @@ export const mutation:  {
     argsType: ExtractArgs<Contract['mutations'][K]> | undefined
   }
 } = {
-		setLocalGovernor: getMutation('setLocalGovernor'),
-		registerNewOraclePartner: getMutation('registerNewOraclePartner'),
-		updateOraclePartnerAddr: getMutation('updateOraclePartnerAddr'),
-		disableOraclePartnerAddr: getMutation('disableOraclePartnerAddr'),
-		setPriorityOraclePartnerIds: getMutation('setPriorityOraclePartnerIds'),
-		setStaleTime: getMutation('setStaleTime'),
+  setLocalGovernor: getMutation('setLocalGovernor'),
+  registerNewOraclePartner: getMutation('registerNewOraclePartner'),
+  updateOraclePartnerAddr: getMutation('updateOraclePartnerAddr'),
+  disableOraclePartnerAddr: getMutation('disableOraclePartnerAddr'),
+  setPriorityOraclePartnerIds: getMutation('setPriorityOraclePartnerIds'),
+  setStaleTime: getMutation('setStaleTime'),
 }
 
-
-
-
 export type SDK = {
-		isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => Promise<CallReturn<'isGovernor'>>
-		isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) => Promise<CallReturn<'isValidLocalGovernor'>>
-		localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => Promise<CallReturn<'localGovernor'>>
-		getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => Promise<CallReturn<'getPrice'>>
-		getUsdValue: (...args: ExtractArgs<Contract['calls']['getUsdValue']>) => Promise<CallReturn<'getUsdValue'>>
-		getAssetAmount: (...args: ExtractArgs<Contract['calls']['getAssetAmount']>) => Promise<CallReturn<'getAssetAmount'>>
-		hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) => Promise<CallReturn<'hasPriceFeed'>>
-		getEthUsdValue: (...args: ExtractArgs<Contract['calls']['getEthUsdValue']>) => Promise<CallReturn<'getEthUsdValue'>>
-		getEthAmount: (...args: ExtractArgs<Contract['calls']['getEthAmount']>) => Promise<CallReturn<'getEthAmount'>>
-		isValidNewOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['isValidNewOraclePartnerAddr']>) => Promise<CallReturn<'isValidNewOraclePartnerAddr'>>
-		isValidOraclePartnerUpdate: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerUpdate']>) => Promise<CallReturn<'isValidOraclePartnerUpdate'>>
-		isValidOraclePartnerDisable: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerDisable']>) => Promise<CallReturn<'isValidOraclePartnerDisable'>>
-		getPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['getPriorityOraclePartnerIds']>) => Promise<CallReturn<'getPriorityOraclePartnerIds'>>
-		areValidPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['areValidPriorityOraclePartnerIds']>) => Promise<CallReturn<'areValidPriorityOraclePartnerIds'>>
-		isValidStaleTime: (...args: ExtractArgs<Contract['calls']['isValidStaleTime']>) => Promise<CallReturn<'isValidStaleTime'>>
-		isValidOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerAddr']>) => Promise<CallReturn<'isValidOraclePartnerAddr'>>
-		isValidOraclePartnerId: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerId']>) => Promise<CallReturn<'isValidOraclePartnerId'>>
-		getOraclePartnerId: (...args: ExtractArgs<Contract['calls']['getOraclePartnerId']>) => Promise<CallReturn<'getOraclePartnerId'>>
-		getOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['getOraclePartnerAddr']>) => Promise<CallReturn<'getOraclePartnerAddr'>>
-		getOraclePartnerInfo: (...args: ExtractArgs<Contract['calls']['getOraclePartnerInfo']>) => Promise<CallReturn<'getOraclePartnerInfo'>>
-		getOraclePartnerDescription: (...args: ExtractArgs<Contract['calls']['getOraclePartnerDescription']>) => Promise<CallReturn<'getOraclePartnerDescription'>>
-		getNumOraclePartners: (...args: ExtractArgs<Contract['calls']['getNumOraclePartners']>) => Promise<CallReturn<'getNumOraclePartners'>>
-		getLastOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['getLastOraclePartnerAddr']>) => Promise<CallReturn<'getLastOraclePartnerAddr'>>
-		getLastOraclePartnerId: (...args: ExtractArgs<Contract['calls']['getLastOraclePartnerId']>) => Promise<CallReturn<'getLastOraclePartnerId'>>
-		oraclePartnerInfo: (...args: ExtractArgs<Contract['calls']['oraclePartnerInfo']>) => Promise<CallReturn<'oraclePartnerInfo'>>
-		oraclePartnerAddrToId: (...args: ExtractArgs<Contract['calls']['oraclePartnerAddrToId']>) => Promise<CallReturn<'oraclePartnerAddrToId'>>
-		numOraclePartners: (...args: ExtractArgs<Contract['calls']['numOraclePartners']>) => Promise<CallReturn<'numOraclePartners'>>
-		priorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['priorityOraclePartnerIds']>) => Promise<CallReturn<'priorityOraclePartnerIds'>>
-		staleTime: (...args: ExtractArgs<Contract['calls']['staleTime']>) => Promise<CallReturn<'staleTime'>>
-		ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => Promise<CallReturn<'ADDY_REGISTRY'>>
-		ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => Promise<CallReturn<'ETH'>>
-		MIN_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MIN_STALE_TIME']>) => Promise<CallReturn<'MIN_STALE_TIME'>>
-		MAX_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MAX_STALE_TIME']>) => Promise<CallReturn<'MAX_STALE_TIME'>>
-		setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) => Promise<Address>
-		registerNewOraclePartner: (...args: ExtractArgs<Contract['mutations']['registerNewOraclePartner']>) => Promise<Address>
-		updateOraclePartnerAddr: (...args: ExtractArgs<Contract['mutations']['updateOraclePartnerAddr']>) => Promise<Address>
-		disableOraclePartnerAddr: (...args: ExtractArgs<Contract['mutations']['disableOraclePartnerAddr']>) => Promise<Address>
-		setPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['mutations']['setPriorityOraclePartnerIds']>) => Promise<Address>
-		setStaleTime: (...args: ExtractArgs<Contract['mutations']['setStaleTime']>) => Promise<Address>
+  isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => Promise<CallReturn<'isGovernor'>>
+  isValidLocalGovernor: (
+    ...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>
+  ) => Promise<CallReturn<'isValidLocalGovernor'>>
+  localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => Promise<CallReturn<'localGovernor'>>
+  getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => Promise<CallReturn<'getPrice'>>
+  getUsdValue: (...args: ExtractArgs<Contract['calls']['getUsdValue']>) => Promise<CallReturn<'getUsdValue'>>
+  getAssetAmount: (...args: ExtractArgs<Contract['calls']['getAssetAmount']>) => Promise<CallReturn<'getAssetAmount'>>
+  hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) => Promise<CallReturn<'hasPriceFeed'>>
+  getEthUsdValue: (...args: ExtractArgs<Contract['calls']['getEthUsdValue']>) => Promise<CallReturn<'getEthUsdValue'>>
+  getEthAmount: (...args: ExtractArgs<Contract['calls']['getEthAmount']>) => Promise<CallReturn<'getEthAmount'>>
+  isValidNewOraclePartnerAddr: (
+    ...args: ExtractArgs<Contract['calls']['isValidNewOraclePartnerAddr']>
+  ) => Promise<CallReturn<'isValidNewOraclePartnerAddr'>>
+  isValidOraclePartnerUpdate: (
+    ...args: ExtractArgs<Contract['calls']['isValidOraclePartnerUpdate']>
+  ) => Promise<CallReturn<'isValidOraclePartnerUpdate'>>
+  isValidOraclePartnerDisable: (
+    ...args: ExtractArgs<Contract['calls']['isValidOraclePartnerDisable']>
+  ) => Promise<CallReturn<'isValidOraclePartnerDisable'>>
+  getPriorityOraclePartnerIds: (
+    ...args: ExtractArgs<Contract['calls']['getPriorityOraclePartnerIds']>
+  ) => Promise<CallReturn<'getPriorityOraclePartnerIds'>>
+  areValidPriorityOraclePartnerIds: (
+    ...args: ExtractArgs<Contract['calls']['areValidPriorityOraclePartnerIds']>
+  ) => Promise<CallReturn<'areValidPriorityOraclePartnerIds'>>
+  isValidStaleTime: (
+    ...args: ExtractArgs<Contract['calls']['isValidStaleTime']>
+  ) => Promise<CallReturn<'isValidStaleTime'>>
+  isValidOraclePartnerAddr: (
+    ...args: ExtractArgs<Contract['calls']['isValidOraclePartnerAddr']>
+  ) => Promise<CallReturn<'isValidOraclePartnerAddr'>>
+  isValidOraclePartnerId: (
+    ...args: ExtractArgs<Contract['calls']['isValidOraclePartnerId']>
+  ) => Promise<CallReturn<'isValidOraclePartnerId'>>
+  getOraclePartnerId: (
+    ...args: ExtractArgs<Contract['calls']['getOraclePartnerId']>
+  ) => Promise<CallReturn<'getOraclePartnerId'>>
+  getOraclePartnerAddr: (
+    ...args: ExtractArgs<Contract['calls']['getOraclePartnerAddr']>
+  ) => Promise<CallReturn<'getOraclePartnerAddr'>>
+  getOraclePartnerInfo: (
+    ...args: ExtractArgs<Contract['calls']['getOraclePartnerInfo']>
+  ) => Promise<CallReturn<'getOraclePartnerInfo'>>
+  getOraclePartnerDescription: (
+    ...args: ExtractArgs<Contract['calls']['getOraclePartnerDescription']>
+  ) => Promise<CallReturn<'getOraclePartnerDescription'>>
+  getNumOraclePartners: (
+    ...args: ExtractArgs<Contract['calls']['getNumOraclePartners']>
+  ) => Promise<CallReturn<'getNumOraclePartners'>>
+  getLastOraclePartnerAddr: (
+    ...args: ExtractArgs<Contract['calls']['getLastOraclePartnerAddr']>
+  ) => Promise<CallReturn<'getLastOraclePartnerAddr'>>
+  getLastOraclePartnerId: (
+    ...args: ExtractArgs<Contract['calls']['getLastOraclePartnerId']>
+  ) => Promise<CallReturn<'getLastOraclePartnerId'>>
+  oraclePartnerInfo: (
+    ...args: ExtractArgs<Contract['calls']['oraclePartnerInfo']>
+  ) => Promise<CallReturn<'oraclePartnerInfo'>>
+  oraclePartnerAddrToId: (
+    ...args: ExtractArgs<Contract['calls']['oraclePartnerAddrToId']>
+  ) => Promise<CallReturn<'oraclePartnerAddrToId'>>
+  numOraclePartners: (
+    ...args: ExtractArgs<Contract['calls']['numOraclePartners']>
+  ) => Promise<CallReturn<'numOraclePartners'>>
+  priorityOraclePartnerIds: (
+    ...args: ExtractArgs<Contract['calls']['priorityOraclePartnerIds']>
+  ) => Promise<CallReturn<'priorityOraclePartnerIds'>>
+  staleTime: (...args: ExtractArgs<Contract['calls']['staleTime']>) => Promise<CallReturn<'staleTime'>>
+  ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => Promise<CallReturn<'ADDY_REGISTRY'>>
+  ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => Promise<CallReturn<'ETH'>>
+  MIN_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MIN_STALE_TIME']>) => Promise<CallReturn<'MIN_STALE_TIME'>>
+  MAX_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MAX_STALE_TIME']>) => Promise<CallReturn<'MAX_STALE_TIME'>>
+  setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) => Promise<Address>
+  registerNewOraclePartner: (
+    ...args: ExtractArgs<Contract['mutations']['registerNewOraclePartner']>
+  ) => Promise<Address>
+  updateOraclePartnerAddr: (...args: ExtractArgs<Contract['mutations']['updateOraclePartnerAddr']>) => Promise<Address>
+  disableOraclePartnerAddr: (
+    ...args: ExtractArgs<Contract['mutations']['disableOraclePartnerAddr']>
+  ) => Promise<Address>
+  setPriorityOraclePartnerIds: (
+    ...args: ExtractArgs<Contract['mutations']['setPriorityOraclePartnerIds']>
+  ) => Promise<Address>
+  setStaleTime: (...args: ExtractArgs<Contract['mutations']['setStaleTime']>) => Promise<Address>
 }
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
     // Queries
-		isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => singleQuery(publicClient!, call.isGovernor(...args)) as Promise<CallReturn<'isGovernor'>>,
-		isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) => singleQuery(publicClient!, call.isValidLocalGovernor(...args)) as Promise<CallReturn<'isValidLocalGovernor'>>,
-		localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => singleQuery(publicClient!, call.localGovernor(...args)) as Promise<CallReturn<'localGovernor'>>,
-		getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => singleQuery(publicClient!, call.getPrice(...args)) as Promise<CallReturn<'getPrice'>>,
-		getUsdValue: (...args: ExtractArgs<Contract['calls']['getUsdValue']>) => singleQuery(publicClient!, call.getUsdValue(...args)) as Promise<CallReturn<'getUsdValue'>>,
-		getAssetAmount: (...args: ExtractArgs<Contract['calls']['getAssetAmount']>) => singleQuery(publicClient!, call.getAssetAmount(...args)) as Promise<CallReturn<'getAssetAmount'>>,
-		hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) => singleQuery(publicClient!, call.hasPriceFeed(...args)) as Promise<CallReturn<'hasPriceFeed'>>,
-		getEthUsdValue: (...args: ExtractArgs<Contract['calls']['getEthUsdValue']>) => singleQuery(publicClient!, call.getEthUsdValue(...args)) as Promise<CallReturn<'getEthUsdValue'>>,
-		getEthAmount: (...args: ExtractArgs<Contract['calls']['getEthAmount']>) => singleQuery(publicClient!, call.getEthAmount(...args)) as Promise<CallReturn<'getEthAmount'>>,
-		isValidNewOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['isValidNewOraclePartnerAddr']>) => singleQuery(publicClient!, call.isValidNewOraclePartnerAddr(...args)) as Promise<CallReturn<'isValidNewOraclePartnerAddr'>>,
-		isValidOraclePartnerUpdate: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerUpdate']>) => singleQuery(publicClient!, call.isValidOraclePartnerUpdate(...args)) as Promise<CallReturn<'isValidOraclePartnerUpdate'>>,
-		isValidOraclePartnerDisable: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerDisable']>) => singleQuery(publicClient!, call.isValidOraclePartnerDisable(...args)) as Promise<CallReturn<'isValidOraclePartnerDisable'>>,
-		getPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['getPriorityOraclePartnerIds']>) => singleQuery(publicClient!, call.getPriorityOraclePartnerIds(...args)) as Promise<CallReturn<'getPriorityOraclePartnerIds'>>,
-		areValidPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['areValidPriorityOraclePartnerIds']>) => singleQuery(publicClient!, call.areValidPriorityOraclePartnerIds(...args)) as Promise<CallReturn<'areValidPriorityOraclePartnerIds'>>,
-		isValidStaleTime: (...args: ExtractArgs<Contract['calls']['isValidStaleTime']>) => singleQuery(publicClient!, call.isValidStaleTime(...args)) as Promise<CallReturn<'isValidStaleTime'>>,
-		isValidOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerAddr']>) => singleQuery(publicClient!, call.isValidOraclePartnerAddr(...args)) as Promise<CallReturn<'isValidOraclePartnerAddr'>>,
-		isValidOraclePartnerId: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerId']>) => singleQuery(publicClient!, call.isValidOraclePartnerId(...args)) as Promise<CallReturn<'isValidOraclePartnerId'>>,
-		getOraclePartnerId: (...args: ExtractArgs<Contract['calls']['getOraclePartnerId']>) => singleQuery(publicClient!, call.getOraclePartnerId(...args)) as Promise<CallReturn<'getOraclePartnerId'>>,
-		getOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['getOraclePartnerAddr']>) => singleQuery(publicClient!, call.getOraclePartnerAddr(...args)) as Promise<CallReturn<'getOraclePartnerAddr'>>,
-		getOraclePartnerInfo: (...args: ExtractArgs<Contract['calls']['getOraclePartnerInfo']>) => singleQuery(publicClient!, call.getOraclePartnerInfo(...args)) as Promise<CallReturn<'getOraclePartnerInfo'>>,
-		getOraclePartnerDescription: (...args: ExtractArgs<Contract['calls']['getOraclePartnerDescription']>) => singleQuery(publicClient!, call.getOraclePartnerDescription(...args)) as Promise<CallReturn<'getOraclePartnerDescription'>>,
-		getNumOraclePartners: (...args: ExtractArgs<Contract['calls']['getNumOraclePartners']>) => singleQuery(publicClient!, call.getNumOraclePartners(...args)) as Promise<CallReturn<'getNumOraclePartners'>>,
-		getLastOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['getLastOraclePartnerAddr']>) => singleQuery(publicClient!, call.getLastOraclePartnerAddr(...args)) as Promise<CallReturn<'getLastOraclePartnerAddr'>>,
-		getLastOraclePartnerId: (...args: ExtractArgs<Contract['calls']['getLastOraclePartnerId']>) => singleQuery(publicClient!, call.getLastOraclePartnerId(...args)) as Promise<CallReturn<'getLastOraclePartnerId'>>,
-		oraclePartnerInfo: (...args: ExtractArgs<Contract['calls']['oraclePartnerInfo']>) => singleQuery(publicClient!, call.oraclePartnerInfo(...args)) as Promise<CallReturn<'oraclePartnerInfo'>>,
-		oraclePartnerAddrToId: (...args: ExtractArgs<Contract['calls']['oraclePartnerAddrToId']>) => singleQuery(publicClient!, call.oraclePartnerAddrToId(...args)) as Promise<CallReturn<'oraclePartnerAddrToId'>>,
-		numOraclePartners: (...args: ExtractArgs<Contract['calls']['numOraclePartners']>) => singleQuery(publicClient!, call.numOraclePartners(...args)) as Promise<CallReturn<'numOraclePartners'>>,
-		priorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['priorityOraclePartnerIds']>) => singleQuery(publicClient!, call.priorityOraclePartnerIds(...args)) as Promise<CallReturn<'priorityOraclePartnerIds'>>,
-		staleTime: (...args: ExtractArgs<Contract['calls']['staleTime']>) => singleQuery(publicClient!, call.staleTime(...args)) as Promise<CallReturn<'staleTime'>>,
-		ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => singleQuery(publicClient!, call.ADDY_REGISTRY(...args)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
-		ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => singleQuery(publicClient!, call.ETH(...args)) as Promise<CallReturn<'ETH'>>,
-		MIN_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MIN_STALE_TIME']>) => singleQuery(publicClient!, call.MIN_STALE_TIME(...args)) as Promise<CallReturn<'MIN_STALE_TIME'>>,
-		MAX_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MAX_STALE_TIME']>) => singleQuery(publicClient!, call.MAX_STALE_TIME(...args)) as Promise<CallReturn<'MAX_STALE_TIME'>>,
-    
+    isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) =>
+      singleQuery(publicClient!, call.isGovernor(...args)) as Promise<CallReturn<'isGovernor'>>,
+    isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) =>
+      singleQuery(publicClient!, call.isValidLocalGovernor(...args)) as Promise<CallReturn<'isValidLocalGovernor'>>,
+    localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) =>
+      singleQuery(publicClient!, call.localGovernor(...args)) as Promise<CallReturn<'localGovernor'>>,
+    getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) =>
+      singleQuery(publicClient!, call.getPrice(...args)) as Promise<CallReturn<'getPrice'>>,
+    getUsdValue: (...args: ExtractArgs<Contract['calls']['getUsdValue']>) =>
+      singleQuery(publicClient!, call.getUsdValue(...args)) as Promise<CallReturn<'getUsdValue'>>,
+    getAssetAmount: (...args: ExtractArgs<Contract['calls']['getAssetAmount']>) =>
+      singleQuery(publicClient!, call.getAssetAmount(...args)) as Promise<CallReturn<'getAssetAmount'>>,
+    hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) =>
+      singleQuery(publicClient!, call.hasPriceFeed(...args)) as Promise<CallReturn<'hasPriceFeed'>>,
+    getEthUsdValue: (...args: ExtractArgs<Contract['calls']['getEthUsdValue']>) =>
+      singleQuery(publicClient!, call.getEthUsdValue(...args)) as Promise<CallReturn<'getEthUsdValue'>>,
+    getEthAmount: (...args: ExtractArgs<Contract['calls']['getEthAmount']>) =>
+      singleQuery(publicClient!, call.getEthAmount(...args)) as Promise<CallReturn<'getEthAmount'>>,
+    isValidNewOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['isValidNewOraclePartnerAddr']>) =>
+      singleQuery(publicClient!, call.isValidNewOraclePartnerAddr(...args)) as Promise<
+        CallReturn<'isValidNewOraclePartnerAddr'>
+      >,
+    isValidOraclePartnerUpdate: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerUpdate']>) =>
+      singleQuery(publicClient!, call.isValidOraclePartnerUpdate(...args)) as Promise<
+        CallReturn<'isValidOraclePartnerUpdate'>
+      >,
+    isValidOraclePartnerDisable: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerDisable']>) =>
+      singleQuery(publicClient!, call.isValidOraclePartnerDisable(...args)) as Promise<
+        CallReturn<'isValidOraclePartnerDisable'>
+      >,
+    getPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['getPriorityOraclePartnerIds']>) =>
+      singleQuery(publicClient!, call.getPriorityOraclePartnerIds(...args)) as Promise<
+        CallReturn<'getPriorityOraclePartnerIds'>
+      >,
+    areValidPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['areValidPriorityOraclePartnerIds']>) =>
+      singleQuery(publicClient!, call.areValidPriorityOraclePartnerIds(...args)) as Promise<
+        CallReturn<'areValidPriorityOraclePartnerIds'>
+      >,
+    isValidStaleTime: (...args: ExtractArgs<Contract['calls']['isValidStaleTime']>) =>
+      singleQuery(publicClient!, call.isValidStaleTime(...args)) as Promise<CallReturn<'isValidStaleTime'>>,
+    isValidOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerAddr']>) =>
+      singleQuery(publicClient!, call.isValidOraclePartnerAddr(...args)) as Promise<
+        CallReturn<'isValidOraclePartnerAddr'>
+      >,
+    isValidOraclePartnerId: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerId']>) =>
+      singleQuery(publicClient!, call.isValidOraclePartnerId(...args)) as Promise<CallReturn<'isValidOraclePartnerId'>>,
+    getOraclePartnerId: (...args: ExtractArgs<Contract['calls']['getOraclePartnerId']>) =>
+      singleQuery(publicClient!, call.getOraclePartnerId(...args)) as Promise<CallReturn<'getOraclePartnerId'>>,
+    getOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['getOraclePartnerAddr']>) =>
+      singleQuery(publicClient!, call.getOraclePartnerAddr(...args)) as Promise<CallReturn<'getOraclePartnerAddr'>>,
+    getOraclePartnerInfo: (...args: ExtractArgs<Contract['calls']['getOraclePartnerInfo']>) =>
+      singleQuery(publicClient!, call.getOraclePartnerInfo(...args)) as Promise<CallReturn<'getOraclePartnerInfo'>>,
+    getOraclePartnerDescription: (...args: ExtractArgs<Contract['calls']['getOraclePartnerDescription']>) =>
+      singleQuery(publicClient!, call.getOraclePartnerDescription(...args)) as Promise<
+        CallReturn<'getOraclePartnerDescription'>
+      >,
+    getNumOraclePartners: (...args: ExtractArgs<Contract['calls']['getNumOraclePartners']>) =>
+      singleQuery(publicClient!, call.getNumOraclePartners(...args)) as Promise<CallReturn<'getNumOraclePartners'>>,
+    getLastOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['getLastOraclePartnerAddr']>) =>
+      singleQuery(publicClient!, call.getLastOraclePartnerAddr(...args)) as Promise<
+        CallReturn<'getLastOraclePartnerAddr'>
+      >,
+    getLastOraclePartnerId: (...args: ExtractArgs<Contract['calls']['getLastOraclePartnerId']>) =>
+      singleQuery(publicClient!, call.getLastOraclePartnerId(...args)) as Promise<CallReturn<'getLastOraclePartnerId'>>,
+    oraclePartnerInfo: (...args: ExtractArgs<Contract['calls']['oraclePartnerInfo']>) =>
+      singleQuery(publicClient!, call.oraclePartnerInfo(...args)) as Promise<CallReturn<'oraclePartnerInfo'>>,
+    oraclePartnerAddrToId: (...args: ExtractArgs<Contract['calls']['oraclePartnerAddrToId']>) =>
+      singleQuery(publicClient!, call.oraclePartnerAddrToId(...args)) as Promise<CallReturn<'oraclePartnerAddrToId'>>,
+    numOraclePartners: (...args: ExtractArgs<Contract['calls']['numOraclePartners']>) =>
+      singleQuery(publicClient!, call.numOraclePartners(...args)) as Promise<CallReturn<'numOraclePartners'>>,
+    priorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['priorityOraclePartnerIds']>) =>
+      singleQuery(publicClient!, call.priorityOraclePartnerIds(...args)) as Promise<
+        CallReturn<'priorityOraclePartnerIds'>
+      >,
+    staleTime: (...args: ExtractArgs<Contract['calls']['staleTime']>) =>
+      singleQuery(publicClient!, call.staleTime(...args)) as Promise<CallReturn<'staleTime'>>,
+    ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) =>
+      singleQuery(publicClient!, call.ADDY_REGISTRY(...args)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
+    ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) =>
+      singleQuery(publicClient!, call.ETH(...args)) as Promise<CallReturn<'ETH'>>,
+    MIN_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MIN_STALE_TIME']>) =>
+      singleQuery(publicClient!, call.MIN_STALE_TIME(...args)) as Promise<CallReturn<'MIN_STALE_TIME'>>,
+    MAX_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MAX_STALE_TIME']>) =>
+      singleQuery(publicClient!, call.MAX_STALE_TIME(...args)) as Promise<CallReturn<'MAX_STALE_TIME'>>,
+
     // Mutations
-		setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) => mutate(walletClient!, mutation.setLocalGovernor)(...args),
-		registerNewOraclePartner: (...args: ExtractArgs<Contract['mutations']['registerNewOraclePartner']>) => mutate(walletClient!, mutation.registerNewOraclePartner)(...args),
-		updateOraclePartnerAddr: (...args: ExtractArgs<Contract['mutations']['updateOraclePartnerAddr']>) => mutate(walletClient!, mutation.updateOraclePartnerAddr)(...args),
-		disableOraclePartnerAddr: (...args: ExtractArgs<Contract['mutations']['disableOraclePartnerAddr']>) => mutate(walletClient!, mutation.disableOraclePartnerAddr)(...args),
-		setPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['mutations']['setPriorityOraclePartnerIds']>) => mutate(walletClient!, mutation.setPriorityOraclePartnerIds)(...args),
-		setStaleTime: (...args: ExtractArgs<Contract['mutations']['setStaleTime']>) => mutate(walletClient!, mutation.setStaleTime)(...args),
+    setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) =>
+      mutate(walletClient!, mutation.setLocalGovernor)(...args),
+    registerNewOraclePartner: (...args: ExtractArgs<Contract['mutations']['registerNewOraclePartner']>) =>
+      mutate(walletClient!, mutation.registerNewOraclePartner)(...args),
+    updateOraclePartnerAddr: (...args: ExtractArgs<Contract['mutations']['updateOraclePartnerAddr']>) =>
+      mutate(walletClient!, mutation.updateOraclePartnerAddr)(...args),
+    disableOraclePartnerAddr: (...args: ExtractArgs<Contract['mutations']['disableOraclePartnerAddr']>) =>
+      mutate(walletClient!, mutation.disableOraclePartnerAddr)(...args),
+    setPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['mutations']['setPriorityOraclePartnerIds']>) =>
+      mutate(walletClient!, mutation.setPriorityOraclePartnerIds)(...args),
+    setStaleTime: (...args: ExtractArgs<Contract['mutations']['setStaleTime']>) =>
+      mutate(walletClient!, mutation.setStaleTime)(...args),
   }
 }
-

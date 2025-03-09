@@ -1552,7 +1552,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = undefined
+export const deployAddress: Address | undefined = '0x45D1a9429Fd603c13Cdab685dc2540f4F57Df464'
 
 export type Contract = {
   calls: {
@@ -1973,7 +1973,7 @@ export type SDK = {
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
 }
 
-export function toSdk(address: `0x${string}`, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(address: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
     // Queries
     apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) =>

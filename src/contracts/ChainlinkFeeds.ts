@@ -9,648 +9,647 @@ import { PublicClient, WalletClient } from 'viem'
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
 
-
 export const abi = [
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "asset",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "name": "chainlinkFeed",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "needsEthToUsd",
-                "type": "bool"
-            },
-            {
-                "indexed": false,
-                "name": "needsBtcToUsd",
-                "type": "bool"
-            }
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'asset',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'chainlinkFeed',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'needsEthToUsd',
+        type: 'bool',
+      },
+      {
+        indexed: false,
+        name: 'needsBtcToUsd',
+        type: 'bool',
+      },
+    ],
+    name: 'ChainlinkFeedAdded',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'asset',
+        type: 'address',
+      },
+    ],
+    name: 'ChainlinkFeedDisabled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+    ],
+    name: 'LocalGovernorSet',
+    type: 'event',
+  },
+  {
+    inputs: [
+      {
+        name: '_address',
+        type: 'address',
+      },
+    ],
+    name: 'isGovernor',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_newGovernor',
+        type: 'address',
+      },
+    ],
+    name: 'isValidLocalGovernor',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_newGovernor',
+        type: 'address',
+      },
+    ],
+    name: 'setLocalGovernor',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'localGovernor',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getConfiguredAssets',
+    outputs: [
+      {
+        name: '',
+        type: 'address[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    name: 'assets',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'indexOfAsset',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'numAssets',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    name: 'getPrice',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_staleTime',
+        type: 'uint256',
+      },
+    ],
+    name: 'getPrice',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_staleTime',
+        type: 'uint256',
+      },
+      {
+        name: '_oracleRegistry',
+        type: 'address',
+      },
+    ],
+    name: 'getPrice',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    name: 'getPriceAndHasFeed',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_staleTime',
+        type: 'uint256',
+      },
+    ],
+    name: 'getPriceAndHasFeed',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_staleTime',
+        type: 'uint256',
+      },
+      {
+        name: '_oracleRegistry',
+        type: 'address',
+      },
+    ],
+    name: 'getPriceAndHasFeed',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_feed',
+        type: 'address',
+      },
+      {
+        name: '_decimals',
+        type: 'uint256',
+      },
+    ],
+    name: 'getChainlinkData',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_feed',
+        type: 'address',
+      },
+      {
+        name: '_decimals',
+        type: 'uint256',
+      },
+      {
+        name: '_staleTime',
+        type: 'uint256',
+      },
+    ],
+    name: 'getChainlinkData',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    name: 'hasPriceFeed',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_feed',
+        type: 'address',
+      },
+      {
+        name: '_needsEthToUsd',
+        type: 'bool',
+      },
+      {
+        name: '_needsBtcToUsd',
+        type: 'bool',
+      },
+    ],
+    name: 'isValidChainlinkFeed',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_feed',
+        type: 'address',
+      },
+    ],
+    name: 'setChainlinkFeed',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_feed',
+        type: 'address',
+      },
+      {
+        name: '_needsEthToUsd',
+        type: 'bool',
+      },
+    ],
+    name: 'setChainlinkFeed',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_feed',
+        type: 'address',
+      },
+      {
+        name: '_needsEthToUsd',
+        type: 'bool',
+      },
+      {
+        name: '_needsBtcToUsd',
+        type: 'bool',
+      },
+    ],
+    name: 'setChainlinkFeed',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    name: 'disableChainlinkPriceFeed',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_oracleId',
+        type: 'uint256',
+      },
+    ],
+    name: 'setOraclePartnerId',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'feedConfig',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'feed',
+            type: 'address',
+          },
+          {
+            name: 'decimals',
+            type: 'uint256',
+          },
+          {
+            name: 'needsEthToUsd',
+            type: 'bool',
+          },
+          {
+            name: 'needsBtcToUsd',
+            type: 'bool',
+          },
         ],
-        "name": "ChainlinkFeedAdded",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "asset",
-                "type": "address"
-            }
-        ],
-        "name": "ChainlinkFeedDisabled",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "addr",
-                "type": "address"
-            }
-        ],
-        "name": "LocalGovernorSet",
-        "type": "event"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_address",
-                "type": "address"
-            }
-        ],
-        "name": "isGovernor",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_newGovernor",
-                "type": "address"
-            }
-        ],
-        "name": "isValidLocalGovernor",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_newGovernor",
-                "type": "address"
-            }
-        ],
-        "name": "setLocalGovernor",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "localGovernor",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "getConfiguredAssets",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address[]"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "arg0",
-                "type": "uint256"
-            }
-        ],
-        "name": "assets",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "arg0",
-                "type": "address"
-            }
-        ],
-        "name": "indexOfAsset",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "numAssets",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            }
-        ],
-        "name": "getPrice",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_staleTime",
-                "type": "uint256"
-            }
-        ],
-        "name": "getPrice",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_staleTime",
-                "type": "uint256"
-            },
-            {
-                "name": "_oracleRegistry",
-                "type": "address"
-            }
-        ],
-        "name": "getPrice",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            }
-        ],
-        "name": "getPriceAndHasFeed",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_staleTime",
-                "type": "uint256"
-            }
-        ],
-        "name": "getPriceAndHasFeed",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_staleTime",
-                "type": "uint256"
-            },
-            {
-                "name": "_oracleRegistry",
-                "type": "address"
-            }
-        ],
-        "name": "getPriceAndHasFeed",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_feed",
-                "type": "address"
-            },
-            {
-                "name": "_decimals",
-                "type": "uint256"
-            }
-        ],
-        "name": "getChainlinkData",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_feed",
-                "type": "address"
-            },
-            {
-                "name": "_decimals",
-                "type": "uint256"
-            },
-            {
-                "name": "_staleTime",
-                "type": "uint256"
-            }
-        ],
-        "name": "getChainlinkData",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            }
-        ],
-        "name": "hasPriceFeed",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_feed",
-                "type": "address"
-            },
-            {
-                "name": "_needsEthToUsd",
-                "type": "bool"
-            },
-            {
-                "name": "_needsBtcToUsd",
-                "type": "bool"
-            }
-        ],
-        "name": "isValidChainlinkFeed",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_feed",
-                "type": "address"
-            }
-        ],
-        "name": "setChainlinkFeed",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_feed",
-                "type": "address"
-            },
-            {
-                "name": "_needsEthToUsd",
-                "type": "bool"
-            }
-        ],
-        "name": "setChainlinkFeed",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_feed",
-                "type": "address"
-            },
-            {
-                "name": "_needsEthToUsd",
-                "type": "bool"
-            },
-            {
-                "name": "_needsBtcToUsd",
-                "type": "bool"
-            }
-        ],
-        "name": "setChainlinkFeed",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            }
-        ],
-        "name": "disableChainlinkPriceFeed",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_oracleId",
-                "type": "uint256"
-            }
-        ],
-        "name": "setOraclePartnerId",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "arg0",
-                "type": "address"
-            }
-        ],
-        "name": "feedConfig",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "feed",
-                        "type": "address"
-                    },
-                    {
-                        "name": "decimals",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "needsEthToUsd",
-                        "type": "bool"
-                    },
-                    {
-                        "name": "needsBtcToUsd",
-                        "type": "bool"
-                    }
-                ],
-                "name": "",
-                "type": "tuple"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "oraclePartnerId",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "ADDY_REGISTRY",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "WETH",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "ETH",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "BTC",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_wethAddr",
-                "type": "address"
-            },
-            {
-                "name": "_ethAddr",
-                "type": "address"
-            },
-            {
-                "name": "_btcAddr",
-                "type": "address"
-            },
-            {
-                "name": "_ethUsdFeed",
-                "type": "address"
-            },
-            {
-                "name": "_btcUsdFeed",
-                "type": "address"
-            },
-            {
-                "name": "_addyRegistry",
-                "type": "address"
-            }
-        ],
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-    }
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'oraclePartnerId',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'ADDY_REGISTRY',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'WETH',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'ETH',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'BTC',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_wethAddr',
+        type: 'address',
+      },
+      {
+        name: '_ethAddr',
+        type: 'address',
+      },
+      {
+        name: '_btcAddr',
+        type: 'address',
+      },
+      {
+        name: '_ethUsdFeed',
+        type: 'address',
+      },
+      {
+        name: '_btcUsdFeed',
+        type: 'address',
+      },
+      {
+        name: '_addyRegistry',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+  },
 ] as const
 
-export const deployAddress: Address | undefined = undefined
+export const deployAddress: Address | undefined = '0x6035ff5936563132caD931a3a2F328477372fb82'
 
 export type Contract = {
   calls: {
@@ -662,11 +661,22 @@ export type Contract = {
     indexOfAsset: (arg0: `0x${string}`) => Promise<bigint>
     numAssets: () => Promise<bigint>
     getPrice: (asset: `0x${string}`, staleTime?: bigint, oracleRegistry?: `0x${string}`) => Promise<bigint>
-    getPriceAndHasFeed: (asset: `0x${string}`, staleTime?: bigint, oracleRegistry?: `0x${string}`) => Promise<[bigint, boolean]>
+    getPriceAndHasFeed: (
+      asset: `0x${string}`,
+      staleTime?: bigint,
+      oracleRegistry?: `0x${string}`,
+    ) => Promise<[bigint, boolean]>
     getChainlinkData: (feed: `0x${string}`, decimals: bigint, staleTime?: bigint) => Promise<bigint>
     hasPriceFeed: (asset: `0x${string}`) => Promise<boolean>
-    isValidChainlinkFeed: (asset: `0x${string}`, feed: `0x${string}`, needsEthToUsd: boolean, needsBtcToUsd: boolean) => Promise<boolean>
-    feedConfig: (arg0: `0x${string}`) => Promise<{ feed: `0x${string}`; decimals: bigint; needsEthToUsd: boolean; needsBtcToUsd: boolean }>
+    isValidChainlinkFeed: (
+      asset: `0x${string}`,
+      feed: `0x${string}`,
+      needsEthToUsd: boolean,
+      needsBtcToUsd: boolean,
+    ) => Promise<boolean>
+    feedConfig: (
+      arg0: `0x${string}`,
+    ) => Promise<{ feed: `0x${string}`; decimals: bigint; needsEthToUsd: boolean; needsBtcToUsd: boolean }>
     oraclePartnerId: () => Promise<bigint>
     ADDY_REGISTRY: () => Promise<`0x${string}`>
     WETH: () => Promise<`0x${string}`>
@@ -675,12 +685,22 @@ export type Contract = {
   }
   mutations: {
     setLocalGovernor: (newGovernor: `0x${string}`) => Promise<boolean>
-    setChainlinkFeed: (asset: `0x${string}`, feed: `0x${string}`, needsEthToUsd?: boolean, needsBtcToUsd?: boolean) => Promise<boolean>
+    setChainlinkFeed: (
+      asset: `0x${string}`,
+      feed: `0x${string}`,
+      needsEthToUsd?: boolean,
+      needsBtcToUsd?: boolean,
+    ) => Promise<boolean>
     disableChainlinkPriceFeed: (asset: `0x${string}`) => Promise<boolean>
     setOraclePartnerId: (oracleId: bigint) => Promise<boolean>
   }
   events: {
-    ChainlinkFeedAdded: (asset: `0x${string}`, chainlinkFeed: `0x${string}`, needsEthToUsd: boolean, needsBtcToUsd: boolean) => Promise<void>
+    ChainlinkFeedAdded: (
+      asset: `0x${string}`,
+      chainlinkFeed: `0x${string}`,
+      needsEthToUsd: boolean,
+      needsBtcToUsd: boolean,
+    ) => Promise<void>
     ChainlinkFeedDisabled: (asset: `0x${string}`) => Promise<void>
     LocalGovernorSet: (addr: `0x${string}`) => Promise<void>
   }
@@ -695,10 +715,7 @@ export type Request<M extends Calls> = {
   deployAddress: Address | undefined
   defaultValue: Awaited<ReturnType<Contract['calls'][M]>> | undefined
   getAbi: () => typeof abi
-  with: (options: {
-    contractAddress?: Address
-    defaultValue?: Awaited<ReturnType<Contract['calls'][M]>>
-  }) => Request<M>
+  with: (options: { contractAddress?: Address; defaultValue?: Awaited<ReturnType<Contract['calls'][M]>> }) => Request<M>
   defaultTo: (defaultValue: Awaited<ReturnType<Contract['calls'][M]>>) => Request<M>
   at: (address: Address) => Request<M>
 }
@@ -708,72 +725,71 @@ function getRequest<M extends Calls>(
   method: M,
   args: ExtractArgs<Contract['calls'][M]>,
   contractAddressOrOptions?:
-  | Address
-  | {
-    contractAddress?: Address
-    defaultValue?: Awaited<ReturnType<Contract['calls'][M]>>
-    },
-  ): Request<M> {
-    const address =
-      typeof contractAddressOrOptions === 'string' ? contractAddressOrOptions : contractAddressOrOptions?.contractAddress
-    const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
-
-    const call = {
-      contractName: 'ChainlinkFeeds' as const,
-      method,
-      args,
-      address,
-      deployAddress,
-      defaultValue,
-      getAbi: () => abi,
-      with: (options: {
+    | Address
+    | {
         contractAddress?: Address
         defaultValue?: Awaited<ReturnType<Contract['calls'][M]>>
-      }) => {
-          call.address = options.contractAddress
-          call.defaultValue = options.defaultValue
-          return call as Request<M>
       },
-      defaultTo: (defaultValue: Awaited<ReturnType<Contract['calls'][M]>>) => {
-        call.defaultValue = defaultValue
-        return call as Request<M>
-      },
-      at: (address: Address) => {
-        call.address = address
-        return call as Request<M>
-      },
-    } as Request<M>
+): Request<M> {
+  const address =
+    typeof contractAddressOrOptions === 'string' ? contractAddressOrOptions : contractAddressOrOptions?.contractAddress
+  const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
 
-    return call
+  const call = {
+    contractName: 'ChainlinkFeeds' as const,
+    method,
+    args,
+    address,
+    deployAddress,
+    defaultValue,
+    getAbi: () => abi,
+    with: (options: { contractAddress?: Address; defaultValue?: Awaited<ReturnType<Contract['calls'][M]>> }) => {
+      call.address = options.contractAddress
+      call.defaultValue = options.defaultValue
+      return call as Request<M>
+    },
+    defaultTo: (defaultValue: Awaited<ReturnType<Contract['calls'][M]>>) => {
+      call.defaultValue = defaultValue
+      return call as Request<M>
+    },
+    at: (address: Address) => {
+      call.address = address
+      return call as Request<M>
+    },
+  } as Request<M>
+
+  return call
 }
 
 type CallType = {
-  [K in Calls]: (
-    ...args: ExtractArgs<Contract['calls'][K]>
-  ) => ReturnType<typeof getRequest<K>>
+  [K in Calls]: (...args: ExtractArgs<Contract['calls'][K]>) => ReturnType<typeof getRequest<K>>
 }
 
 export const call: CallType = {
-		isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => getRequest('isGovernor', args),
-		isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) => getRequest('isValidLocalGovernor', args),
-		localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => getRequest('localGovernor', args),
-		getConfiguredAssets: (...args: ExtractArgs<Contract['calls']['getConfiguredAssets']>) => getRequest('getConfiguredAssets', args),
-		assets: (...args: ExtractArgs<Contract['calls']['assets']>) => getRequest('assets', args),
-		indexOfAsset: (...args: ExtractArgs<Contract['calls']['indexOfAsset']>) => getRequest('indexOfAsset', args),
-		numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) => getRequest('numAssets', args),
-		getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => getRequest('getPrice', args),
-		getPriceAndHasFeed: (...args: ExtractArgs<Contract['calls']['getPriceAndHasFeed']>) => getRequest('getPriceAndHasFeed', args),
-		getChainlinkData: (...args: ExtractArgs<Contract['calls']['getChainlinkData']>) => getRequest('getChainlinkData', args),
-		hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) => getRequest('hasPriceFeed', args),
-		isValidChainlinkFeed: (...args: ExtractArgs<Contract['calls']['isValidChainlinkFeed']>) => getRequest('isValidChainlinkFeed', args),
-		feedConfig: (...args: ExtractArgs<Contract['calls']['feedConfig']>) => getRequest('feedConfig', args),
-		oraclePartnerId: (...args: ExtractArgs<Contract['calls']['oraclePartnerId']>) => getRequest('oraclePartnerId', args),
-		ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => getRequest('ADDY_REGISTRY', args),
-		WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) => getRequest('WETH', args),
-		ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => getRequest('ETH', args),
-		BTC: (...args: ExtractArgs<Contract['calls']['BTC']>) => getRequest('BTC', args),
+  isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => getRequest('isGovernor', args),
+  isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) =>
+    getRequest('isValidLocalGovernor', args),
+  localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => getRequest('localGovernor', args),
+  getConfiguredAssets: (...args: ExtractArgs<Contract['calls']['getConfiguredAssets']>) =>
+    getRequest('getConfiguredAssets', args),
+  assets: (...args: ExtractArgs<Contract['calls']['assets']>) => getRequest('assets', args),
+  indexOfAsset: (...args: ExtractArgs<Contract['calls']['indexOfAsset']>) => getRequest('indexOfAsset', args),
+  numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) => getRequest('numAssets', args),
+  getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => getRequest('getPrice', args),
+  getPriceAndHasFeed: (...args: ExtractArgs<Contract['calls']['getPriceAndHasFeed']>) =>
+    getRequest('getPriceAndHasFeed', args),
+  getChainlinkData: (...args: ExtractArgs<Contract['calls']['getChainlinkData']>) =>
+    getRequest('getChainlinkData', args),
+  hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) => getRequest('hasPriceFeed', args),
+  isValidChainlinkFeed: (...args: ExtractArgs<Contract['calls']['isValidChainlinkFeed']>) =>
+    getRequest('isValidChainlinkFeed', args),
+  feedConfig: (...args: ExtractArgs<Contract['calls']['feedConfig']>) => getRequest('feedConfig', args),
+  oraclePartnerId: (...args: ExtractArgs<Contract['calls']['oraclePartnerId']>) => getRequest('oraclePartnerId', args),
+  ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => getRequest('ADDY_REGISTRY', args),
+  WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) => getRequest('WETH', args),
+  ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => getRequest('ETH', args),
+  BTC: (...args: ExtractArgs<Contract['calls']['BTC']>) => getRequest('BTC', args),
 }
-
 
 export type Mutations = keyof Contract['mutations']
 function getMutation<M extends Mutations>(functionName: M) {
@@ -786,7 +802,7 @@ function getMutation<M extends Mutations>(functionName: M) {
   }
 }
 
-export const mutation:  {
+export const mutation: {
   [K in Mutations]: {
     contractName: 'ChainlinkFeeds'
     deployAddress: Address | undefined
@@ -795,67 +811,99 @@ export const mutation:  {
     argsType: ExtractArgs<Contract['mutations'][K]> | undefined
   }
 } = {
-		setLocalGovernor: getMutation('setLocalGovernor'),
-		setChainlinkFeed: getMutation('setChainlinkFeed'),
-		disableChainlinkPriceFeed: getMutation('disableChainlinkPriceFeed'),
-		setOraclePartnerId: getMutation('setOraclePartnerId'),
+  setLocalGovernor: getMutation('setLocalGovernor'),
+  setChainlinkFeed: getMutation('setChainlinkFeed'),
+  disableChainlinkPriceFeed: getMutation('disableChainlinkPriceFeed'),
+  setOraclePartnerId: getMutation('setOraclePartnerId'),
 }
 
-
-
-
 export type SDK = {
-		isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => Promise<CallReturn<'isGovernor'>>
-		isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) => Promise<CallReturn<'isValidLocalGovernor'>>
-		localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => Promise<CallReturn<'localGovernor'>>
-		getConfiguredAssets: (...args: ExtractArgs<Contract['calls']['getConfiguredAssets']>) => Promise<CallReturn<'getConfiguredAssets'>>
-		assets: (...args: ExtractArgs<Contract['calls']['assets']>) => Promise<CallReturn<'assets'>>
-		indexOfAsset: (...args: ExtractArgs<Contract['calls']['indexOfAsset']>) => Promise<CallReturn<'indexOfAsset'>>
-		numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) => Promise<CallReturn<'numAssets'>>
-		getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => Promise<CallReturn<'getPrice'>>
-		getPriceAndHasFeed: (...args: ExtractArgs<Contract['calls']['getPriceAndHasFeed']>) => Promise<CallReturn<'getPriceAndHasFeed'>>
-		getChainlinkData: (...args: ExtractArgs<Contract['calls']['getChainlinkData']>) => Promise<CallReturn<'getChainlinkData'>>
-		hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) => Promise<CallReturn<'hasPriceFeed'>>
-		isValidChainlinkFeed: (...args: ExtractArgs<Contract['calls']['isValidChainlinkFeed']>) => Promise<CallReturn<'isValidChainlinkFeed'>>
-		feedConfig: (...args: ExtractArgs<Contract['calls']['feedConfig']>) => Promise<CallReturn<'feedConfig'>>
-		oraclePartnerId: (...args: ExtractArgs<Contract['calls']['oraclePartnerId']>) => Promise<CallReturn<'oraclePartnerId'>>
-		ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => Promise<CallReturn<'ADDY_REGISTRY'>>
-		WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) => Promise<CallReturn<'WETH'>>
-		ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => Promise<CallReturn<'ETH'>>
-		BTC: (...args: ExtractArgs<Contract['calls']['BTC']>) => Promise<CallReturn<'BTC'>>
-		setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) => Promise<Address>
-		setChainlinkFeed: (...args: ExtractArgs<Contract['mutations']['setChainlinkFeed']>) => Promise<Address>
-		disableChainlinkPriceFeed: (...args: ExtractArgs<Contract['mutations']['disableChainlinkPriceFeed']>) => Promise<Address>
-		setOraclePartnerId: (...args: ExtractArgs<Contract['mutations']['setOraclePartnerId']>) => Promise<Address>
+  isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => Promise<CallReturn<'isGovernor'>>
+  isValidLocalGovernor: (
+    ...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>
+  ) => Promise<CallReturn<'isValidLocalGovernor'>>
+  localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => Promise<CallReturn<'localGovernor'>>
+  getConfiguredAssets: (
+    ...args: ExtractArgs<Contract['calls']['getConfiguredAssets']>
+  ) => Promise<CallReturn<'getConfiguredAssets'>>
+  assets: (...args: ExtractArgs<Contract['calls']['assets']>) => Promise<CallReturn<'assets'>>
+  indexOfAsset: (...args: ExtractArgs<Contract['calls']['indexOfAsset']>) => Promise<CallReturn<'indexOfAsset'>>
+  numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) => Promise<CallReturn<'numAssets'>>
+  getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => Promise<CallReturn<'getPrice'>>
+  getPriceAndHasFeed: (
+    ...args: ExtractArgs<Contract['calls']['getPriceAndHasFeed']>
+  ) => Promise<CallReturn<'getPriceAndHasFeed'>>
+  getChainlinkData: (
+    ...args: ExtractArgs<Contract['calls']['getChainlinkData']>
+  ) => Promise<CallReturn<'getChainlinkData'>>
+  hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) => Promise<CallReturn<'hasPriceFeed'>>
+  isValidChainlinkFeed: (
+    ...args: ExtractArgs<Contract['calls']['isValidChainlinkFeed']>
+  ) => Promise<CallReturn<'isValidChainlinkFeed'>>
+  feedConfig: (...args: ExtractArgs<Contract['calls']['feedConfig']>) => Promise<CallReturn<'feedConfig'>>
+  oraclePartnerId: (
+    ...args: ExtractArgs<Contract['calls']['oraclePartnerId']>
+  ) => Promise<CallReturn<'oraclePartnerId'>>
+  ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => Promise<CallReturn<'ADDY_REGISTRY'>>
+  WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) => Promise<CallReturn<'WETH'>>
+  ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => Promise<CallReturn<'ETH'>>
+  BTC: (...args: ExtractArgs<Contract['calls']['BTC']>) => Promise<CallReturn<'BTC'>>
+  setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) => Promise<Address>
+  setChainlinkFeed: (...args: ExtractArgs<Contract['mutations']['setChainlinkFeed']>) => Promise<Address>
+  disableChainlinkPriceFeed: (
+    ...args: ExtractArgs<Contract['mutations']['disableChainlinkPriceFeed']>
+  ) => Promise<Address>
+  setOraclePartnerId: (...args: ExtractArgs<Contract['mutations']['setOraclePartnerId']>) => Promise<Address>
 }
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
     // Queries
-		isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => singleQuery(publicClient!, call.isGovernor(...args)) as Promise<CallReturn<'isGovernor'>>,
-		isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) => singleQuery(publicClient!, call.isValidLocalGovernor(...args)) as Promise<CallReturn<'isValidLocalGovernor'>>,
-		localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => singleQuery(publicClient!, call.localGovernor(...args)) as Promise<CallReturn<'localGovernor'>>,
-		getConfiguredAssets: (...args: ExtractArgs<Contract['calls']['getConfiguredAssets']>) => singleQuery(publicClient!, call.getConfiguredAssets(...args)) as Promise<CallReturn<'getConfiguredAssets'>>,
-		assets: (...args: ExtractArgs<Contract['calls']['assets']>) => singleQuery(publicClient!, call.assets(...args)) as Promise<CallReturn<'assets'>>,
-		indexOfAsset: (...args: ExtractArgs<Contract['calls']['indexOfAsset']>) => singleQuery(publicClient!, call.indexOfAsset(...args)) as Promise<CallReturn<'indexOfAsset'>>,
-		numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) => singleQuery(publicClient!, call.numAssets(...args)) as Promise<CallReturn<'numAssets'>>,
-		getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => singleQuery(publicClient!, call.getPrice(...args)) as Promise<CallReturn<'getPrice'>>,
-		getPriceAndHasFeed: (...args: ExtractArgs<Contract['calls']['getPriceAndHasFeed']>) => singleQuery(publicClient!, call.getPriceAndHasFeed(...args)) as Promise<CallReturn<'getPriceAndHasFeed'>>,
-		getChainlinkData: (...args: ExtractArgs<Contract['calls']['getChainlinkData']>) => singleQuery(publicClient!, call.getChainlinkData(...args)) as Promise<CallReturn<'getChainlinkData'>>,
-		hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) => singleQuery(publicClient!, call.hasPriceFeed(...args)) as Promise<CallReturn<'hasPriceFeed'>>,
-		isValidChainlinkFeed: (...args: ExtractArgs<Contract['calls']['isValidChainlinkFeed']>) => singleQuery(publicClient!, call.isValidChainlinkFeed(...args)) as Promise<CallReturn<'isValidChainlinkFeed'>>,
-		feedConfig: (...args: ExtractArgs<Contract['calls']['feedConfig']>) => singleQuery(publicClient!, call.feedConfig(...args)) as Promise<CallReturn<'feedConfig'>>,
-		oraclePartnerId: (...args: ExtractArgs<Contract['calls']['oraclePartnerId']>) => singleQuery(publicClient!, call.oraclePartnerId(...args)) as Promise<CallReturn<'oraclePartnerId'>>,
-		ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => singleQuery(publicClient!, call.ADDY_REGISTRY(...args)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
-		WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) => singleQuery(publicClient!, call.WETH(...args)) as Promise<CallReturn<'WETH'>>,
-		ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => singleQuery(publicClient!, call.ETH(...args)) as Promise<CallReturn<'ETH'>>,
-		BTC: (...args: ExtractArgs<Contract['calls']['BTC']>) => singleQuery(publicClient!, call.BTC(...args)) as Promise<CallReturn<'BTC'>>,
-    
+    isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) =>
+      singleQuery(publicClient!, call.isGovernor(...args)) as Promise<CallReturn<'isGovernor'>>,
+    isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) =>
+      singleQuery(publicClient!, call.isValidLocalGovernor(...args)) as Promise<CallReturn<'isValidLocalGovernor'>>,
+    localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) =>
+      singleQuery(publicClient!, call.localGovernor(...args)) as Promise<CallReturn<'localGovernor'>>,
+    getConfiguredAssets: (...args: ExtractArgs<Contract['calls']['getConfiguredAssets']>) =>
+      singleQuery(publicClient!, call.getConfiguredAssets(...args)) as Promise<CallReturn<'getConfiguredAssets'>>,
+    assets: (...args: ExtractArgs<Contract['calls']['assets']>) =>
+      singleQuery(publicClient!, call.assets(...args)) as Promise<CallReturn<'assets'>>,
+    indexOfAsset: (...args: ExtractArgs<Contract['calls']['indexOfAsset']>) =>
+      singleQuery(publicClient!, call.indexOfAsset(...args)) as Promise<CallReturn<'indexOfAsset'>>,
+    numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) =>
+      singleQuery(publicClient!, call.numAssets(...args)) as Promise<CallReturn<'numAssets'>>,
+    getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) =>
+      singleQuery(publicClient!, call.getPrice(...args)) as Promise<CallReturn<'getPrice'>>,
+    getPriceAndHasFeed: (...args: ExtractArgs<Contract['calls']['getPriceAndHasFeed']>) =>
+      singleQuery(publicClient!, call.getPriceAndHasFeed(...args)) as Promise<CallReturn<'getPriceAndHasFeed'>>,
+    getChainlinkData: (...args: ExtractArgs<Contract['calls']['getChainlinkData']>) =>
+      singleQuery(publicClient!, call.getChainlinkData(...args)) as Promise<CallReturn<'getChainlinkData'>>,
+    hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) =>
+      singleQuery(publicClient!, call.hasPriceFeed(...args)) as Promise<CallReturn<'hasPriceFeed'>>,
+    isValidChainlinkFeed: (...args: ExtractArgs<Contract['calls']['isValidChainlinkFeed']>) =>
+      singleQuery(publicClient!, call.isValidChainlinkFeed(...args)) as Promise<CallReturn<'isValidChainlinkFeed'>>,
+    feedConfig: (...args: ExtractArgs<Contract['calls']['feedConfig']>) =>
+      singleQuery(publicClient!, call.feedConfig(...args)) as Promise<CallReturn<'feedConfig'>>,
+    oraclePartnerId: (...args: ExtractArgs<Contract['calls']['oraclePartnerId']>) =>
+      singleQuery(publicClient!, call.oraclePartnerId(...args)) as Promise<CallReturn<'oraclePartnerId'>>,
+    ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) =>
+      singleQuery(publicClient!, call.ADDY_REGISTRY(...args)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
+    WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) =>
+      singleQuery(publicClient!, call.WETH(...args)) as Promise<CallReturn<'WETH'>>,
+    ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) =>
+      singleQuery(publicClient!, call.ETH(...args)) as Promise<CallReturn<'ETH'>>,
+    BTC: (...args: ExtractArgs<Contract['calls']['BTC']>) =>
+      singleQuery(publicClient!, call.BTC(...args)) as Promise<CallReturn<'BTC'>>,
+
     // Mutations
-		setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) => mutate(walletClient!, mutation.setLocalGovernor)(...args),
-		setChainlinkFeed: (...args: ExtractArgs<Contract['mutations']['setChainlinkFeed']>) => mutate(walletClient!, mutation.setChainlinkFeed)(...args),
-		disableChainlinkPriceFeed: (...args: ExtractArgs<Contract['mutations']['disableChainlinkPriceFeed']>) => mutate(walletClient!, mutation.disableChainlinkPriceFeed)(...args),
-		setOraclePartnerId: (...args: ExtractArgs<Contract['mutations']['setOraclePartnerId']>) => mutate(walletClient!, mutation.setOraclePartnerId)(...args),
+    setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) =>
+      mutate(walletClient!, mutation.setLocalGovernor)(...args),
+    setChainlinkFeed: (...args: ExtractArgs<Contract['mutations']['setChainlinkFeed']>) =>
+      mutate(walletClient!, mutation.setChainlinkFeed)(...args),
+    disableChainlinkPriceFeed: (...args: ExtractArgs<Contract['mutations']['disableChainlinkPriceFeed']>) =>
+      mutate(walletClient!, mutation.disableChainlinkPriceFeed)(...args),
+    setOraclePartnerId: (...args: ExtractArgs<Contract['mutations']['setOraclePartnerId']>) =>
+      mutate(walletClient!, mutation.setOraclePartnerId)(...args),
   }
 }
-

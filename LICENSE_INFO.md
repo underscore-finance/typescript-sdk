@@ -82,8 +82,9 @@ To verify which license applies to a specific file:
 ## Questions and Commercial Licensing
 
 For questions about the license or to inquire about commercial licensing options, please contact:
+
 - Email: team@hightop.com
 
 ## Disclaimer
 
-This document is provided for informational purposes only and does not constitute legal advice. You should consult with a lawyer to discuss your specific situation and licensing needs. 
+This document is provided for informational purposes only and does not constitute legal advice. You should consult with a lawyer to discuss your specific situation and licensing needs.

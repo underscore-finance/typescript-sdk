@@ -9,1796 +9,1795 @@ import { PublicClient, WalletClient } from 'viem'
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
 
-
 export const abi = [
-    {
-        "inputs": [],
-        "name": "aaveV3",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "aaveV3Id",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "compoundV3",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "compoundV3Id",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "euler",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "eulerId",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "fluid",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "fluidId",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "moonwell",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "moonwellId",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "morpho",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "morphoId",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "sky",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "skyId",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "uniswapV2",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "uniswapV2Id",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "uniswapV3",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "uniswapV3Id",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "aerodrome",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "aerodromeId",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "aerodromeSlipstream",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "aerodromeSlipstreamId",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "curve",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "curveId",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_assetAmount",
-                "type": "uint256"
-            },
-            {
-                "name": "_vaultToken",
-                "type": "address"
-            }
-        ],
-        "name": "getVaultTokenAmount",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_vaultToken",
-                "type": "address"
-            }
-        ],
-        "name": "getLegoFromVaultToken",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "address"
-            },
-            {
-                "name": "",
-                "type": "string"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_amount",
-                "type": "uint256"
-            }
-        ],
-        "name": "getUnderlyingData",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "asset",
-                        "type": "address"
-                    },
-                    {
-                        "name": "amount",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "usdValue",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "legoAddr",
-                        "type": "address"
-                    },
-                    {
-                        "name": "legoDesc",
-                        "type": "string"
-                    }
-                ],
-                "name": "",
-                "type": "tuple"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountIn",
-                "type": "uint256"
-            },
-            {
-                "name": "_slippage",
-                "type": "uint256"
-            }
-        ],
-        "name": "getRoutesAndSwapInstructionsAmountOut",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "minAmountOut",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "tokenPath",
-                        "type": "address[]"
-                    },
-                    {
-                        "name": "poolPath",
-                        "type": "address[]"
-                    }
-                ],
-                "name": "",
-                "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountIn",
-                "type": "uint256"
-            },
-            {
-                "name": "_slippage",
-                "type": "uint256"
-            },
-            {
-                "name": "_includeLegoIds",
-                "type": "uint256[]"
-            }
-        ],
-        "name": "getRoutesAndSwapInstructionsAmountOut",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "minAmountOut",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "tokenPath",
-                        "type": "address[]"
-                    },
-                    {
-                        "name": "poolPath",
-                        "type": "address[]"
-                    }
-                ],
-                "name": "",
-                "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountOut",
-                "type": "uint256"
-            },
-            {
-                "name": "_amountInAvailable",
-                "type": "uint256"
-            },
-            {
-                "name": "_slippage",
-                "type": "uint256"
-            }
-        ],
-        "name": "getRoutesAndSwapInstructionsAmountIn",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "minAmountOut",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "tokenPath",
-                        "type": "address[]"
-                    },
-                    {
-                        "name": "poolPath",
-                        "type": "address[]"
-                    }
-                ],
-                "name": "",
-                "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountOut",
-                "type": "uint256"
-            },
-            {
-                "name": "_amountInAvailable",
-                "type": "uint256"
-            },
-            {
-                "name": "_slippage",
-                "type": "uint256"
-            },
-            {
-                "name": "_includeLegoIds",
-                "type": "uint256[]"
-            }
-        ],
-        "name": "getRoutesAndSwapInstructionsAmountIn",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "minAmountOut",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "tokenPath",
-                        "type": "address[]"
-                    },
-                    {
-                        "name": "poolPath",
-                        "type": "address[]"
-                    }
-                ],
-                "name": "",
-                "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_slippage",
-                "type": "uint256"
-            },
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "pool",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenIn",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenOut",
-                        "type": "address"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountOut",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "_routes",
-                "type": "tuple[]"
-            }
-        ],
-        "name": "prepareSwapInstructionsAmountOut",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "minAmountOut",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "tokenPath",
-                        "type": "address[]"
-                    },
-                    {
-                        "name": "poolPath",
-                        "type": "address[]"
-                    }
-                ],
-                "name": "",
-                "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountIn",
-                "type": "uint256"
-            }
-        ],
-        "name": "getBestSwapRoutesAmountOut",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "pool",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenIn",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenOut",
-                        "type": "address"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountOut",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "",
-                "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountIn",
-                "type": "uint256"
-            },
-            {
-                "name": "_includeLegoIds",
-                "type": "uint256[]"
-            }
-        ],
-        "name": "getBestSwapRoutesAmountOut",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "pool",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenIn",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenOut",
-                        "type": "address"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountOut",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "",
-                "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountIn",
-                "type": "uint256"
-            }
-        ],
-        "name": "getBestSwapAmountOutWithRouterPool",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "pool",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenIn",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenOut",
-                        "type": "address"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountOut",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "",
-                "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountIn",
-                "type": "uint256"
-            },
-            {
-                "name": "_includeLegoIds",
-                "type": "uint256[]"
-            }
-        ],
-        "name": "getBestSwapAmountOutWithRouterPool",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "pool",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenIn",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenOut",
-                        "type": "address"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountOut",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "",
-                "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountIn",
-                "type": "uint256"
-            }
-        ],
-        "name": "getBestSwapAmountOutSinglePool",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "pool",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenIn",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenOut",
-                        "type": "address"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountOut",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "",
-                "type": "tuple"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountIn",
-                "type": "uint256"
-            },
-            {
-                "name": "_includeLegoIds",
-                "type": "uint256[]"
-            }
-        ],
-        "name": "getBestSwapAmountOutSinglePool",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "pool",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenIn",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenOut",
-                        "type": "address"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountOut",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "",
-                "type": "tuple"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountIn",
-                "type": "uint256"
-            }
-        ],
-        "name": "getSwapAmountOutViaRouterPool",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "pool",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenIn",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenOut",
-                        "type": "address"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountOut",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "",
-                "type": "tuple"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountIn",
-                "type": "uint256"
-            },
-            {
-                "name": "_includeLegoIds",
-                "type": "uint256[]"
-            }
-        ],
-        "name": "getSwapAmountOutViaRouterPool",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "pool",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenIn",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenOut",
-                        "type": "address"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountOut",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "",
-                "type": "tuple"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountOut",
-                "type": "uint256"
-            }
-        ],
-        "name": "getBestSwapRoutesAmountIn",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "pool",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenIn",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenOut",
-                        "type": "address"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountOut",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "",
-                "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountOut",
-                "type": "uint256"
-            },
-            {
-                "name": "_includeLegoIds",
-                "type": "uint256[]"
-            }
-        ],
-        "name": "getBestSwapRoutesAmountIn",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "pool",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenIn",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenOut",
-                        "type": "address"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountOut",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "",
-                "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountOut",
-                "type": "uint256"
-            }
-        ],
-        "name": "getBestSwapAmountInWithRouterPool",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "pool",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenIn",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenOut",
-                        "type": "address"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountOut",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "",
-                "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountOut",
-                "type": "uint256"
-            },
-            {
-                "name": "_includeLegoIds",
-                "type": "uint256[]"
-            }
-        ],
-        "name": "getBestSwapAmountInWithRouterPool",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "pool",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenIn",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenOut",
-                        "type": "address"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountOut",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "",
-                "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountOut",
-                "type": "uint256"
-            }
-        ],
-        "name": "getBestSwapAmountInSinglePool",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "pool",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenIn",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenOut",
-                        "type": "address"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountOut",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "",
-                "type": "tuple"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountOut",
-                "type": "uint256"
-            },
-            {
-                "name": "_includeLegoIds",
-                "type": "uint256[]"
-            }
-        ],
-        "name": "getBestSwapAmountInSinglePool",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "pool",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenIn",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenOut",
-                        "type": "address"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountOut",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "",
-                "type": "tuple"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountOut",
-                "type": "uint256"
-            }
-        ],
-        "name": "getSwapAmountInViaRouterPool",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "pool",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenIn",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenOut",
-                        "type": "address"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountOut",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "",
-                "type": "tuple"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountOut",
-                "type": "uint256"
-            },
-            {
-                "name": "_includeLegoIds",
-                "type": "uint256[]"
-            }
-        ],
-        "name": "getSwapAmountInViaRouterPool",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "pool",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenIn",
-                        "type": "address"
-                    },
-                    {
-                        "name": "tokenOut",
-                        "type": "address"
-                    },
-                    {
-                        "name": "amountIn",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "amountOut",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "",
-                "type": "tuple"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "ADDY_REGISTRY",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "ROUTER_TOKENA",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "ROUTER_TOKENB",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "AAVE_V3_ID",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "COMPOUND_V3_ID",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "EULER_ID",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "FLUID_ID",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "MOONWELL_ID",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "MORPHO_ID",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "SKY_ID",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "UNISWAP_V2_ID",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "UNISWAP_V3_ID",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "AERODROME_ID",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "AERODROME_SLIPSTREAM_ID",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "CURVE_ID",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_addyRegistry",
-                "type": "address"
-            },
-            {
-                "name": "_routerTokenA",
-                "type": "address"
-            },
-            {
-                "name": "_routerTokenB",
-                "type": "address"
-            },
-            {
-                "name": "_aaveV3Id",
-                "type": "uint256"
-            },
-            {
-                "name": "_compoundV3Id",
-                "type": "uint256"
-            },
-            {
-                "name": "_eulerId",
-                "type": "uint256"
-            },
-            {
-                "name": "_fluidId",
-                "type": "uint256"
-            },
-            {
-                "name": "_moonwellId",
-                "type": "uint256"
-            },
-            {
-                "name": "_morphoId",
-                "type": "uint256"
-            },
-            {
-                "name": "_skyId",
-                "type": "uint256"
-            },
-            {
-                "name": "_uniswapV2Id",
-                "type": "uint256"
-            },
-            {
-                "name": "_uniswapV3Id",
-                "type": "uint256"
-            },
-            {
-                "name": "_aerodromeId",
-                "type": "uint256"
-            },
-            {
-                "name": "_aerodromeSlipstreamId",
-                "type": "uint256"
-            },
-            {
-                "name": "_curveId",
-                "type": "uint256"
-            }
-        ],
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-    }
+  {
+    inputs: [],
+    name: 'aaveV3',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'aaveV3Id',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'compoundV3',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'compoundV3Id',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'euler',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'eulerId',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'fluid',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'fluidId',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'moonwell',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'moonwellId',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'morpho',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'morphoId',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'sky',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'skyId',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'uniswapV2',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'uniswapV2Id',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'uniswapV3',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'uniswapV3Id',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'aerodrome',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'aerodromeId',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'aerodromeSlipstream',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'aerodromeSlipstreamId',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'curve',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'curveId',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_assetAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    name: 'getVaultTokenAmount',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    name: 'getLegoFromVaultToken',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'getUnderlyingData',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'asset',
+            type: 'address',
+          },
+          {
+            name: 'amount',
+            type: 'uint256',
+          },
+          {
+            name: 'usdValue',
+            type: 'uint256',
+          },
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'legoAddr',
+            type: 'address',
+          },
+          {
+            name: 'legoDesc',
+            type: 'string',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+      {
+        name: '_slippage',
+        type: 'uint256',
+      },
+    ],
+    name: 'getRoutesAndSwapInstructionsAmountOut',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'minAmountOut',
+            type: 'uint256',
+          },
+          {
+            name: 'tokenPath',
+            type: 'address[]',
+          },
+          {
+            name: 'poolPath',
+            type: 'address[]',
+          },
+        ],
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+      {
+        name: '_slippage',
+        type: 'uint256',
+      },
+      {
+        name: '_includeLegoIds',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'getRoutesAndSwapInstructionsAmountOut',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'minAmountOut',
+            type: 'uint256',
+          },
+          {
+            name: 'tokenPath',
+            type: 'address[]',
+          },
+          {
+            name: 'poolPath',
+            type: 'address[]',
+          },
+        ],
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_amountInAvailable',
+        type: 'uint256',
+      },
+      {
+        name: '_slippage',
+        type: 'uint256',
+      },
+    ],
+    name: 'getRoutesAndSwapInstructionsAmountIn',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'minAmountOut',
+            type: 'uint256',
+          },
+          {
+            name: 'tokenPath',
+            type: 'address[]',
+          },
+          {
+            name: 'poolPath',
+            type: 'address[]',
+          },
+        ],
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_amountInAvailable',
+        type: 'uint256',
+      },
+      {
+        name: '_slippage',
+        type: 'uint256',
+      },
+      {
+        name: '_includeLegoIds',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'getRoutesAndSwapInstructionsAmountIn',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'minAmountOut',
+            type: 'uint256',
+          },
+          {
+            name: 'tokenPath',
+            type: 'address[]',
+          },
+          {
+            name: 'poolPath',
+            type: 'address[]',
+          },
+        ],
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_slippage',
+        type: 'uint256',
+      },
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'pool',
+            type: 'address',
+          },
+          {
+            name: 'tokenIn',
+            type: 'address',
+          },
+          {
+            name: 'tokenOut',
+            type: 'address',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'amountOut',
+            type: 'uint256',
+          },
+        ],
+        name: '_routes',
+        type: 'tuple[]',
+      },
+    ],
+    name: 'prepareSwapInstructionsAmountOut',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'minAmountOut',
+            type: 'uint256',
+          },
+          {
+            name: 'tokenPath',
+            type: 'address[]',
+          },
+          {
+            name: 'poolPath',
+            type: 'address[]',
+          },
+        ],
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+    ],
+    name: 'getBestSwapRoutesAmountOut',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'pool',
+            type: 'address',
+          },
+          {
+            name: 'tokenIn',
+            type: 'address',
+          },
+          {
+            name: 'tokenOut',
+            type: 'address',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'amountOut',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+      {
+        name: '_includeLegoIds',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'getBestSwapRoutesAmountOut',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'pool',
+            type: 'address',
+          },
+          {
+            name: 'tokenIn',
+            type: 'address',
+          },
+          {
+            name: 'tokenOut',
+            type: 'address',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'amountOut',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+    ],
+    name: 'getBestSwapAmountOutWithRouterPool',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'pool',
+            type: 'address',
+          },
+          {
+            name: 'tokenIn',
+            type: 'address',
+          },
+          {
+            name: 'tokenOut',
+            type: 'address',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'amountOut',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+      {
+        name: '_includeLegoIds',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'getBestSwapAmountOutWithRouterPool',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'pool',
+            type: 'address',
+          },
+          {
+            name: 'tokenIn',
+            type: 'address',
+          },
+          {
+            name: 'tokenOut',
+            type: 'address',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'amountOut',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+    ],
+    name: 'getBestSwapAmountOutSinglePool',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'pool',
+            type: 'address',
+          },
+          {
+            name: 'tokenIn',
+            type: 'address',
+          },
+          {
+            name: 'tokenOut',
+            type: 'address',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'amountOut',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+      {
+        name: '_includeLegoIds',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'getBestSwapAmountOutSinglePool',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'pool',
+            type: 'address',
+          },
+          {
+            name: 'tokenIn',
+            type: 'address',
+          },
+          {
+            name: 'tokenOut',
+            type: 'address',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'amountOut',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+    ],
+    name: 'getSwapAmountOutViaRouterPool',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'pool',
+            type: 'address',
+          },
+          {
+            name: 'tokenIn',
+            type: 'address',
+          },
+          {
+            name: 'tokenOut',
+            type: 'address',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'amountOut',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+      {
+        name: '_includeLegoIds',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'getSwapAmountOutViaRouterPool',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'pool',
+            type: 'address',
+          },
+          {
+            name: 'tokenIn',
+            type: 'address',
+          },
+          {
+            name: 'tokenOut',
+            type: 'address',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'amountOut',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountOut',
+        type: 'uint256',
+      },
+    ],
+    name: 'getBestSwapRoutesAmountIn',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'pool',
+            type: 'address',
+          },
+          {
+            name: 'tokenIn',
+            type: 'address',
+          },
+          {
+            name: 'tokenOut',
+            type: 'address',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'amountOut',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_includeLegoIds',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'getBestSwapRoutesAmountIn',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'pool',
+            type: 'address',
+          },
+          {
+            name: 'tokenIn',
+            type: 'address',
+          },
+          {
+            name: 'tokenOut',
+            type: 'address',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'amountOut',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountOut',
+        type: 'uint256',
+      },
+    ],
+    name: 'getBestSwapAmountInWithRouterPool',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'pool',
+            type: 'address',
+          },
+          {
+            name: 'tokenIn',
+            type: 'address',
+          },
+          {
+            name: 'tokenOut',
+            type: 'address',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'amountOut',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_includeLegoIds',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'getBestSwapAmountInWithRouterPool',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'pool',
+            type: 'address',
+          },
+          {
+            name: 'tokenIn',
+            type: 'address',
+          },
+          {
+            name: 'tokenOut',
+            type: 'address',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'amountOut',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountOut',
+        type: 'uint256',
+      },
+    ],
+    name: 'getBestSwapAmountInSinglePool',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'pool',
+            type: 'address',
+          },
+          {
+            name: 'tokenIn',
+            type: 'address',
+          },
+          {
+            name: 'tokenOut',
+            type: 'address',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'amountOut',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_includeLegoIds',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'getBestSwapAmountInSinglePool',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'pool',
+            type: 'address',
+          },
+          {
+            name: 'tokenIn',
+            type: 'address',
+          },
+          {
+            name: 'tokenOut',
+            type: 'address',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'amountOut',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountOut',
+        type: 'uint256',
+      },
+    ],
+    name: 'getSwapAmountInViaRouterPool',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'pool',
+            type: 'address',
+          },
+          {
+            name: 'tokenIn',
+            type: 'address',
+          },
+          {
+            name: 'tokenOut',
+            type: 'address',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'amountOut',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_includeLegoIds',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'getSwapAmountInViaRouterPool',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'pool',
+            type: 'address',
+          },
+          {
+            name: 'tokenIn',
+            type: 'address',
+          },
+          {
+            name: 'tokenOut',
+            type: 'address',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'amountOut',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'ADDY_REGISTRY',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'ROUTER_TOKENA',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'ROUTER_TOKENB',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'AAVE_V3_ID',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'COMPOUND_V3_ID',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'EULER_ID',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'FLUID_ID',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MOONWELL_ID',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MORPHO_ID',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'SKY_ID',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'UNISWAP_V2_ID',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'UNISWAP_V3_ID',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'AERODROME_ID',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'AERODROME_SLIPSTREAM_ID',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'CURVE_ID',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addyRegistry',
+        type: 'address',
+      },
+      {
+        name: '_routerTokenA',
+        type: 'address',
+      },
+      {
+        name: '_routerTokenB',
+        type: 'address',
+      },
+      {
+        name: '_aaveV3Id',
+        type: 'uint256',
+      },
+      {
+        name: '_compoundV3Id',
+        type: 'uint256',
+      },
+      {
+        name: '_eulerId',
+        type: 'uint256',
+      },
+      {
+        name: '_fluidId',
+        type: 'uint256',
+      },
+      {
+        name: '_moonwellId',
+        type: 'uint256',
+      },
+      {
+        name: '_morphoId',
+        type: 'uint256',
+      },
+      {
+        name: '_skyId',
+        type: 'uint256',
+      },
+      {
+        name: '_uniswapV2Id',
+        type: 'uint256',
+      },
+      {
+        name: '_uniswapV3Id',
+        type: 'uint256',
+      },
+      {
+        name: '_aerodromeId',
+        type: 'uint256',
+      },
+      {
+        name: '_aerodromeSlipstreamId',
+        type: 'uint256',
+      },
+      {
+        name: '_curveId',
+        type: 'uint256',
+      },
+    ],
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+  },
 ] as const
 
-export const deployAddress: Address | undefined = undefined
+export const deployAddress: Address | undefined = '0xd313d00cC5E2129799B90Ad538334BB19e17dfEd'
 
 export type Contract = {
   calls: {
@@ -1828,7 +1827,17 @@ export type Contract = {
     curveId: () => Promise<bigint>
     getVaultTokenAmount: (asset: `0x${string}`, assetAmount: bigint, vaultToken: `0x${string}`) => Promise<bigint>
     getLegoFromVaultToken: (vaultToken: `0x${string}`) => Promise<[bigint, `0x${string}`, string]>
-    getUnderlyingData: (asset: `0x${string}`, amount: bigint) => Promise<{ asset: `0x${string}`; amount: bigint; usdValue: bigint; legoId: bigint; legoAddr: `0x${string}`; legoDesc: string }>
+    getUnderlyingData: (
+      asset: `0x${string}`,
+      amount: bigint,
+    ) => Promise<{
+      asset: `0x${string}`
+      amount: bigint
+      usdValue: bigint
+      legoId: bigint
+      legoAddr: `0x${string}`
+      legoDesc: string
+    }>
     ADDY_REGISTRY: () => Promise<`0x${string}`>
     ROUTER_TOKENA: () => Promise<`0x${string}`>
     ROUTER_TOKENB: () => Promise<`0x${string}`>
@@ -1846,21 +1855,176 @@ export type Contract = {
     CURVE_ID: () => Promise<bigint>
   }
   mutations: {
-    getRoutesAndSwapInstructionsAmountOut: (tokenIn: `0x${string}`, tokenOut: `0x${string}`, amountIn: bigint, slippage: bigint, includeLegoIds?: bigint[]) => Promise<{ legoId: bigint; amountIn: bigint; minAmountOut: bigint; tokenPath: `0x${string}`[]; poolPath: `0x${string}`[] }[]>
-    getRoutesAndSwapInstructionsAmountIn: (tokenIn: `0x${string}`, tokenOut: `0x${string}`, amountOut: bigint, amountInAvailable: bigint, slippage: bigint, includeLegoIds?: bigint[]) => Promise<{ legoId: bigint; amountIn: bigint; minAmountOut: bigint; tokenPath: `0x${string}`[]; poolPath: `0x${string}`[] }[]>
-    prepareSwapInstructionsAmountOut: (slippage: bigint, routes: { legoId: bigint; pool: `0x${string}`; tokenIn: `0x${string}`; tokenOut: `0x${string}`; amountIn: bigint; amountOut: bigint }[]) => Promise<{ legoId: bigint; amountIn: bigint; minAmountOut: bigint; tokenPath: `0x${string}`[]; poolPath: `0x${string}`[] }[]>
-    getBestSwapRoutesAmountOut: (tokenIn: `0x${string}`, tokenOut: `0x${string}`, amountIn: bigint, includeLegoIds?: bigint[]) => Promise<{ legoId: bigint; pool: `0x${string}`; tokenIn: `0x${string}`; tokenOut: `0x${string}`; amountIn: bigint; amountOut: bigint }[]>
-    getBestSwapAmountOutWithRouterPool: (tokenIn: `0x${string}`, tokenOut: `0x${string}`, amountIn: bigint, includeLegoIds?: bigint[]) => Promise<[bigint, { legoId: bigint; pool: `0x${string}`; tokenIn: `0x${string}`; tokenOut: `0x${string}`; amountIn: bigint; amountOut: bigint }[]]>
-    getBestSwapAmountOutSinglePool: (tokenIn: `0x${string}`, tokenOut: `0x${string}`, amountIn: bigint, includeLegoIds?: bigint[]) => Promise<{ legoId: bigint; pool: `0x${string}`; tokenIn: `0x${string}`; tokenOut: `0x${string}`; amountIn: bigint; amountOut: bigint }>
-    getSwapAmountOutViaRouterPool: (tokenIn: `0x${string}`, tokenOut: `0x${string}`, amountIn: bigint, includeLegoIds?: bigint[]) => Promise<{ legoId: bigint; pool: `0x${string}`; tokenIn: `0x${string}`; tokenOut: `0x${string}`; amountIn: bigint; amountOut: bigint }>
-    getBestSwapRoutesAmountIn: (tokenIn: `0x${string}`, tokenOut: `0x${string}`, amountOut: bigint, includeLegoIds?: bigint[]) => Promise<{ legoId: bigint; pool: `0x${string}`; tokenIn: `0x${string}`; tokenOut: `0x${string}`; amountIn: bigint; amountOut: bigint }[]>
-    getBestSwapAmountInWithRouterPool: (tokenIn: `0x${string}`, tokenOut: `0x${string}`, amountOut: bigint, includeLegoIds?: bigint[]) => Promise<[bigint, { legoId: bigint; pool: `0x${string}`; tokenIn: `0x${string}`; tokenOut: `0x${string}`; amountIn: bigint; amountOut: bigint }[]]>
-    getBestSwapAmountInSinglePool: (tokenIn: `0x${string}`, tokenOut: `0x${string}`, amountOut: bigint, includeLegoIds?: bigint[]) => Promise<{ legoId: bigint; pool: `0x${string}`; tokenIn: `0x${string}`; tokenOut: `0x${string}`; amountIn: bigint; amountOut: bigint }>
-    getSwapAmountInViaRouterPool: (tokenIn: `0x${string}`, tokenOut: `0x${string}`, amountOut: bigint, includeLegoIds?: bigint[]) => Promise<{ legoId: bigint; pool: `0x${string}`; tokenIn: `0x${string}`; tokenOut: `0x${string}`; amountIn: bigint; amountOut: bigint }>
+    getRoutesAndSwapInstructionsAmountOut: (
+      tokenIn: `0x${string}`,
+      tokenOut: `0x${string}`,
+      amountIn: bigint,
+      slippage: bigint,
+      includeLegoIds?: bigint[],
+    ) => Promise<
+      {
+        legoId: bigint
+        amountIn: bigint
+        minAmountOut: bigint
+        tokenPath: `0x${string}`[]
+        poolPath: `0x${string}`[]
+      }[]
+    >
+    getRoutesAndSwapInstructionsAmountIn: (
+      tokenIn: `0x${string}`,
+      tokenOut: `0x${string}`,
+      amountOut: bigint,
+      amountInAvailable: bigint,
+      slippage: bigint,
+      includeLegoIds?: bigint[],
+    ) => Promise<
+      {
+        legoId: bigint
+        amountIn: bigint
+        minAmountOut: bigint
+        tokenPath: `0x${string}`[]
+        poolPath: `0x${string}`[]
+      }[]
+    >
+    prepareSwapInstructionsAmountOut: (
+      slippage: bigint,
+      routes: {
+        legoId: bigint
+        pool: `0x${string}`
+        tokenIn: `0x${string}`
+        tokenOut: `0x${string}`
+        amountIn: bigint
+        amountOut: bigint
+      }[],
+    ) => Promise<
+      {
+        legoId: bigint
+        amountIn: bigint
+        minAmountOut: bigint
+        tokenPath: `0x${string}`[]
+        poolPath: `0x${string}`[]
+      }[]
+    >
+    getBestSwapRoutesAmountOut: (
+      tokenIn: `0x${string}`,
+      tokenOut: `0x${string}`,
+      amountIn: bigint,
+      includeLegoIds?: bigint[],
+    ) => Promise<
+      {
+        legoId: bigint
+        pool: `0x${string}`
+        tokenIn: `0x${string}`
+        tokenOut: `0x${string}`
+        amountIn: bigint
+        amountOut: bigint
+      }[]
+    >
+    getBestSwapAmountOutWithRouterPool: (
+      tokenIn: `0x${string}`,
+      tokenOut: `0x${string}`,
+      amountIn: bigint,
+      includeLegoIds?: bigint[],
+    ) => Promise<
+      [
+        bigint,
+        {
+          legoId: bigint
+          pool: `0x${string}`
+          tokenIn: `0x${string}`
+          tokenOut: `0x${string}`
+          amountIn: bigint
+          amountOut: bigint
+        }[],
+      ]
+    >
+    getBestSwapAmountOutSinglePool: (
+      tokenIn: `0x${string}`,
+      tokenOut: `0x${string}`,
+      amountIn: bigint,
+      includeLegoIds?: bigint[],
+    ) => Promise<{
+      legoId: bigint
+      pool: `0x${string}`
+      tokenIn: `0x${string}`
+      tokenOut: `0x${string}`
+      amountIn: bigint
+      amountOut: bigint
+    }>
+    getSwapAmountOutViaRouterPool: (
+      tokenIn: `0x${string}`,
+      tokenOut: `0x${string}`,
+      amountIn: bigint,
+      includeLegoIds?: bigint[],
+    ) => Promise<{
+      legoId: bigint
+      pool: `0x${string}`
+      tokenIn: `0x${string}`
+      tokenOut: `0x${string}`
+      amountIn: bigint
+      amountOut: bigint
+    }>
+    getBestSwapRoutesAmountIn: (
+      tokenIn: `0x${string}`,
+      tokenOut: `0x${string}`,
+      amountOut: bigint,
+      includeLegoIds?: bigint[],
+    ) => Promise<
+      {
+        legoId: bigint
+        pool: `0x${string}`
+        tokenIn: `0x${string}`
+        tokenOut: `0x${string}`
+        amountIn: bigint
+        amountOut: bigint
+      }[]
+    >
+    getBestSwapAmountInWithRouterPool: (
+      tokenIn: `0x${string}`,
+      tokenOut: `0x${string}`,
+      amountOut: bigint,
+      includeLegoIds?: bigint[],
+    ) => Promise<
+      [
+        bigint,
+        {
+          legoId: bigint
+          pool: `0x${string}`
+          tokenIn: `0x${string}`
+          tokenOut: `0x${string}`
+          amountIn: bigint
+          amountOut: bigint
+        }[],
+      ]
+    >
+    getBestSwapAmountInSinglePool: (
+      tokenIn: `0x${string}`,
+      tokenOut: `0x${string}`,
+      amountOut: bigint,
+      includeLegoIds?: bigint[],
+    ) => Promise<{
+      legoId: bigint
+      pool: `0x${string}`
+      tokenIn: `0x${string}`
+      tokenOut: `0x${string}`
+      amountIn: bigint
+      amountOut: bigint
+    }>
+    getSwapAmountInViaRouterPool: (
+      tokenIn: `0x${string}`,
+      tokenOut: `0x${string}`,
+      amountOut: bigint,
+      includeLegoIds?: bigint[],
+    ) => Promise<{
+      legoId: bigint
+      pool: `0x${string}`
+      tokenIn: `0x${string}`
+      tokenOut: `0x${string}`
+      amountIn: bigint
+      amountOut: bigint
+    }>
   }
-  events: {
-    
-  }
+  events: {}
 }
 
 export type Calls = keyof Contract['calls']
@@ -1872,10 +2036,7 @@ export type Request<M extends Calls> = {
   deployAddress: Address | undefined
   defaultValue: Awaited<ReturnType<Contract['calls'][M]>> | undefined
   getAbi: () => typeof abi
-  with: (options: {
-    contractAddress?: Address
-    defaultValue?: Awaited<ReturnType<Contract['calls'][M]>>
-  }) => Request<M>
+  with: (options: { contractAddress?: Address; defaultValue?: Awaited<ReturnType<Contract['calls'][M]>> }) => Request<M>
   defaultTo: (defaultValue: Awaited<ReturnType<Contract['calls'][M]>>) => Request<M>
   at: (address: Address) => Request<M>
 }
@@ -1885,96 +2046,96 @@ function getRequest<M extends Calls>(
   method: M,
   args: ExtractArgs<Contract['calls'][M]>,
   contractAddressOrOptions?:
-  | Address
-  | {
-    contractAddress?: Address
-    defaultValue?: Awaited<ReturnType<Contract['calls'][M]>>
-    },
-  ): Request<M> {
-    const address =
-      typeof contractAddressOrOptions === 'string' ? contractAddressOrOptions : contractAddressOrOptions?.contractAddress
-    const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
-
-    const call = {
-      contractName: 'LegoHelper' as const,
-      method,
-      args,
-      address,
-      deployAddress,
-      defaultValue,
-      getAbi: () => abi,
-      with: (options: {
+    | Address
+    | {
         contractAddress?: Address
         defaultValue?: Awaited<ReturnType<Contract['calls'][M]>>
-      }) => {
-          call.address = options.contractAddress
-          call.defaultValue = options.defaultValue
-          return call as Request<M>
       },
-      defaultTo: (defaultValue: Awaited<ReturnType<Contract['calls'][M]>>) => {
-        call.defaultValue = defaultValue
-        return call as Request<M>
-      },
-      at: (address: Address) => {
-        call.address = address
-        return call as Request<M>
-      },
-    } as Request<M>
+): Request<M> {
+  const address =
+    typeof contractAddressOrOptions === 'string' ? contractAddressOrOptions : contractAddressOrOptions?.contractAddress
+  const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
 
-    return call
+  const call = {
+    contractName: 'LegoHelper' as const,
+    method,
+    args,
+    address,
+    deployAddress,
+    defaultValue,
+    getAbi: () => abi,
+    with: (options: { contractAddress?: Address; defaultValue?: Awaited<ReturnType<Contract['calls'][M]>> }) => {
+      call.address = options.contractAddress
+      call.defaultValue = options.defaultValue
+      return call as Request<M>
+    },
+    defaultTo: (defaultValue: Awaited<ReturnType<Contract['calls'][M]>>) => {
+      call.defaultValue = defaultValue
+      return call as Request<M>
+    },
+    at: (address: Address) => {
+      call.address = address
+      return call as Request<M>
+    },
+  } as Request<M>
+
+  return call
 }
 
 type CallType = {
-  [K in Calls]: (
-    ...args: ExtractArgs<Contract['calls'][K]>
-  ) => ReturnType<typeof getRequest<K>>
+  [K in Calls]: (...args: ExtractArgs<Contract['calls'][K]>) => ReturnType<typeof getRequest<K>>
 }
 
 export const call: CallType = {
-		aaveV3: (...args: ExtractArgs<Contract['calls']['aaveV3']>) => getRequest('aaveV3', args),
-		aaveV3Id: (...args: ExtractArgs<Contract['calls']['aaveV3Id']>) => getRequest('aaveV3Id', args),
-		compoundV3: (...args: ExtractArgs<Contract['calls']['compoundV3']>) => getRequest('compoundV3', args),
-		compoundV3Id: (...args: ExtractArgs<Contract['calls']['compoundV3Id']>) => getRequest('compoundV3Id', args),
-		euler: (...args: ExtractArgs<Contract['calls']['euler']>) => getRequest('euler', args),
-		eulerId: (...args: ExtractArgs<Contract['calls']['eulerId']>) => getRequest('eulerId', args),
-		fluid: (...args: ExtractArgs<Contract['calls']['fluid']>) => getRequest('fluid', args),
-		fluidId: (...args: ExtractArgs<Contract['calls']['fluidId']>) => getRequest('fluidId', args),
-		moonwell: (...args: ExtractArgs<Contract['calls']['moonwell']>) => getRequest('moonwell', args),
-		moonwellId: (...args: ExtractArgs<Contract['calls']['moonwellId']>) => getRequest('moonwellId', args),
-		morpho: (...args: ExtractArgs<Contract['calls']['morpho']>) => getRequest('morpho', args),
-		morphoId: (...args: ExtractArgs<Contract['calls']['morphoId']>) => getRequest('morphoId', args),
-		sky: (...args: ExtractArgs<Contract['calls']['sky']>) => getRequest('sky', args),
-		skyId: (...args: ExtractArgs<Contract['calls']['skyId']>) => getRequest('skyId', args),
-		uniswapV2: (...args: ExtractArgs<Contract['calls']['uniswapV2']>) => getRequest('uniswapV2', args),
-		uniswapV2Id: (...args: ExtractArgs<Contract['calls']['uniswapV2Id']>) => getRequest('uniswapV2Id', args),
-		uniswapV3: (...args: ExtractArgs<Contract['calls']['uniswapV3']>) => getRequest('uniswapV3', args),
-		uniswapV3Id: (...args: ExtractArgs<Contract['calls']['uniswapV3Id']>) => getRequest('uniswapV3Id', args),
-		aerodrome: (...args: ExtractArgs<Contract['calls']['aerodrome']>) => getRequest('aerodrome', args),
-		aerodromeId: (...args: ExtractArgs<Contract['calls']['aerodromeId']>) => getRequest('aerodromeId', args),
-		aerodromeSlipstream: (...args: ExtractArgs<Contract['calls']['aerodromeSlipstream']>) => getRequest('aerodromeSlipstream', args),
-		aerodromeSlipstreamId: (...args: ExtractArgs<Contract['calls']['aerodromeSlipstreamId']>) => getRequest('aerodromeSlipstreamId', args),
-		curve: (...args: ExtractArgs<Contract['calls']['curve']>) => getRequest('curve', args),
-		curveId: (...args: ExtractArgs<Contract['calls']['curveId']>) => getRequest('curveId', args),
-		getVaultTokenAmount: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>) => getRequest('getVaultTokenAmount', args),
-		getLegoFromVaultToken: (...args: ExtractArgs<Contract['calls']['getLegoFromVaultToken']>) => getRequest('getLegoFromVaultToken', args),
-		getUnderlyingData: (...args: ExtractArgs<Contract['calls']['getUnderlyingData']>) => getRequest('getUnderlyingData', args),
-		ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => getRequest('ADDY_REGISTRY', args),
-		ROUTER_TOKENA: (...args: ExtractArgs<Contract['calls']['ROUTER_TOKENA']>) => getRequest('ROUTER_TOKENA', args),
-		ROUTER_TOKENB: (...args: ExtractArgs<Contract['calls']['ROUTER_TOKENB']>) => getRequest('ROUTER_TOKENB', args),
-		AAVE_V3_ID: (...args: ExtractArgs<Contract['calls']['AAVE_V3_ID']>) => getRequest('AAVE_V3_ID', args),
-		COMPOUND_V3_ID: (...args: ExtractArgs<Contract['calls']['COMPOUND_V3_ID']>) => getRequest('COMPOUND_V3_ID', args),
-		EULER_ID: (...args: ExtractArgs<Contract['calls']['EULER_ID']>) => getRequest('EULER_ID', args),
-		FLUID_ID: (...args: ExtractArgs<Contract['calls']['FLUID_ID']>) => getRequest('FLUID_ID', args),
-		MOONWELL_ID: (...args: ExtractArgs<Contract['calls']['MOONWELL_ID']>) => getRequest('MOONWELL_ID', args),
-		MORPHO_ID: (...args: ExtractArgs<Contract['calls']['MORPHO_ID']>) => getRequest('MORPHO_ID', args),
-		SKY_ID: (...args: ExtractArgs<Contract['calls']['SKY_ID']>) => getRequest('SKY_ID', args),
-		UNISWAP_V2_ID: (...args: ExtractArgs<Contract['calls']['UNISWAP_V2_ID']>) => getRequest('UNISWAP_V2_ID', args),
-		UNISWAP_V3_ID: (...args: ExtractArgs<Contract['calls']['UNISWAP_V3_ID']>) => getRequest('UNISWAP_V3_ID', args),
-		AERODROME_ID: (...args: ExtractArgs<Contract['calls']['AERODROME_ID']>) => getRequest('AERODROME_ID', args),
-		AERODROME_SLIPSTREAM_ID: (...args: ExtractArgs<Contract['calls']['AERODROME_SLIPSTREAM_ID']>) => getRequest('AERODROME_SLIPSTREAM_ID', args),
-		CURVE_ID: (...args: ExtractArgs<Contract['calls']['CURVE_ID']>) => getRequest('CURVE_ID', args),
+  aaveV3: (...args: ExtractArgs<Contract['calls']['aaveV3']>) => getRequest('aaveV3', args),
+  aaveV3Id: (...args: ExtractArgs<Contract['calls']['aaveV3Id']>) => getRequest('aaveV3Id', args),
+  compoundV3: (...args: ExtractArgs<Contract['calls']['compoundV3']>) => getRequest('compoundV3', args),
+  compoundV3Id: (...args: ExtractArgs<Contract['calls']['compoundV3Id']>) => getRequest('compoundV3Id', args),
+  euler: (...args: ExtractArgs<Contract['calls']['euler']>) => getRequest('euler', args),
+  eulerId: (...args: ExtractArgs<Contract['calls']['eulerId']>) => getRequest('eulerId', args),
+  fluid: (...args: ExtractArgs<Contract['calls']['fluid']>) => getRequest('fluid', args),
+  fluidId: (...args: ExtractArgs<Contract['calls']['fluidId']>) => getRequest('fluidId', args),
+  moonwell: (...args: ExtractArgs<Contract['calls']['moonwell']>) => getRequest('moonwell', args),
+  moonwellId: (...args: ExtractArgs<Contract['calls']['moonwellId']>) => getRequest('moonwellId', args),
+  morpho: (...args: ExtractArgs<Contract['calls']['morpho']>) => getRequest('morpho', args),
+  morphoId: (...args: ExtractArgs<Contract['calls']['morphoId']>) => getRequest('morphoId', args),
+  sky: (...args: ExtractArgs<Contract['calls']['sky']>) => getRequest('sky', args),
+  skyId: (...args: ExtractArgs<Contract['calls']['skyId']>) => getRequest('skyId', args),
+  uniswapV2: (...args: ExtractArgs<Contract['calls']['uniswapV2']>) => getRequest('uniswapV2', args),
+  uniswapV2Id: (...args: ExtractArgs<Contract['calls']['uniswapV2Id']>) => getRequest('uniswapV2Id', args),
+  uniswapV3: (...args: ExtractArgs<Contract['calls']['uniswapV3']>) => getRequest('uniswapV3', args),
+  uniswapV3Id: (...args: ExtractArgs<Contract['calls']['uniswapV3Id']>) => getRequest('uniswapV3Id', args),
+  aerodrome: (...args: ExtractArgs<Contract['calls']['aerodrome']>) => getRequest('aerodrome', args),
+  aerodromeId: (...args: ExtractArgs<Contract['calls']['aerodromeId']>) => getRequest('aerodromeId', args),
+  aerodromeSlipstream: (...args: ExtractArgs<Contract['calls']['aerodromeSlipstream']>) =>
+    getRequest('aerodromeSlipstream', args),
+  aerodromeSlipstreamId: (...args: ExtractArgs<Contract['calls']['aerodromeSlipstreamId']>) =>
+    getRequest('aerodromeSlipstreamId', args),
+  curve: (...args: ExtractArgs<Contract['calls']['curve']>) => getRequest('curve', args),
+  curveId: (...args: ExtractArgs<Contract['calls']['curveId']>) => getRequest('curveId', args),
+  getVaultTokenAmount: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>) =>
+    getRequest('getVaultTokenAmount', args),
+  getLegoFromVaultToken: (...args: ExtractArgs<Contract['calls']['getLegoFromVaultToken']>) =>
+    getRequest('getLegoFromVaultToken', args),
+  getUnderlyingData: (...args: ExtractArgs<Contract['calls']['getUnderlyingData']>) =>
+    getRequest('getUnderlyingData', args),
+  ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => getRequest('ADDY_REGISTRY', args),
+  ROUTER_TOKENA: (...args: ExtractArgs<Contract['calls']['ROUTER_TOKENA']>) => getRequest('ROUTER_TOKENA', args),
+  ROUTER_TOKENB: (...args: ExtractArgs<Contract['calls']['ROUTER_TOKENB']>) => getRequest('ROUTER_TOKENB', args),
+  AAVE_V3_ID: (...args: ExtractArgs<Contract['calls']['AAVE_V3_ID']>) => getRequest('AAVE_V3_ID', args),
+  COMPOUND_V3_ID: (...args: ExtractArgs<Contract['calls']['COMPOUND_V3_ID']>) => getRequest('COMPOUND_V3_ID', args),
+  EULER_ID: (...args: ExtractArgs<Contract['calls']['EULER_ID']>) => getRequest('EULER_ID', args),
+  FLUID_ID: (...args: ExtractArgs<Contract['calls']['FLUID_ID']>) => getRequest('FLUID_ID', args),
+  MOONWELL_ID: (...args: ExtractArgs<Contract['calls']['MOONWELL_ID']>) => getRequest('MOONWELL_ID', args),
+  MORPHO_ID: (...args: ExtractArgs<Contract['calls']['MORPHO_ID']>) => getRequest('MORPHO_ID', args),
+  SKY_ID: (...args: ExtractArgs<Contract['calls']['SKY_ID']>) => getRequest('SKY_ID', args),
+  UNISWAP_V2_ID: (...args: ExtractArgs<Contract['calls']['UNISWAP_V2_ID']>) => getRequest('UNISWAP_V2_ID', args),
+  UNISWAP_V3_ID: (...args: ExtractArgs<Contract['calls']['UNISWAP_V3_ID']>) => getRequest('UNISWAP_V3_ID', args),
+  AERODROME_ID: (...args: ExtractArgs<Contract['calls']['AERODROME_ID']>) => getRequest('AERODROME_ID', args),
+  AERODROME_SLIPSTREAM_ID: (...args: ExtractArgs<Contract['calls']['AERODROME_SLIPSTREAM_ID']>) =>
+    getRequest('AERODROME_SLIPSTREAM_ID', args),
+  CURVE_ID: (...args: ExtractArgs<Contract['calls']['CURVE_ID']>) => getRequest('CURVE_ID', args),
 }
-
 
 export type Mutations = keyof Contract['mutations']
 function getMutation<M extends Mutations>(functionName: M) {
@@ -1987,7 +2148,7 @@ function getMutation<M extends Mutations>(functionName: M) {
   }
 }
 
-export const mutation:  {
+export const mutation: {
   [K in Mutations]: {
     contractName: 'LegoHelper'
     deployAddress: Address | undefined
@@ -1996,136 +2157,226 @@ export const mutation:  {
     argsType: ExtractArgs<Contract['mutations'][K]> | undefined
   }
 } = {
-		getRoutesAndSwapInstructionsAmountOut: getMutation('getRoutesAndSwapInstructionsAmountOut'),
-		getRoutesAndSwapInstructionsAmountIn: getMutation('getRoutesAndSwapInstructionsAmountIn'),
-		prepareSwapInstructionsAmountOut: getMutation('prepareSwapInstructionsAmountOut'),
-		getBestSwapRoutesAmountOut: getMutation('getBestSwapRoutesAmountOut'),
-		getBestSwapAmountOutWithRouterPool: getMutation('getBestSwapAmountOutWithRouterPool'),
-		getBestSwapAmountOutSinglePool: getMutation('getBestSwapAmountOutSinglePool'),
-		getSwapAmountOutViaRouterPool: getMutation('getSwapAmountOutViaRouterPool'),
-		getBestSwapRoutesAmountIn: getMutation('getBestSwapRoutesAmountIn'),
-		getBestSwapAmountInWithRouterPool: getMutation('getBestSwapAmountInWithRouterPool'),
-		getBestSwapAmountInSinglePool: getMutation('getBestSwapAmountInSinglePool'),
-		getSwapAmountInViaRouterPool: getMutation('getSwapAmountInViaRouterPool'),
+  getRoutesAndSwapInstructionsAmountOut: getMutation('getRoutesAndSwapInstructionsAmountOut'),
+  getRoutesAndSwapInstructionsAmountIn: getMutation('getRoutesAndSwapInstructionsAmountIn'),
+  prepareSwapInstructionsAmountOut: getMutation('prepareSwapInstructionsAmountOut'),
+  getBestSwapRoutesAmountOut: getMutation('getBestSwapRoutesAmountOut'),
+  getBestSwapAmountOutWithRouterPool: getMutation('getBestSwapAmountOutWithRouterPool'),
+  getBestSwapAmountOutSinglePool: getMutation('getBestSwapAmountOutSinglePool'),
+  getSwapAmountOutViaRouterPool: getMutation('getSwapAmountOutViaRouterPool'),
+  getBestSwapRoutesAmountIn: getMutation('getBestSwapRoutesAmountIn'),
+  getBestSwapAmountInWithRouterPool: getMutation('getBestSwapAmountInWithRouterPool'),
+  getBestSwapAmountInSinglePool: getMutation('getBestSwapAmountInSinglePool'),
+  getSwapAmountInViaRouterPool: getMutation('getSwapAmountInViaRouterPool'),
 }
 
-
-
-
 export type SDK = {
-		aaveV3: (...args: ExtractArgs<Contract['calls']['aaveV3']>) => Promise<CallReturn<'aaveV3'>>
-		aaveV3Id: (...args: ExtractArgs<Contract['calls']['aaveV3Id']>) => Promise<CallReturn<'aaveV3Id'>>
-		compoundV3: (...args: ExtractArgs<Contract['calls']['compoundV3']>) => Promise<CallReturn<'compoundV3'>>
-		compoundV3Id: (...args: ExtractArgs<Contract['calls']['compoundV3Id']>) => Promise<CallReturn<'compoundV3Id'>>
-		euler: (...args: ExtractArgs<Contract['calls']['euler']>) => Promise<CallReturn<'euler'>>
-		eulerId: (...args: ExtractArgs<Contract['calls']['eulerId']>) => Promise<CallReturn<'eulerId'>>
-		fluid: (...args: ExtractArgs<Contract['calls']['fluid']>) => Promise<CallReturn<'fluid'>>
-		fluidId: (...args: ExtractArgs<Contract['calls']['fluidId']>) => Promise<CallReturn<'fluidId'>>
-		moonwell: (...args: ExtractArgs<Contract['calls']['moonwell']>) => Promise<CallReturn<'moonwell'>>
-		moonwellId: (...args: ExtractArgs<Contract['calls']['moonwellId']>) => Promise<CallReturn<'moonwellId'>>
-		morpho: (...args: ExtractArgs<Contract['calls']['morpho']>) => Promise<CallReturn<'morpho'>>
-		morphoId: (...args: ExtractArgs<Contract['calls']['morphoId']>) => Promise<CallReturn<'morphoId'>>
-		sky: (...args: ExtractArgs<Contract['calls']['sky']>) => Promise<CallReturn<'sky'>>
-		skyId: (...args: ExtractArgs<Contract['calls']['skyId']>) => Promise<CallReturn<'skyId'>>
-		uniswapV2: (...args: ExtractArgs<Contract['calls']['uniswapV2']>) => Promise<CallReturn<'uniswapV2'>>
-		uniswapV2Id: (...args: ExtractArgs<Contract['calls']['uniswapV2Id']>) => Promise<CallReturn<'uniswapV2Id'>>
-		uniswapV3: (...args: ExtractArgs<Contract['calls']['uniswapV3']>) => Promise<CallReturn<'uniswapV3'>>
-		uniswapV3Id: (...args: ExtractArgs<Contract['calls']['uniswapV3Id']>) => Promise<CallReturn<'uniswapV3Id'>>
-		aerodrome: (...args: ExtractArgs<Contract['calls']['aerodrome']>) => Promise<CallReturn<'aerodrome'>>
-		aerodromeId: (...args: ExtractArgs<Contract['calls']['aerodromeId']>) => Promise<CallReturn<'aerodromeId'>>
-		aerodromeSlipstream: (...args: ExtractArgs<Contract['calls']['aerodromeSlipstream']>) => Promise<CallReturn<'aerodromeSlipstream'>>
-		aerodromeSlipstreamId: (...args: ExtractArgs<Contract['calls']['aerodromeSlipstreamId']>) => Promise<CallReturn<'aerodromeSlipstreamId'>>
-		curve: (...args: ExtractArgs<Contract['calls']['curve']>) => Promise<CallReturn<'curve'>>
-		curveId: (...args: ExtractArgs<Contract['calls']['curveId']>) => Promise<CallReturn<'curveId'>>
-		getVaultTokenAmount: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>) => Promise<CallReturn<'getVaultTokenAmount'>>
-		getLegoFromVaultToken: (...args: ExtractArgs<Contract['calls']['getLegoFromVaultToken']>) => Promise<CallReturn<'getLegoFromVaultToken'>>
-		getUnderlyingData: (...args: ExtractArgs<Contract['calls']['getUnderlyingData']>) => Promise<CallReturn<'getUnderlyingData'>>
-		ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => Promise<CallReturn<'ADDY_REGISTRY'>>
-		ROUTER_TOKENA: (...args: ExtractArgs<Contract['calls']['ROUTER_TOKENA']>) => Promise<CallReturn<'ROUTER_TOKENA'>>
-		ROUTER_TOKENB: (...args: ExtractArgs<Contract['calls']['ROUTER_TOKENB']>) => Promise<CallReturn<'ROUTER_TOKENB'>>
-		AAVE_V3_ID: (...args: ExtractArgs<Contract['calls']['AAVE_V3_ID']>) => Promise<CallReturn<'AAVE_V3_ID'>>
-		COMPOUND_V3_ID: (...args: ExtractArgs<Contract['calls']['COMPOUND_V3_ID']>) => Promise<CallReturn<'COMPOUND_V3_ID'>>
-		EULER_ID: (...args: ExtractArgs<Contract['calls']['EULER_ID']>) => Promise<CallReturn<'EULER_ID'>>
-		FLUID_ID: (...args: ExtractArgs<Contract['calls']['FLUID_ID']>) => Promise<CallReturn<'FLUID_ID'>>
-		MOONWELL_ID: (...args: ExtractArgs<Contract['calls']['MOONWELL_ID']>) => Promise<CallReturn<'MOONWELL_ID'>>
-		MORPHO_ID: (...args: ExtractArgs<Contract['calls']['MORPHO_ID']>) => Promise<CallReturn<'MORPHO_ID'>>
-		SKY_ID: (...args: ExtractArgs<Contract['calls']['SKY_ID']>) => Promise<CallReturn<'SKY_ID'>>
-		UNISWAP_V2_ID: (...args: ExtractArgs<Contract['calls']['UNISWAP_V2_ID']>) => Promise<CallReturn<'UNISWAP_V2_ID'>>
-		UNISWAP_V3_ID: (...args: ExtractArgs<Contract['calls']['UNISWAP_V3_ID']>) => Promise<CallReturn<'UNISWAP_V3_ID'>>
-		AERODROME_ID: (...args: ExtractArgs<Contract['calls']['AERODROME_ID']>) => Promise<CallReturn<'AERODROME_ID'>>
-		AERODROME_SLIPSTREAM_ID: (...args: ExtractArgs<Contract['calls']['AERODROME_SLIPSTREAM_ID']>) => Promise<CallReturn<'AERODROME_SLIPSTREAM_ID'>>
-		CURVE_ID: (...args: ExtractArgs<Contract['calls']['CURVE_ID']>) => Promise<CallReturn<'CURVE_ID'>>
-		getRoutesAndSwapInstructionsAmountOut: (...args: ExtractArgs<Contract['mutations']['getRoutesAndSwapInstructionsAmountOut']>) => Promise<Address>
-		getRoutesAndSwapInstructionsAmountIn: (...args: ExtractArgs<Contract['mutations']['getRoutesAndSwapInstructionsAmountIn']>) => Promise<Address>
-		prepareSwapInstructionsAmountOut: (...args: ExtractArgs<Contract['mutations']['prepareSwapInstructionsAmountOut']>) => Promise<Address>
-		getBestSwapRoutesAmountOut: (...args: ExtractArgs<Contract['mutations']['getBestSwapRoutesAmountOut']>) => Promise<Address>
-		getBestSwapAmountOutWithRouterPool: (...args: ExtractArgs<Contract['mutations']['getBestSwapAmountOutWithRouterPool']>) => Promise<Address>
-		getBestSwapAmountOutSinglePool: (...args: ExtractArgs<Contract['mutations']['getBestSwapAmountOutSinglePool']>) => Promise<Address>
-		getSwapAmountOutViaRouterPool: (...args: ExtractArgs<Contract['mutations']['getSwapAmountOutViaRouterPool']>) => Promise<Address>
-		getBestSwapRoutesAmountIn: (...args: ExtractArgs<Contract['mutations']['getBestSwapRoutesAmountIn']>) => Promise<Address>
-		getBestSwapAmountInWithRouterPool: (...args: ExtractArgs<Contract['mutations']['getBestSwapAmountInWithRouterPool']>) => Promise<Address>
-		getBestSwapAmountInSinglePool: (...args: ExtractArgs<Contract['mutations']['getBestSwapAmountInSinglePool']>) => Promise<Address>
-		getSwapAmountInViaRouterPool: (...args: ExtractArgs<Contract['mutations']['getSwapAmountInViaRouterPool']>) => Promise<Address>
+  aaveV3: (...args: ExtractArgs<Contract['calls']['aaveV3']>) => Promise<CallReturn<'aaveV3'>>
+  aaveV3Id: (...args: ExtractArgs<Contract['calls']['aaveV3Id']>) => Promise<CallReturn<'aaveV3Id'>>
+  compoundV3: (...args: ExtractArgs<Contract['calls']['compoundV3']>) => Promise<CallReturn<'compoundV3'>>
+  compoundV3Id: (...args: ExtractArgs<Contract['calls']['compoundV3Id']>) => Promise<CallReturn<'compoundV3Id'>>
+  euler: (...args: ExtractArgs<Contract['calls']['euler']>) => Promise<CallReturn<'euler'>>
+  eulerId: (...args: ExtractArgs<Contract['calls']['eulerId']>) => Promise<CallReturn<'eulerId'>>
+  fluid: (...args: ExtractArgs<Contract['calls']['fluid']>) => Promise<CallReturn<'fluid'>>
+  fluidId: (...args: ExtractArgs<Contract['calls']['fluidId']>) => Promise<CallReturn<'fluidId'>>
+  moonwell: (...args: ExtractArgs<Contract['calls']['moonwell']>) => Promise<CallReturn<'moonwell'>>
+  moonwellId: (...args: ExtractArgs<Contract['calls']['moonwellId']>) => Promise<CallReturn<'moonwellId'>>
+  morpho: (...args: ExtractArgs<Contract['calls']['morpho']>) => Promise<CallReturn<'morpho'>>
+  morphoId: (...args: ExtractArgs<Contract['calls']['morphoId']>) => Promise<CallReturn<'morphoId'>>
+  sky: (...args: ExtractArgs<Contract['calls']['sky']>) => Promise<CallReturn<'sky'>>
+  skyId: (...args: ExtractArgs<Contract['calls']['skyId']>) => Promise<CallReturn<'skyId'>>
+  uniswapV2: (...args: ExtractArgs<Contract['calls']['uniswapV2']>) => Promise<CallReturn<'uniswapV2'>>
+  uniswapV2Id: (...args: ExtractArgs<Contract['calls']['uniswapV2Id']>) => Promise<CallReturn<'uniswapV2Id'>>
+  uniswapV3: (...args: ExtractArgs<Contract['calls']['uniswapV3']>) => Promise<CallReturn<'uniswapV3'>>
+  uniswapV3Id: (...args: ExtractArgs<Contract['calls']['uniswapV3Id']>) => Promise<CallReturn<'uniswapV3Id'>>
+  aerodrome: (...args: ExtractArgs<Contract['calls']['aerodrome']>) => Promise<CallReturn<'aerodrome'>>
+  aerodromeId: (...args: ExtractArgs<Contract['calls']['aerodromeId']>) => Promise<CallReturn<'aerodromeId'>>
+  aerodromeSlipstream: (
+    ...args: ExtractArgs<Contract['calls']['aerodromeSlipstream']>
+  ) => Promise<CallReturn<'aerodromeSlipstream'>>
+  aerodromeSlipstreamId: (
+    ...args: ExtractArgs<Contract['calls']['aerodromeSlipstreamId']>
+  ) => Promise<CallReturn<'aerodromeSlipstreamId'>>
+  curve: (...args: ExtractArgs<Contract['calls']['curve']>) => Promise<CallReturn<'curve'>>
+  curveId: (...args: ExtractArgs<Contract['calls']['curveId']>) => Promise<CallReturn<'curveId'>>
+  getVaultTokenAmount: (
+    ...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>
+  ) => Promise<CallReturn<'getVaultTokenAmount'>>
+  getLegoFromVaultToken: (
+    ...args: ExtractArgs<Contract['calls']['getLegoFromVaultToken']>
+  ) => Promise<CallReturn<'getLegoFromVaultToken'>>
+  getUnderlyingData: (
+    ...args: ExtractArgs<Contract['calls']['getUnderlyingData']>
+  ) => Promise<CallReturn<'getUnderlyingData'>>
+  ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => Promise<CallReturn<'ADDY_REGISTRY'>>
+  ROUTER_TOKENA: (...args: ExtractArgs<Contract['calls']['ROUTER_TOKENA']>) => Promise<CallReturn<'ROUTER_TOKENA'>>
+  ROUTER_TOKENB: (...args: ExtractArgs<Contract['calls']['ROUTER_TOKENB']>) => Promise<CallReturn<'ROUTER_TOKENB'>>
+  AAVE_V3_ID: (...args: ExtractArgs<Contract['calls']['AAVE_V3_ID']>) => Promise<CallReturn<'AAVE_V3_ID'>>
+  COMPOUND_V3_ID: (...args: ExtractArgs<Contract['calls']['COMPOUND_V3_ID']>) => Promise<CallReturn<'COMPOUND_V3_ID'>>
+  EULER_ID: (...args: ExtractArgs<Contract['calls']['EULER_ID']>) => Promise<CallReturn<'EULER_ID'>>
+  FLUID_ID: (...args: ExtractArgs<Contract['calls']['FLUID_ID']>) => Promise<CallReturn<'FLUID_ID'>>
+  MOONWELL_ID: (...args: ExtractArgs<Contract['calls']['MOONWELL_ID']>) => Promise<CallReturn<'MOONWELL_ID'>>
+  MORPHO_ID: (...args: ExtractArgs<Contract['calls']['MORPHO_ID']>) => Promise<CallReturn<'MORPHO_ID'>>
+  SKY_ID: (...args: ExtractArgs<Contract['calls']['SKY_ID']>) => Promise<CallReturn<'SKY_ID'>>
+  UNISWAP_V2_ID: (...args: ExtractArgs<Contract['calls']['UNISWAP_V2_ID']>) => Promise<CallReturn<'UNISWAP_V2_ID'>>
+  UNISWAP_V3_ID: (...args: ExtractArgs<Contract['calls']['UNISWAP_V3_ID']>) => Promise<CallReturn<'UNISWAP_V3_ID'>>
+  AERODROME_ID: (...args: ExtractArgs<Contract['calls']['AERODROME_ID']>) => Promise<CallReturn<'AERODROME_ID'>>
+  AERODROME_SLIPSTREAM_ID: (
+    ...args: ExtractArgs<Contract['calls']['AERODROME_SLIPSTREAM_ID']>
+  ) => Promise<CallReturn<'AERODROME_SLIPSTREAM_ID'>>
+  CURVE_ID: (...args: ExtractArgs<Contract['calls']['CURVE_ID']>) => Promise<CallReturn<'CURVE_ID'>>
+  getRoutesAndSwapInstructionsAmountOut: (
+    ...args: ExtractArgs<Contract['mutations']['getRoutesAndSwapInstructionsAmountOut']>
+  ) => Promise<Address>
+  getRoutesAndSwapInstructionsAmountIn: (
+    ...args: ExtractArgs<Contract['mutations']['getRoutesAndSwapInstructionsAmountIn']>
+  ) => Promise<Address>
+  prepareSwapInstructionsAmountOut: (
+    ...args: ExtractArgs<Contract['mutations']['prepareSwapInstructionsAmountOut']>
+  ) => Promise<Address>
+  getBestSwapRoutesAmountOut: (
+    ...args: ExtractArgs<Contract['mutations']['getBestSwapRoutesAmountOut']>
+  ) => Promise<Address>
+  getBestSwapAmountOutWithRouterPool: (
+    ...args: ExtractArgs<Contract['mutations']['getBestSwapAmountOutWithRouterPool']>
+  ) => Promise<Address>
+  getBestSwapAmountOutSinglePool: (
+    ...args: ExtractArgs<Contract['mutations']['getBestSwapAmountOutSinglePool']>
+  ) => Promise<Address>
+  getSwapAmountOutViaRouterPool: (
+    ...args: ExtractArgs<Contract['mutations']['getSwapAmountOutViaRouterPool']>
+  ) => Promise<Address>
+  getBestSwapRoutesAmountIn: (
+    ...args: ExtractArgs<Contract['mutations']['getBestSwapRoutesAmountIn']>
+  ) => Promise<Address>
+  getBestSwapAmountInWithRouterPool: (
+    ...args: ExtractArgs<Contract['mutations']['getBestSwapAmountInWithRouterPool']>
+  ) => Promise<Address>
+  getBestSwapAmountInSinglePool: (
+    ...args: ExtractArgs<Contract['mutations']['getBestSwapAmountInSinglePool']>
+  ) => Promise<Address>
+  getSwapAmountInViaRouterPool: (
+    ...args: ExtractArgs<Contract['mutations']['getSwapAmountInViaRouterPool']>
+  ) => Promise<Address>
 }
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
     // Queries
-		aaveV3: (...args: ExtractArgs<Contract['calls']['aaveV3']>) => singleQuery(publicClient!, call.aaveV3(...args)) as Promise<CallReturn<'aaveV3'>>,
-		aaveV3Id: (...args: ExtractArgs<Contract['calls']['aaveV3Id']>) => singleQuery(publicClient!, call.aaveV3Id(...args)) as Promise<CallReturn<'aaveV3Id'>>,
-		compoundV3: (...args: ExtractArgs<Contract['calls']['compoundV3']>) => singleQuery(publicClient!, call.compoundV3(...args)) as Promise<CallReturn<'compoundV3'>>,
-		compoundV3Id: (...args: ExtractArgs<Contract['calls']['compoundV3Id']>) => singleQuery(publicClient!, call.compoundV3Id(...args)) as Promise<CallReturn<'compoundV3Id'>>,
-		euler: (...args: ExtractArgs<Contract['calls']['euler']>) => singleQuery(publicClient!, call.euler(...args)) as Promise<CallReturn<'euler'>>,
-		eulerId: (...args: ExtractArgs<Contract['calls']['eulerId']>) => singleQuery(publicClient!, call.eulerId(...args)) as Promise<CallReturn<'eulerId'>>,
-		fluid: (...args: ExtractArgs<Contract['calls']['fluid']>) => singleQuery(publicClient!, call.fluid(...args)) as Promise<CallReturn<'fluid'>>,
-		fluidId: (...args: ExtractArgs<Contract['calls']['fluidId']>) => singleQuery(publicClient!, call.fluidId(...args)) as Promise<CallReturn<'fluidId'>>,
-		moonwell: (...args: ExtractArgs<Contract['calls']['moonwell']>) => singleQuery(publicClient!, call.moonwell(...args)) as Promise<CallReturn<'moonwell'>>,
-		moonwellId: (...args: ExtractArgs<Contract['calls']['moonwellId']>) => singleQuery(publicClient!, call.moonwellId(...args)) as Promise<CallReturn<'moonwellId'>>,
-		morpho: (...args: ExtractArgs<Contract['calls']['morpho']>) => singleQuery(publicClient!, call.morpho(...args)) as Promise<CallReturn<'morpho'>>,
-		morphoId: (...args: ExtractArgs<Contract['calls']['morphoId']>) => singleQuery(publicClient!, call.morphoId(...args)) as Promise<CallReturn<'morphoId'>>,
-		sky: (...args: ExtractArgs<Contract['calls']['sky']>) => singleQuery(publicClient!, call.sky(...args)) as Promise<CallReturn<'sky'>>,
-		skyId: (...args: ExtractArgs<Contract['calls']['skyId']>) => singleQuery(publicClient!, call.skyId(...args)) as Promise<CallReturn<'skyId'>>,
-		uniswapV2: (...args: ExtractArgs<Contract['calls']['uniswapV2']>) => singleQuery(publicClient!, call.uniswapV2(...args)) as Promise<CallReturn<'uniswapV2'>>,
-		uniswapV2Id: (...args: ExtractArgs<Contract['calls']['uniswapV2Id']>) => singleQuery(publicClient!, call.uniswapV2Id(...args)) as Promise<CallReturn<'uniswapV2Id'>>,
-		uniswapV3: (...args: ExtractArgs<Contract['calls']['uniswapV3']>) => singleQuery(publicClient!, call.uniswapV3(...args)) as Promise<CallReturn<'uniswapV3'>>,
-		uniswapV3Id: (...args: ExtractArgs<Contract['calls']['uniswapV3Id']>) => singleQuery(publicClient!, call.uniswapV3Id(...args)) as Promise<CallReturn<'uniswapV3Id'>>,
-		aerodrome: (...args: ExtractArgs<Contract['calls']['aerodrome']>) => singleQuery(publicClient!, call.aerodrome(...args)) as Promise<CallReturn<'aerodrome'>>,
-		aerodromeId: (...args: ExtractArgs<Contract['calls']['aerodromeId']>) => singleQuery(publicClient!, call.aerodromeId(...args)) as Promise<CallReturn<'aerodromeId'>>,
-		aerodromeSlipstream: (...args: ExtractArgs<Contract['calls']['aerodromeSlipstream']>) => singleQuery(publicClient!, call.aerodromeSlipstream(...args)) as Promise<CallReturn<'aerodromeSlipstream'>>,
-		aerodromeSlipstreamId: (...args: ExtractArgs<Contract['calls']['aerodromeSlipstreamId']>) => singleQuery(publicClient!, call.aerodromeSlipstreamId(...args)) as Promise<CallReturn<'aerodromeSlipstreamId'>>,
-		curve: (...args: ExtractArgs<Contract['calls']['curve']>) => singleQuery(publicClient!, call.curve(...args)) as Promise<CallReturn<'curve'>>,
-		curveId: (...args: ExtractArgs<Contract['calls']['curveId']>) => singleQuery(publicClient!, call.curveId(...args)) as Promise<CallReturn<'curveId'>>,
-		getVaultTokenAmount: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>) => singleQuery(publicClient!, call.getVaultTokenAmount(...args)) as Promise<CallReturn<'getVaultTokenAmount'>>,
-		getLegoFromVaultToken: (...args: ExtractArgs<Contract['calls']['getLegoFromVaultToken']>) => singleQuery(publicClient!, call.getLegoFromVaultToken(...args)) as Promise<CallReturn<'getLegoFromVaultToken'>>,
-		getUnderlyingData: (...args: ExtractArgs<Contract['calls']['getUnderlyingData']>) => singleQuery(publicClient!, call.getUnderlyingData(...args)) as Promise<CallReturn<'getUnderlyingData'>>,
-		ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => singleQuery(publicClient!, call.ADDY_REGISTRY(...args)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
-		ROUTER_TOKENA: (...args: ExtractArgs<Contract['calls']['ROUTER_TOKENA']>) => singleQuery(publicClient!, call.ROUTER_TOKENA(...args)) as Promise<CallReturn<'ROUTER_TOKENA'>>,
-		ROUTER_TOKENB: (...args: ExtractArgs<Contract['calls']['ROUTER_TOKENB']>) => singleQuery(publicClient!, call.ROUTER_TOKENB(...args)) as Promise<CallReturn<'ROUTER_TOKENB'>>,
-		AAVE_V3_ID: (...args: ExtractArgs<Contract['calls']['AAVE_V3_ID']>) => singleQuery(publicClient!, call.AAVE_V3_ID(...args)) as Promise<CallReturn<'AAVE_V3_ID'>>,
-		COMPOUND_V3_ID: (...args: ExtractArgs<Contract['calls']['COMPOUND_V3_ID']>) => singleQuery(publicClient!, call.COMPOUND_V3_ID(...args)) as Promise<CallReturn<'COMPOUND_V3_ID'>>,
-		EULER_ID: (...args: ExtractArgs<Contract['calls']['EULER_ID']>) => singleQuery(publicClient!, call.EULER_ID(...args)) as Promise<CallReturn<'EULER_ID'>>,
-		FLUID_ID: (...args: ExtractArgs<Contract['calls']['FLUID_ID']>) => singleQuery(publicClient!, call.FLUID_ID(...args)) as Promise<CallReturn<'FLUID_ID'>>,
-		MOONWELL_ID: (...args: ExtractArgs<Contract['calls']['MOONWELL_ID']>) => singleQuery(publicClient!, call.MOONWELL_ID(...args)) as Promise<CallReturn<'MOONWELL_ID'>>,
-		MORPHO_ID: (...args: ExtractArgs<Contract['calls']['MORPHO_ID']>) => singleQuery(publicClient!, call.MORPHO_ID(...args)) as Promise<CallReturn<'MORPHO_ID'>>,
-		SKY_ID: (...args: ExtractArgs<Contract['calls']['SKY_ID']>) => singleQuery(publicClient!, call.SKY_ID(...args)) as Promise<CallReturn<'SKY_ID'>>,
-		UNISWAP_V2_ID: (...args: ExtractArgs<Contract['calls']['UNISWAP_V2_ID']>) => singleQuery(publicClient!, call.UNISWAP_V2_ID(...args)) as Promise<CallReturn<'UNISWAP_V2_ID'>>,
-		UNISWAP_V3_ID: (...args: ExtractArgs<Contract['calls']['UNISWAP_V3_ID']>) => singleQuery(publicClient!, call.UNISWAP_V3_ID(...args)) as Promise<CallReturn<'UNISWAP_V3_ID'>>,
-		AERODROME_ID: (...args: ExtractArgs<Contract['calls']['AERODROME_ID']>) => singleQuery(publicClient!, call.AERODROME_ID(...args)) as Promise<CallReturn<'AERODROME_ID'>>,
-		AERODROME_SLIPSTREAM_ID: (...args: ExtractArgs<Contract['calls']['AERODROME_SLIPSTREAM_ID']>) => singleQuery(publicClient!, call.AERODROME_SLIPSTREAM_ID(...args)) as Promise<CallReturn<'AERODROME_SLIPSTREAM_ID'>>,
-		CURVE_ID: (...args: ExtractArgs<Contract['calls']['CURVE_ID']>) => singleQuery(publicClient!, call.CURVE_ID(...args)) as Promise<CallReturn<'CURVE_ID'>>,
-    
+    aaveV3: (...args: ExtractArgs<Contract['calls']['aaveV3']>) =>
+      singleQuery(publicClient!, call.aaveV3(...args)) as Promise<CallReturn<'aaveV3'>>,
+    aaveV3Id: (...args: ExtractArgs<Contract['calls']['aaveV3Id']>) =>
+      singleQuery(publicClient!, call.aaveV3Id(...args)) as Promise<CallReturn<'aaveV3Id'>>,
+    compoundV3: (...args: ExtractArgs<Contract['calls']['compoundV3']>) =>
+      singleQuery(publicClient!, call.compoundV3(...args)) as Promise<CallReturn<'compoundV3'>>,
+    compoundV3Id: (...args: ExtractArgs<Contract['calls']['compoundV3Id']>) =>
+      singleQuery(publicClient!, call.compoundV3Id(...args)) as Promise<CallReturn<'compoundV3Id'>>,
+    euler: (...args: ExtractArgs<Contract['calls']['euler']>) =>
+      singleQuery(publicClient!, call.euler(...args)) as Promise<CallReturn<'euler'>>,
+    eulerId: (...args: ExtractArgs<Contract['calls']['eulerId']>) =>
+      singleQuery(publicClient!, call.eulerId(...args)) as Promise<CallReturn<'eulerId'>>,
+    fluid: (...args: ExtractArgs<Contract['calls']['fluid']>) =>
+      singleQuery(publicClient!, call.fluid(...args)) as Promise<CallReturn<'fluid'>>,
+    fluidId: (...args: ExtractArgs<Contract['calls']['fluidId']>) =>
+      singleQuery(publicClient!, call.fluidId(...args)) as Promise<CallReturn<'fluidId'>>,
+    moonwell: (...args: ExtractArgs<Contract['calls']['moonwell']>) =>
+      singleQuery(publicClient!, call.moonwell(...args)) as Promise<CallReturn<'moonwell'>>,
+    moonwellId: (...args: ExtractArgs<Contract['calls']['moonwellId']>) =>
+      singleQuery(publicClient!, call.moonwellId(...args)) as Promise<CallReturn<'moonwellId'>>,
+    morpho: (...args: ExtractArgs<Contract['calls']['morpho']>) =>
+      singleQuery(publicClient!, call.morpho(...args)) as Promise<CallReturn<'morpho'>>,
+    morphoId: (...args: ExtractArgs<Contract['calls']['morphoId']>) =>
+      singleQuery(publicClient!, call.morphoId(...args)) as Promise<CallReturn<'morphoId'>>,
+    sky: (...args: ExtractArgs<Contract['calls']['sky']>) =>
+      singleQuery(publicClient!, call.sky(...args)) as Promise<CallReturn<'sky'>>,
+    skyId: (...args: ExtractArgs<Contract['calls']['skyId']>) =>
+      singleQuery(publicClient!, call.skyId(...args)) as Promise<CallReturn<'skyId'>>,
+    uniswapV2: (...args: ExtractArgs<Contract['calls']['uniswapV2']>) =>
+      singleQuery(publicClient!, call.uniswapV2(...args)) as Promise<CallReturn<'uniswapV2'>>,
+    uniswapV2Id: (...args: ExtractArgs<Contract['calls']['uniswapV2Id']>) =>
+      singleQuery(publicClient!, call.uniswapV2Id(...args)) as Promise<CallReturn<'uniswapV2Id'>>,
+    uniswapV3: (...args: ExtractArgs<Contract['calls']['uniswapV3']>) =>
+      singleQuery(publicClient!, call.uniswapV3(...args)) as Promise<CallReturn<'uniswapV3'>>,
+    uniswapV3Id: (...args: ExtractArgs<Contract['calls']['uniswapV3Id']>) =>
+      singleQuery(publicClient!, call.uniswapV3Id(...args)) as Promise<CallReturn<'uniswapV3Id'>>,
+    aerodrome: (...args: ExtractArgs<Contract['calls']['aerodrome']>) =>
+      singleQuery(publicClient!, call.aerodrome(...args)) as Promise<CallReturn<'aerodrome'>>,
+    aerodromeId: (...args: ExtractArgs<Contract['calls']['aerodromeId']>) =>
+      singleQuery(publicClient!, call.aerodromeId(...args)) as Promise<CallReturn<'aerodromeId'>>,
+    aerodromeSlipstream: (...args: ExtractArgs<Contract['calls']['aerodromeSlipstream']>) =>
+      singleQuery(publicClient!, call.aerodromeSlipstream(...args)) as Promise<CallReturn<'aerodromeSlipstream'>>,
+    aerodromeSlipstreamId: (...args: ExtractArgs<Contract['calls']['aerodromeSlipstreamId']>) =>
+      singleQuery(publicClient!, call.aerodromeSlipstreamId(...args)) as Promise<CallReturn<'aerodromeSlipstreamId'>>,
+    curve: (...args: ExtractArgs<Contract['calls']['curve']>) =>
+      singleQuery(publicClient!, call.curve(...args)) as Promise<CallReturn<'curve'>>,
+    curveId: (...args: ExtractArgs<Contract['calls']['curveId']>) =>
+      singleQuery(publicClient!, call.curveId(...args)) as Promise<CallReturn<'curveId'>>,
+    getVaultTokenAmount: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>) =>
+      singleQuery(publicClient!, call.getVaultTokenAmount(...args)) as Promise<CallReturn<'getVaultTokenAmount'>>,
+    getLegoFromVaultToken: (...args: ExtractArgs<Contract['calls']['getLegoFromVaultToken']>) =>
+      singleQuery(publicClient!, call.getLegoFromVaultToken(...args)) as Promise<CallReturn<'getLegoFromVaultToken'>>,
+    getUnderlyingData: (...args: ExtractArgs<Contract['calls']['getUnderlyingData']>) =>
+      singleQuery(publicClient!, call.getUnderlyingData(...args)) as Promise<CallReturn<'getUnderlyingData'>>,
+    ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) =>
+      singleQuery(publicClient!, call.ADDY_REGISTRY(...args)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
+    ROUTER_TOKENA: (...args: ExtractArgs<Contract['calls']['ROUTER_TOKENA']>) =>
+      singleQuery(publicClient!, call.ROUTER_TOKENA(...args)) as Promise<CallReturn<'ROUTER_TOKENA'>>,
+    ROUTER_TOKENB: (...args: ExtractArgs<Contract['calls']['ROUTER_TOKENB']>) =>
+      singleQuery(publicClient!, call.ROUTER_TOKENB(...args)) as Promise<CallReturn<'ROUTER_TOKENB'>>,
+    AAVE_V3_ID: (...args: ExtractArgs<Contract['calls']['AAVE_V3_ID']>) =>
+      singleQuery(publicClient!, call.AAVE_V3_ID(...args)) as Promise<CallReturn<'AAVE_V3_ID'>>,
+    COMPOUND_V3_ID: (...args: ExtractArgs<Contract['calls']['COMPOUND_V3_ID']>) =>
+      singleQuery(publicClient!, call.COMPOUND_V3_ID(...args)) as Promise<CallReturn<'COMPOUND_V3_ID'>>,
+    EULER_ID: (...args: ExtractArgs<Contract['calls']['EULER_ID']>) =>
+      singleQuery(publicClient!, call.EULER_ID(...args)) as Promise<CallReturn<'EULER_ID'>>,
+    FLUID_ID: (...args: ExtractArgs<Contract['calls']['FLUID_ID']>) =>
+      singleQuery(publicClient!, call.FLUID_ID(...args)) as Promise<CallReturn<'FLUID_ID'>>,
+    MOONWELL_ID: (...args: ExtractArgs<Contract['calls']['MOONWELL_ID']>) =>
+      singleQuery(publicClient!, call.MOONWELL_ID(...args)) as Promise<CallReturn<'MOONWELL_ID'>>,
+    MORPHO_ID: (...args: ExtractArgs<Contract['calls']['MORPHO_ID']>) =>
+      singleQuery(publicClient!, call.MORPHO_ID(...args)) as Promise<CallReturn<'MORPHO_ID'>>,
+    SKY_ID: (...args: ExtractArgs<Contract['calls']['SKY_ID']>) =>
+      singleQuery(publicClient!, call.SKY_ID(...args)) as Promise<CallReturn<'SKY_ID'>>,
+    UNISWAP_V2_ID: (...args: ExtractArgs<Contract['calls']['UNISWAP_V2_ID']>) =>
+      singleQuery(publicClient!, call.UNISWAP_V2_ID(...args)) as Promise<CallReturn<'UNISWAP_V2_ID'>>,
+    UNISWAP_V3_ID: (...args: ExtractArgs<Contract['calls']['UNISWAP_V3_ID']>) =>
+      singleQuery(publicClient!, call.UNISWAP_V3_ID(...args)) as Promise<CallReturn<'UNISWAP_V3_ID'>>,
+    AERODROME_ID: (...args: ExtractArgs<Contract['calls']['AERODROME_ID']>) =>
+      singleQuery(publicClient!, call.AERODROME_ID(...args)) as Promise<CallReturn<'AERODROME_ID'>>,
+    AERODROME_SLIPSTREAM_ID: (...args: ExtractArgs<Contract['calls']['AERODROME_SLIPSTREAM_ID']>) =>
+      singleQuery(publicClient!, call.AERODROME_SLIPSTREAM_ID(...args)) as Promise<
+        CallReturn<'AERODROME_SLIPSTREAM_ID'>
+      >,
+    CURVE_ID: (...args: ExtractArgs<Contract['calls']['CURVE_ID']>) =>
+      singleQuery(publicClient!, call.CURVE_ID(...args)) as Promise<CallReturn<'CURVE_ID'>>,
+
     // Mutations
-		getRoutesAndSwapInstructionsAmountOut: (...args: ExtractArgs<Contract['mutations']['getRoutesAndSwapInstructionsAmountOut']>) => mutate(walletClient!, mutation.getRoutesAndSwapInstructionsAmountOut)(...args),
-		getRoutesAndSwapInstructionsAmountIn: (...args: ExtractArgs<Contract['mutations']['getRoutesAndSwapInstructionsAmountIn']>) => mutate(walletClient!, mutation.getRoutesAndSwapInstructionsAmountIn)(...args),
-		prepareSwapInstructionsAmountOut: (...args: ExtractArgs<Contract['mutations']['prepareSwapInstructionsAmountOut']>) => mutate(walletClient!, mutation.prepareSwapInstructionsAmountOut)(...args),
-		getBestSwapRoutesAmountOut: (...args: ExtractArgs<Contract['mutations']['getBestSwapRoutesAmountOut']>) => mutate(walletClient!, mutation.getBestSwapRoutesAmountOut)(...args),
-		getBestSwapAmountOutWithRouterPool: (...args: ExtractArgs<Contract['mutations']['getBestSwapAmountOutWithRouterPool']>) => mutate(walletClient!, mutation.getBestSwapAmountOutWithRouterPool)(...args),
-		getBestSwapAmountOutSinglePool: (...args: ExtractArgs<Contract['mutations']['getBestSwapAmountOutSinglePool']>) => mutate(walletClient!, mutation.getBestSwapAmountOutSinglePool)(...args),
-		getSwapAmountOutViaRouterPool: (...args: ExtractArgs<Contract['mutations']['getSwapAmountOutViaRouterPool']>) => mutate(walletClient!, mutation.getSwapAmountOutViaRouterPool)(...args),
-		getBestSwapRoutesAmountIn: (...args: ExtractArgs<Contract['mutations']['getBestSwapRoutesAmountIn']>) => mutate(walletClient!, mutation.getBestSwapRoutesAmountIn)(...args),
-		getBestSwapAmountInWithRouterPool: (...args: ExtractArgs<Contract['mutations']['getBestSwapAmountInWithRouterPool']>) => mutate(walletClient!, mutation.getBestSwapAmountInWithRouterPool)(...args),
-		getBestSwapAmountInSinglePool: (...args: ExtractArgs<Contract['mutations']['getBestSwapAmountInSinglePool']>) => mutate(walletClient!, mutation.getBestSwapAmountInSinglePool)(...args),
-		getSwapAmountInViaRouterPool: (...args: ExtractArgs<Contract['mutations']['getSwapAmountInViaRouterPool']>) => mutate(walletClient!, mutation.getSwapAmountInViaRouterPool)(...args),
+    getRoutesAndSwapInstructionsAmountOut: (
+      ...args: ExtractArgs<Contract['mutations']['getRoutesAndSwapInstructionsAmountOut']>
+    ) => mutate(walletClient!, mutation.getRoutesAndSwapInstructionsAmountOut)(...args),
+    getRoutesAndSwapInstructionsAmountIn: (
+      ...args: ExtractArgs<Contract['mutations']['getRoutesAndSwapInstructionsAmountIn']>
+    ) => mutate(walletClient!, mutation.getRoutesAndSwapInstructionsAmountIn)(...args),
+    prepareSwapInstructionsAmountOut: (
+      ...args: ExtractArgs<Contract['mutations']['prepareSwapInstructionsAmountOut']>
+    ) => mutate(walletClient!, mutation.prepareSwapInstructionsAmountOut)(...args),
+    getBestSwapRoutesAmountOut: (...args: ExtractArgs<Contract['mutations']['getBestSwapRoutesAmountOut']>) =>
+      mutate(walletClient!, mutation.getBestSwapRoutesAmountOut)(...args),
+    getBestSwapAmountOutWithRouterPool: (
+      ...args: ExtractArgs<Contract['mutations']['getBestSwapAmountOutWithRouterPool']>
+    ) => mutate(walletClient!, mutation.getBestSwapAmountOutWithRouterPool)(...args),
+    getBestSwapAmountOutSinglePool: (...args: ExtractArgs<Contract['mutations']['getBestSwapAmountOutSinglePool']>) =>
+      mutate(walletClient!, mutation.getBestSwapAmountOutSinglePool)(...args),
+    getSwapAmountOutViaRouterPool: (...args: ExtractArgs<Contract['mutations']['getSwapAmountOutViaRouterPool']>) =>
+      mutate(walletClient!, mutation.getSwapAmountOutViaRouterPool)(...args),
+    getBestSwapRoutesAmountIn: (...args: ExtractArgs<Contract['mutations']['getBestSwapRoutesAmountIn']>) =>
+      mutate(walletClient!, mutation.getBestSwapRoutesAmountIn)(...args),
+    getBestSwapAmountInWithRouterPool: (
+      ...args: ExtractArgs<Contract['mutations']['getBestSwapAmountInWithRouterPool']>
+    ) => mutate(walletClient!, mutation.getBestSwapAmountInWithRouterPool)(...args),
+    getBestSwapAmountInSinglePool: (...args: ExtractArgs<Contract['mutations']['getBestSwapAmountInSinglePool']>) =>
+      mutate(walletClient!, mutation.getBestSwapAmountInSinglePool)(...args),
+    getSwapAmountInViaRouterPool: (...args: ExtractArgs<Contract['mutations']['getSwapAmountInViaRouterPool']>) =>
+      mutate(walletClient!, mutation.getSwapAmountInViaRouterPool)(...args),
   }
 }
-

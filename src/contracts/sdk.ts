@@ -33,6 +33,7 @@ import * as WalletFunds from './WalletFunds.js'
 export type SDK = {
   AddyRegistry: AddyRegistry.SDK
   AgentFactory: AgentFactory.SDK
+  Agent: (address: `0x${string}`) => AgentTemplate.SDK
   ChainlinkFeeds: ChainlinkFeeds.SDK
   LegoAaveV3: LegoAaveV3.SDK
   LegoAeroClassic: LegoAeroClassic.SDK
@@ -52,7 +53,6 @@ export type SDK = {
   PriceSheets: PriceSheets.SDK
   PythFeeds: PythFeeds.SDK
   StorkFeeds: StorkFeeds.SDK
-  Agent: (address: `0x${string}`) => AgentTemplate.SDK
   WalletConfig: (address: `0x${string}`) => WalletConfig.SDK
   WalletFunds: (address: `0x${string}`) => WalletFunds.SDK
 }

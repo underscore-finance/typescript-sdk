@@ -9,1274 +9,1273 @@ import { PublicClient, WalletClient } from 'viem'
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
 
-
 export const abi = [
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "sender",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "name": "tokenA",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "name": "tokenB",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "amountA",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "amountB",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "lpAmountReceived",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "usdValue",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "recipient",
-                "type": "address"
-            }
-        ],
-        "name": "UniswapV2LiquidityAdded",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "name": "sender",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "name": "pool",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "name": "tokenA",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "name": "tokenB",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "amountA",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "amountB",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "lpToken",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "lpAmountBurned",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "usdValue",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "recipient",
-                "type": "address"
-            }
-        ],
-        "name": "UniswapV2LiquidityRemoved",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "sender",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "name": "tokenIn",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "name": "tokenOut",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "amountIn",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "amountOut",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "usdValue",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "numTokens",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "recipient",
-                "type": "address"
-            }
-        ],
-        "name": "UniswapV2Swap",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "pool",
-                "type": "address"
-            }
-        ],
-        "name": "UniV2WethCoreRouterPoolSet",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "asset",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "name": "recipient",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "amount",
-                "type": "uint256"
-            }
-        ],
-        "name": "UniV2FundsRecovered",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "name": "legoId",
-                "type": "uint256"
-            }
-        ],
-        "name": "UniswapV2LegoIdSet",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "name": "isActivated",
-                "type": "bool"
-            }
-        ],
-        "name": "UniswapV2Activated",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "addr",
-                "type": "address"
-            }
-        ],
-        "name": "LocalGovernorSet",
-        "type": "event"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_address",
-                "type": "address"
-            }
-        ],
-        "name": "isGovernor",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_newGovernor",
-                "type": "address"
-            }
-        ],
-        "name": "isValidLocalGovernor",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_newGovernor",
-                "type": "address"
-            }
-        ],
-        "name": "setLocalGovernor",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "localGovernor",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "getRegistries",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address[]"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_user",
-                "type": "address"
-            }
-        ],
-        "name": "getAccessForLego",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            },
-            {
-                "name": "",
-                "type": "string"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_amountIn",
-                "type": "uint256"
-            },
-            {
-                "name": "_minAmountOut",
-                "type": "uint256"
-            },
-            {
-                "name": "_tokenPath",
-                "type": "address[]"
-            },
-            {
-                "name": "_poolPath",
-                "type": "address[]"
-            },
-            {
-                "name": "_recipient",
-                "type": "address"
-            }
-        ],
-        "name": "swapTokens",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_amountIn",
-                "type": "uint256"
-            },
-            {
-                "name": "_minAmountOut",
-                "type": "uint256"
-            },
-            {
-                "name": "_tokenPath",
-                "type": "address[]"
-            },
-            {
-                "name": "_poolPath",
-                "type": "address[]"
-            },
-            {
-                "name": "_recipient",
-                "type": "address"
-            },
-            {
-                "name": "_oracleRegistry",
-                "type": "address"
-            }
-        ],
-        "name": "swapTokens",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_nftTokenId",
-                "type": "uint256"
-            },
-            {
-                "name": "_pool",
-                "type": "address"
-            },
-            {
-                "name": "_tokenA",
-                "type": "address"
-            },
-            {
-                "name": "_tokenB",
-                "type": "address"
-            },
-            {
-                "name": "_tickLower",
-                "type": "int24"
-            },
-            {
-                "name": "_tickUpper",
-                "type": "int24"
-            },
-            {
-                "name": "_amountA",
-                "type": "uint256"
-            },
-            {
-                "name": "_amountB",
-                "type": "uint256"
-            },
-            {
-                "name": "_minAmountA",
-                "type": "uint256"
-            },
-            {
-                "name": "_minAmountB",
-                "type": "uint256"
-            },
-            {
-                "name": "_minLpAmount",
-                "type": "uint256"
-            },
-            {
-                "name": "_recipient",
-                "type": "address"
-            }
-        ],
-        "name": "addLiquidity",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_nftTokenId",
-                "type": "uint256"
-            },
-            {
-                "name": "_pool",
-                "type": "address"
-            },
-            {
-                "name": "_tokenA",
-                "type": "address"
-            },
-            {
-                "name": "_tokenB",
-                "type": "address"
-            },
-            {
-                "name": "_tickLower",
-                "type": "int24"
-            },
-            {
-                "name": "_tickUpper",
-                "type": "int24"
-            },
-            {
-                "name": "_amountA",
-                "type": "uint256"
-            },
-            {
-                "name": "_amountB",
-                "type": "uint256"
-            },
-            {
-                "name": "_minAmountA",
-                "type": "uint256"
-            },
-            {
-                "name": "_minAmountB",
-                "type": "uint256"
-            },
-            {
-                "name": "_minLpAmount",
-                "type": "uint256"
-            },
-            {
-                "name": "_recipient",
-                "type": "address"
-            },
-            {
-                "name": "_oracleRegistry",
-                "type": "address"
-            }
-        ],
-        "name": "addLiquidity",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_nftTokenId",
-                "type": "uint256"
-            },
-            {
-                "name": "_pool",
-                "type": "address"
-            },
-            {
-                "name": "_tokenA",
-                "type": "address"
-            },
-            {
-                "name": "_tokenB",
-                "type": "address"
-            },
-            {
-                "name": "_lpToken",
-                "type": "address"
-            },
-            {
-                "name": "_liqToRemove",
-                "type": "uint256"
-            },
-            {
-                "name": "_minAmountA",
-                "type": "uint256"
-            },
-            {
-                "name": "_minAmountB",
-                "type": "uint256"
-            },
-            {
-                "name": "_recipient",
-                "type": "address"
-            }
-        ],
-        "name": "removeLiquidity",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_nftTokenId",
-                "type": "uint256"
-            },
-            {
-                "name": "_pool",
-                "type": "address"
-            },
-            {
-                "name": "_tokenA",
-                "type": "address"
-            },
-            {
-                "name": "_tokenB",
-                "type": "address"
-            },
-            {
-                "name": "_lpToken",
-                "type": "address"
-            },
-            {
-                "name": "_liqToRemove",
-                "type": "uint256"
-            },
-            {
-                "name": "_minAmountA",
-                "type": "uint256"
-            },
-            {
-                "name": "_minAmountB",
-                "type": "uint256"
-            },
-            {
-                "name": "_recipient",
-                "type": "address"
-            },
-            {
-                "name": "_oracleRegistry",
-                "type": "address"
-            }
-        ],
-        "name": "removeLiquidity",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_user",
-                "type": "address"
-            },
-            {
-                "name": "_market",
-                "type": "address"
-            },
-            {
-                "name": "_rewardToken",
-                "type": "address"
-            },
-            {
-                "name": "_rewardAmount",
-                "type": "uint256"
-            },
-            {
-                "name": "_proof",
-                "type": "bytes32"
-            }
-        ],
-        "name": "claimRewards",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_user",
-                "type": "address"
-            }
-        ],
-        "name": "hasClaimableRewards",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_pool",
-                "type": "address"
-            }
-        ],
-        "name": "getLpToken",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_lpToken",
-                "type": "address"
-            }
-        ],
-        "name": "getPoolForLpToken",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "getCoreRouterPool",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenA",
-                "type": "address"
-            },
-            {
-                "name": "_tokenB",
-                "type": "address"
-            }
-        ],
-        "name": "getDeepestLiqPool",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "name": "pool",
-                        "type": "address"
-                    },
-                    {
-                        "name": "fee",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "liquidity",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "numCoins",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "legoId",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "",
-                "type": "tuple"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountIn",
-                "type": "uint256"
-            }
-        ],
-        "name": "getBestSwapAmountOut",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_pool",
-                "type": "address"
-            },
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountIn",
-                "type": "uint256"
-            }
-        ],
-        "name": "getSwapAmountOut",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountOut",
-                "type": "uint256"
-            }
-        ],
-        "name": "getBestSwapAmountIn",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_pool",
-                "type": "address"
-            },
-            {
-                "name": "_tokenIn",
-                "type": "address"
-            },
-            {
-                "name": "_tokenOut",
-                "type": "address"
-            },
-            {
-                "name": "_amountOut",
-                "type": "uint256"
-            }
-        ],
-        "name": "getSwapAmountIn",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_pool",
-                "type": "address"
-            },
-            {
-                "name": "_tokenA",
-                "type": "address"
-            },
-            {
-                "name": "_tokenB",
-                "type": "address"
-            },
-            {
-                "name": "_availAmountA",
-                "type": "uint256"
-            },
-            {
-                "name": "_availAmountB",
-                "type": "uint256"
-            }
-        ],
-        "name": "getAddLiqAmountsIn",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_pool",
-                "type": "address"
-            },
-            {
-                "name": "_tokenA",
-                "type": "address"
-            },
-            {
-                "name": "_tokenB",
-                "type": "address"
-            },
-            {
-                "name": "_lpAmount",
-                "type": "uint256"
-            }
-        ],
-        "name": "getRemoveLiqAmountsOut",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_pool",
-                "type": "address"
-            },
-            {
-                "name": "_targetToken",
-                "type": "address"
-            }
-        ],
-        "name": "getPriceUnsafe",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_pool",
-                "type": "address"
-            },
-            {
-                "name": "_targetToken",
-                "type": "address"
-            },
-            {
-                "name": "_oracleRegistry",
-                "type": "address"
-            }
-        ],
-        "name": "getPriceUnsafe",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_addr",
-                "type": "address"
-            }
-        ],
-        "name": "setCoreRouterPool",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_recipient",
-                "type": "address"
-            }
-        ],
-        "name": "recoverFunds",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_legoId",
-                "type": "uint256"
-            }
-        ],
-        "name": "setLegoId",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_shouldActivate",
-                "type": "bool"
-            }
-        ],
-        "name": "activate",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "coreRouterPool",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "UNISWAP_V2_FACTORY",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "UNISWAP_V2_ROUTER",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "legoId",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "isActivated",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "ADDY_REGISTRY",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_uniswapV2Factory",
-                "type": "address"
-            },
-            {
-                "name": "_uniswapV2Router",
-                "type": "address"
-            },
-            {
-                "name": "_addyRegistry",
-                "type": "address"
-            },
-            {
-                "name": "_coreRouterPool",
-                "type": "address"
-            }
-        ],
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-    }
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'sender',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'tokenA',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'tokenB',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'amountA',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'amountB',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'lpAmountReceived',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'usdValue',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'recipient',
+        type: 'address',
+      },
+    ],
+    name: 'UniswapV2LiquidityAdded',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'sender',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'pool',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'tokenA',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'tokenB',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'amountA',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'amountB',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'lpToken',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'lpAmountBurned',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'usdValue',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'recipient',
+        type: 'address',
+      },
+    ],
+    name: 'UniswapV2LiquidityRemoved',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'sender',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'tokenIn',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'tokenOut',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'amountIn',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'amountOut',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'usdValue',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'numTokens',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'recipient',
+        type: 'address',
+      },
+    ],
+    name: 'UniswapV2Swap',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'pool',
+        type: 'address',
+      },
+    ],
+    name: 'UniV2WethCoreRouterPoolSet',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'asset',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'recipient',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'UniV2FundsRecovered',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'legoId',
+        type: 'uint256',
+      },
+    ],
+    name: 'UniswapV2LegoIdSet',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'isActivated',
+        type: 'bool',
+      },
+    ],
+    name: 'UniswapV2Activated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+    ],
+    name: 'LocalGovernorSet',
+    type: 'event',
+  },
+  {
+    inputs: [
+      {
+        name: '_address',
+        type: 'address',
+      },
+    ],
+    name: 'isGovernor',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_newGovernor',
+        type: 'address',
+      },
+    ],
+    name: 'isValidLocalGovernor',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_newGovernor',
+        type: 'address',
+      },
+    ],
+    name: 'setLocalGovernor',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'localGovernor',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getRegistries',
+    outputs: [
+      {
+        name: '',
+        type: 'address[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_user',
+        type: 'address',
+      },
+    ],
+    name: 'getAccessForLego',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'string',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenPath',
+        type: 'address[]',
+      },
+      {
+        name: '_poolPath',
+        type: 'address[]',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    name: 'swapTokens',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenPath',
+        type: 'address[]',
+      },
+      {
+        name: '_poolPath',
+        type: 'address[]',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_oracleRegistry',
+        type: 'address',
+      },
+    ],
+    name: 'swapTokens',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_tickLower',
+        type: 'int24',
+      },
+      {
+        name: '_tickUpper',
+        type: 'int24',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minLpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    name: 'addLiquidity',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_tickLower',
+        type: 'int24',
+      },
+      {
+        name: '_tickUpper',
+        type: 'int24',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minLpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_oracleRegistry',
+        type: 'address',
+      },
+    ],
+    name: 'addLiquidity',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_lpToken',
+        type: 'address',
+      },
+      {
+        name: '_liqToRemove',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    name: 'removeLiquidity',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_lpToken',
+        type: 'address',
+      },
+      {
+        name: '_liqToRemove',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_oracleRegistry',
+        type: 'address',
+      },
+    ],
+    name: 'removeLiquidity',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_user',
+        type: 'address',
+      },
+      {
+        name: '_market',
+        type: 'address',
+      },
+      {
+        name: '_rewardToken',
+        type: 'address',
+      },
+      {
+        name: '_rewardAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_proof',
+        type: 'bytes32',
+      },
+    ],
+    name: 'claimRewards',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_user',
+        type: 'address',
+      },
+    ],
+    name: 'hasClaimableRewards',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_pool',
+        type: 'address',
+      },
+    ],
+    name: 'getLpToken',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_lpToken',
+        type: 'address',
+      },
+    ],
+    name: 'getPoolForLpToken',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getCoreRouterPool',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+    ],
+    name: 'getDeepestLiqPool',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'pool',
+            type: 'address',
+          },
+          {
+            name: 'fee',
+            type: 'uint256',
+          },
+          {
+            name: 'liquidity',
+            type: 'uint256',
+          },
+          {
+            name: 'numCoins',
+            type: 'uint256',
+          },
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+    ],
+    name: 'getBestSwapAmountOut',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+    ],
+    name: 'getSwapAmountOut',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountOut',
+        type: 'uint256',
+      },
+    ],
+    name: 'getBestSwapAmountIn',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountOut',
+        type: 'uint256',
+      },
+    ],
+    name: 'getSwapAmountIn',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_availAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_availAmountB',
+        type: 'uint256',
+      },
+    ],
+    name: 'getAddLiqAmountsIn',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_lpAmount',
+        type: 'uint256',
+      },
+    ],
+    name: 'getRemoveLiqAmountsOut',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_targetToken',
+        type: 'address',
+      },
+    ],
+    name: 'getPriceUnsafe',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_targetToken',
+        type: 'address',
+      },
+      {
+        name: '_oracleRegistry',
+        type: 'address',
+      },
+    ],
+    name: 'getPriceUnsafe',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+    ],
+    name: 'setCoreRouterPool',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    name: 'recoverFunds',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+    ],
+    name: 'setLegoId',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_shouldActivate',
+        type: 'bool',
+      },
+    ],
+    name: 'activate',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'coreRouterPool',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'UNISWAP_V2_FACTORY',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'UNISWAP_V2_ROUTER',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'legoId',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'isActivated',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'ADDY_REGISTRY',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_uniswapV2Factory',
+        type: 'address',
+      },
+      {
+        name: '_uniswapV2Router',
+        type: 'address',
+      },
+      {
+        name: '_addyRegistry',
+        type: 'address',
+      },
+      {
+        name: '_coreRouterPool',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+  },
 ] as const
 
-export const deployAddress: Address | undefined = undefined
+export const deployAddress: Address | undefined = '0xFA56408A68ba9bF5Df0F1CF4187B7260fDf38fC4'
 
 export type Contract = {
   calls: {
@@ -1289,13 +1288,45 @@ export type Contract = {
     getLpToken: (pool: `0x${string}`) => Promise<`0x${string}`>
     getPoolForLpToken: (lpToken: `0x${string}`) => Promise<`0x${string}`>
     getCoreRouterPool: () => Promise<`0x${string}`>
-    getDeepestLiqPool: (tokenA: `0x${string}`, tokenB: `0x${string}`) => Promise<{ pool: `0x${string}`; fee: bigint; liquidity: bigint; numCoins: bigint; legoId: bigint }>
-    getBestSwapAmountOut: (tokenIn: `0x${string}`, tokenOut: `0x${string}`, amountIn: bigint) => Promise<[`0x${string}`, bigint]>
-    getSwapAmountOut: (pool: `0x${string}`, tokenIn: `0x${string}`, tokenOut: `0x${string}`, amountIn: bigint) => Promise<bigint>
-    getBestSwapAmountIn: (tokenIn: `0x${string}`, tokenOut: `0x${string}`, amountOut: bigint) => Promise<[`0x${string}`, bigint]>
-    getSwapAmountIn: (pool: `0x${string}`, tokenIn: `0x${string}`, tokenOut: `0x${string}`, amountOut: bigint) => Promise<bigint>
-    getAddLiqAmountsIn: (pool: `0x${string}`, tokenA: `0x${string}`, tokenB: `0x${string}`, availAmountA: bigint, availAmountB: bigint) => Promise<[bigint, bigint, bigint]>
-    getRemoveLiqAmountsOut: (pool: `0x${string}`, tokenA: `0x${string}`, tokenB: `0x${string}`, lpAmount: bigint) => Promise<[bigint, bigint]>
+    getDeepestLiqPool: (
+      tokenA: `0x${string}`,
+      tokenB: `0x${string}`,
+    ) => Promise<{ pool: `0x${string}`; fee: bigint; liquidity: bigint; numCoins: bigint; legoId: bigint }>
+    getBestSwapAmountOut: (
+      tokenIn: `0x${string}`,
+      tokenOut: `0x${string}`,
+      amountIn: bigint,
+    ) => Promise<[`0x${string}`, bigint]>
+    getSwapAmountOut: (
+      pool: `0x${string}`,
+      tokenIn: `0x${string}`,
+      tokenOut: `0x${string}`,
+      amountIn: bigint,
+    ) => Promise<bigint>
+    getBestSwapAmountIn: (
+      tokenIn: `0x${string}`,
+      tokenOut: `0x${string}`,
+      amountOut: bigint,
+    ) => Promise<[`0x${string}`, bigint]>
+    getSwapAmountIn: (
+      pool: `0x${string}`,
+      tokenIn: `0x${string}`,
+      tokenOut: `0x${string}`,
+      amountOut: bigint,
+    ) => Promise<bigint>
+    getAddLiqAmountsIn: (
+      pool: `0x${string}`,
+      tokenA: `0x${string}`,
+      tokenB: `0x${string}`,
+      availAmountA: bigint,
+      availAmountB: bigint,
+    ) => Promise<[bigint, bigint, bigint]>
+    getRemoveLiqAmountsOut: (
+      pool: `0x${string}`,
+      tokenA: `0x${string}`,
+      tokenB: `0x${string}`,
+      lpAmount: bigint,
+    ) => Promise<[bigint, bigint]>
     getPriceUnsafe: (pool: `0x${string}`, targetToken: `0x${string}`, oracleRegistry?: `0x${string}`) => Promise<bigint>
     coreRouterPool: () => Promise<`0x${string}`>
     UNISWAP_V2_FACTORY: () => Promise<`0x${string}`>
@@ -1306,19 +1337,86 @@ export type Contract = {
   }
   mutations: {
     setLocalGovernor: (newGovernor: `0x${string}`) => Promise<boolean>
-    swapTokens: (amountIn: bigint, minAmountOut: bigint, tokenPath: `0x${string}`[], poolPath: `0x${string}`[], recipient: `0x${string}`, oracleRegistry?: `0x${string}`) => Promise<[bigint, bigint, bigint, bigint]>
-    addLiquidity: (nftTokenId: bigint, pool: `0x${string}`, tokenA: `0x${string}`, tokenB: `0x${string}`, tickLower: unknown, tickUpper: unknown, amountA: bigint, amountB: bigint, minAmountA: bigint, minAmountB: bigint, minLpAmount: bigint, recipient: `0x${string}`, oracleRegistry?: `0x${string}`) => Promise<[bigint, bigint, bigint, bigint, bigint, bigint, bigint]>
-    removeLiquidity: (nftTokenId: bigint, pool: `0x${string}`, tokenA: `0x${string}`, tokenB: `0x${string}`, lpToken: `0x${string}`, liqToRemove: bigint, minAmountA: bigint, minAmountB: bigint, recipient: `0x${string}`, oracleRegistry?: `0x${string}`) => Promise<[bigint, bigint, bigint, bigint, bigint, boolean]>
-    claimRewards: (user: `0x${string}`, market: `0x${string}`, rewardToken: `0x${string}`, rewardAmount: bigint, proof: `0x${string}`) => Promise<void>
+    swapTokens: (
+      amountIn: bigint,
+      minAmountOut: bigint,
+      tokenPath: `0x${string}`[],
+      poolPath: `0x${string}`[],
+      recipient: `0x${string}`,
+      oracleRegistry?: `0x${string}`,
+    ) => Promise<[bigint, bigint, bigint, bigint]>
+    addLiquidity: (
+      nftTokenId: bigint,
+      pool: `0x${string}`,
+      tokenA: `0x${string}`,
+      tokenB: `0x${string}`,
+      tickLower: unknown,
+      tickUpper: unknown,
+      amountA: bigint,
+      amountB: bigint,
+      minAmountA: bigint,
+      minAmountB: bigint,
+      minLpAmount: bigint,
+      recipient: `0x${string}`,
+      oracleRegistry?: `0x${string}`,
+    ) => Promise<[bigint, bigint, bigint, bigint, bigint, bigint, bigint]>
+    removeLiquidity: (
+      nftTokenId: bigint,
+      pool: `0x${string}`,
+      tokenA: `0x${string}`,
+      tokenB: `0x${string}`,
+      lpToken: `0x${string}`,
+      liqToRemove: bigint,
+      minAmountA: bigint,
+      minAmountB: bigint,
+      recipient: `0x${string}`,
+      oracleRegistry?: `0x${string}`,
+    ) => Promise<[bigint, bigint, bigint, bigint, bigint, boolean]>
+    claimRewards: (
+      user: `0x${string}`,
+      market: `0x${string}`,
+      rewardToken: `0x${string}`,
+      rewardAmount: bigint,
+      proof: `0x${string}`,
+    ) => Promise<void>
     setCoreRouterPool: (addr: `0x${string}`) => Promise<boolean>
     recoverFunds: (asset: `0x${string}`, recipient: `0x${string}`) => Promise<boolean>
     setLegoId: (legoId: bigint) => Promise<boolean>
     activate: (shouldActivate: boolean) => Promise<void>
   }
   events: {
-    UniswapV2LiquidityAdded: (sender: `0x${string}`, tokenA: `0x${string}`, tokenB: `0x${string}`, amountA: bigint, amountB: bigint, lpAmountReceived: bigint, usdValue: bigint, recipient: `0x${string}`) => Promise<void>
-    UniswapV2LiquidityRemoved: (sender: `0x${string}`, pool: `0x${string}`, tokenA: `0x${string}`, tokenB: `0x${string}`, amountA: bigint, amountB: bigint, lpToken: `0x${string}`, lpAmountBurned: bigint, usdValue: bigint, recipient: `0x${string}`) => Promise<void>
-    UniswapV2Swap: (sender: `0x${string}`, tokenIn: `0x${string}`, tokenOut: `0x${string}`, amountIn: bigint, amountOut: bigint, usdValue: bigint, numTokens: bigint, recipient: `0x${string}`) => Promise<void>
+    UniswapV2LiquidityAdded: (
+      sender: `0x${string}`,
+      tokenA: `0x${string}`,
+      tokenB: `0x${string}`,
+      amountA: bigint,
+      amountB: bigint,
+      lpAmountReceived: bigint,
+      usdValue: bigint,
+      recipient: `0x${string}`,
+    ) => Promise<void>
+    UniswapV2LiquidityRemoved: (
+      sender: `0x${string}`,
+      pool: `0x${string}`,
+      tokenA: `0x${string}`,
+      tokenB: `0x${string}`,
+      amountA: bigint,
+      amountB: bigint,
+      lpToken: `0x${string}`,
+      lpAmountBurned: bigint,
+      usdValue: bigint,
+      recipient: `0x${string}`,
+    ) => Promise<void>
+    UniswapV2Swap: (
+      sender: `0x${string}`,
+      tokenIn: `0x${string}`,
+      tokenOut: `0x${string}`,
+      amountIn: bigint,
+      amountOut: bigint,
+      usdValue: bigint,
+      numTokens: bigint,
+      recipient: `0x${string}`,
+    ) => Promise<void>
     UniV2WethCoreRouterPoolSet: (pool: `0x${string}`) => Promise<void>
     UniV2FundsRecovered: (asset: `0x${string}`, recipient: `0x${string}`, amount: bigint) => Promise<void>
     UniswapV2LegoIdSet: (legoId: bigint) => Promise<void>
@@ -1336,10 +1434,7 @@ export type Request<M extends Calls> = {
   deployAddress: Address | undefined
   defaultValue: Awaited<ReturnType<Contract['calls'][M]>> | undefined
   getAbi: () => typeof abi
-  with: (options: {
-    contractAddress?: Address
-    defaultValue?: Awaited<ReturnType<Contract['calls'][M]>>
-  }) => Request<M>
+  with: (options: { contractAddress?: Address; defaultValue?: Awaited<ReturnType<Contract['calls'][M]>> }) => Request<M>
   defaultTo: (defaultValue: Awaited<ReturnType<Contract['calls'][M]>>) => Request<M>
   at: (address: Address) => Request<M>
 }
@@ -1349,77 +1444,84 @@ function getRequest<M extends Calls>(
   method: M,
   args: ExtractArgs<Contract['calls'][M]>,
   contractAddressOrOptions?:
-  | Address
-  | {
-    contractAddress?: Address
-    defaultValue?: Awaited<ReturnType<Contract['calls'][M]>>
-    },
-  ): Request<M> {
-    const address =
-      typeof contractAddressOrOptions === 'string' ? contractAddressOrOptions : contractAddressOrOptions?.contractAddress
-    const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
-
-    const call = {
-      contractName: 'LegoUniswapV2' as const,
-      method,
-      args,
-      address,
-      deployAddress,
-      defaultValue,
-      getAbi: () => abi,
-      with: (options: {
+    | Address
+    | {
         contractAddress?: Address
         defaultValue?: Awaited<ReturnType<Contract['calls'][M]>>
-      }) => {
-          call.address = options.contractAddress
-          call.defaultValue = options.defaultValue
-          return call as Request<M>
       },
-      defaultTo: (defaultValue: Awaited<ReturnType<Contract['calls'][M]>>) => {
-        call.defaultValue = defaultValue
-        return call as Request<M>
-      },
-      at: (address: Address) => {
-        call.address = address
-        return call as Request<M>
-      },
-    } as Request<M>
+): Request<M> {
+  const address =
+    typeof contractAddressOrOptions === 'string' ? contractAddressOrOptions : contractAddressOrOptions?.contractAddress
+  const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
 
-    return call
+  const call = {
+    contractName: 'LegoUniswapV2' as const,
+    method,
+    args,
+    address,
+    deployAddress,
+    defaultValue,
+    getAbi: () => abi,
+    with: (options: { contractAddress?: Address; defaultValue?: Awaited<ReturnType<Contract['calls'][M]>> }) => {
+      call.address = options.contractAddress
+      call.defaultValue = options.defaultValue
+      return call as Request<M>
+    },
+    defaultTo: (defaultValue: Awaited<ReturnType<Contract['calls'][M]>>) => {
+      call.defaultValue = defaultValue
+      return call as Request<M>
+    },
+    at: (address: Address) => {
+      call.address = address
+      return call as Request<M>
+    },
+  } as Request<M>
+
+  return call
 }
 
 type CallType = {
-  [K in Calls]: (
-    ...args: ExtractArgs<Contract['calls'][K]>
-  ) => ReturnType<typeof getRequest<K>>
+  [K in Calls]: (...args: ExtractArgs<Contract['calls'][K]>) => ReturnType<typeof getRequest<K>>
 }
 
 export const call: CallType = {
-		isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => getRequest('isGovernor', args),
-		isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) => getRequest('isValidLocalGovernor', args),
-		localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => getRequest('localGovernor', args),
-		getRegistries: (...args: ExtractArgs<Contract['calls']['getRegistries']>) => getRequest('getRegistries', args),
-		getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) => getRequest('getAccessForLego', args),
-		hasClaimableRewards: (...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>) => getRequest('hasClaimableRewards', args),
-		getLpToken: (...args: ExtractArgs<Contract['calls']['getLpToken']>) => getRequest('getLpToken', args),
-		getPoolForLpToken: (...args: ExtractArgs<Contract['calls']['getPoolForLpToken']>) => getRequest('getPoolForLpToken', args),
-		getCoreRouterPool: (...args: ExtractArgs<Contract['calls']['getCoreRouterPool']>) => getRequest('getCoreRouterPool', args),
-		getDeepestLiqPool: (...args: ExtractArgs<Contract['calls']['getDeepestLiqPool']>) => getRequest('getDeepestLiqPool', args),
-		getBestSwapAmountOut: (...args: ExtractArgs<Contract['calls']['getBestSwapAmountOut']>) => getRequest('getBestSwapAmountOut', args),
-		getSwapAmountOut: (...args: ExtractArgs<Contract['calls']['getSwapAmountOut']>) => getRequest('getSwapAmountOut', args),
-		getBestSwapAmountIn: (...args: ExtractArgs<Contract['calls']['getBestSwapAmountIn']>) => getRequest('getBestSwapAmountIn', args),
-		getSwapAmountIn: (...args: ExtractArgs<Contract['calls']['getSwapAmountIn']>) => getRequest('getSwapAmountIn', args),
-		getAddLiqAmountsIn: (...args: ExtractArgs<Contract['calls']['getAddLiqAmountsIn']>) => getRequest('getAddLiqAmountsIn', args),
-		getRemoveLiqAmountsOut: (...args: ExtractArgs<Contract['calls']['getRemoveLiqAmountsOut']>) => getRequest('getRemoveLiqAmountsOut', args),
-		getPriceUnsafe: (...args: ExtractArgs<Contract['calls']['getPriceUnsafe']>) => getRequest('getPriceUnsafe', args),
-		coreRouterPool: (...args: ExtractArgs<Contract['calls']['coreRouterPool']>) => getRequest('coreRouterPool', args),
-		UNISWAP_V2_FACTORY: (...args: ExtractArgs<Contract['calls']['UNISWAP_V2_FACTORY']>) => getRequest('UNISWAP_V2_FACTORY', args),
-		UNISWAP_V2_ROUTER: (...args: ExtractArgs<Contract['calls']['UNISWAP_V2_ROUTER']>) => getRequest('UNISWAP_V2_ROUTER', args),
-		legoId: (...args: ExtractArgs<Contract['calls']['legoId']>) => getRequest('legoId', args),
-		isActivated: (...args: ExtractArgs<Contract['calls']['isActivated']>) => getRequest('isActivated', args),
-		ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => getRequest('ADDY_REGISTRY', args),
+  isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => getRequest('isGovernor', args),
+  isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) =>
+    getRequest('isValidLocalGovernor', args),
+  localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => getRequest('localGovernor', args),
+  getRegistries: (...args: ExtractArgs<Contract['calls']['getRegistries']>) => getRequest('getRegistries', args),
+  getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
+    getRequest('getAccessForLego', args),
+  hasClaimableRewards: (...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>) =>
+    getRequest('hasClaimableRewards', args),
+  getLpToken: (...args: ExtractArgs<Contract['calls']['getLpToken']>) => getRequest('getLpToken', args),
+  getPoolForLpToken: (...args: ExtractArgs<Contract['calls']['getPoolForLpToken']>) =>
+    getRequest('getPoolForLpToken', args),
+  getCoreRouterPool: (...args: ExtractArgs<Contract['calls']['getCoreRouterPool']>) =>
+    getRequest('getCoreRouterPool', args),
+  getDeepestLiqPool: (...args: ExtractArgs<Contract['calls']['getDeepestLiqPool']>) =>
+    getRequest('getDeepestLiqPool', args),
+  getBestSwapAmountOut: (...args: ExtractArgs<Contract['calls']['getBestSwapAmountOut']>) =>
+    getRequest('getBestSwapAmountOut', args),
+  getSwapAmountOut: (...args: ExtractArgs<Contract['calls']['getSwapAmountOut']>) =>
+    getRequest('getSwapAmountOut', args),
+  getBestSwapAmountIn: (...args: ExtractArgs<Contract['calls']['getBestSwapAmountIn']>) =>
+    getRequest('getBestSwapAmountIn', args),
+  getSwapAmountIn: (...args: ExtractArgs<Contract['calls']['getSwapAmountIn']>) => getRequest('getSwapAmountIn', args),
+  getAddLiqAmountsIn: (...args: ExtractArgs<Contract['calls']['getAddLiqAmountsIn']>) =>
+    getRequest('getAddLiqAmountsIn', args),
+  getRemoveLiqAmountsOut: (...args: ExtractArgs<Contract['calls']['getRemoveLiqAmountsOut']>) =>
+    getRequest('getRemoveLiqAmountsOut', args),
+  getPriceUnsafe: (...args: ExtractArgs<Contract['calls']['getPriceUnsafe']>) => getRequest('getPriceUnsafe', args),
+  coreRouterPool: (...args: ExtractArgs<Contract['calls']['coreRouterPool']>) => getRequest('coreRouterPool', args),
+  UNISWAP_V2_FACTORY: (...args: ExtractArgs<Contract['calls']['UNISWAP_V2_FACTORY']>) =>
+    getRequest('UNISWAP_V2_FACTORY', args),
+  UNISWAP_V2_ROUTER: (...args: ExtractArgs<Contract['calls']['UNISWAP_V2_ROUTER']>) =>
+    getRequest('UNISWAP_V2_ROUTER', args),
+  legoId: (...args: ExtractArgs<Contract['calls']['legoId']>) => getRequest('legoId', args),
+  isActivated: (...args: ExtractArgs<Contract['calls']['isActivated']>) => getRequest('isActivated', args),
+  ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => getRequest('ADDY_REGISTRY', args),
 }
-
 
 export type Mutations = keyof Contract['mutations']
 function getMutation<M extends Mutations>(functionName: M) {
@@ -1432,7 +1534,7 @@ function getMutation<M extends Mutations>(functionName: M) {
   }
 }
 
-export const mutation:  {
+export const mutation: {
   [K in Mutations]: {
     contractName: 'LegoUniswapV2'
     deployAddress: Address | undefined
@@ -1441,92 +1543,148 @@ export const mutation:  {
     argsType: ExtractArgs<Contract['mutations'][K]> | undefined
   }
 } = {
-		setLocalGovernor: getMutation('setLocalGovernor'),
-		swapTokens: getMutation('swapTokens'),
-		addLiquidity: getMutation('addLiquidity'),
-		removeLiquidity: getMutation('removeLiquidity'),
-		claimRewards: getMutation('claimRewards'),
-		setCoreRouterPool: getMutation('setCoreRouterPool'),
-		recoverFunds: getMutation('recoverFunds'),
-		setLegoId: getMutation('setLegoId'),
-		activate: getMutation('activate'),
+  setLocalGovernor: getMutation('setLocalGovernor'),
+  swapTokens: getMutation('swapTokens'),
+  addLiquidity: getMutation('addLiquidity'),
+  removeLiquidity: getMutation('removeLiquidity'),
+  claimRewards: getMutation('claimRewards'),
+  setCoreRouterPool: getMutation('setCoreRouterPool'),
+  recoverFunds: getMutation('recoverFunds'),
+  setLegoId: getMutation('setLegoId'),
+  activate: getMutation('activate'),
 }
 
-
-
-
 export type SDK = {
-		isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => Promise<CallReturn<'isGovernor'>>
-		isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) => Promise<CallReturn<'isValidLocalGovernor'>>
-		localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => Promise<CallReturn<'localGovernor'>>
-		getRegistries: (...args: ExtractArgs<Contract['calls']['getRegistries']>) => Promise<CallReturn<'getRegistries'>>
-		getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) => Promise<CallReturn<'getAccessForLego'>>
-		hasClaimableRewards: (...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>) => Promise<CallReturn<'hasClaimableRewards'>>
-		getLpToken: (...args: ExtractArgs<Contract['calls']['getLpToken']>) => Promise<CallReturn<'getLpToken'>>
-		getPoolForLpToken: (...args: ExtractArgs<Contract['calls']['getPoolForLpToken']>) => Promise<CallReturn<'getPoolForLpToken'>>
-		getCoreRouterPool: (...args: ExtractArgs<Contract['calls']['getCoreRouterPool']>) => Promise<CallReturn<'getCoreRouterPool'>>
-		getDeepestLiqPool: (...args: ExtractArgs<Contract['calls']['getDeepestLiqPool']>) => Promise<CallReturn<'getDeepestLiqPool'>>
-		getBestSwapAmountOut: (...args: ExtractArgs<Contract['calls']['getBestSwapAmountOut']>) => Promise<CallReturn<'getBestSwapAmountOut'>>
-		getSwapAmountOut: (...args: ExtractArgs<Contract['calls']['getSwapAmountOut']>) => Promise<CallReturn<'getSwapAmountOut'>>
-		getBestSwapAmountIn: (...args: ExtractArgs<Contract['calls']['getBestSwapAmountIn']>) => Promise<CallReturn<'getBestSwapAmountIn'>>
-		getSwapAmountIn: (...args: ExtractArgs<Contract['calls']['getSwapAmountIn']>) => Promise<CallReturn<'getSwapAmountIn'>>
-		getAddLiqAmountsIn: (...args: ExtractArgs<Contract['calls']['getAddLiqAmountsIn']>) => Promise<CallReturn<'getAddLiqAmountsIn'>>
-		getRemoveLiqAmountsOut: (...args: ExtractArgs<Contract['calls']['getRemoveLiqAmountsOut']>) => Promise<CallReturn<'getRemoveLiqAmountsOut'>>
-		getPriceUnsafe: (...args: ExtractArgs<Contract['calls']['getPriceUnsafe']>) => Promise<CallReturn<'getPriceUnsafe'>>
-		coreRouterPool: (...args: ExtractArgs<Contract['calls']['coreRouterPool']>) => Promise<CallReturn<'coreRouterPool'>>
-		UNISWAP_V2_FACTORY: (...args: ExtractArgs<Contract['calls']['UNISWAP_V2_FACTORY']>) => Promise<CallReturn<'UNISWAP_V2_FACTORY'>>
-		UNISWAP_V2_ROUTER: (...args: ExtractArgs<Contract['calls']['UNISWAP_V2_ROUTER']>) => Promise<CallReturn<'UNISWAP_V2_ROUTER'>>
-		legoId: (...args: ExtractArgs<Contract['calls']['legoId']>) => Promise<CallReturn<'legoId'>>
-		isActivated: (...args: ExtractArgs<Contract['calls']['isActivated']>) => Promise<CallReturn<'isActivated'>>
-		ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => Promise<CallReturn<'ADDY_REGISTRY'>>
-		setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) => Promise<Address>
-		swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) => Promise<Address>
-		addLiquidity: (...args: ExtractArgs<Contract['mutations']['addLiquidity']>) => Promise<Address>
-		removeLiquidity: (...args: ExtractArgs<Contract['mutations']['removeLiquidity']>) => Promise<Address>
-		claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) => Promise<Address>
-		setCoreRouterPool: (...args: ExtractArgs<Contract['mutations']['setCoreRouterPool']>) => Promise<Address>
-		recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
-		setLegoId: (...args: ExtractArgs<Contract['mutations']['setLegoId']>) => Promise<Address>
-		activate: (...args: ExtractArgs<Contract['mutations']['activate']>) => Promise<Address>
+  isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => Promise<CallReturn<'isGovernor'>>
+  isValidLocalGovernor: (
+    ...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>
+  ) => Promise<CallReturn<'isValidLocalGovernor'>>
+  localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => Promise<CallReturn<'localGovernor'>>
+  getRegistries: (...args: ExtractArgs<Contract['calls']['getRegistries']>) => Promise<CallReturn<'getRegistries'>>
+  getAccessForLego: (
+    ...args: ExtractArgs<Contract['calls']['getAccessForLego']>
+  ) => Promise<CallReturn<'getAccessForLego'>>
+  hasClaimableRewards: (
+    ...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>
+  ) => Promise<CallReturn<'hasClaimableRewards'>>
+  getLpToken: (...args: ExtractArgs<Contract['calls']['getLpToken']>) => Promise<CallReturn<'getLpToken'>>
+  getPoolForLpToken: (
+    ...args: ExtractArgs<Contract['calls']['getPoolForLpToken']>
+  ) => Promise<CallReturn<'getPoolForLpToken'>>
+  getCoreRouterPool: (
+    ...args: ExtractArgs<Contract['calls']['getCoreRouterPool']>
+  ) => Promise<CallReturn<'getCoreRouterPool'>>
+  getDeepestLiqPool: (
+    ...args: ExtractArgs<Contract['calls']['getDeepestLiqPool']>
+  ) => Promise<CallReturn<'getDeepestLiqPool'>>
+  getBestSwapAmountOut: (
+    ...args: ExtractArgs<Contract['calls']['getBestSwapAmountOut']>
+  ) => Promise<CallReturn<'getBestSwapAmountOut'>>
+  getSwapAmountOut: (
+    ...args: ExtractArgs<Contract['calls']['getSwapAmountOut']>
+  ) => Promise<CallReturn<'getSwapAmountOut'>>
+  getBestSwapAmountIn: (
+    ...args: ExtractArgs<Contract['calls']['getBestSwapAmountIn']>
+  ) => Promise<CallReturn<'getBestSwapAmountIn'>>
+  getSwapAmountIn: (
+    ...args: ExtractArgs<Contract['calls']['getSwapAmountIn']>
+  ) => Promise<CallReturn<'getSwapAmountIn'>>
+  getAddLiqAmountsIn: (
+    ...args: ExtractArgs<Contract['calls']['getAddLiqAmountsIn']>
+  ) => Promise<CallReturn<'getAddLiqAmountsIn'>>
+  getRemoveLiqAmountsOut: (
+    ...args: ExtractArgs<Contract['calls']['getRemoveLiqAmountsOut']>
+  ) => Promise<CallReturn<'getRemoveLiqAmountsOut'>>
+  getPriceUnsafe: (...args: ExtractArgs<Contract['calls']['getPriceUnsafe']>) => Promise<CallReturn<'getPriceUnsafe'>>
+  coreRouterPool: (...args: ExtractArgs<Contract['calls']['coreRouterPool']>) => Promise<CallReturn<'coreRouterPool'>>
+  UNISWAP_V2_FACTORY: (
+    ...args: ExtractArgs<Contract['calls']['UNISWAP_V2_FACTORY']>
+  ) => Promise<CallReturn<'UNISWAP_V2_FACTORY'>>
+  UNISWAP_V2_ROUTER: (
+    ...args: ExtractArgs<Contract['calls']['UNISWAP_V2_ROUTER']>
+  ) => Promise<CallReturn<'UNISWAP_V2_ROUTER'>>
+  legoId: (...args: ExtractArgs<Contract['calls']['legoId']>) => Promise<CallReturn<'legoId'>>
+  isActivated: (...args: ExtractArgs<Contract['calls']['isActivated']>) => Promise<CallReturn<'isActivated'>>
+  ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => Promise<CallReturn<'ADDY_REGISTRY'>>
+  setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) => Promise<Address>
+  swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) => Promise<Address>
+  addLiquidity: (...args: ExtractArgs<Contract['mutations']['addLiquidity']>) => Promise<Address>
+  removeLiquidity: (...args: ExtractArgs<Contract['mutations']['removeLiquidity']>) => Promise<Address>
+  claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) => Promise<Address>
+  setCoreRouterPool: (...args: ExtractArgs<Contract['mutations']['setCoreRouterPool']>) => Promise<Address>
+  recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
+  setLegoId: (...args: ExtractArgs<Contract['mutations']['setLegoId']>) => Promise<Address>
+  activate: (...args: ExtractArgs<Contract['mutations']['activate']>) => Promise<Address>
 }
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
     // Queries
-		isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => singleQuery(publicClient!, call.isGovernor(...args)) as Promise<CallReturn<'isGovernor'>>,
-		isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) => singleQuery(publicClient!, call.isValidLocalGovernor(...args)) as Promise<CallReturn<'isValidLocalGovernor'>>,
-		localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => singleQuery(publicClient!, call.localGovernor(...args)) as Promise<CallReturn<'localGovernor'>>,
-		getRegistries: (...args: ExtractArgs<Contract['calls']['getRegistries']>) => singleQuery(publicClient!, call.getRegistries(...args)) as Promise<CallReturn<'getRegistries'>>,
-		getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) => singleQuery(publicClient!, call.getAccessForLego(...args)) as Promise<CallReturn<'getAccessForLego'>>,
-		hasClaimableRewards: (...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>) => singleQuery(publicClient!, call.hasClaimableRewards(...args)) as Promise<CallReturn<'hasClaimableRewards'>>,
-		getLpToken: (...args: ExtractArgs<Contract['calls']['getLpToken']>) => singleQuery(publicClient!, call.getLpToken(...args)) as Promise<CallReturn<'getLpToken'>>,
-		getPoolForLpToken: (...args: ExtractArgs<Contract['calls']['getPoolForLpToken']>) => singleQuery(publicClient!, call.getPoolForLpToken(...args)) as Promise<CallReturn<'getPoolForLpToken'>>,
-		getCoreRouterPool: (...args: ExtractArgs<Contract['calls']['getCoreRouterPool']>) => singleQuery(publicClient!, call.getCoreRouterPool(...args)) as Promise<CallReturn<'getCoreRouterPool'>>,
-		getDeepestLiqPool: (...args: ExtractArgs<Contract['calls']['getDeepestLiqPool']>) => singleQuery(publicClient!, call.getDeepestLiqPool(...args)) as Promise<CallReturn<'getDeepestLiqPool'>>,
-		getBestSwapAmountOut: (...args: ExtractArgs<Contract['calls']['getBestSwapAmountOut']>) => singleQuery(publicClient!, call.getBestSwapAmountOut(...args)) as Promise<CallReturn<'getBestSwapAmountOut'>>,
-		getSwapAmountOut: (...args: ExtractArgs<Contract['calls']['getSwapAmountOut']>) => singleQuery(publicClient!, call.getSwapAmountOut(...args)) as Promise<CallReturn<'getSwapAmountOut'>>,
-		getBestSwapAmountIn: (...args: ExtractArgs<Contract['calls']['getBestSwapAmountIn']>) => singleQuery(publicClient!, call.getBestSwapAmountIn(...args)) as Promise<CallReturn<'getBestSwapAmountIn'>>,
-		getSwapAmountIn: (...args: ExtractArgs<Contract['calls']['getSwapAmountIn']>) => singleQuery(publicClient!, call.getSwapAmountIn(...args)) as Promise<CallReturn<'getSwapAmountIn'>>,
-		getAddLiqAmountsIn: (...args: ExtractArgs<Contract['calls']['getAddLiqAmountsIn']>) => singleQuery(publicClient!, call.getAddLiqAmountsIn(...args)) as Promise<CallReturn<'getAddLiqAmountsIn'>>,
-		getRemoveLiqAmountsOut: (...args: ExtractArgs<Contract['calls']['getRemoveLiqAmountsOut']>) => singleQuery(publicClient!, call.getRemoveLiqAmountsOut(...args)) as Promise<CallReturn<'getRemoveLiqAmountsOut'>>,
-		getPriceUnsafe: (...args: ExtractArgs<Contract['calls']['getPriceUnsafe']>) => singleQuery(publicClient!, call.getPriceUnsafe(...args)) as Promise<CallReturn<'getPriceUnsafe'>>,
-		coreRouterPool: (...args: ExtractArgs<Contract['calls']['coreRouterPool']>) => singleQuery(publicClient!, call.coreRouterPool(...args)) as Promise<CallReturn<'coreRouterPool'>>,
-		UNISWAP_V2_FACTORY: (...args: ExtractArgs<Contract['calls']['UNISWAP_V2_FACTORY']>) => singleQuery(publicClient!, call.UNISWAP_V2_FACTORY(...args)) as Promise<CallReturn<'UNISWAP_V2_FACTORY'>>,
-		UNISWAP_V2_ROUTER: (...args: ExtractArgs<Contract['calls']['UNISWAP_V2_ROUTER']>) => singleQuery(publicClient!, call.UNISWAP_V2_ROUTER(...args)) as Promise<CallReturn<'UNISWAP_V2_ROUTER'>>,
-		legoId: (...args: ExtractArgs<Contract['calls']['legoId']>) => singleQuery(publicClient!, call.legoId(...args)) as Promise<CallReturn<'legoId'>>,
-		isActivated: (...args: ExtractArgs<Contract['calls']['isActivated']>) => singleQuery(publicClient!, call.isActivated(...args)) as Promise<CallReturn<'isActivated'>>,
-		ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => singleQuery(publicClient!, call.ADDY_REGISTRY(...args)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
-    
+    isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) =>
+      singleQuery(publicClient!, call.isGovernor(...args)) as Promise<CallReturn<'isGovernor'>>,
+    isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) =>
+      singleQuery(publicClient!, call.isValidLocalGovernor(...args)) as Promise<CallReturn<'isValidLocalGovernor'>>,
+    localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) =>
+      singleQuery(publicClient!, call.localGovernor(...args)) as Promise<CallReturn<'localGovernor'>>,
+    getRegistries: (...args: ExtractArgs<Contract['calls']['getRegistries']>) =>
+      singleQuery(publicClient!, call.getRegistries(...args)) as Promise<CallReturn<'getRegistries'>>,
+    getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
+      singleQuery(publicClient!, call.getAccessForLego(...args)) as Promise<CallReturn<'getAccessForLego'>>,
+    hasClaimableRewards: (...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>) =>
+      singleQuery(publicClient!, call.hasClaimableRewards(...args)) as Promise<CallReturn<'hasClaimableRewards'>>,
+    getLpToken: (...args: ExtractArgs<Contract['calls']['getLpToken']>) =>
+      singleQuery(publicClient!, call.getLpToken(...args)) as Promise<CallReturn<'getLpToken'>>,
+    getPoolForLpToken: (...args: ExtractArgs<Contract['calls']['getPoolForLpToken']>) =>
+      singleQuery(publicClient!, call.getPoolForLpToken(...args)) as Promise<CallReturn<'getPoolForLpToken'>>,
+    getCoreRouterPool: (...args: ExtractArgs<Contract['calls']['getCoreRouterPool']>) =>
+      singleQuery(publicClient!, call.getCoreRouterPool(...args)) as Promise<CallReturn<'getCoreRouterPool'>>,
+    getDeepestLiqPool: (...args: ExtractArgs<Contract['calls']['getDeepestLiqPool']>) =>
+      singleQuery(publicClient!, call.getDeepestLiqPool(...args)) as Promise<CallReturn<'getDeepestLiqPool'>>,
+    getBestSwapAmountOut: (...args: ExtractArgs<Contract['calls']['getBestSwapAmountOut']>) =>
+      singleQuery(publicClient!, call.getBestSwapAmountOut(...args)) as Promise<CallReturn<'getBestSwapAmountOut'>>,
+    getSwapAmountOut: (...args: ExtractArgs<Contract['calls']['getSwapAmountOut']>) =>
+      singleQuery(publicClient!, call.getSwapAmountOut(...args)) as Promise<CallReturn<'getSwapAmountOut'>>,
+    getBestSwapAmountIn: (...args: ExtractArgs<Contract['calls']['getBestSwapAmountIn']>) =>
+      singleQuery(publicClient!, call.getBestSwapAmountIn(...args)) as Promise<CallReturn<'getBestSwapAmountIn'>>,
+    getSwapAmountIn: (...args: ExtractArgs<Contract['calls']['getSwapAmountIn']>) =>
+      singleQuery(publicClient!, call.getSwapAmountIn(...args)) as Promise<CallReturn<'getSwapAmountIn'>>,
+    getAddLiqAmountsIn: (...args: ExtractArgs<Contract['calls']['getAddLiqAmountsIn']>) =>
+      singleQuery(publicClient!, call.getAddLiqAmountsIn(...args)) as Promise<CallReturn<'getAddLiqAmountsIn'>>,
+    getRemoveLiqAmountsOut: (...args: ExtractArgs<Contract['calls']['getRemoveLiqAmountsOut']>) =>
+      singleQuery(publicClient!, call.getRemoveLiqAmountsOut(...args)) as Promise<CallReturn<'getRemoveLiqAmountsOut'>>,
+    getPriceUnsafe: (...args: ExtractArgs<Contract['calls']['getPriceUnsafe']>) =>
+      singleQuery(publicClient!, call.getPriceUnsafe(...args)) as Promise<CallReturn<'getPriceUnsafe'>>,
+    coreRouterPool: (...args: ExtractArgs<Contract['calls']['coreRouterPool']>) =>
+      singleQuery(publicClient!, call.coreRouterPool(...args)) as Promise<CallReturn<'coreRouterPool'>>,
+    UNISWAP_V2_FACTORY: (...args: ExtractArgs<Contract['calls']['UNISWAP_V2_FACTORY']>) =>
+      singleQuery(publicClient!, call.UNISWAP_V2_FACTORY(...args)) as Promise<CallReturn<'UNISWAP_V2_FACTORY'>>,
+    UNISWAP_V2_ROUTER: (...args: ExtractArgs<Contract['calls']['UNISWAP_V2_ROUTER']>) =>
+      singleQuery(publicClient!, call.UNISWAP_V2_ROUTER(...args)) as Promise<CallReturn<'UNISWAP_V2_ROUTER'>>,
+    legoId: (...args: ExtractArgs<Contract['calls']['legoId']>) =>
+      singleQuery(publicClient!, call.legoId(...args)) as Promise<CallReturn<'legoId'>>,
+    isActivated: (...args: ExtractArgs<Contract['calls']['isActivated']>) =>
+      singleQuery(publicClient!, call.isActivated(...args)) as Promise<CallReturn<'isActivated'>>,
+    ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) =>
+      singleQuery(publicClient!, call.ADDY_REGISTRY(...args)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
+
     // Mutations
-		setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) => mutate(walletClient!, mutation.setLocalGovernor)(...args),
-		swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) => mutate(walletClient!, mutation.swapTokens)(...args),
-		addLiquidity: (...args: ExtractArgs<Contract['mutations']['addLiquidity']>) => mutate(walletClient!, mutation.addLiquidity)(...args),
-		removeLiquidity: (...args: ExtractArgs<Contract['mutations']['removeLiquidity']>) => mutate(walletClient!, mutation.removeLiquidity)(...args),
-		claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) => mutate(walletClient!, mutation.claimRewards)(...args),
-		setCoreRouterPool: (...args: ExtractArgs<Contract['mutations']['setCoreRouterPool']>) => mutate(walletClient!, mutation.setCoreRouterPool)(...args),
-		recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => mutate(walletClient!, mutation.recoverFunds)(...args),
-		setLegoId: (...args: ExtractArgs<Contract['mutations']['setLegoId']>) => mutate(walletClient!, mutation.setLegoId)(...args),
-		activate: (...args: ExtractArgs<Contract['mutations']['activate']>) => mutate(walletClient!, mutation.activate)(...args),
+    setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) =>
+      mutate(walletClient!, mutation.setLocalGovernor)(...args),
+    swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) =>
+      mutate(walletClient!, mutation.swapTokens)(...args),
+    addLiquidity: (...args: ExtractArgs<Contract['mutations']['addLiquidity']>) =>
+      mutate(walletClient!, mutation.addLiquidity)(...args),
+    removeLiquidity: (...args: ExtractArgs<Contract['mutations']['removeLiquidity']>) =>
+      mutate(walletClient!, mutation.removeLiquidity)(...args),
+    claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) =>
+      mutate(walletClient!, mutation.claimRewards)(...args),
+    setCoreRouterPool: (...args: ExtractArgs<Contract['mutations']['setCoreRouterPool']>) =>
+      mutate(walletClient!, mutation.setCoreRouterPool)(...args),
+    recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) =>
+      mutate(walletClient!, mutation.recoverFunds)(...args),
+    setLegoId: (...args: ExtractArgs<Contract['mutations']['setLegoId']>) =>
+      mutate(walletClient!, mutation.setLegoId)(...args),
+    activate: (...args: ExtractArgs<Contract['mutations']['activate']>) =>
+      mutate(walletClient!, mutation.activate)(...args),
   }
 }
-

@@ -4,9 +4,9 @@ This document lists all Additional Use Grants for the Underscore Protocol, as re
 
 ## Current Additional Use Grants
 
-| Date Granted | Entity | Grant Description | Scope | Expiration |
-|--------------|--------|-------------------|-------|------------|
-| N/A | N/A | No additional use grants have been issued yet | N/A | N/A |
+| Date Granted | Entity | Grant Description                             | Scope | Expiration |
+| ------------ | ------ | --------------------------------------------- | ----- | ---------- |
+| N/A          | N/A    | No additional use grants have been issued yet | N/A   | N/A        |
 
 ## Grant Process
 
@@ -20,6 +20,7 @@ Additional Use Grants are issued through the Underscore governance process. To r
 ## Grant Terms
 
 Each Additional Use Grant will specify:
+
 - The entity receiving the grant
 - The specific use cases permitted
 - Any limitations or conditions
@@ -28,4 +29,5 @@ Each Additional Use Grant will specify:
 ## Contact
 
 For questions about Additional Use Grants or to inquire about commercial licensing options, please contact:
+
 - Email: team@hightop.com

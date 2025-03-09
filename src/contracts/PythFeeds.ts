@@ -9,561 +9,560 @@ import { PublicClient, WalletClient } from 'viem'
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
 
-
 export const abi = [
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "asset",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "name": "feedId",
-                "type": "bytes32"
-            }
-        ],
-        "name": "PythFeedAdded",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "asset",
-                "type": "address"
-            }
-        ],
-        "name": "PythFeedDisabled",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "name": "payload",
-                "type": "bytes"
-            },
-            {
-                "indexed": false,
-                "name": "feeAmount",
-                "type": "uint256"
-            },
-            {
-                "indexed": true,
-                "name": "caller",
-                "type": "address"
-            }
-        ],
-        "name": "PythPriceUpdated",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "recipient",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "amount",
-                "type": "uint256"
-            }
-        ],
-        "name": "EthRecoveredFromPyth",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "addr",
-                "type": "address"
-            }
-        ],
-        "name": "LocalGovernorSet",
-        "type": "event"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_address",
-                "type": "address"
-            }
-        ],
-        "name": "isGovernor",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_newGovernor",
-                "type": "address"
-            }
-        ],
-        "name": "isValidLocalGovernor",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_newGovernor",
-                "type": "address"
-            }
-        ],
-        "name": "setLocalGovernor",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "localGovernor",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "getConfiguredAssets",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address[]"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "arg0",
-                "type": "uint256"
-            }
-        ],
-        "name": "assets",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "arg0",
-                "type": "address"
-            }
-        ],
-        "name": "indexOfAsset",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "numAssets",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "stateMutability": "payable",
-        "type": "fallback"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            }
-        ],
-        "name": "getPrice",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_staleTime",
-                "type": "uint256"
-            }
-        ],
-        "name": "getPrice",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_staleTime",
-                "type": "uint256"
-            },
-            {
-                "name": "_oracleRegistry",
-                "type": "address"
-            }
-        ],
-        "name": "getPrice",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            }
-        ],
-        "name": "getPriceAndHasFeed",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_staleTime",
-                "type": "uint256"
-            }
-        ],
-        "name": "getPriceAndHasFeed",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_staleTime",
-                "type": "uint256"
-            },
-            {
-                "name": "_oracleRegistry",
-                "type": "address"
-            }
-        ],
-        "name": "getPriceAndHasFeed",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            }
-        ],
-        "name": "hasPriceFeed",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_payloads",
-                "type": "bytes[]"
-            }
-        ],
-        "name": "updatePythPrices",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_feedId",
-                "type": "bytes32"
-            }
-        ],
-        "name": "isValidPythFeed",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            },
-            {
-                "name": "_feedId",
-                "type": "bytes32"
-            }
-        ],
-        "name": "setPythFeed",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_asset",
-                "type": "address"
-            }
-        ],
-        "name": "disablePythPriceFeed",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_recipient",
-                "type": "address"
-            }
-        ],
-        "name": "isValidEthRecovery",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_recipient",
-                "type": "address"
-            }
-        ],
-        "name": "recoverEthBalance",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_oracleId",
-                "type": "uint256"
-            }
-        ],
-        "name": "setOraclePartnerId",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "PYTH",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "arg0",
-                "type": "address"
-            }
-        ],
-        "name": "feedConfig",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bytes32"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "oraclePartnerId",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "ADDY_REGISTRY",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "_pyth",
-                "type": "address"
-            },
-            {
-                "name": "_addyRegistry",
-                "type": "address"
-            }
-        ],
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-    }
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'asset',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'feedId',
+        type: 'bytes32',
+      },
+    ],
+    name: 'PythFeedAdded',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'asset',
+        type: 'address',
+      },
+    ],
+    name: 'PythFeedDisabled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'payload',
+        type: 'bytes',
+      },
+      {
+        indexed: false,
+        name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        indexed: true,
+        name: 'caller',
+        type: 'address',
+      },
+    ],
+    name: 'PythPriceUpdated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'recipient',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'EthRecoveredFromPyth',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+    ],
+    name: 'LocalGovernorSet',
+    type: 'event',
+  },
+  {
+    inputs: [
+      {
+        name: '_address',
+        type: 'address',
+      },
+    ],
+    name: 'isGovernor',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_newGovernor',
+        type: 'address',
+      },
+    ],
+    name: 'isValidLocalGovernor',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_newGovernor',
+        type: 'address',
+      },
+    ],
+    name: 'setLocalGovernor',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'localGovernor',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getConfiguredAssets',
+    outputs: [
+      {
+        name: '',
+        type: 'address[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    name: 'assets',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'indexOfAsset',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'numAssets',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    stateMutability: 'payable',
+    type: 'fallback',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    name: 'getPrice',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_staleTime',
+        type: 'uint256',
+      },
+    ],
+    name: 'getPrice',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_staleTime',
+        type: 'uint256',
+      },
+      {
+        name: '_oracleRegistry',
+        type: 'address',
+      },
+    ],
+    name: 'getPrice',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    name: 'getPriceAndHasFeed',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_staleTime',
+        type: 'uint256',
+      },
+    ],
+    name: 'getPriceAndHasFeed',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_staleTime',
+        type: 'uint256',
+      },
+      {
+        name: '_oracleRegistry',
+        type: 'address',
+      },
+    ],
+    name: 'getPriceAndHasFeed',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    name: 'hasPriceFeed',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_payloads',
+        type: 'bytes[]',
+      },
+    ],
+    name: 'updatePythPrices',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_feedId',
+        type: 'bytes32',
+      },
+    ],
+    name: 'isValidPythFeed',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_feedId',
+        type: 'bytes32',
+      },
+    ],
+    name: 'setPythFeed',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    name: 'disablePythPriceFeed',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    name: 'isValidEthRecovery',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    name: 'recoverEthBalance',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_oracleId',
+        type: 'uint256',
+      },
+    ],
+    name: 'setOraclePartnerId',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'PYTH',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'feedConfig',
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'oraclePartnerId',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'ADDY_REGISTRY',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_pyth',
+        type: 'address',
+      },
+      {
+        name: '_addyRegistry',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+  },
 ] as const
 
-export const deployAddress: Address | undefined = undefined
+export const deployAddress: Address | undefined = '0xB8090783aBF7B6336121FAfd6c4aCa3C4516792D'
 
 export type Contract = {
   calls: {
@@ -575,7 +574,11 @@ export type Contract = {
     indexOfAsset: (arg0: `0x${string}`) => Promise<bigint>
     numAssets: () => Promise<bigint>
     getPrice: (asset: `0x${string}`, staleTime?: bigint, oracleRegistry?: `0x${string}`) => Promise<bigint>
-    getPriceAndHasFeed: (asset: `0x${string}`, staleTime?: bigint, oracleRegistry?: `0x${string}`) => Promise<[bigint, boolean]>
+    getPriceAndHasFeed: (
+      asset: `0x${string}`,
+      staleTime?: bigint,
+      oracleRegistry?: `0x${string}`,
+    ) => Promise<[bigint, boolean]>
     hasPriceFeed: (asset: `0x${string}`) => Promise<boolean>
     isValidPythFeed: (asset: `0x${string}`, feedId: `0x${string}`) => Promise<boolean>
     isValidEthRecovery: (recipient: `0x${string}`) => Promise<boolean>
@@ -610,10 +613,7 @@ export type Request<M extends Calls> = {
   deployAddress: Address | undefined
   defaultValue: Awaited<ReturnType<Contract['calls'][M]>> | undefined
   getAbi: () => typeof abi
-  with: (options: {
-    contractAddress?: Address
-    defaultValue?: Awaited<ReturnType<Contract['calls'][M]>>
-  }) => Request<M>
+  with: (options: { contractAddress?: Address; defaultValue?: Awaited<ReturnType<Contract['calls'][M]>> }) => Request<M>
   defaultTo: (defaultValue: Awaited<ReturnType<Contract['calls'][M]>>) => Request<M>
   at: (address: Address) => Request<M>
 }
@@ -623,70 +623,68 @@ function getRequest<M extends Calls>(
   method: M,
   args: ExtractArgs<Contract['calls'][M]>,
   contractAddressOrOptions?:
-  | Address
-  | {
-    contractAddress?: Address
-    defaultValue?: Awaited<ReturnType<Contract['calls'][M]>>
-    },
-  ): Request<M> {
-    const address =
-      typeof contractAddressOrOptions === 'string' ? contractAddressOrOptions : contractAddressOrOptions?.contractAddress
-    const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
-
-    const call = {
-      contractName: 'PythFeeds' as const,
-      method,
-      args,
-      address,
-      deployAddress,
-      defaultValue,
-      getAbi: () => abi,
-      with: (options: {
+    | Address
+    | {
         contractAddress?: Address
         defaultValue?: Awaited<ReturnType<Contract['calls'][M]>>
-      }) => {
-          call.address = options.contractAddress
-          call.defaultValue = options.defaultValue
-          return call as Request<M>
       },
-      defaultTo: (defaultValue: Awaited<ReturnType<Contract['calls'][M]>>) => {
-        call.defaultValue = defaultValue
-        return call as Request<M>
-      },
-      at: (address: Address) => {
-        call.address = address
-        return call as Request<M>
-      },
-    } as Request<M>
+): Request<M> {
+  const address =
+    typeof contractAddressOrOptions === 'string' ? contractAddressOrOptions : contractAddressOrOptions?.contractAddress
+  const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
 
-    return call
+  const call = {
+    contractName: 'PythFeeds' as const,
+    method,
+    args,
+    address,
+    deployAddress,
+    defaultValue,
+    getAbi: () => abi,
+    with: (options: { contractAddress?: Address; defaultValue?: Awaited<ReturnType<Contract['calls'][M]>> }) => {
+      call.address = options.contractAddress
+      call.defaultValue = options.defaultValue
+      return call as Request<M>
+    },
+    defaultTo: (defaultValue: Awaited<ReturnType<Contract['calls'][M]>>) => {
+      call.defaultValue = defaultValue
+      return call as Request<M>
+    },
+    at: (address: Address) => {
+      call.address = address
+      return call as Request<M>
+    },
+  } as Request<M>
+
+  return call
 }
 
 type CallType = {
-  [K in Calls]: (
-    ...args: ExtractArgs<Contract['calls'][K]>
-  ) => ReturnType<typeof getRequest<K>>
+  [K in Calls]: (...args: ExtractArgs<Contract['calls'][K]>) => ReturnType<typeof getRequest<K>>
 }
 
 export const call: CallType = {
-		isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => getRequest('isGovernor', args),
-		isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) => getRequest('isValidLocalGovernor', args),
-		localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => getRequest('localGovernor', args),
-		getConfiguredAssets: (...args: ExtractArgs<Contract['calls']['getConfiguredAssets']>) => getRequest('getConfiguredAssets', args),
-		assets: (...args: ExtractArgs<Contract['calls']['assets']>) => getRequest('assets', args),
-		indexOfAsset: (...args: ExtractArgs<Contract['calls']['indexOfAsset']>) => getRequest('indexOfAsset', args),
-		numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) => getRequest('numAssets', args),
-		getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => getRequest('getPrice', args),
-		getPriceAndHasFeed: (...args: ExtractArgs<Contract['calls']['getPriceAndHasFeed']>) => getRequest('getPriceAndHasFeed', args),
-		hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) => getRequest('hasPriceFeed', args),
-		isValidPythFeed: (...args: ExtractArgs<Contract['calls']['isValidPythFeed']>) => getRequest('isValidPythFeed', args),
-		isValidEthRecovery: (...args: ExtractArgs<Contract['calls']['isValidEthRecovery']>) => getRequest('isValidEthRecovery', args),
-		PYTH: (...args: ExtractArgs<Contract['calls']['PYTH']>) => getRequest('PYTH', args),
-		feedConfig: (...args: ExtractArgs<Contract['calls']['feedConfig']>) => getRequest('feedConfig', args),
-		oraclePartnerId: (...args: ExtractArgs<Contract['calls']['oraclePartnerId']>) => getRequest('oraclePartnerId', args),
-		ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => getRequest('ADDY_REGISTRY', args),
+  isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => getRequest('isGovernor', args),
+  isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) =>
+    getRequest('isValidLocalGovernor', args),
+  localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => getRequest('localGovernor', args),
+  getConfiguredAssets: (...args: ExtractArgs<Contract['calls']['getConfiguredAssets']>) =>
+    getRequest('getConfiguredAssets', args),
+  assets: (...args: ExtractArgs<Contract['calls']['assets']>) => getRequest('assets', args),
+  indexOfAsset: (...args: ExtractArgs<Contract['calls']['indexOfAsset']>) => getRequest('indexOfAsset', args),
+  numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) => getRequest('numAssets', args),
+  getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => getRequest('getPrice', args),
+  getPriceAndHasFeed: (...args: ExtractArgs<Contract['calls']['getPriceAndHasFeed']>) =>
+    getRequest('getPriceAndHasFeed', args),
+  hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) => getRequest('hasPriceFeed', args),
+  isValidPythFeed: (...args: ExtractArgs<Contract['calls']['isValidPythFeed']>) => getRequest('isValidPythFeed', args),
+  isValidEthRecovery: (...args: ExtractArgs<Contract['calls']['isValidEthRecovery']>) =>
+    getRequest('isValidEthRecovery', args),
+  PYTH: (...args: ExtractArgs<Contract['calls']['PYTH']>) => getRequest('PYTH', args),
+  feedConfig: (...args: ExtractArgs<Contract['calls']['feedConfig']>) => getRequest('feedConfig', args),
+  oraclePartnerId: (...args: ExtractArgs<Contract['calls']['oraclePartnerId']>) => getRequest('oraclePartnerId', args),
+  ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => getRequest('ADDY_REGISTRY', args),
 }
-
 
 export type Mutations = keyof Contract['mutations']
 function getMutation<M extends Mutations>(functionName: M) {
@@ -699,7 +697,7 @@ function getMutation<M extends Mutations>(functionName: M) {
   }
 }
 
-export const mutation:  {
+export const mutation: {
   [K in Mutations]: {
     contractName: 'PythFeeds'
     deployAddress: Address | undefined
@@ -708,69 +706,99 @@ export const mutation:  {
     argsType: ExtractArgs<Contract['mutations'][K]> | undefined
   }
 } = {
-		setLocalGovernor: getMutation('setLocalGovernor'),
-		updatePythPrices: getMutation('updatePythPrices'),
-		setPythFeed: getMutation('setPythFeed'),
-		disablePythPriceFeed: getMutation('disablePythPriceFeed'),
-		recoverEthBalance: getMutation('recoverEthBalance'),
-		setOraclePartnerId: getMutation('setOraclePartnerId'),
+  setLocalGovernor: getMutation('setLocalGovernor'),
+  updatePythPrices: getMutation('updatePythPrices'),
+  setPythFeed: getMutation('setPythFeed'),
+  disablePythPriceFeed: getMutation('disablePythPriceFeed'),
+  recoverEthBalance: getMutation('recoverEthBalance'),
+  setOraclePartnerId: getMutation('setOraclePartnerId'),
 }
 
-
-
-
 export type SDK = {
-		isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => Promise<CallReturn<'isGovernor'>>
-		isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) => Promise<CallReturn<'isValidLocalGovernor'>>
-		localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => Promise<CallReturn<'localGovernor'>>
-		getConfiguredAssets: (...args: ExtractArgs<Contract['calls']['getConfiguredAssets']>) => Promise<CallReturn<'getConfiguredAssets'>>
-		assets: (...args: ExtractArgs<Contract['calls']['assets']>) => Promise<CallReturn<'assets'>>
-		indexOfAsset: (...args: ExtractArgs<Contract['calls']['indexOfAsset']>) => Promise<CallReturn<'indexOfAsset'>>
-		numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) => Promise<CallReturn<'numAssets'>>
-		getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => Promise<CallReturn<'getPrice'>>
-		getPriceAndHasFeed: (...args: ExtractArgs<Contract['calls']['getPriceAndHasFeed']>) => Promise<CallReturn<'getPriceAndHasFeed'>>
-		hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) => Promise<CallReturn<'hasPriceFeed'>>
-		isValidPythFeed: (...args: ExtractArgs<Contract['calls']['isValidPythFeed']>) => Promise<CallReturn<'isValidPythFeed'>>
-		isValidEthRecovery: (...args: ExtractArgs<Contract['calls']['isValidEthRecovery']>) => Promise<CallReturn<'isValidEthRecovery'>>
-		PYTH: (...args: ExtractArgs<Contract['calls']['PYTH']>) => Promise<CallReturn<'PYTH'>>
-		feedConfig: (...args: ExtractArgs<Contract['calls']['feedConfig']>) => Promise<CallReturn<'feedConfig'>>
-		oraclePartnerId: (...args: ExtractArgs<Contract['calls']['oraclePartnerId']>) => Promise<CallReturn<'oraclePartnerId'>>
-		ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => Promise<CallReturn<'ADDY_REGISTRY'>>
-		setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) => Promise<Address>
-		updatePythPrices: (...args: ExtractArgs<Contract['mutations']['updatePythPrices']>) => Promise<Address>
-		setPythFeed: (...args: ExtractArgs<Contract['mutations']['setPythFeed']>) => Promise<Address>
-		disablePythPriceFeed: (...args: ExtractArgs<Contract['mutations']['disablePythPriceFeed']>) => Promise<Address>
-		recoverEthBalance: (...args: ExtractArgs<Contract['mutations']['recoverEthBalance']>) => Promise<Address>
-		setOraclePartnerId: (...args: ExtractArgs<Contract['mutations']['setOraclePartnerId']>) => Promise<Address>
+  isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => Promise<CallReturn<'isGovernor'>>
+  isValidLocalGovernor: (
+    ...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>
+  ) => Promise<CallReturn<'isValidLocalGovernor'>>
+  localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => Promise<CallReturn<'localGovernor'>>
+  getConfiguredAssets: (
+    ...args: ExtractArgs<Contract['calls']['getConfiguredAssets']>
+  ) => Promise<CallReturn<'getConfiguredAssets'>>
+  assets: (...args: ExtractArgs<Contract['calls']['assets']>) => Promise<CallReturn<'assets'>>
+  indexOfAsset: (...args: ExtractArgs<Contract['calls']['indexOfAsset']>) => Promise<CallReturn<'indexOfAsset'>>
+  numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) => Promise<CallReturn<'numAssets'>>
+  getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => Promise<CallReturn<'getPrice'>>
+  getPriceAndHasFeed: (
+    ...args: ExtractArgs<Contract['calls']['getPriceAndHasFeed']>
+  ) => Promise<CallReturn<'getPriceAndHasFeed'>>
+  hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) => Promise<CallReturn<'hasPriceFeed'>>
+  isValidPythFeed: (
+    ...args: ExtractArgs<Contract['calls']['isValidPythFeed']>
+  ) => Promise<CallReturn<'isValidPythFeed'>>
+  isValidEthRecovery: (
+    ...args: ExtractArgs<Contract['calls']['isValidEthRecovery']>
+  ) => Promise<CallReturn<'isValidEthRecovery'>>
+  PYTH: (...args: ExtractArgs<Contract['calls']['PYTH']>) => Promise<CallReturn<'PYTH'>>
+  feedConfig: (...args: ExtractArgs<Contract['calls']['feedConfig']>) => Promise<CallReturn<'feedConfig'>>
+  oraclePartnerId: (
+    ...args: ExtractArgs<Contract['calls']['oraclePartnerId']>
+  ) => Promise<CallReturn<'oraclePartnerId'>>
+  ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => Promise<CallReturn<'ADDY_REGISTRY'>>
+  setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) => Promise<Address>
+  updatePythPrices: (...args: ExtractArgs<Contract['mutations']['updatePythPrices']>) => Promise<Address>
+  setPythFeed: (...args: ExtractArgs<Contract['mutations']['setPythFeed']>) => Promise<Address>
+  disablePythPriceFeed: (...args: ExtractArgs<Contract['mutations']['disablePythPriceFeed']>) => Promise<Address>
+  recoverEthBalance: (...args: ExtractArgs<Contract['mutations']['recoverEthBalance']>) => Promise<Address>
+  setOraclePartnerId: (...args: ExtractArgs<Contract['mutations']['setOraclePartnerId']>) => Promise<Address>
 }
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
     // Queries
-		isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => singleQuery(publicClient!, call.isGovernor(...args)) as Promise<CallReturn<'isGovernor'>>,
-		isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) => singleQuery(publicClient!, call.isValidLocalGovernor(...args)) as Promise<CallReturn<'isValidLocalGovernor'>>,
-		localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => singleQuery(publicClient!, call.localGovernor(...args)) as Promise<CallReturn<'localGovernor'>>,
-		getConfiguredAssets: (...args: ExtractArgs<Contract['calls']['getConfiguredAssets']>) => singleQuery(publicClient!, call.getConfiguredAssets(...args)) as Promise<CallReturn<'getConfiguredAssets'>>,
-		assets: (...args: ExtractArgs<Contract['calls']['assets']>) => singleQuery(publicClient!, call.assets(...args)) as Promise<CallReturn<'assets'>>,
-		indexOfAsset: (...args: ExtractArgs<Contract['calls']['indexOfAsset']>) => singleQuery(publicClient!, call.indexOfAsset(...args)) as Promise<CallReturn<'indexOfAsset'>>,
-		numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) => singleQuery(publicClient!, call.numAssets(...args)) as Promise<CallReturn<'numAssets'>>,
-		getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => singleQuery(publicClient!, call.getPrice(...args)) as Promise<CallReturn<'getPrice'>>,
-		getPriceAndHasFeed: (...args: ExtractArgs<Contract['calls']['getPriceAndHasFeed']>) => singleQuery(publicClient!, call.getPriceAndHasFeed(...args)) as Promise<CallReturn<'getPriceAndHasFeed'>>,
-		hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) => singleQuery(publicClient!, call.hasPriceFeed(...args)) as Promise<CallReturn<'hasPriceFeed'>>,
-		isValidPythFeed: (...args: ExtractArgs<Contract['calls']['isValidPythFeed']>) => singleQuery(publicClient!, call.isValidPythFeed(...args)) as Promise<CallReturn<'isValidPythFeed'>>,
-		isValidEthRecovery: (...args: ExtractArgs<Contract['calls']['isValidEthRecovery']>) => singleQuery(publicClient!, call.isValidEthRecovery(...args)) as Promise<CallReturn<'isValidEthRecovery'>>,
-		PYTH: (...args: ExtractArgs<Contract['calls']['PYTH']>) => singleQuery(publicClient!, call.PYTH(...args)) as Promise<CallReturn<'PYTH'>>,
-		feedConfig: (...args: ExtractArgs<Contract['calls']['feedConfig']>) => singleQuery(publicClient!, call.feedConfig(...args)) as Promise<CallReturn<'feedConfig'>>,
-		oraclePartnerId: (...args: ExtractArgs<Contract['calls']['oraclePartnerId']>) => singleQuery(publicClient!, call.oraclePartnerId(...args)) as Promise<CallReturn<'oraclePartnerId'>>,
-		ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => singleQuery(publicClient!, call.ADDY_REGISTRY(...args)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
-    
+    isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) =>
+      singleQuery(publicClient!, call.isGovernor(...args)) as Promise<CallReturn<'isGovernor'>>,
+    isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) =>
+      singleQuery(publicClient!, call.isValidLocalGovernor(...args)) as Promise<CallReturn<'isValidLocalGovernor'>>,
+    localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) =>
+      singleQuery(publicClient!, call.localGovernor(...args)) as Promise<CallReturn<'localGovernor'>>,
+    getConfiguredAssets: (...args: ExtractArgs<Contract['calls']['getConfiguredAssets']>) =>
+      singleQuery(publicClient!, call.getConfiguredAssets(...args)) as Promise<CallReturn<'getConfiguredAssets'>>,
+    assets: (...args: ExtractArgs<Contract['calls']['assets']>) =>
+      singleQuery(publicClient!, call.assets(...args)) as Promise<CallReturn<'assets'>>,
+    indexOfAsset: (...args: ExtractArgs<Contract['calls']['indexOfAsset']>) =>
+      singleQuery(publicClient!, call.indexOfAsset(...args)) as Promise<CallReturn<'indexOfAsset'>>,
+    numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) =>
+      singleQuery(publicClient!, call.numAssets(...args)) as Promise<CallReturn<'numAssets'>>,
+    getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) =>
+      singleQuery(publicClient!, call.getPrice(...args)) as Promise<CallReturn<'getPrice'>>,
+    getPriceAndHasFeed: (...args: ExtractArgs<Contract['calls']['getPriceAndHasFeed']>) =>
+      singleQuery(publicClient!, call.getPriceAndHasFeed(...args)) as Promise<CallReturn<'getPriceAndHasFeed'>>,
+    hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) =>
+      singleQuery(publicClient!, call.hasPriceFeed(...args)) as Promise<CallReturn<'hasPriceFeed'>>,
+    isValidPythFeed: (...args: ExtractArgs<Contract['calls']['isValidPythFeed']>) =>
+      singleQuery(publicClient!, call.isValidPythFeed(...args)) as Promise<CallReturn<'isValidPythFeed'>>,
+    isValidEthRecovery: (...args: ExtractArgs<Contract['calls']['isValidEthRecovery']>) =>
+      singleQuery(publicClient!, call.isValidEthRecovery(...args)) as Promise<CallReturn<'isValidEthRecovery'>>,
+    PYTH: (...args: ExtractArgs<Contract['calls']['PYTH']>) =>
+      singleQuery(publicClient!, call.PYTH(...args)) as Promise<CallReturn<'PYTH'>>,
+    feedConfig: (...args: ExtractArgs<Contract['calls']['feedConfig']>) =>
+      singleQuery(publicClient!, call.feedConfig(...args)) as Promise<CallReturn<'feedConfig'>>,
+    oraclePartnerId: (...args: ExtractArgs<Contract['calls']['oraclePartnerId']>) =>
+      singleQuery(publicClient!, call.oraclePartnerId(...args)) as Promise<CallReturn<'oraclePartnerId'>>,
+    ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) =>
+      singleQuery(publicClient!, call.ADDY_REGISTRY(...args)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
+
     // Mutations
-		setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) => mutate(walletClient!, mutation.setLocalGovernor)(...args),
-		updatePythPrices: (...args: ExtractArgs<Contract['mutations']['updatePythPrices']>) => mutate(walletClient!, mutation.updatePythPrices)(...args),
-		setPythFeed: (...args: ExtractArgs<Contract['mutations']['setPythFeed']>) => mutate(walletClient!, mutation.setPythFeed)(...args),
-		disablePythPriceFeed: (...args: ExtractArgs<Contract['mutations']['disablePythPriceFeed']>) => mutate(walletClient!, mutation.disablePythPriceFeed)(...args),
-		recoverEthBalance: (...args: ExtractArgs<Contract['mutations']['recoverEthBalance']>) => mutate(walletClient!, mutation.recoverEthBalance)(...args),
-		setOraclePartnerId: (...args: ExtractArgs<Contract['mutations']['setOraclePartnerId']>) => mutate(walletClient!, mutation.setOraclePartnerId)(...args),
+    setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) =>
+      mutate(walletClient!, mutation.setLocalGovernor)(...args),
+    updatePythPrices: (...args: ExtractArgs<Contract['mutations']['updatePythPrices']>) =>
+      mutate(walletClient!, mutation.updatePythPrices)(...args),
+    setPythFeed: (...args: ExtractArgs<Contract['mutations']['setPythFeed']>) =>
+      mutate(walletClient!, mutation.setPythFeed)(...args),
+    disablePythPriceFeed: (...args: ExtractArgs<Contract['mutations']['disablePythPriceFeed']>) =>
+      mutate(walletClient!, mutation.disablePythPriceFeed)(...args),
+    recoverEthBalance: (...args: ExtractArgs<Contract['mutations']['recoverEthBalance']>) =>
+      mutate(walletClient!, mutation.recoverEthBalance)(...args),
+    setOraclePartnerId: (...args: ExtractArgs<Contract['mutations']['setOraclePartnerId']>) =>
+      mutate(walletClient!, mutation.setOraclePartnerId)(...args),
   }
 }
-

@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 /* @ts-nocheck */
-  
+
 export * as AddyRegistry from './AddyRegistry.js'
 export * as AgentFactory from './AgentFactory.js'
 export * as AgentTemplate from './AgentTemplate.js'

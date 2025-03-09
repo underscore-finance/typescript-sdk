@@ -22,6 +22,7 @@ The Underscore Protocol governance may vote to move the Change Date earlier than
 ## Verification
 
 To verify this Change Date, please refer to:
+
 1. The LICENSE file in the repository root
 2. The BUSL_LICENSE file in the licenses directory
 3. This document (LICENSE_DATE.md)
@@ -29,4 +30,5 @@ To verify this Change Date, please refer to:
 ## Contact
 
 For questions about licensing or to inquire about commercial licensing options before the Change Date, please contact:
+
 - Email: team@hightop.com
