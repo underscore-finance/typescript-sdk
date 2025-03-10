@@ -6,15 +6,18 @@
 import { PublicClient, WalletClient } from 'viem'
 
 import * as AddyRegistry from './AddyRegistry.js'
+import * as Agent from './Agent.js'
 import * as AgentFactory from './AgentFactory.js'
-import * as AgentTemplate from './AgentTemplate.js'
 import * as ChainlinkFeeds from './ChainlinkFeeds.js'
 import * as ERC20 from './ERC20.js'
 import * as LegoAaveV3 from './LegoAaveV3.js'
 import * as LegoAeroClassic from './LegoAeroClassic.js'
 import * as LegoAeroSlipstream from './LegoAeroSlipstream.js'
+import * as LegoCommon from './LegoCommon.js'
 import * as LegoCompoundV3 from './LegoCompoundV3.js'
+import * as LegoCredit from './LegoCredit.js'
 import * as LegoCurve from './LegoCurve.js'
+import * as LegoDex from './LegoDex.js'
 import * as LegoEuler from './LegoEuler.js'
 import * as LegoFluid from './LegoFluid.js'
 import * as LegoHelper from './LegoHelper.js'
@@ -24,6 +27,8 @@ import * as LegoRegistry from './LegoRegistry.js'
 import * as LegoSky from './LegoSky.js'
 import * as LegoUniswapV2 from './LegoUniswapV2.js'
 import * as LegoUniswapV3 from './LegoUniswapV3.js'
+import * as LegoYield from './LegoYield.js'
+import * as OracleParser from './OracleParser.js'
 import * as OracleRegistry from './OracleRegistry.js'
 import * as PriceSheets from './PriceSheets.js'
 import * as PythFeeds from './PythFeeds.js'
@@ -33,16 +38,18 @@ import * as WalletFunds from './WalletFunds.js'
 
 export type SDK = {
   AddyRegistry: AddyRegistry.SDK
+  Agent: (address: `0x${string}`) => Agent.SDK
   AgentFactory: AgentFactory.SDK
-  Agent: (address: `0x${string}`) => AgentTemplate.SDK
   ChainlinkFeeds: ChainlinkFeeds.SDK
   ERC20: (address: `0x${string}`) => ERC20.SDK
-
   LegoAaveV3: LegoAaveV3.SDK
   LegoAeroClassic: LegoAeroClassic.SDK
   LegoAeroSlipstream: LegoAeroSlipstream.SDK
+  LegoCommon: (address: `0x${string}`) => LegoCommon.SDK
   LegoCompoundV3: LegoCompoundV3.SDK
+  LegoCredit: (address: `0x${string}`) => LegoCredit.SDK
   LegoCurve: LegoCurve.SDK
+  LegoDex: (address: `0x${string}`) => LegoDex.SDK
   LegoEuler: LegoEuler.SDK
   LegoFluid: LegoFluid.SDK
   LegoHelper: LegoHelper.SDK
@@ -52,6 +59,8 @@ export type SDK = {
   LegoSky: LegoSky.SDK
   LegoUniswapV2: LegoUniswapV2.SDK
   LegoUniswapV3: LegoUniswapV3.SDK
+  LegoYield: (address: `0x${string}`) => LegoYield.SDK
+  OracleParser: (address: `0x${string}`) => OracleParser.SDK
   OracleRegistry: OracleRegistry.SDK
   PriceSheets: PriceSheets.SDK
   PythFeeds: PythFeeds.SDK
@@ -63,14 +72,18 @@ export type SDK = {
 export default function createSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
     AddyRegistry: AddyRegistry.toSdk(publicClient, walletClient),
+    Agent: (address: `0x${string}`) => Agent.toSdk(address, publicClient, walletClient),
     AgentFactory: AgentFactory.toSdk(publicClient, walletClient),
     ChainlinkFeeds: ChainlinkFeeds.toSdk(publicClient, walletClient),
     ERC20: (address: `0x${string}`) => ERC20.toSdk(address, publicClient, walletClient),
     LegoAaveV3: LegoAaveV3.toSdk(publicClient, walletClient),
     LegoAeroClassic: LegoAeroClassic.toSdk(publicClient, walletClient),
     LegoAeroSlipstream: LegoAeroSlipstream.toSdk(publicClient, walletClient),
+    LegoCommon: (address: `0x${string}`) => LegoCommon.toSdk(address, publicClient, walletClient),
     LegoCompoundV3: LegoCompoundV3.toSdk(publicClient, walletClient),
+    LegoCredit: (address: `0x${string}`) => LegoCredit.toSdk(address, publicClient, walletClient),
     LegoCurve: LegoCurve.toSdk(publicClient, walletClient),
+    LegoDex: (address: `0x${string}`) => LegoDex.toSdk(address, publicClient, walletClient),
     LegoEuler: LegoEuler.toSdk(publicClient, walletClient),
     LegoFluid: LegoFluid.toSdk(publicClient, walletClient),
     LegoHelper: LegoHelper.toSdk(publicClient, walletClient),
@@ -80,11 +93,12 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     LegoSky: LegoSky.toSdk(publicClient, walletClient),
     LegoUniswapV2: LegoUniswapV2.toSdk(publicClient, walletClient),
     LegoUniswapV3: LegoUniswapV3.toSdk(publicClient, walletClient),
+    LegoYield: (address: `0x${string}`) => LegoYield.toSdk(address, publicClient, walletClient),
+    OracleParser: (address: `0x${string}`) => OracleParser.toSdk(address, publicClient, walletClient),
     OracleRegistry: OracleRegistry.toSdk(publicClient, walletClient),
     PriceSheets: PriceSheets.toSdk(publicClient, walletClient),
     PythFeeds: PythFeeds.toSdk(publicClient, walletClient),
     StorkFeeds: StorkFeeds.toSdk(publicClient, walletClient),
-    Agent: (address: `0x${string}`) => AgentTemplate.toSdk(address, publicClient, walletClient),
     WalletConfig: (address: `0x${string}`) => WalletConfig.toSdk(address, publicClient, walletClient),
     WalletFunds: (address: `0x${string}`) => WalletFunds.toSdk(address, publicClient, walletClient),
   }

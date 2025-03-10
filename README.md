@@ -39,7 +39,7 @@ const underscore = new Underscore({
 
 // Create an AI Wallet
 const createWallet = async (owner: string, aiAgent: string) => {
-  return await underscore.contracts.AgentFactory.createWalletClient(
+  return await underscore.Factory.createUserWallet(
     owner, // Your wallet address
     aiAgent, // AI agent's address
   )
@@ -48,7 +48,7 @@ const createWallet = async (owner: string, aiAgent: string) => {
 // Configure AI permissions
 const configureAgent = async (agent: string, allowedAssets: string[]) => {
   for (const asset of allowedAssets) {
-    await underscore.contracts.WalletConfig('0xWalletAddress').addAssetForAgent(agent, asset)
+    await underscore.UserWalletConfig.at('0xWalletAddress').addAssetForAgent(agent, asset)
   }
 }
 ```

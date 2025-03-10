@@ -1564,7 +1564,9 @@ export type Contract = {
       assets: `0x${string}`[],
       legoIds: bigint[],
     ) => Promise<boolean>
-    getAgentSubscriptionStatus: (agent: `0x${string}`) => Promise<{
+    getAgentSubscriptionStatus: (
+      agent: `0x${string}`,
+    ) => Promise<{
       recipient: `0x${string}`
       asset: `0x${string}`
       amount: bigint
@@ -1605,7 +1607,9 @@ export type Contract = {
     ownershipChangeDelay: () => Promise<bigint>
     protocolSub: () => Promise<{ installBlock: bigint; paidThroughBlock: bigint }>
     reserveAssets: (arg0: `0x${string}`) => Promise<bigint>
-    agentSettings: (arg0: `0x${string}`) => Promise<{
+    agentSettings: (
+      arg0: `0x${string}`,
+    ) => Promise<{
       isActive: boolean
       installBlock: bigint
       paidThroughBlock: bigint
