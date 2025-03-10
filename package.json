@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc",
     "codegen": "dappql && prettier --write .",
-    "ship": "bump patch --commit --push &&npm run build && npm publish --access public",
+    "ship": "npm run build && bump patch --commit --push && npm publish --access public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
