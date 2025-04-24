@@ -13,6 +13,7 @@ export default {
     UserWallet: { isTemplate: true, address: '0xf614Bb656a8B1B8646b25f3Ca4a9655E407D38e5' },
     UserWalletConfig: { isTemplate: true, address: '0xAeE931cC57CfBE31328bCfF092Af7eC7dFD7EBC8' },
     Agent: { isTemplate: true, address: '0x2e3754aD00DcC1c31Ee1Ea46379DA83bD02896F7' },
+    Agent_v1: { isTemplate: true, address: '0x70418b3AAa1044eC8bFF6a461B4E43460bb5699E' },
     LegoRegistry: { address: '0x5dC5A7304a1f2feeadF491b8F62BD41687CB330b' },
     OracleRegistry: { address: '0x4D97d514d92Efd711D0645fE0759fA68480facc5' },
     PriceSheets: { address: '0x38Cd202B42b3906051573174e506b5b6BC83D47C' },

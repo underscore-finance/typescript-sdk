@@ -106,6 +106,13 @@ class Underscore {
     return { at: (address: Address) => this.contracts.Agent(address) }
   }
 
+  /**
+   * @deprecated Use `Agent` instead. This version is for legacy compatibility.
+   */
+  get Agent_v1() {
+    return { at: (address: Address) => this.contracts.Agent_v1(address) }
+  }
+
   get UserWallet() {
     return { at: (address: Address) => this.contracts.UserWallet(address) }
   }
