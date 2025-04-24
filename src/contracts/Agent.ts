@@ -15,89 +15,6 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        name: 'prevOwner',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        name: 'newOwner',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'confirmBlock',
-        type: 'uint256',
-      },
-    ],
-    name: 'AgentOwnershipChangeInitiated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'prevOwner',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        name: 'newOwner',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'initiatedBlock',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'confirmBlock',
-        type: 'uint256',
-      },
-    ],
-    name: 'AgentOwnershipChangeConfirmed',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'cancelledOwner',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'initiatedBlock',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'confirmBlock',
-        type: 'uint256',
-      },
-    ],
-    name: 'AgentOwnershipChangeCancelled',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        name: 'delayBlocks',
-        type: 'uint256',
-      },
-    ],
-    name: 'AgentOwnershipChangeDelaySet',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
         name: 'asset',
         type: 'address',
       },
@@ -116,20 +33,227 @@ export const abi = [
     type: 'event',
   },
   {
+    anonymous: false,
     inputs: [
       {
-        name: '_owner',
+        indexed: true,
+        name: 'prevOwner',
         type: 'address',
       },
+      {
+        indexed: true,
+        name: 'newOwner',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
     ],
-    name: 'initialize',
+    name: 'OwnershipChangeInitiated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'prevOwner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'newOwner',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+    ],
+    name: 'OwnershipChangeConfirmed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'cancelledOwner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'cancelledBy',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+    ],
+    name: 'OwnershipChangeCancelled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'delayBlocks',
+        type: 'uint256',
+      },
+    ],
+    name: 'OwnershipChangeDelaySet',
+    type: 'event',
+  },
+  {
+    inputs: [],
+    name: 'hasPendingOwnerChange',
     outputs: [
       {
         name: '',
         type: 'bool',
       },
     ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_newOwner',
+        type: 'address',
+      },
+    ],
+    name: 'changeOwnership',
+    outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'confirmOwnershipChange',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'cancelOwnershipChange',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_numBlocks',
+        type: 'uint256',
+      },
+    ],
+    name: 'setOwnershipChangeDelay',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'owner',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'pendingOwner',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'newOwner',
+            type: 'address',
+          },
+          {
+            name: 'initiatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'confirmBlock',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'ownershipChangeDelay',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MIN_OWNER_CHANGE_DELAY',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MAX_OWNER_CHANGE_DELAY',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: '_ADDY_REGISTRY',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -2814,6 +2938,32 @@ export const abi = [
             name: 'isWethToEthConversion',
             type: 'bool',
           },
+          {
+            components: [
+              {
+                name: 'legoId',
+                type: 'uint256',
+              },
+              {
+                name: 'amountIn',
+                type: 'uint256',
+              },
+              {
+                name: 'minAmountOut',
+                type: 'uint256',
+              },
+              {
+                name: 'tokenPath',
+                type: 'address[]',
+              },
+              {
+                name: 'poolPath',
+                type: 'address[]',
+              },
+            ],
+            name: 'swapInstructions',
+            type: 'tuple[]',
+          },
         ],
         name: '_instructions',
         type: 'tuple[]',
@@ -2928,6 +3078,32 @@ export const abi = [
           {
             name: 'isWethToEthConversion',
             type: 'bool',
+          },
+          {
+            components: [
+              {
+                name: 'legoId',
+                type: 'uint256',
+              },
+              {
+                name: 'amountIn',
+                type: 'uint256',
+              },
+              {
+                name: 'minAmountOut',
+                type: 'uint256',
+              },
+              {
+                name: 'tokenPath',
+                type: 'address[]',
+              },
+              {
+                name: 'poolPath',
+                type: 'address[]',
+              },
+            ],
+            name: 'swapInstructions',
+            type: 'tuple[]',
           },
         ],
         name: '_instructions',
@@ -3062,6 +3238,32 @@ export const abi = [
             name: 'isWethToEthConversion',
             type: 'bool',
           },
+          {
+            components: [
+              {
+                name: 'legoId',
+                type: 'uint256',
+              },
+              {
+                name: 'amountIn',
+                type: 'uint256',
+              },
+              {
+                name: 'minAmountOut',
+                type: 'uint256',
+              },
+              {
+                name: 'tokenPath',
+                type: 'address[]',
+              },
+              {
+                name: 'poolPath',
+                type: 'address[]',
+              },
+            ],
+            name: 'swapInstructions',
+            type: 'tuple[]',
+          },
         ],
         name: '_instructions',
         type: 'tuple[]',
@@ -3096,44 +3298,6 @@ export const abi = [
   {
     inputs: [
       {
-        name: '_newOwner',
-        type: 'address',
-      },
-    ],
-    name: 'changeOwnership',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'confirmOwnershipChange',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'cancelOwnershipChange',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_numBlocks',
-        type: 'uint256',
-      },
-    ],
-    name: 'setOwnershipChangeDelay',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         name: '_asset',
         type: 'address',
       },
@@ -3146,18 +3310,6 @@ export const abi = [
       },
     ],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'initialized',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -3178,81 +3330,15 @@ export const abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'owner',
-    outputs: [
+    inputs: [
       {
-        name: '',
+        name: '_owner',
         type: 'address',
       },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'pendingOwner',
-    outputs: [
       {
-        components: [
-          {
-            name: 'newOwner',
-            type: 'address',
-          },
-          {
-            name: 'initiatedBlock',
-            type: 'uint256',
-          },
-          {
-            name: 'confirmBlock',
-            type: 'uint256',
-          },
-        ],
-        name: '',
-        type: 'tuple',
+        name: '_addyRegistry',
+        type: 'address',
       },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'ownershipChangeDelay',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MIN_OWNER_CHANGE_DELAY',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MAX_OWNER_CHANGE_DELAY',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
       {
         name: '_minOwnerChangeDelay',
         type: 'uint256',
@@ -3268,10 +3354,17 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x70418b3AAa1044eC8bFF6a461B4E43460bb5699E'
+export const deployAddress: Address | undefined = '0x2e3754aD00DcC1c31Ee1Ea46379DA83bD02896F7'
 
 export type Contract = {
   calls: {
+    hasPendingOwnerChange: () => Promise<boolean>
+    owner: () => Promise<`0x${string}`>
+    pendingOwner: () => Promise<{ newOwner: `0x${string}`; initiatedBlock: bigint; confirmBlock: bigint }>
+    ownershipChangeDelay: () => Promise<bigint>
+    MIN_OWNER_CHANGE_DELAY: () => Promise<bigint>
+    MAX_OWNER_CHANGE_DELAY: () => Promise<bigint>
+    _ADDY_REGISTRY: () => Promise<`0x${string}`>
     apiVersion: () => Promise<string>
     getSwapActionHash: (
       userWallet: `0x${string}`,
@@ -3310,20 +3403,24 @@ export type Contract = {
         liqToRemove: bigint
         recipient: `0x${string}`
         isWethToEthConversion: boolean
+        swapInstructions: {
+          legoId: bigint
+          amountIn: bigint
+          minAmountOut: bigint
+          tokenPath: `0x${string}`[]
+          poolPath: `0x${string}`[]
+        }[]
       }[],
       expiration: bigint,
     ) => Promise<`0x${string}`>
     DOMAIN_SEPARATOR: () => Promise<`0x${string}`>
-    initialized: () => Promise<boolean>
     usedSignatures: (arg0: `0x${string}`) => Promise<boolean>
-    owner: () => Promise<`0x${string}`>
-    pendingOwner: () => Promise<{ newOwner: `0x${string}`; initiatedBlock: bigint; confirmBlock: bigint }>
-    ownershipChangeDelay: () => Promise<bigint>
-    MIN_OWNER_CHANGE_DELAY: () => Promise<bigint>
-    MAX_OWNER_CHANGE_DELAY: () => Promise<bigint>
   }
   mutations: {
-    initialize: (owner: `0x${string}`) => Promise<boolean>
+    changeOwnership: (newOwner: `0x${string}`) => Promise<void>
+    confirmOwnershipChange: () => Promise<void>
+    cancelOwnershipChange: () => Promise<void>
+    setOwnershipChangeDelay: (numBlocks: bigint) => Promise<void>
     depositTokens: (
       userWallet: `0x${string}`,
       legoId: bigint,
@@ -3462,34 +3559,34 @@ export type Contract = {
         liqToRemove: bigint
         recipient: `0x${string}`
         isWethToEthConversion: boolean
+        swapInstructions: {
+          legoId: bigint
+          amountIn: bigint
+          minAmountOut: bigint
+          tokenPath: `0x${string}`[]
+          poolPath: `0x${string}`[]
+        }[]
       }[],
       sig?: { signature: `0x${string}`; signer: `0x${string}`; expiration: bigint },
     ) => Promise<boolean>
-    changeOwnership: (newOwner: `0x${string}`) => Promise<void>
-    confirmOwnershipChange: () => Promise<void>
-    cancelOwnershipChange: () => Promise<void>
-    setOwnershipChangeDelay: (numBlocks: bigint) => Promise<void>
     recoverFunds: (asset: `0x${string}`) => Promise<boolean>
   }
   events: {
-    AgentOwnershipChangeInitiated: (
-      prevOwner: `0x${string}`,
-      newOwner: `0x${string}`,
-      confirmBlock: bigint,
-    ) => Promise<void>
-    AgentOwnershipChangeConfirmed: (
-      prevOwner: `0x${string}`,
-      newOwner: `0x${string}`,
-      initiatedBlock: bigint,
-      confirmBlock: bigint,
-    ) => Promise<void>
-    AgentOwnershipChangeCancelled: (
-      cancelledOwner: `0x${string}`,
-      initiatedBlock: bigint,
-      confirmBlock: bigint,
-    ) => Promise<void>
-    AgentOwnershipChangeDelaySet: (delayBlocks: bigint) => Promise<void>
     AgentFundsRecovered: (asset: `0x${string}`, recipient: `0x${string}`, balance: bigint) => Promise<void>
+    OwnershipChangeInitiated: (prevOwner: `0x${string}`, newOwner: `0x${string}`, confirmBlock: bigint) => Promise<void>
+    OwnershipChangeConfirmed: (
+      prevOwner: `0x${string}`,
+      newOwner: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+    ) => Promise<void>
+    OwnershipChangeCancelled: (
+      cancelledOwner: `0x${string}`,
+      cancelledBy: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+    ) => Promise<void>
+    OwnershipChangeDelaySet: (delayBlocks: bigint) => Promise<void>
   }
 }
 
@@ -3553,15 +3650,8 @@ type CallType = {
 }
 
 export const call: CallType = {
-  apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) => getRequest('apiVersion', args),
-  getSwapActionHash: (...args: ExtractArgs<Contract['calls']['getSwapActionHash']>) =>
-    getRequest('getSwapActionHash', args),
-  getBatchActionHash: (...args: ExtractArgs<Contract['calls']['getBatchActionHash']>) =>
-    getRequest('getBatchActionHash', args),
-  DOMAIN_SEPARATOR: (...args: ExtractArgs<Contract['calls']['DOMAIN_SEPARATOR']>) =>
-    getRequest('DOMAIN_SEPARATOR', args),
-  initialized: (...args: ExtractArgs<Contract['calls']['initialized']>) => getRequest('initialized', args),
-  usedSignatures: (...args: ExtractArgs<Contract['calls']['usedSignatures']>) => getRequest('usedSignatures', args),
+  hasPendingOwnerChange: (...args: ExtractArgs<Contract['calls']['hasPendingOwnerChange']>) =>
+    getRequest('hasPendingOwnerChange', args),
   owner: (...args: ExtractArgs<Contract['calls']['owner']>) => getRequest('owner', args),
   pendingOwner: (...args: ExtractArgs<Contract['calls']['pendingOwner']>) => getRequest('pendingOwner', args),
   ownershipChangeDelay: (...args: ExtractArgs<Contract['calls']['ownershipChangeDelay']>) =>
@@ -3570,6 +3660,15 @@ export const call: CallType = {
     getRequest('MIN_OWNER_CHANGE_DELAY', args),
   MAX_OWNER_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_OWNER_CHANGE_DELAY']>) =>
     getRequest('MAX_OWNER_CHANGE_DELAY', args),
+  _ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['_ADDY_REGISTRY']>) => getRequest('_ADDY_REGISTRY', args),
+  apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) => getRequest('apiVersion', args),
+  getSwapActionHash: (...args: ExtractArgs<Contract['calls']['getSwapActionHash']>) =>
+    getRequest('getSwapActionHash', args),
+  getBatchActionHash: (...args: ExtractArgs<Contract['calls']['getBatchActionHash']>) =>
+    getRequest('getBatchActionHash', args),
+  DOMAIN_SEPARATOR: (...args: ExtractArgs<Contract['calls']['DOMAIN_SEPARATOR']>) =>
+    getRequest('DOMAIN_SEPARATOR', args),
+  usedSignatures: (...args: ExtractArgs<Contract['calls']['usedSignatures']>) => getRequest('usedSignatures', args),
 }
 
 export type Mutations = keyof Contract['mutations']
@@ -3592,7 +3691,10 @@ export const mutation: {
     argsType: ExtractArgs<Contract['mutations'][K]> | undefined
   }
 } = {
-  initialize: getMutation('initialize'),
+  changeOwnership: getMutation('changeOwnership'),
+  confirmOwnershipChange: getMutation('confirmOwnershipChange'),
+  cancelOwnershipChange: getMutation('cancelOwnershipChange'),
+  setOwnershipChangeDelay: getMutation('setOwnershipChangeDelay'),
   depositTokens: getMutation('depositTokens'),
   withdrawTokens: getMutation('withdrawTokens'),
   rebalance: getMutation('rebalance'),
@@ -3606,26 +3708,13 @@ export const mutation: {
   convertEthToWeth: getMutation('convertEthToWeth'),
   convertWethToEth: getMutation('convertWethToEth'),
   performBatchActions: getMutation('performBatchActions'),
-  changeOwnership: getMutation('changeOwnership'),
-  confirmOwnershipChange: getMutation('confirmOwnershipChange'),
-  cancelOwnershipChange: getMutation('cancelOwnershipChange'),
-  setOwnershipChangeDelay: getMutation('setOwnershipChangeDelay'),
   recoverFunds: getMutation('recoverFunds'),
 }
 
 export type SDK = {
-  apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) => Promise<CallReturn<'apiVersion'>>
-  getSwapActionHash: (
-    ...args: ExtractArgs<Contract['calls']['getSwapActionHash']>
-  ) => Promise<CallReturn<'getSwapActionHash'>>
-  getBatchActionHash: (
-    ...args: ExtractArgs<Contract['calls']['getBatchActionHash']>
-  ) => Promise<CallReturn<'getBatchActionHash'>>
-  DOMAIN_SEPARATOR: (
-    ...args: ExtractArgs<Contract['calls']['DOMAIN_SEPARATOR']>
-  ) => Promise<CallReturn<'DOMAIN_SEPARATOR'>>
-  initialized: (...args: ExtractArgs<Contract['calls']['initialized']>) => Promise<CallReturn<'initialized'>>
-  usedSignatures: (...args: ExtractArgs<Contract['calls']['usedSignatures']>) => Promise<CallReturn<'usedSignatures'>>
+  hasPendingOwnerChange: (
+    ...args: ExtractArgs<Contract['calls']['hasPendingOwnerChange']>
+  ) => Promise<CallReturn<'hasPendingOwnerChange'>>
   owner: (...args: ExtractArgs<Contract['calls']['owner']>) => Promise<CallReturn<'owner'>>
   pendingOwner: (...args: ExtractArgs<Contract['calls']['pendingOwner']>) => Promise<CallReturn<'pendingOwner'>>
   ownershipChangeDelay: (
@@ -3637,7 +3726,22 @@ export type SDK = {
   MAX_OWNER_CHANGE_DELAY: (
     ...args: ExtractArgs<Contract['calls']['MAX_OWNER_CHANGE_DELAY']>
   ) => Promise<CallReturn<'MAX_OWNER_CHANGE_DELAY'>>
-  initialize: (...args: ExtractArgs<Contract['mutations']['initialize']>) => Promise<Address>
+  _ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['_ADDY_REGISTRY']>) => Promise<CallReturn<'_ADDY_REGISTRY'>>
+  apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) => Promise<CallReturn<'apiVersion'>>
+  getSwapActionHash: (
+    ...args: ExtractArgs<Contract['calls']['getSwapActionHash']>
+  ) => Promise<CallReturn<'getSwapActionHash'>>
+  getBatchActionHash: (
+    ...args: ExtractArgs<Contract['calls']['getBatchActionHash']>
+  ) => Promise<CallReturn<'getBatchActionHash'>>
+  DOMAIN_SEPARATOR: (
+    ...args: ExtractArgs<Contract['calls']['DOMAIN_SEPARATOR']>
+  ) => Promise<CallReturn<'DOMAIN_SEPARATOR'>>
+  usedSignatures: (...args: ExtractArgs<Contract['calls']['usedSignatures']>) => Promise<CallReturn<'usedSignatures'>>
+  changeOwnership: (...args: ExtractArgs<Contract['mutations']['changeOwnership']>) => Promise<Address>
+  confirmOwnershipChange: (...args: ExtractArgs<Contract['mutations']['confirmOwnershipChange']>) => Promise<Address>
+  cancelOwnershipChange: (...args: ExtractArgs<Contract['mutations']['cancelOwnershipChange']>) => Promise<Address>
+  setOwnershipChangeDelay: (...args: ExtractArgs<Contract['mutations']['setOwnershipChangeDelay']>) => Promise<Address>
   depositTokens: (...args: ExtractArgs<Contract['mutations']['depositTokens']>) => Promise<Address>
   withdrawTokens: (...args: ExtractArgs<Contract['mutations']['withdrawTokens']>) => Promise<Address>
   rebalance: (...args: ExtractArgs<Contract['mutations']['rebalance']>) => Promise<Address>
@@ -3651,32 +3755,16 @@ export type SDK = {
   convertEthToWeth: (...args: ExtractArgs<Contract['mutations']['convertEthToWeth']>) => Promise<Address>
   convertWethToEth: (...args: ExtractArgs<Contract['mutations']['convertWethToEth']>) => Promise<Address>
   performBatchActions: (...args: ExtractArgs<Contract['mutations']['performBatchActions']>) => Promise<Address>
-  changeOwnership: (...args: ExtractArgs<Contract['mutations']['changeOwnership']>) => Promise<Address>
-  confirmOwnershipChange: (...args: ExtractArgs<Contract['mutations']['confirmOwnershipChange']>) => Promise<Address>
-  cancelOwnershipChange: (...args: ExtractArgs<Contract['mutations']['cancelOwnershipChange']>) => Promise<Address>
-  setOwnershipChangeDelay: (...args: ExtractArgs<Contract['mutations']['setOwnershipChangeDelay']>) => Promise<Address>
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
 }
 
 export function toSdk(address: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
     // Queries
-    apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) =>
-      singleQuery(publicClient!, call.apiVersion(...args).at(address)) as Promise<CallReturn<'apiVersion'>>,
-    getSwapActionHash: (...args: ExtractArgs<Contract['calls']['getSwapActionHash']>) =>
-      singleQuery(publicClient!, call.getSwapActionHash(...args).at(address)) as Promise<
-        CallReturn<'getSwapActionHash'>
+    hasPendingOwnerChange: (...args: ExtractArgs<Contract['calls']['hasPendingOwnerChange']>) =>
+      singleQuery(publicClient!, call.hasPendingOwnerChange(...args).at(address)) as Promise<
+        CallReturn<'hasPendingOwnerChange'>
       >,
-    getBatchActionHash: (...args: ExtractArgs<Contract['calls']['getBatchActionHash']>) =>
-      singleQuery(publicClient!, call.getBatchActionHash(...args).at(address)) as Promise<
-        CallReturn<'getBatchActionHash'>
-      >,
-    DOMAIN_SEPARATOR: (...args: ExtractArgs<Contract['calls']['DOMAIN_SEPARATOR']>) =>
-      singleQuery(publicClient!, call.DOMAIN_SEPARATOR(...args).at(address)) as Promise<CallReturn<'DOMAIN_SEPARATOR'>>,
-    initialized: (...args: ExtractArgs<Contract['calls']['initialized']>) =>
-      singleQuery(publicClient!, call.initialized(...args).at(address)) as Promise<CallReturn<'initialized'>>,
-    usedSignatures: (...args: ExtractArgs<Contract['calls']['usedSignatures']>) =>
-      singleQuery(publicClient!, call.usedSignatures(...args).at(address)) as Promise<CallReturn<'usedSignatures'>>,
     owner: (...args: ExtractArgs<Contract['calls']['owner']>) =>
       singleQuery(publicClient!, call.owner(...args).at(address)) as Promise<CallReturn<'owner'>>,
     pendingOwner: (...args: ExtractArgs<Contract['calls']['pendingOwner']>) =>
@@ -3693,10 +3781,32 @@ export function toSdk(address: Address, publicClient?: PublicClient, walletClien
       singleQuery(publicClient!, call.MAX_OWNER_CHANGE_DELAY(...args).at(address)) as Promise<
         CallReturn<'MAX_OWNER_CHANGE_DELAY'>
       >,
+    _ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['_ADDY_REGISTRY']>) =>
+      singleQuery(publicClient!, call._ADDY_REGISTRY(...args).at(address)) as Promise<CallReturn<'_ADDY_REGISTRY'>>,
+    apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) =>
+      singleQuery(publicClient!, call.apiVersion(...args).at(address)) as Promise<CallReturn<'apiVersion'>>,
+    getSwapActionHash: (...args: ExtractArgs<Contract['calls']['getSwapActionHash']>) =>
+      singleQuery(publicClient!, call.getSwapActionHash(...args).at(address)) as Promise<
+        CallReturn<'getSwapActionHash'>
+      >,
+    getBatchActionHash: (...args: ExtractArgs<Contract['calls']['getBatchActionHash']>) =>
+      singleQuery(publicClient!, call.getBatchActionHash(...args).at(address)) as Promise<
+        CallReturn<'getBatchActionHash'>
+      >,
+    DOMAIN_SEPARATOR: (...args: ExtractArgs<Contract['calls']['DOMAIN_SEPARATOR']>) =>
+      singleQuery(publicClient!, call.DOMAIN_SEPARATOR(...args).at(address)) as Promise<CallReturn<'DOMAIN_SEPARATOR'>>,
+    usedSignatures: (...args: ExtractArgs<Contract['calls']['usedSignatures']>) =>
+      singleQuery(publicClient!, call.usedSignatures(...args).at(address)) as Promise<CallReturn<'usedSignatures'>>,
 
     // Mutations
-    initialize: (...args: ExtractArgs<Contract['mutations']['initialize']>) =>
-      mutate(walletClient!, mutation.initialize, { address })(...args),
+    changeOwnership: (...args: ExtractArgs<Contract['mutations']['changeOwnership']>) =>
+      mutate(walletClient!, mutation.changeOwnership, { address })(...args),
+    confirmOwnershipChange: (...args: ExtractArgs<Contract['mutations']['confirmOwnershipChange']>) =>
+      mutate(walletClient!, mutation.confirmOwnershipChange, { address })(...args),
+    cancelOwnershipChange: (...args: ExtractArgs<Contract['mutations']['cancelOwnershipChange']>) =>
+      mutate(walletClient!, mutation.cancelOwnershipChange, { address })(...args),
+    setOwnershipChangeDelay: (...args: ExtractArgs<Contract['mutations']['setOwnershipChangeDelay']>) =>
+      mutate(walletClient!, mutation.setOwnershipChangeDelay, { address })(...args),
     depositTokens: (...args: ExtractArgs<Contract['mutations']['depositTokens']>) =>
       mutate(walletClient!, mutation.depositTokens, { address })(...args),
     withdrawTokens: (...args: ExtractArgs<Contract['mutations']['withdrawTokens']>) =>
@@ -3723,14 +3833,6 @@ export function toSdk(address: Address, publicClient?: PublicClient, walletClien
       mutate(walletClient!, mutation.convertWethToEth, { address })(...args),
     performBatchActions: (...args: ExtractArgs<Contract['mutations']['performBatchActions']>) =>
       mutate(walletClient!, mutation.performBatchActions, { address })(...args),
-    changeOwnership: (...args: ExtractArgs<Contract['mutations']['changeOwnership']>) =>
-      mutate(walletClient!, mutation.changeOwnership, { address })(...args),
-    confirmOwnershipChange: (...args: ExtractArgs<Contract['mutations']['confirmOwnershipChange']>) =>
-      mutate(walletClient!, mutation.confirmOwnershipChange, { address })(...args),
-    cancelOwnershipChange: (...args: ExtractArgs<Contract['mutations']['cancelOwnershipChange']>) =>
-      mutate(walletClient!, mutation.cancelOwnershipChange, { address })(...args),
-    setOwnershipChangeDelay: (...args: ExtractArgs<Contract['mutations']['setOwnershipChangeDelay']>) =>
-      mutate(walletClient!, mutation.setOwnershipChangeDelay, { address })(...args),
     recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) =>
       mutate(walletClient!, mutation.recoverFunds, { address })(...args),
   }

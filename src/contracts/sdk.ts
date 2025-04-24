@@ -33,8 +33,8 @@ import * as OracleRegistry from './OracleRegistry.js'
 import * as PriceSheets from './PriceSheets.js'
 import * as PythFeeds from './PythFeeds.js'
 import * as StorkFeeds from './StorkFeeds.js'
-import * as WalletConfig from './WalletConfig.js'
-import * as WalletFunds from './WalletFunds.js'
+import * as UserWallet from './UserWallet.js'
+import * as UserWalletConfig from './UserWalletConfig.js'
 
 export type SDK = {
   AddyRegistry: AddyRegistry.SDK
@@ -65,8 +65,8 @@ export type SDK = {
   PriceSheets: PriceSheets.SDK
   PythFeeds: PythFeeds.SDK
   StorkFeeds: StorkFeeds.SDK
-  WalletConfig: (address: `0x${string}`) => WalletConfig.SDK
-  WalletFunds: (address: `0x${string}`) => WalletFunds.SDK
+  UserWallet: (address: `0x${string}`) => UserWallet.SDK
+  UserWalletConfig: (address: `0x${string}`) => UserWalletConfig.SDK
 }
 
 export default function createSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
@@ -99,7 +99,7 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     PriceSheets: PriceSheets.toSdk(publicClient, walletClient),
     PythFeeds: PythFeeds.toSdk(publicClient, walletClient),
     StorkFeeds: StorkFeeds.toSdk(publicClient, walletClient),
-    WalletConfig: (address: `0x${string}`) => WalletConfig.toSdk(address, publicClient, walletClient),
-    WalletFunds: (address: `0x${string}`) => WalletFunds.toSdk(address, publicClient, walletClient),
+    UserWallet: (address: `0x${string}`) => UserWallet.toSdk(address, publicClient, walletClient),
+    UserWalletConfig: (address: `0x${string}`) => UserWalletConfig.toSdk(address, publicClient, walletClient),
   }
 }

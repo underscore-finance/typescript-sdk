@@ -145,11 +145,82 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        name: 'addr',
+        name: 'prevGov',
         type: 'address',
       },
+      {
+        indexed: true,
+        name: 'newGov',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
     ],
-    name: 'LocalGovernorSet',
+    name: 'GovChangeInitiated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'prevGov',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'newGov',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+    ],
+    name: 'GovChangeConfirmed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'cancelledGov',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+    ],
+    name: 'GovChangeCancelled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'delayBlocks',
+        type: 'uint256',
+      },
+    ],
+    name: 'GovChangeDelaySet',
     type: 'event',
   },
   {
@@ -344,7 +415,19 @@ export const abi = [
         type: 'address',
       },
     ],
-    name: 'isGovernor',
+    name: 'canGovern',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'hasPendingGovChange',
     outputs: [
       {
         name: '',
@@ -357,44 +440,110 @@ export const abi = [
   {
     inputs: [
       {
-        name: '_newGovernor',
+        name: '_newGov',
         type: 'address',
       },
     ],
-    name: 'isValidLocalGovernor',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_newGovernor',
-        type: 'address',
-      },
-    ],
-    name: 'setLocalGovernor',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
+    name: 'changeGovernance',
+    outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'localGovernor',
+    name: 'confirmGovernanceChange',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'cancelGovernanceChange',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_numBlocks',
+        type: 'uint256',
+      },
+    ],
+    name: 'setGovernanceChangeDelay',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'governance',
     outputs: [
       {
         name: '',
         type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'pendingGov',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'newGov',
+            type: 'address',
+          },
+          {
+            name: 'initiatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'confirmBlock',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'govChangeDelay',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MIN_GOV_CHANGE_DELAY',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MAX_GOV_CHANGE_DELAY',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -1061,7 +1210,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xCAacba1b91F4004CCba7d3Ffea0CaAd7E588EEe4'
+export const deployAddress: Address | undefined = '0x959753dB45E61Cf7dCc6057279A57AC286830C28'
 
 export type Contract = {
   calls: {
@@ -1074,9 +1223,13 @@ export type Contract = {
     assets: (arg0: bigint) => Promise<`0x${string}`>
     indexOfAsset: (arg0: `0x${string}`) => Promise<bigint>
     numAssets: () => Promise<bigint>
-    isGovernor: (address: `0x${string}`) => Promise<boolean>
-    isValidLocalGovernor: (newGovernor: `0x${string}`) => Promise<boolean>
-    localGovernor: () => Promise<`0x${string}`>
+    canGovern: (address: `0x${string}`) => Promise<boolean>
+    hasPendingGovChange: () => Promise<boolean>
+    governance: () => Promise<`0x${string}`>
+    pendingGov: () => Promise<{ newGov: `0x${string}`; initiatedBlock: bigint; confirmBlock: bigint }>
+    govChangeDelay: () => Promise<bigint>
+    MIN_GOV_CHANGE_DELAY: () => Promise<bigint>
+    MAX_GOV_CHANGE_DELAY: () => Promise<bigint>
     getRegistries: () => Promise<`0x${string}`[]>
     getAccessForLego: (user: `0x${string}`) => Promise<[`0x${string}`, string, bigint]>
     isVaultToken: (vaultToken: `0x${string}`) => Promise<boolean>
@@ -1103,7 +1256,10 @@ export type Contract = {
     WETH: () => Promise<`0x${string}`>
   }
   mutations: {
-    setLocalGovernor: (newGovernor: `0x${string}`) => Promise<boolean>
+    changeGovernance: (newGov: `0x${string}`) => Promise<void>
+    confirmGovernanceChange: () => Promise<void>
+    cancelGovernanceChange: () => Promise<void>
+    setGovernanceChangeDelay: (numBlocks: bigint) => Promise<void>
     depositTokens: (
       asset: `0x${string}`,
       amount: bigint,
@@ -1153,7 +1309,15 @@ export type Contract = {
     MoonwellFundsRecovered: (asset: `0x${string}`, recipient: `0x${string}`, amount: bigint) => Promise<void>
     MoonwellLegoIdSet: (legoId: bigint) => Promise<void>
     MoonwellActivated: (isActivated: boolean) => Promise<void>
-    LocalGovernorSet: (addr: `0x${string}`) => Promise<void>
+    GovChangeInitiated: (prevGov: `0x${string}`, newGov: `0x${string}`, confirmBlock: bigint) => Promise<void>
+    GovChangeConfirmed: (
+      prevGov: `0x${string}`,
+      newGov: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+    ) => Promise<void>
+    GovChangeCancelled: (cancelledGov: `0x${string}`, initiatedBlock: bigint, confirmBlock: bigint) => Promise<void>
+    GovChangeDelaySet: (delayBlocks: bigint) => Promise<void>
     AssetOpportunityAdded: (asset: `0x${string}`, vaultToken: `0x${string}`) => Promise<void>
     AssetOpportunityRemoved: (asset: `0x${string}`, vaultToken: `0x${string}`) => Promise<void>
   }
@@ -1232,10 +1396,16 @@ export const call: CallType = {
   assets: (...args: ExtractArgs<Contract['calls']['assets']>) => getRequest('assets', args),
   indexOfAsset: (...args: ExtractArgs<Contract['calls']['indexOfAsset']>) => getRequest('indexOfAsset', args),
   numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) => getRequest('numAssets', args),
-  isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => getRequest('isGovernor', args),
-  isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) =>
-    getRequest('isValidLocalGovernor', args),
-  localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => getRequest('localGovernor', args),
+  canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) => getRequest('canGovern', args),
+  hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
+    getRequest('hasPendingGovChange', args),
+  governance: (...args: ExtractArgs<Contract['calls']['governance']>) => getRequest('governance', args),
+  pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) => getRequest('pendingGov', args),
+  govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) => getRequest('govChangeDelay', args),
+  MIN_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>) =>
+    getRequest('MIN_GOV_CHANGE_DELAY', args),
+  MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
+    getRequest('MAX_GOV_CHANGE_DELAY', args),
   getRegistries: (...args: ExtractArgs<Contract['calls']['getRegistries']>) => getRequest('getRegistries', args),
   getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
     getRequest('getAccessForLego', args),
@@ -1282,7 +1452,10 @@ export const mutation: {
     argsType: ExtractArgs<Contract['mutations'][K]> | undefined
   }
 } = {
-  setLocalGovernor: getMutation('setLocalGovernor'),
+  changeGovernance: getMutation('changeGovernance'),
+  confirmGovernanceChange: getMutation('confirmGovernanceChange'),
+  cancelGovernanceChange: getMutation('cancelGovernanceChange'),
+  setGovernanceChangeDelay: getMutation('setGovernanceChangeDelay'),
   depositTokens: getMutation('depositTokens'),
   withdrawTokens: getMutation('withdrawTokens'),
   claimRewards: getMutation('claimRewards'),
@@ -1311,11 +1484,19 @@ export type SDK = {
   assets: (...args: ExtractArgs<Contract['calls']['assets']>) => Promise<CallReturn<'assets'>>
   indexOfAsset: (...args: ExtractArgs<Contract['calls']['indexOfAsset']>) => Promise<CallReturn<'indexOfAsset'>>
   numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) => Promise<CallReturn<'numAssets'>>
-  isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => Promise<CallReturn<'isGovernor'>>
-  isValidLocalGovernor: (
-    ...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>
-  ) => Promise<CallReturn<'isValidLocalGovernor'>>
-  localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => Promise<CallReturn<'localGovernor'>>
+  canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) => Promise<CallReturn<'canGovern'>>
+  hasPendingGovChange: (
+    ...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>
+  ) => Promise<CallReturn<'hasPendingGovChange'>>
+  governance: (...args: ExtractArgs<Contract['calls']['governance']>) => Promise<CallReturn<'governance'>>
+  pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) => Promise<CallReturn<'pendingGov'>>
+  govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) => Promise<CallReturn<'govChangeDelay'>>
+  MIN_GOV_CHANGE_DELAY: (
+    ...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>
+  ) => Promise<CallReturn<'MIN_GOV_CHANGE_DELAY'>>
+  MAX_GOV_CHANGE_DELAY: (
+    ...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>
+  ) => Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>
   getRegistries: (...args: ExtractArgs<Contract['calls']['getRegistries']>) => Promise<CallReturn<'getRegistries'>>
   getAccessForLego: (
     ...args: ExtractArgs<Contract['calls']['getAccessForLego']>
@@ -1348,7 +1529,12 @@ export type SDK = {
   isActivated: (...args: ExtractArgs<Contract['calls']['isActivated']>) => Promise<CallReturn<'isActivated'>>
   ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => Promise<CallReturn<'ADDY_REGISTRY'>>
   WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) => Promise<CallReturn<'WETH'>>
-  setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) => Promise<Address>
+  changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) => Promise<Address>
+  confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) => Promise<Address>
+  cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) => Promise<Address>
+  setGovernanceChangeDelay: (
+    ...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>
+  ) => Promise<Address>
   depositTokens: (...args: ExtractArgs<Contract['mutations']['depositTokens']>) => Promise<Address>
   withdrawTokens: (...args: ExtractArgs<Contract['mutations']['withdrawTokens']>) => Promise<Address>
   claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) => Promise<Address>
@@ -1382,12 +1568,20 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.indexOfAsset(...args)) as Promise<CallReturn<'indexOfAsset'>>,
     numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) =>
       singleQuery(publicClient!, call.numAssets(...args)) as Promise<CallReturn<'numAssets'>>,
-    isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) =>
-      singleQuery(publicClient!, call.isGovernor(...args)) as Promise<CallReturn<'isGovernor'>>,
-    isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) =>
-      singleQuery(publicClient!, call.isValidLocalGovernor(...args)) as Promise<CallReturn<'isValidLocalGovernor'>>,
-    localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) =>
-      singleQuery(publicClient!, call.localGovernor(...args)) as Promise<CallReturn<'localGovernor'>>,
+    canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) =>
+      singleQuery(publicClient!, call.canGovern(...args)) as Promise<CallReturn<'canGovern'>>,
+    hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
+      singleQuery(publicClient!, call.hasPendingGovChange(...args)) as Promise<CallReturn<'hasPendingGovChange'>>,
+    governance: (...args: ExtractArgs<Contract['calls']['governance']>) =>
+      singleQuery(publicClient!, call.governance(...args)) as Promise<CallReturn<'governance'>>,
+    pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) =>
+      singleQuery(publicClient!, call.pendingGov(...args)) as Promise<CallReturn<'pendingGov'>>,
+    govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) =>
+      singleQuery(publicClient!, call.govChangeDelay(...args)) as Promise<CallReturn<'govChangeDelay'>>,
+    MIN_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>) =>
+      singleQuery(publicClient!, call.MIN_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MIN_GOV_CHANGE_DELAY'>>,
+    MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
+      singleQuery(publicClient!, call.MAX_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>,
     getRegistries: (...args: ExtractArgs<Contract['calls']['getRegistries']>) =>
       singleQuery(publicClient!, call.getRegistries(...args)) as Promise<CallReturn<'getRegistries'>>,
     getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
@@ -1424,8 +1618,14 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.WETH(...args)) as Promise<CallReturn<'WETH'>>,
 
     // Mutations
-    setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) =>
-      mutate(walletClient!, mutation.setLocalGovernor)(...args),
+    changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) =>
+      mutate(walletClient!, mutation.changeGovernance)(...args),
+    confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) =>
+      mutate(walletClient!, mutation.confirmGovernanceChange)(...args),
+    cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) =>
+      mutate(walletClient!, mutation.cancelGovernanceChange)(...args),
+    setGovernanceChangeDelay: (...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>) =>
+      mutate(walletClient!, mutation.setGovernanceChangeDelay)(...args),
     depositTokens: (...args: ExtractArgs<Contract['mutations']['depositTokens']>) =>
       mutate(walletClient!, mutation.depositTokens)(...args),
     withdrawTokens: (...args: ExtractArgs<Contract['mutations']['withdrawTokens']>) =>

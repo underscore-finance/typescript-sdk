@@ -15,102 +15,6 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        name: 'addr',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'legoId',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'description',
-        type: 'string',
-      },
-      {
-        indexed: false,
-        name: 'legoType',
-        type: 'uint256',
-      },
-    ],
-    name: 'NewLegoRegistered',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'newAddr',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        name: 'prevAddr',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'legoId',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'version',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'description',
-        type: 'string',
-      },
-      {
-        indexed: false,
-        name: 'legoType',
-        type: 'uint256',
-      },
-    ],
-    name: 'LegoAddrUpdated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'prevAddr',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'legoId',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'version',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'description',
-        type: 'string',
-      },
-      {
-        indexed: false,
-        name: 'legoType',
-        type: 'uint256',
-      },
-    ],
-    name: 'LegoAddrDisabled',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
         name: 'helperAddr',
         type: 'address',
       },
@@ -123,11 +27,412 @@ export const abi = [
     inputs: [
       {
         indexed: true,
+        name: 'prevGov',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'newGov',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+    ],
+    name: 'GovChangeInitiated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'prevGov',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'newGov',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+    ],
+    name: 'GovChangeConfirmed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'cancelledGov',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+    ],
+    name: 'GovChangeCancelled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'delayBlocks',
+        type: 'uint256',
+      },
+    ],
+    name: 'GovChangeDelaySet',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         name: 'addr',
         type: 'address',
       },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
     ],
-    name: 'LocalGovernorSet',
+    name: 'NewAddyPending',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'NewAddyConfirmed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'NewPendingAddyCancelled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'newAddr',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'prevAddr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'version',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyUpdatePending',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'newAddr',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'prevAddr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'version',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyUpdateConfirmed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'newAddr',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'prevAddr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyUpdateCancelled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'version',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyDisablePending',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'version',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyDisableConfirmed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyDisableCancelled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'delayBlocks',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyChangeDelaySet',
     type: 'event',
   },
   {
@@ -137,7 +442,19 @@ export const abi = [
         type: 'address',
       },
     ],
-    name: 'isGovernor',
+    name: 'canGovern',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'hasPendingGovChange',
     outputs: [
       {
         name: '',
@@ -150,44 +467,110 @@ export const abi = [
   {
     inputs: [
       {
-        name: '_newGovernor',
+        name: '_newGov',
         type: 'address',
       },
     ],
-    name: 'isValidLocalGovernor',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_newGovernor',
-        type: 'address',
-      },
-    ],
-    name: 'setLocalGovernor',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
+    name: 'changeGovernance',
+    outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'localGovernor',
+    name: 'confirmGovernanceChange',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'cancelGovernanceChange',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_numBlocks',
+        type: 'uint256',
+      },
+    ],
+    name: 'setGovernanceChangeDelay',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'governance',
     outputs: [
       {
         name: '',
         type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'pendingGov',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'newGov',
+            type: 'address',
+          },
+          {
+            name: 'initiatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'confirmBlock',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'govChangeDelay',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MIN_GOV_CHANGE_DELAY',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MAX_GOV_CHANGE_DELAY',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -229,7 +612,41 @@ export const abi = [
     outputs: [
       {
         name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+    ],
+    name: 'confirmNewLegoRegistration',
+    outputs: [
+      {
+        name: '',
         type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+    ],
+    name: 'cancelPendingNewLego',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
       },
     ],
     stateMutability: 'nonpayable',
@@ -284,6 +701,40 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'confirmLegoUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+    ],
+    name: 'cancelPendingLegoUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+    ],
     name: 'isValidLegoDisable',
     outputs: [
       {
@@ -309,6 +760,81 @@ export const abi = [
       },
     ],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+    ],
+    name: 'confirmLegoDisable',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+    ],
+    name: 'cancelPendingLegoDisable',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_numBlocks',
+        type: 'uint256',
+      },
+    ],
+    name: 'setLegoChangeDelay',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'legoChangeDelay',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'numLegosRaw',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -405,10 +931,6 @@ export const abi = [
           {
             name: 'description',
             type: 'string',
-          },
-          {
-            name: 'legoType',
-            type: 'uint256',
           },
         ],
         name: '',
@@ -544,88 +1066,42 @@ export const abi = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'pendingLegoType',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    name: 'legoIdToType',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'legoHelper',
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'uint256',
-      },
-    ],
-    name: 'legoInfo',
-    outputs: [
-      {
-        components: [
-          {
-            name: 'addr',
-            type: 'address',
-          },
-          {
-            name: 'version',
-            type: 'uint256',
-          },
-          {
-            name: 'lastModified',
-            type: 'uint256',
-          },
-          {
-            name: 'description',
-            type: 'string',
-          },
-          {
-            name: 'legoType',
-            type: 'uint256',
-          },
-        ],
-        name: '',
-        type: 'tuple',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    name: 'legoAddrToId',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'numLegos',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'ADDY_REGISTRY',
     outputs: [
       {
         name: '',
@@ -641,6 +1117,14 @@ export const abi = [
         name: '_addyRegistry',
         type: 'address',
       },
+      {
+        name: '_minLegoChangeDelay',
+        type: 'uint256',
+      },
+      {
+        name: '_maxLegoChangeDelay',
+        type: 'uint256',
+      },
     ],
     outputs: [],
     stateMutability: 'nonpayable',
@@ -648,23 +1132,29 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x590504539913411CeF7fc1b3Fa49b06FE970c759'
+export const deployAddress: Address | undefined = '0x5dC5A7304a1f2feeadF491b8F62BD41687CB330b'
 
 export type Contract = {
   calls: {
-    isGovernor: (address: `0x${string}`) => Promise<boolean>
-    isValidLocalGovernor: (newGovernor: `0x${string}`) => Promise<boolean>
-    localGovernor: () => Promise<`0x${string}`>
+    canGovern: (address: `0x${string}`) => Promise<boolean>
+    hasPendingGovChange: () => Promise<boolean>
+    governance: () => Promise<`0x${string}`>
+    pendingGov: () => Promise<{ newGov: `0x${string}`; initiatedBlock: bigint; confirmBlock: bigint }>
+    govChangeDelay: () => Promise<bigint>
+    MIN_GOV_CHANGE_DELAY: () => Promise<bigint>
+    MAX_GOV_CHANGE_DELAY: () => Promise<bigint>
     isValidNewLegoAddr: (addr: `0x${string}`) => Promise<boolean>
     isValidLegoUpdate: (legoId: bigint, newAddr: `0x${string}`) => Promise<boolean>
     isValidLegoDisable: (legoId: bigint) => Promise<boolean>
+    legoChangeDelay: () => Promise<bigint>
+    numLegosRaw: () => Promise<bigint>
     isValidLegoAddr: (addr: `0x${string}`) => Promise<boolean>
     isValidLegoId: (legoId: bigint) => Promise<boolean>
     getLegoId: (addr: `0x${string}`) => Promise<bigint>
     getLegoAddr: (legoId: bigint) => Promise<`0x${string}`>
     getLegoInfo: (
       legoId: bigint,
-    ) => Promise<{ addr: `0x${string}`; version: bigint; lastModified: bigint; description: string; legoType: bigint }>
+    ) => Promise<{ addr: `0x${string}`; version: bigint; lastModified: bigint; description: string }>
     getLegoDescription: (legoId: bigint) => Promise<string>
     getNumLegos: () => Promise<bigint>
     getLastLegoAddr: () => Promise<`0x${string}`>
@@ -672,40 +1162,97 @@ export type Contract = {
     getUnderlyingAsset: (vaultToken: `0x${string}`) => Promise<`0x${string}`>
     getUnderlyingForUser: (user: `0x${string}`, asset: `0x${string}`) => Promise<bigint>
     isValidLegoHelper: (helperAddr: `0x${string}`) => Promise<boolean>
+    pendingLegoType: (arg0: `0x${string}`) => Promise<bigint>
+    legoIdToType: (arg0: bigint) => Promise<bigint>
     legoHelper: () => Promise<`0x${string}`>
-    legoInfo: (
-      arg0: bigint,
-    ) => Promise<{ addr: `0x${string}`; version: bigint; lastModified: bigint; description: string; legoType: bigint }>
-    legoAddrToId: (arg0: `0x${string}`) => Promise<bigint>
-    numLegos: () => Promise<bigint>
-    ADDY_REGISTRY: () => Promise<`0x${string}`>
   }
   mutations: {
-    setLocalGovernor: (newGovernor: `0x${string}`) => Promise<boolean>
-    registerNewLego: (addr: `0x${string}`, description: string, legoType: bigint) => Promise<bigint>
+    changeGovernance: (newGov: `0x${string}`) => Promise<void>
+    confirmGovernanceChange: () => Promise<void>
+    cancelGovernanceChange: () => Promise<void>
+    setGovernanceChangeDelay: (numBlocks: bigint) => Promise<void>
+    registerNewLego: (addr: `0x${string}`, description: string, legoType: bigint) => Promise<boolean>
+    confirmNewLegoRegistration: (addr: `0x${string}`) => Promise<bigint>
+    cancelPendingNewLego: (addr: `0x${string}`) => Promise<boolean>
     updateLegoAddr: (legoId: bigint, newAddr: `0x${string}`) => Promise<boolean>
+    confirmLegoUpdate: (legoId: bigint) => Promise<boolean>
+    cancelPendingLegoUpdate: (legoId: bigint) => Promise<boolean>
     disableLegoAddr: (legoId: bigint) => Promise<boolean>
+    confirmLegoDisable: (legoId: bigint) => Promise<boolean>
+    cancelPendingLegoDisable: (legoId: bigint) => Promise<boolean>
+    setLegoChangeDelay: (numBlocks: bigint) => Promise<boolean>
     setLegoHelper: (helperAddr: `0x${string}`) => Promise<boolean>
   }
   events: {
-    NewLegoRegistered: (addr: `0x${string}`, legoId: bigint, description: string, legoType: bigint) => Promise<void>
-    LegoAddrUpdated: (
+    LegoHelperSet: (helperAddr: `0x${string}`) => Promise<void>
+    GovChangeInitiated: (prevGov: `0x${string}`, newGov: `0x${string}`, confirmBlock: bigint) => Promise<void>
+    GovChangeConfirmed: (
+      prevGov: `0x${string}`,
+      newGov: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+    ) => Promise<void>
+    GovChangeCancelled: (cancelledGov: `0x${string}`, initiatedBlock: bigint, confirmBlock: bigint) => Promise<void>
+    GovChangeDelaySet: (delayBlocks: bigint) => Promise<void>
+    NewAddyPending: (addr: `0x${string}`, description: string, confirmBlock: bigint, registry: string) => Promise<void>
+    NewAddyConfirmed: (addr: `0x${string}`, addyId: bigint, description: string, registry: string) => Promise<void>
+    NewPendingAddyCancelled: (
+      description: string,
+      addr: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyUpdatePending: (
+      addyId: bigint,
+      description: string,
       newAddr: `0x${string}`,
       prevAddr: `0x${string}`,
-      legoId: bigint,
       version: bigint,
-      description: string,
-      legoType: bigint,
+      confirmBlock: bigint,
+      registry: string,
     ) => Promise<void>
-    LegoAddrDisabled: (
+    AddyUpdateConfirmed: (
+      addyId: bigint,
+      description: string,
+      newAddr: `0x${string}`,
       prevAddr: `0x${string}`,
-      legoId: bigint,
       version: bigint,
-      description: string,
-      legoType: bigint,
+      registry: string,
     ) => Promise<void>
-    LegoHelperSet: (helperAddr: `0x${string}`) => Promise<void>
-    LocalGovernorSet: (addr: `0x${string}`) => Promise<void>
+    AddyUpdateCancelled: (
+      addyId: bigint,
+      description: string,
+      newAddr: `0x${string}`,
+      prevAddr: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyDisablePending: (
+      addyId: bigint,
+      description: string,
+      addr: `0x${string}`,
+      version: bigint,
+      confirmBlock: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyDisableConfirmed: (
+      addyId: bigint,
+      description: string,
+      addr: `0x${string}`,
+      version: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyDisableCancelled: (
+      addyId: bigint,
+      description: string,
+      addr: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyChangeDelaySet: (delayBlocks: bigint, registry: string) => Promise<void>
   }
 }
 
@@ -769,16 +1316,24 @@ type CallType = {
 }
 
 export const call: CallType = {
-  isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => getRequest('isGovernor', args),
-  isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) =>
-    getRequest('isValidLocalGovernor', args),
-  localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => getRequest('localGovernor', args),
+  canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) => getRequest('canGovern', args),
+  hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
+    getRequest('hasPendingGovChange', args),
+  governance: (...args: ExtractArgs<Contract['calls']['governance']>) => getRequest('governance', args),
+  pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) => getRequest('pendingGov', args),
+  govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) => getRequest('govChangeDelay', args),
+  MIN_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>) =>
+    getRequest('MIN_GOV_CHANGE_DELAY', args),
+  MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
+    getRequest('MAX_GOV_CHANGE_DELAY', args),
   isValidNewLegoAddr: (...args: ExtractArgs<Contract['calls']['isValidNewLegoAddr']>) =>
     getRequest('isValidNewLegoAddr', args),
   isValidLegoUpdate: (...args: ExtractArgs<Contract['calls']['isValidLegoUpdate']>) =>
     getRequest('isValidLegoUpdate', args),
   isValidLegoDisable: (...args: ExtractArgs<Contract['calls']['isValidLegoDisable']>) =>
     getRequest('isValidLegoDisable', args),
+  legoChangeDelay: (...args: ExtractArgs<Contract['calls']['legoChangeDelay']>) => getRequest('legoChangeDelay', args),
+  numLegosRaw: (...args: ExtractArgs<Contract['calls']['numLegosRaw']>) => getRequest('numLegosRaw', args),
   isValidLegoAddr: (...args: ExtractArgs<Contract['calls']['isValidLegoAddr']>) => getRequest('isValidLegoAddr', args),
   isValidLegoId: (...args: ExtractArgs<Contract['calls']['isValidLegoId']>) => getRequest('isValidLegoId', args),
   getLegoId: (...args: ExtractArgs<Contract['calls']['getLegoId']>) => getRequest('getLegoId', args),
@@ -795,11 +1350,9 @@ export const call: CallType = {
     getRequest('getUnderlyingForUser', args),
   isValidLegoHelper: (...args: ExtractArgs<Contract['calls']['isValidLegoHelper']>) =>
     getRequest('isValidLegoHelper', args),
+  pendingLegoType: (...args: ExtractArgs<Contract['calls']['pendingLegoType']>) => getRequest('pendingLegoType', args),
+  legoIdToType: (...args: ExtractArgs<Contract['calls']['legoIdToType']>) => getRequest('legoIdToType', args),
   legoHelper: (...args: ExtractArgs<Contract['calls']['legoHelper']>) => getRequest('legoHelper', args),
-  legoInfo: (...args: ExtractArgs<Contract['calls']['legoInfo']>) => getRequest('legoInfo', args),
-  legoAddrToId: (...args: ExtractArgs<Contract['calls']['legoAddrToId']>) => getRequest('legoAddrToId', args),
-  numLegos: (...args: ExtractArgs<Contract['calls']['numLegos']>) => getRequest('numLegos', args),
-  ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => getRequest('ADDY_REGISTRY', args),
 }
 
 export type Mutations = keyof Contract['mutations']
@@ -822,19 +1375,37 @@ export const mutation: {
     argsType: ExtractArgs<Contract['mutations'][K]> | undefined
   }
 } = {
-  setLocalGovernor: getMutation('setLocalGovernor'),
+  changeGovernance: getMutation('changeGovernance'),
+  confirmGovernanceChange: getMutation('confirmGovernanceChange'),
+  cancelGovernanceChange: getMutation('cancelGovernanceChange'),
+  setGovernanceChangeDelay: getMutation('setGovernanceChangeDelay'),
   registerNewLego: getMutation('registerNewLego'),
+  confirmNewLegoRegistration: getMutation('confirmNewLegoRegistration'),
+  cancelPendingNewLego: getMutation('cancelPendingNewLego'),
   updateLegoAddr: getMutation('updateLegoAddr'),
+  confirmLegoUpdate: getMutation('confirmLegoUpdate'),
+  cancelPendingLegoUpdate: getMutation('cancelPendingLegoUpdate'),
   disableLegoAddr: getMutation('disableLegoAddr'),
+  confirmLegoDisable: getMutation('confirmLegoDisable'),
+  cancelPendingLegoDisable: getMutation('cancelPendingLegoDisable'),
+  setLegoChangeDelay: getMutation('setLegoChangeDelay'),
   setLegoHelper: getMutation('setLegoHelper'),
 }
 
 export type SDK = {
-  isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => Promise<CallReturn<'isGovernor'>>
-  isValidLocalGovernor: (
-    ...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>
-  ) => Promise<CallReturn<'isValidLocalGovernor'>>
-  localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => Promise<CallReturn<'localGovernor'>>
+  canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) => Promise<CallReturn<'canGovern'>>
+  hasPendingGovChange: (
+    ...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>
+  ) => Promise<CallReturn<'hasPendingGovChange'>>
+  governance: (...args: ExtractArgs<Contract['calls']['governance']>) => Promise<CallReturn<'governance'>>
+  pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) => Promise<CallReturn<'pendingGov'>>
+  govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) => Promise<CallReturn<'govChangeDelay'>>
+  MIN_GOV_CHANGE_DELAY: (
+    ...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>
+  ) => Promise<CallReturn<'MIN_GOV_CHANGE_DELAY'>>
+  MAX_GOV_CHANGE_DELAY: (
+    ...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>
+  ) => Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>
   isValidNewLegoAddr: (
     ...args: ExtractArgs<Contract['calls']['isValidNewLegoAddr']>
   ) => Promise<CallReturn<'isValidNewLegoAddr'>>
@@ -844,6 +1415,10 @@ export type SDK = {
   isValidLegoDisable: (
     ...args: ExtractArgs<Contract['calls']['isValidLegoDisable']>
   ) => Promise<CallReturn<'isValidLegoDisable'>>
+  legoChangeDelay: (
+    ...args: ExtractArgs<Contract['calls']['legoChangeDelay']>
+  ) => Promise<CallReturn<'legoChangeDelay'>>
+  numLegosRaw: (...args: ExtractArgs<Contract['calls']['numLegosRaw']>) => Promise<CallReturn<'numLegosRaw'>>
   isValidLegoAddr: (
     ...args: ExtractArgs<Contract['calls']['isValidLegoAddr']>
   ) => Promise<CallReturn<'isValidLegoAddr'>>
@@ -868,33 +1443,61 @@ export type SDK = {
   isValidLegoHelper: (
     ...args: ExtractArgs<Contract['calls']['isValidLegoHelper']>
   ) => Promise<CallReturn<'isValidLegoHelper'>>
+  pendingLegoType: (
+    ...args: ExtractArgs<Contract['calls']['pendingLegoType']>
+  ) => Promise<CallReturn<'pendingLegoType'>>
+  legoIdToType: (...args: ExtractArgs<Contract['calls']['legoIdToType']>) => Promise<CallReturn<'legoIdToType'>>
   legoHelper: (...args: ExtractArgs<Contract['calls']['legoHelper']>) => Promise<CallReturn<'legoHelper'>>
-  legoInfo: (...args: ExtractArgs<Contract['calls']['legoInfo']>) => Promise<CallReturn<'legoInfo'>>
-  legoAddrToId: (...args: ExtractArgs<Contract['calls']['legoAddrToId']>) => Promise<CallReturn<'legoAddrToId'>>
-  numLegos: (...args: ExtractArgs<Contract['calls']['numLegos']>) => Promise<CallReturn<'numLegos'>>
-  ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => Promise<CallReturn<'ADDY_REGISTRY'>>
-  setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) => Promise<Address>
+  changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) => Promise<Address>
+  confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) => Promise<Address>
+  cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) => Promise<Address>
+  setGovernanceChangeDelay: (
+    ...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>
+  ) => Promise<Address>
   registerNewLego: (...args: ExtractArgs<Contract['mutations']['registerNewLego']>) => Promise<Address>
+  confirmNewLegoRegistration: (
+    ...args: ExtractArgs<Contract['mutations']['confirmNewLegoRegistration']>
+  ) => Promise<Address>
+  cancelPendingNewLego: (...args: ExtractArgs<Contract['mutations']['cancelPendingNewLego']>) => Promise<Address>
   updateLegoAddr: (...args: ExtractArgs<Contract['mutations']['updateLegoAddr']>) => Promise<Address>
+  confirmLegoUpdate: (...args: ExtractArgs<Contract['mutations']['confirmLegoUpdate']>) => Promise<Address>
+  cancelPendingLegoUpdate: (...args: ExtractArgs<Contract['mutations']['cancelPendingLegoUpdate']>) => Promise<Address>
   disableLegoAddr: (...args: ExtractArgs<Contract['mutations']['disableLegoAddr']>) => Promise<Address>
+  confirmLegoDisable: (...args: ExtractArgs<Contract['mutations']['confirmLegoDisable']>) => Promise<Address>
+  cancelPendingLegoDisable: (
+    ...args: ExtractArgs<Contract['mutations']['cancelPendingLegoDisable']>
+  ) => Promise<Address>
+  setLegoChangeDelay: (...args: ExtractArgs<Contract['mutations']['setLegoChangeDelay']>) => Promise<Address>
   setLegoHelper: (...args: ExtractArgs<Contract['mutations']['setLegoHelper']>) => Promise<Address>
 }
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
     // Queries
-    isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) =>
-      singleQuery(publicClient!, call.isGovernor(...args)) as Promise<CallReturn<'isGovernor'>>,
-    isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) =>
-      singleQuery(publicClient!, call.isValidLocalGovernor(...args)) as Promise<CallReturn<'isValidLocalGovernor'>>,
-    localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) =>
-      singleQuery(publicClient!, call.localGovernor(...args)) as Promise<CallReturn<'localGovernor'>>,
+    canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) =>
+      singleQuery(publicClient!, call.canGovern(...args)) as Promise<CallReturn<'canGovern'>>,
+    hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
+      singleQuery(publicClient!, call.hasPendingGovChange(...args)) as Promise<CallReturn<'hasPendingGovChange'>>,
+    governance: (...args: ExtractArgs<Contract['calls']['governance']>) =>
+      singleQuery(publicClient!, call.governance(...args)) as Promise<CallReturn<'governance'>>,
+    pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) =>
+      singleQuery(publicClient!, call.pendingGov(...args)) as Promise<CallReturn<'pendingGov'>>,
+    govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) =>
+      singleQuery(publicClient!, call.govChangeDelay(...args)) as Promise<CallReturn<'govChangeDelay'>>,
+    MIN_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>) =>
+      singleQuery(publicClient!, call.MIN_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MIN_GOV_CHANGE_DELAY'>>,
+    MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
+      singleQuery(publicClient!, call.MAX_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>,
     isValidNewLegoAddr: (...args: ExtractArgs<Contract['calls']['isValidNewLegoAddr']>) =>
       singleQuery(publicClient!, call.isValidNewLegoAddr(...args)) as Promise<CallReturn<'isValidNewLegoAddr'>>,
     isValidLegoUpdate: (...args: ExtractArgs<Contract['calls']['isValidLegoUpdate']>) =>
       singleQuery(publicClient!, call.isValidLegoUpdate(...args)) as Promise<CallReturn<'isValidLegoUpdate'>>,
     isValidLegoDisable: (...args: ExtractArgs<Contract['calls']['isValidLegoDisable']>) =>
       singleQuery(publicClient!, call.isValidLegoDisable(...args)) as Promise<CallReturn<'isValidLegoDisable'>>,
+    legoChangeDelay: (...args: ExtractArgs<Contract['calls']['legoChangeDelay']>) =>
+      singleQuery(publicClient!, call.legoChangeDelay(...args)) as Promise<CallReturn<'legoChangeDelay'>>,
+    numLegosRaw: (...args: ExtractArgs<Contract['calls']['numLegosRaw']>) =>
+      singleQuery(publicClient!, call.numLegosRaw(...args)) as Promise<CallReturn<'numLegosRaw'>>,
     isValidLegoAddr: (...args: ExtractArgs<Contract['calls']['isValidLegoAddr']>) =>
       singleQuery(publicClient!, call.isValidLegoAddr(...args)) as Promise<CallReturn<'isValidLegoAddr'>>,
     isValidLegoId: (...args: ExtractArgs<Contract['calls']['isValidLegoId']>) =>
@@ -919,26 +1522,42 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.getUnderlyingForUser(...args)) as Promise<CallReturn<'getUnderlyingForUser'>>,
     isValidLegoHelper: (...args: ExtractArgs<Contract['calls']['isValidLegoHelper']>) =>
       singleQuery(publicClient!, call.isValidLegoHelper(...args)) as Promise<CallReturn<'isValidLegoHelper'>>,
+    pendingLegoType: (...args: ExtractArgs<Contract['calls']['pendingLegoType']>) =>
+      singleQuery(publicClient!, call.pendingLegoType(...args)) as Promise<CallReturn<'pendingLegoType'>>,
+    legoIdToType: (...args: ExtractArgs<Contract['calls']['legoIdToType']>) =>
+      singleQuery(publicClient!, call.legoIdToType(...args)) as Promise<CallReturn<'legoIdToType'>>,
     legoHelper: (...args: ExtractArgs<Contract['calls']['legoHelper']>) =>
       singleQuery(publicClient!, call.legoHelper(...args)) as Promise<CallReturn<'legoHelper'>>,
-    legoInfo: (...args: ExtractArgs<Contract['calls']['legoInfo']>) =>
-      singleQuery(publicClient!, call.legoInfo(...args)) as Promise<CallReturn<'legoInfo'>>,
-    legoAddrToId: (...args: ExtractArgs<Contract['calls']['legoAddrToId']>) =>
-      singleQuery(publicClient!, call.legoAddrToId(...args)) as Promise<CallReturn<'legoAddrToId'>>,
-    numLegos: (...args: ExtractArgs<Contract['calls']['numLegos']>) =>
-      singleQuery(publicClient!, call.numLegos(...args)) as Promise<CallReturn<'numLegos'>>,
-    ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) =>
-      singleQuery(publicClient!, call.ADDY_REGISTRY(...args)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
 
     // Mutations
-    setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) =>
-      mutate(walletClient!, mutation.setLocalGovernor)(...args),
+    changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) =>
+      mutate(walletClient!, mutation.changeGovernance)(...args),
+    confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) =>
+      mutate(walletClient!, mutation.confirmGovernanceChange)(...args),
+    cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) =>
+      mutate(walletClient!, mutation.cancelGovernanceChange)(...args),
+    setGovernanceChangeDelay: (...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>) =>
+      mutate(walletClient!, mutation.setGovernanceChangeDelay)(...args),
     registerNewLego: (...args: ExtractArgs<Contract['mutations']['registerNewLego']>) =>
       mutate(walletClient!, mutation.registerNewLego)(...args),
+    confirmNewLegoRegistration: (...args: ExtractArgs<Contract['mutations']['confirmNewLegoRegistration']>) =>
+      mutate(walletClient!, mutation.confirmNewLegoRegistration)(...args),
+    cancelPendingNewLego: (...args: ExtractArgs<Contract['mutations']['cancelPendingNewLego']>) =>
+      mutate(walletClient!, mutation.cancelPendingNewLego)(...args),
     updateLegoAddr: (...args: ExtractArgs<Contract['mutations']['updateLegoAddr']>) =>
       mutate(walletClient!, mutation.updateLegoAddr)(...args),
+    confirmLegoUpdate: (...args: ExtractArgs<Contract['mutations']['confirmLegoUpdate']>) =>
+      mutate(walletClient!, mutation.confirmLegoUpdate)(...args),
+    cancelPendingLegoUpdate: (...args: ExtractArgs<Contract['mutations']['cancelPendingLegoUpdate']>) =>
+      mutate(walletClient!, mutation.cancelPendingLegoUpdate)(...args),
     disableLegoAddr: (...args: ExtractArgs<Contract['mutations']['disableLegoAddr']>) =>
       mutate(walletClient!, mutation.disableLegoAddr)(...args),
+    confirmLegoDisable: (...args: ExtractArgs<Contract['mutations']['confirmLegoDisable']>) =>
+      mutate(walletClient!, mutation.confirmLegoDisable)(...args),
+    cancelPendingLegoDisable: (...args: ExtractArgs<Contract['mutations']['cancelPendingLegoDisable']>) =>
+      mutate(walletClient!, mutation.cancelPendingLegoDisable)(...args),
+    setLegoChangeDelay: (...args: ExtractArgs<Contract['mutations']['setLegoChangeDelay']>) =>
+      mutate(walletClient!, mutation.setLegoChangeDelay)(...args),
     setLegoHelper: (...args: ExtractArgs<Contract['mutations']['setLegoHelper']>) =>
       mutate(walletClient!, mutation.setLegoHelper)(...args),
   }

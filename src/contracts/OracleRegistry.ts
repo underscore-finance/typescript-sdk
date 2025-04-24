@@ -14,87 +14,6 @@ export const abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: true,
-        name: 'addr',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'oraclePartnerId',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'description',
-        type: 'string',
-      },
-    ],
-    name: 'NewOraclePartnerRegistered',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'newAddr',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        name: 'prevAddr',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'oraclePartnerId',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'version',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'description',
-        type: 'string',
-      },
-    ],
-    name: 'OraclePartnerAddrUpdated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'prevAddr',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'oraclePartnerId',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'version',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'description',
-        type: 'string',
-      },
-    ],
-    name: 'OraclePartnerAddrDisabled',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
         indexed: false,
         name: 'numIds',
         type: 'uint256',
@@ -120,11 +39,412 @@ export const abi = [
     inputs: [
       {
         indexed: true,
+        name: 'prevGov',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'newGov',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+    ],
+    name: 'GovChangeInitiated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'prevGov',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'newGov',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+    ],
+    name: 'GovChangeConfirmed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'cancelledGov',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+    ],
+    name: 'GovChangeCancelled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'delayBlocks',
+        type: 'uint256',
+      },
+    ],
+    name: 'GovChangeDelaySet',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         name: 'addr',
         type: 'address',
       },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
     ],
-    name: 'LocalGovernorSet',
+    name: 'NewAddyPending',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'NewAddyConfirmed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'NewPendingAddyCancelled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'newAddr',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'prevAddr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'version',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyUpdatePending',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'newAddr',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'prevAddr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'version',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyUpdateConfirmed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'newAddr',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'prevAddr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyUpdateCancelled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'version',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyDisablePending',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'version',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyDisableConfirmed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyDisableCancelled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'delayBlocks',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyChangeDelaySet',
     type: 'event',
   },
   {
@@ -134,7 +454,19 @@ export const abi = [
         type: 'address',
       },
     ],
-    name: 'isGovernor',
+    name: 'canGovern',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'hasPendingGovChange',
     outputs: [
       {
         name: '',
@@ -147,44 +479,110 @@ export const abi = [
   {
     inputs: [
       {
-        name: '_newGovernor',
+        name: '_newGov',
         type: 'address',
       },
     ],
-    name: 'isValidLocalGovernor',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_newGovernor',
-        type: 'address',
-      },
-    ],
-    name: 'setLocalGovernor',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
+    name: 'changeGovernance',
+    outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'localGovernor',
+    name: 'confirmGovernanceChange',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'cancelGovernanceChange',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_numBlocks',
+        type: 'uint256',
+      },
+    ],
+    name: 'setGovernanceChangeDelay',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'governance',
     outputs: [
       {
         name: '',
         type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'pendingGov',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'newGov',
+            type: 'address',
+          },
+          {
+            name: 'initiatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'confirmBlock',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'govChangeDelay',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MIN_GOV_CHANGE_DELAY',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MAX_GOV_CHANGE_DELAY',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -445,7 +843,41 @@ export const abi = [
     outputs: [
       {
         name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+    ],
+    name: 'confirmNewOraclePartnerRegistration',
+    outputs: [
+      {
+        name: '',
         type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+    ],
+    name: 'cancelPendingNewOraclePartner',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
       },
     ],
     stateMutability: 'nonpayable',
@@ -500,6 +932,40 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'confirmOraclePartnerUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_oracleId',
+        type: 'uint256',
+      },
+    ],
+    name: 'cancelPendingOraclePartnerUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_oracleId',
+        type: 'uint256',
+      },
+    ],
     name: 'isValidOraclePartnerDisable',
     outputs: [
       {
@@ -525,6 +991,69 @@ export const abi = [
       },
     ],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_oracleId',
+        type: 'uint256',
+      },
+    ],
+    name: 'confirmOraclePartnerDisable',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_oracleId',
+        type: 'uint256',
+      },
+    ],
+    name: 'cancelPendingOraclePartnerDisable',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_numBlocks',
+        type: 'uint256',
+      },
+    ],
+    name: 'setOraclePartnerChangeDelay',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'oracleChangeDelay',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -605,6 +1134,18 @@ export const abi = [
       },
     ],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'numOraclePartnersRaw',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -770,70 +1311,6 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    name: 'oraclePartnerInfo',
-    outputs: [
-      {
-        components: [
-          {
-            name: 'addr',
-            type: 'address',
-          },
-          {
-            name: 'version',
-            type: 'uint256',
-          },
-          {
-            name: 'lastModified',
-            type: 'uint256',
-          },
-          {
-            name: 'description',
-            type: 'string',
-          },
-        ],
-        name: '',
-        type: 'tuple',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    name: 'oraclePartnerAddrToId',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'numOraclePartners',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'uint256',
-      },
-    ],
     name: 'priorityOraclePartnerIds',
     outputs: [
       {
@@ -851,18 +1328,6 @@ export const abi = [
       {
         name: '',
         type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'ADDY_REGISTRY',
-    outputs: [
-      {
-        name: '',
-        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -907,6 +1372,10 @@ export const abi = [
   {
     inputs: [
       {
+        name: '_addyRegistry',
+        type: 'address',
+      },
+      {
         name: '_ethAddr',
         type: 'address',
       },
@@ -919,8 +1388,12 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_addyRegistry',
-        type: 'address',
+        name: '_minOracleChangeDelay',
+        type: 'uint256',
+      },
+      {
+        name: '_maxOracleChangeDelay',
+        type: 'uint256',
       },
     ],
     outputs: [],
@@ -929,13 +1402,17 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xc56add9377Bc3a39f1B928Abc7440E43B6b10e1f'
+export const deployAddress: Address | undefined = '0x4D97d514d92Efd711D0645fE0759fA68480facc5'
 
 export type Contract = {
   calls: {
-    isGovernor: (address: `0x${string}`) => Promise<boolean>
-    isValidLocalGovernor: (newGovernor: `0x${string}`) => Promise<boolean>
-    localGovernor: () => Promise<`0x${string}`>
+    canGovern: (address: `0x${string}`) => Promise<boolean>
+    hasPendingGovChange: () => Promise<boolean>
+    governance: () => Promise<`0x${string}`>
+    pendingGov: () => Promise<{ newGov: `0x${string}`; initiatedBlock: bigint; confirmBlock: bigint }>
+    govChangeDelay: () => Promise<bigint>
+    MIN_GOV_CHANGE_DELAY: () => Promise<bigint>
+    MAX_GOV_CHANGE_DELAY: () => Promise<bigint>
     getPrice: (asset: `0x${string}`, shouldRaise?: boolean) => Promise<bigint>
     getUsdValue: (asset: `0x${string}`, amount: bigint, shouldRaise?: boolean) => Promise<bigint>
     getAssetAmount: (asset: `0x${string}`, usdValue: bigint, shouldRaise?: boolean) => Promise<bigint>
@@ -945,9 +1422,11 @@ export type Contract = {
     isValidNewOraclePartnerAddr: (addr: `0x${string}`) => Promise<boolean>
     isValidOraclePartnerUpdate: (oracleId: bigint, newAddr: `0x${string}`) => Promise<boolean>
     isValidOraclePartnerDisable: (oracleId: bigint) => Promise<boolean>
+    oracleChangeDelay: () => Promise<bigint>
     getPriorityOraclePartnerIds: () => Promise<bigint[]>
     areValidPriorityOraclePartnerIds: (priorityIds: bigint[]) => Promise<boolean>
     isValidStaleTime: (staleTime: bigint) => Promise<boolean>
+    numOraclePartnersRaw: () => Promise<bigint>
     isValidOraclePartnerAddr: (addr: `0x${string}`) => Promise<boolean>
     isValidOraclePartnerId: (oracleId: bigint) => Promise<boolean>
     getOraclePartnerId: (addr: `0x${string}`) => Promise<bigint>
@@ -959,44 +1438,101 @@ export type Contract = {
     getNumOraclePartners: () => Promise<bigint>
     getLastOraclePartnerAddr: () => Promise<`0x${string}`>
     getLastOraclePartnerId: () => Promise<bigint>
-    oraclePartnerInfo: (
-      arg0: bigint,
-    ) => Promise<{ addr: `0x${string}`; version: bigint; lastModified: bigint; description: string }>
-    oraclePartnerAddrToId: (arg0: `0x${string}`) => Promise<bigint>
-    numOraclePartners: () => Promise<bigint>
     priorityOraclePartnerIds: (arg0: bigint) => Promise<bigint>
     staleTime: () => Promise<bigint>
-    ADDY_REGISTRY: () => Promise<`0x${string}`>
     ETH: () => Promise<`0x${string}`>
     MIN_STALE_TIME: () => Promise<bigint>
     MAX_STALE_TIME: () => Promise<bigint>
   }
   mutations: {
-    setLocalGovernor: (newGovernor: `0x${string}`) => Promise<boolean>
-    registerNewOraclePartner: (addr: `0x${string}`, description: string) => Promise<bigint>
+    changeGovernance: (newGov: `0x${string}`) => Promise<void>
+    confirmGovernanceChange: () => Promise<void>
+    cancelGovernanceChange: () => Promise<void>
+    setGovernanceChangeDelay: (numBlocks: bigint) => Promise<void>
+    registerNewOraclePartner: (addr: `0x${string}`, description: string) => Promise<boolean>
+    confirmNewOraclePartnerRegistration: (addr: `0x${string}`) => Promise<bigint>
+    cancelPendingNewOraclePartner: (addr: `0x${string}`) => Promise<boolean>
     updateOraclePartnerAddr: (oracleId: bigint, newAddr: `0x${string}`) => Promise<boolean>
+    confirmOraclePartnerUpdate: (oracleId: bigint) => Promise<boolean>
+    cancelPendingOraclePartnerUpdate: (oracleId: bigint) => Promise<boolean>
     disableOraclePartnerAddr: (oracleId: bigint) => Promise<boolean>
+    confirmOraclePartnerDisable: (oracleId: bigint) => Promise<boolean>
+    cancelPendingOraclePartnerDisable: (oracleId: bigint) => Promise<boolean>
+    setOraclePartnerChangeDelay: (numBlocks: bigint) => Promise<boolean>
     setPriorityOraclePartnerIds: (priorityIds: bigint[]) => Promise<boolean>
     setStaleTime: (staleTime: bigint) => Promise<boolean>
   }
   events: {
-    NewOraclePartnerRegistered: (addr: `0x${string}`, oraclePartnerId: bigint, description: string) => Promise<void>
-    OraclePartnerAddrUpdated: (
-      newAddr: `0x${string}`,
-      prevAddr: `0x${string}`,
-      oraclePartnerId: bigint,
-      version: bigint,
-      description: string,
-    ) => Promise<void>
-    OraclePartnerAddrDisabled: (
-      prevAddr: `0x${string}`,
-      oraclePartnerId: bigint,
-      version: bigint,
-      description: string,
-    ) => Promise<void>
     PriorityOraclePartnerIdsModified: (numIds: bigint) => Promise<void>
     StaleTimeSet: (staleTime: bigint) => Promise<void>
-    LocalGovernorSet: (addr: `0x${string}`) => Promise<void>
+    GovChangeInitiated: (prevGov: `0x${string}`, newGov: `0x${string}`, confirmBlock: bigint) => Promise<void>
+    GovChangeConfirmed: (
+      prevGov: `0x${string}`,
+      newGov: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+    ) => Promise<void>
+    GovChangeCancelled: (cancelledGov: `0x${string}`, initiatedBlock: bigint, confirmBlock: bigint) => Promise<void>
+    GovChangeDelaySet: (delayBlocks: bigint) => Promise<void>
+    NewAddyPending: (addr: `0x${string}`, description: string, confirmBlock: bigint, registry: string) => Promise<void>
+    NewAddyConfirmed: (addr: `0x${string}`, addyId: bigint, description: string, registry: string) => Promise<void>
+    NewPendingAddyCancelled: (
+      description: string,
+      addr: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyUpdatePending: (
+      addyId: bigint,
+      description: string,
+      newAddr: `0x${string}`,
+      prevAddr: `0x${string}`,
+      version: bigint,
+      confirmBlock: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyUpdateConfirmed: (
+      addyId: bigint,
+      description: string,
+      newAddr: `0x${string}`,
+      prevAddr: `0x${string}`,
+      version: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyUpdateCancelled: (
+      addyId: bigint,
+      description: string,
+      newAddr: `0x${string}`,
+      prevAddr: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyDisablePending: (
+      addyId: bigint,
+      description: string,
+      addr: `0x${string}`,
+      version: bigint,
+      confirmBlock: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyDisableConfirmed: (
+      addyId: bigint,
+      description: string,
+      addr: `0x${string}`,
+      version: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyDisableCancelled: (
+      addyId: bigint,
+      description: string,
+      addr: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyChangeDelaySet: (delayBlocks: bigint, registry: string) => Promise<void>
   }
 }
 
@@ -1060,10 +1596,16 @@ type CallType = {
 }
 
 export const call: CallType = {
-  isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => getRequest('isGovernor', args),
-  isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) =>
-    getRequest('isValidLocalGovernor', args),
-  localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => getRequest('localGovernor', args),
+  canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) => getRequest('canGovern', args),
+  hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
+    getRequest('hasPendingGovChange', args),
+  governance: (...args: ExtractArgs<Contract['calls']['governance']>) => getRequest('governance', args),
+  pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) => getRequest('pendingGov', args),
+  govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) => getRequest('govChangeDelay', args),
+  MIN_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>) =>
+    getRequest('MIN_GOV_CHANGE_DELAY', args),
+  MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
+    getRequest('MAX_GOV_CHANGE_DELAY', args),
   getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => getRequest('getPrice', args),
   getUsdValue: (...args: ExtractArgs<Contract['calls']['getUsdValue']>) => getRequest('getUsdValue', args),
   getAssetAmount: (...args: ExtractArgs<Contract['calls']['getAssetAmount']>) => getRequest('getAssetAmount', args),
@@ -1076,12 +1618,16 @@ export const call: CallType = {
     getRequest('isValidOraclePartnerUpdate', args),
   isValidOraclePartnerDisable: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerDisable']>) =>
     getRequest('isValidOraclePartnerDisable', args),
+  oracleChangeDelay: (...args: ExtractArgs<Contract['calls']['oracleChangeDelay']>) =>
+    getRequest('oracleChangeDelay', args),
   getPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['getPriorityOraclePartnerIds']>) =>
     getRequest('getPriorityOraclePartnerIds', args),
   areValidPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['areValidPriorityOraclePartnerIds']>) =>
     getRequest('areValidPriorityOraclePartnerIds', args),
   isValidStaleTime: (...args: ExtractArgs<Contract['calls']['isValidStaleTime']>) =>
     getRequest('isValidStaleTime', args),
+  numOraclePartnersRaw: (...args: ExtractArgs<Contract['calls']['numOraclePartnersRaw']>) =>
+    getRequest('numOraclePartnersRaw', args),
   isValidOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerAddr']>) =>
     getRequest('isValidOraclePartnerAddr', args),
   isValidOraclePartnerId: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerId']>) =>
@@ -1100,16 +1646,9 @@ export const call: CallType = {
     getRequest('getLastOraclePartnerAddr', args),
   getLastOraclePartnerId: (...args: ExtractArgs<Contract['calls']['getLastOraclePartnerId']>) =>
     getRequest('getLastOraclePartnerId', args),
-  oraclePartnerInfo: (...args: ExtractArgs<Contract['calls']['oraclePartnerInfo']>) =>
-    getRequest('oraclePartnerInfo', args),
-  oraclePartnerAddrToId: (...args: ExtractArgs<Contract['calls']['oraclePartnerAddrToId']>) =>
-    getRequest('oraclePartnerAddrToId', args),
-  numOraclePartners: (...args: ExtractArgs<Contract['calls']['numOraclePartners']>) =>
-    getRequest('numOraclePartners', args),
   priorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['priorityOraclePartnerIds']>) =>
     getRequest('priorityOraclePartnerIds', args),
   staleTime: (...args: ExtractArgs<Contract['calls']['staleTime']>) => getRequest('staleTime', args),
-  ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => getRequest('ADDY_REGISTRY', args),
   ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => getRequest('ETH', args),
   MIN_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MIN_STALE_TIME']>) => getRequest('MIN_STALE_TIME', args),
   MAX_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MAX_STALE_TIME']>) => getRequest('MAX_STALE_TIME', args),
@@ -1135,20 +1674,38 @@ export const mutation: {
     argsType: ExtractArgs<Contract['mutations'][K]> | undefined
   }
 } = {
-  setLocalGovernor: getMutation('setLocalGovernor'),
+  changeGovernance: getMutation('changeGovernance'),
+  confirmGovernanceChange: getMutation('confirmGovernanceChange'),
+  cancelGovernanceChange: getMutation('cancelGovernanceChange'),
+  setGovernanceChangeDelay: getMutation('setGovernanceChangeDelay'),
   registerNewOraclePartner: getMutation('registerNewOraclePartner'),
+  confirmNewOraclePartnerRegistration: getMutation('confirmNewOraclePartnerRegistration'),
+  cancelPendingNewOraclePartner: getMutation('cancelPendingNewOraclePartner'),
   updateOraclePartnerAddr: getMutation('updateOraclePartnerAddr'),
+  confirmOraclePartnerUpdate: getMutation('confirmOraclePartnerUpdate'),
+  cancelPendingOraclePartnerUpdate: getMutation('cancelPendingOraclePartnerUpdate'),
   disableOraclePartnerAddr: getMutation('disableOraclePartnerAddr'),
+  confirmOraclePartnerDisable: getMutation('confirmOraclePartnerDisable'),
+  cancelPendingOraclePartnerDisable: getMutation('cancelPendingOraclePartnerDisable'),
+  setOraclePartnerChangeDelay: getMutation('setOraclePartnerChangeDelay'),
   setPriorityOraclePartnerIds: getMutation('setPriorityOraclePartnerIds'),
   setStaleTime: getMutation('setStaleTime'),
 }
 
 export type SDK = {
-  isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => Promise<CallReturn<'isGovernor'>>
-  isValidLocalGovernor: (
-    ...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>
-  ) => Promise<CallReturn<'isValidLocalGovernor'>>
-  localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => Promise<CallReturn<'localGovernor'>>
+  canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) => Promise<CallReturn<'canGovern'>>
+  hasPendingGovChange: (
+    ...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>
+  ) => Promise<CallReturn<'hasPendingGovChange'>>
+  governance: (...args: ExtractArgs<Contract['calls']['governance']>) => Promise<CallReturn<'governance'>>
+  pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) => Promise<CallReturn<'pendingGov'>>
+  govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) => Promise<CallReturn<'govChangeDelay'>>
+  MIN_GOV_CHANGE_DELAY: (
+    ...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>
+  ) => Promise<CallReturn<'MIN_GOV_CHANGE_DELAY'>>
+  MAX_GOV_CHANGE_DELAY: (
+    ...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>
+  ) => Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>
   getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => Promise<CallReturn<'getPrice'>>
   getUsdValue: (...args: ExtractArgs<Contract['calls']['getUsdValue']>) => Promise<CallReturn<'getUsdValue'>>
   getAssetAmount: (...args: ExtractArgs<Contract['calls']['getAssetAmount']>) => Promise<CallReturn<'getAssetAmount'>>
@@ -1164,6 +1721,9 @@ export type SDK = {
   isValidOraclePartnerDisable: (
     ...args: ExtractArgs<Contract['calls']['isValidOraclePartnerDisable']>
   ) => Promise<CallReturn<'isValidOraclePartnerDisable'>>
+  oracleChangeDelay: (
+    ...args: ExtractArgs<Contract['calls']['oracleChangeDelay']>
+  ) => Promise<CallReturn<'oracleChangeDelay'>>
   getPriorityOraclePartnerIds: (
     ...args: ExtractArgs<Contract['calls']['getPriorityOraclePartnerIds']>
   ) => Promise<CallReturn<'getPriorityOraclePartnerIds'>>
@@ -1173,6 +1733,9 @@ export type SDK = {
   isValidStaleTime: (
     ...args: ExtractArgs<Contract['calls']['isValidStaleTime']>
   ) => Promise<CallReturn<'isValidStaleTime'>>
+  numOraclePartnersRaw: (
+    ...args: ExtractArgs<Contract['calls']['numOraclePartnersRaw']>
+  ) => Promise<CallReturn<'numOraclePartnersRaw'>>
   isValidOraclePartnerAddr: (
     ...args: ExtractArgs<Contract['calls']['isValidOraclePartnerAddr']>
   ) => Promise<CallReturn<'isValidOraclePartnerAddr'>>
@@ -1200,30 +1763,46 @@ export type SDK = {
   getLastOraclePartnerId: (
     ...args: ExtractArgs<Contract['calls']['getLastOraclePartnerId']>
   ) => Promise<CallReturn<'getLastOraclePartnerId'>>
-  oraclePartnerInfo: (
-    ...args: ExtractArgs<Contract['calls']['oraclePartnerInfo']>
-  ) => Promise<CallReturn<'oraclePartnerInfo'>>
-  oraclePartnerAddrToId: (
-    ...args: ExtractArgs<Contract['calls']['oraclePartnerAddrToId']>
-  ) => Promise<CallReturn<'oraclePartnerAddrToId'>>
-  numOraclePartners: (
-    ...args: ExtractArgs<Contract['calls']['numOraclePartners']>
-  ) => Promise<CallReturn<'numOraclePartners'>>
   priorityOraclePartnerIds: (
     ...args: ExtractArgs<Contract['calls']['priorityOraclePartnerIds']>
   ) => Promise<CallReturn<'priorityOraclePartnerIds'>>
   staleTime: (...args: ExtractArgs<Contract['calls']['staleTime']>) => Promise<CallReturn<'staleTime'>>
-  ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => Promise<CallReturn<'ADDY_REGISTRY'>>
   ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => Promise<CallReturn<'ETH'>>
   MIN_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MIN_STALE_TIME']>) => Promise<CallReturn<'MIN_STALE_TIME'>>
   MAX_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MAX_STALE_TIME']>) => Promise<CallReturn<'MAX_STALE_TIME'>>
-  setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) => Promise<Address>
+  changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) => Promise<Address>
+  confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) => Promise<Address>
+  cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) => Promise<Address>
+  setGovernanceChangeDelay: (
+    ...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>
+  ) => Promise<Address>
   registerNewOraclePartner: (
     ...args: ExtractArgs<Contract['mutations']['registerNewOraclePartner']>
   ) => Promise<Address>
+  confirmNewOraclePartnerRegistration: (
+    ...args: ExtractArgs<Contract['mutations']['confirmNewOraclePartnerRegistration']>
+  ) => Promise<Address>
+  cancelPendingNewOraclePartner: (
+    ...args: ExtractArgs<Contract['mutations']['cancelPendingNewOraclePartner']>
+  ) => Promise<Address>
   updateOraclePartnerAddr: (...args: ExtractArgs<Contract['mutations']['updateOraclePartnerAddr']>) => Promise<Address>
+  confirmOraclePartnerUpdate: (
+    ...args: ExtractArgs<Contract['mutations']['confirmOraclePartnerUpdate']>
+  ) => Promise<Address>
+  cancelPendingOraclePartnerUpdate: (
+    ...args: ExtractArgs<Contract['mutations']['cancelPendingOraclePartnerUpdate']>
+  ) => Promise<Address>
   disableOraclePartnerAddr: (
     ...args: ExtractArgs<Contract['mutations']['disableOraclePartnerAddr']>
+  ) => Promise<Address>
+  confirmOraclePartnerDisable: (
+    ...args: ExtractArgs<Contract['mutations']['confirmOraclePartnerDisable']>
+  ) => Promise<Address>
+  cancelPendingOraclePartnerDisable: (
+    ...args: ExtractArgs<Contract['mutations']['cancelPendingOraclePartnerDisable']>
+  ) => Promise<Address>
+  setOraclePartnerChangeDelay: (
+    ...args: ExtractArgs<Contract['mutations']['setOraclePartnerChangeDelay']>
   ) => Promise<Address>
   setPriorityOraclePartnerIds: (
     ...args: ExtractArgs<Contract['mutations']['setPriorityOraclePartnerIds']>
@@ -1234,12 +1813,20 @@ export type SDK = {
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
     // Queries
-    isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) =>
-      singleQuery(publicClient!, call.isGovernor(...args)) as Promise<CallReturn<'isGovernor'>>,
-    isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) =>
-      singleQuery(publicClient!, call.isValidLocalGovernor(...args)) as Promise<CallReturn<'isValidLocalGovernor'>>,
-    localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) =>
-      singleQuery(publicClient!, call.localGovernor(...args)) as Promise<CallReturn<'localGovernor'>>,
+    canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) =>
+      singleQuery(publicClient!, call.canGovern(...args)) as Promise<CallReturn<'canGovern'>>,
+    hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
+      singleQuery(publicClient!, call.hasPendingGovChange(...args)) as Promise<CallReturn<'hasPendingGovChange'>>,
+    governance: (...args: ExtractArgs<Contract['calls']['governance']>) =>
+      singleQuery(publicClient!, call.governance(...args)) as Promise<CallReturn<'governance'>>,
+    pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) =>
+      singleQuery(publicClient!, call.pendingGov(...args)) as Promise<CallReturn<'pendingGov'>>,
+    govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) =>
+      singleQuery(publicClient!, call.govChangeDelay(...args)) as Promise<CallReturn<'govChangeDelay'>>,
+    MIN_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>) =>
+      singleQuery(publicClient!, call.MIN_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MIN_GOV_CHANGE_DELAY'>>,
+    MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
+      singleQuery(publicClient!, call.MAX_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>,
     getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) =>
       singleQuery(publicClient!, call.getPrice(...args)) as Promise<CallReturn<'getPrice'>>,
     getUsdValue: (...args: ExtractArgs<Contract['calls']['getUsdValue']>) =>
@@ -1264,6 +1851,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.isValidOraclePartnerDisable(...args)) as Promise<
         CallReturn<'isValidOraclePartnerDisable'>
       >,
+    oracleChangeDelay: (...args: ExtractArgs<Contract['calls']['oracleChangeDelay']>) =>
+      singleQuery(publicClient!, call.oracleChangeDelay(...args)) as Promise<CallReturn<'oracleChangeDelay'>>,
     getPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['getPriorityOraclePartnerIds']>) =>
       singleQuery(publicClient!, call.getPriorityOraclePartnerIds(...args)) as Promise<
         CallReturn<'getPriorityOraclePartnerIds'>
@@ -1274,6 +1863,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       >,
     isValidStaleTime: (...args: ExtractArgs<Contract['calls']['isValidStaleTime']>) =>
       singleQuery(publicClient!, call.isValidStaleTime(...args)) as Promise<CallReturn<'isValidStaleTime'>>,
+    numOraclePartnersRaw: (...args: ExtractArgs<Contract['calls']['numOraclePartnersRaw']>) =>
+      singleQuery(publicClient!, call.numOraclePartnersRaw(...args)) as Promise<CallReturn<'numOraclePartnersRaw'>>,
     isValidOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerAddr']>) =>
       singleQuery(publicClient!, call.isValidOraclePartnerAddr(...args)) as Promise<
         CallReturn<'isValidOraclePartnerAddr'>
@@ -1298,20 +1889,12 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       >,
     getLastOraclePartnerId: (...args: ExtractArgs<Contract['calls']['getLastOraclePartnerId']>) =>
       singleQuery(publicClient!, call.getLastOraclePartnerId(...args)) as Promise<CallReturn<'getLastOraclePartnerId'>>,
-    oraclePartnerInfo: (...args: ExtractArgs<Contract['calls']['oraclePartnerInfo']>) =>
-      singleQuery(publicClient!, call.oraclePartnerInfo(...args)) as Promise<CallReturn<'oraclePartnerInfo'>>,
-    oraclePartnerAddrToId: (...args: ExtractArgs<Contract['calls']['oraclePartnerAddrToId']>) =>
-      singleQuery(publicClient!, call.oraclePartnerAddrToId(...args)) as Promise<CallReturn<'oraclePartnerAddrToId'>>,
-    numOraclePartners: (...args: ExtractArgs<Contract['calls']['numOraclePartners']>) =>
-      singleQuery(publicClient!, call.numOraclePartners(...args)) as Promise<CallReturn<'numOraclePartners'>>,
     priorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['priorityOraclePartnerIds']>) =>
       singleQuery(publicClient!, call.priorityOraclePartnerIds(...args)) as Promise<
         CallReturn<'priorityOraclePartnerIds'>
       >,
     staleTime: (...args: ExtractArgs<Contract['calls']['staleTime']>) =>
       singleQuery(publicClient!, call.staleTime(...args)) as Promise<CallReturn<'staleTime'>>,
-    ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) =>
-      singleQuery(publicClient!, call.ADDY_REGISTRY(...args)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
     ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) =>
       singleQuery(publicClient!, call.ETH(...args)) as Promise<CallReturn<'ETH'>>,
     MIN_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MIN_STALE_TIME']>) =>
@@ -1320,14 +1903,37 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.MAX_STALE_TIME(...args)) as Promise<CallReturn<'MAX_STALE_TIME'>>,
 
     // Mutations
-    setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) =>
-      mutate(walletClient!, mutation.setLocalGovernor)(...args),
+    changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) =>
+      mutate(walletClient!, mutation.changeGovernance)(...args),
+    confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) =>
+      mutate(walletClient!, mutation.confirmGovernanceChange)(...args),
+    cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) =>
+      mutate(walletClient!, mutation.cancelGovernanceChange)(...args),
+    setGovernanceChangeDelay: (...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>) =>
+      mutate(walletClient!, mutation.setGovernanceChangeDelay)(...args),
     registerNewOraclePartner: (...args: ExtractArgs<Contract['mutations']['registerNewOraclePartner']>) =>
       mutate(walletClient!, mutation.registerNewOraclePartner)(...args),
+    confirmNewOraclePartnerRegistration: (
+      ...args: ExtractArgs<Contract['mutations']['confirmNewOraclePartnerRegistration']>
+    ) => mutate(walletClient!, mutation.confirmNewOraclePartnerRegistration)(...args),
+    cancelPendingNewOraclePartner: (...args: ExtractArgs<Contract['mutations']['cancelPendingNewOraclePartner']>) =>
+      mutate(walletClient!, mutation.cancelPendingNewOraclePartner)(...args),
     updateOraclePartnerAddr: (...args: ExtractArgs<Contract['mutations']['updateOraclePartnerAddr']>) =>
       mutate(walletClient!, mutation.updateOraclePartnerAddr)(...args),
+    confirmOraclePartnerUpdate: (...args: ExtractArgs<Contract['mutations']['confirmOraclePartnerUpdate']>) =>
+      mutate(walletClient!, mutation.confirmOraclePartnerUpdate)(...args),
+    cancelPendingOraclePartnerUpdate: (
+      ...args: ExtractArgs<Contract['mutations']['cancelPendingOraclePartnerUpdate']>
+    ) => mutate(walletClient!, mutation.cancelPendingOraclePartnerUpdate)(...args),
     disableOraclePartnerAddr: (...args: ExtractArgs<Contract['mutations']['disableOraclePartnerAddr']>) =>
       mutate(walletClient!, mutation.disableOraclePartnerAddr)(...args),
+    confirmOraclePartnerDisable: (...args: ExtractArgs<Contract['mutations']['confirmOraclePartnerDisable']>) =>
+      mutate(walletClient!, mutation.confirmOraclePartnerDisable)(...args),
+    cancelPendingOraclePartnerDisable: (
+      ...args: ExtractArgs<Contract['mutations']['cancelPendingOraclePartnerDisable']>
+    ) => mutate(walletClient!, mutation.cancelPendingOraclePartnerDisable)(...args),
+    setOraclePartnerChangeDelay: (...args: ExtractArgs<Contract['mutations']['setOraclePartnerChangeDelay']>) =>
+      mutate(walletClient!, mutation.setOraclePartnerChangeDelay)(...args),
     setPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['mutations']['setPriorityOraclePartnerIds']>) =>
       mutate(walletClient!, mutation.setPriorityOraclePartnerIds)(...args),
     setStaleTime: (...args: ExtractArgs<Contract['mutations']['setStaleTime']>) =>

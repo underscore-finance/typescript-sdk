@@ -332,11 +332,82 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        name: 'addr',
+        name: 'prevGov',
         type: 'address',
       },
+      {
+        indexed: true,
+        name: 'newGov',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
     ],
-    name: 'LocalGovernorSet',
+    name: 'GovChangeInitiated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'prevGov',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'newGov',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+    ],
+    name: 'GovChangeConfirmed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'cancelledGov',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+    ],
+    name: 'GovChangeCancelled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'delayBlocks',
+        type: 'uint256',
+      },
+    ],
+    name: 'GovChangeDelaySet',
     type: 'event',
   },
   {
@@ -346,7 +417,19 @@ export const abi = [
         type: 'address',
       },
     ],
-    name: 'isGovernor',
+    name: 'canGovern',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'hasPendingGovChange',
     outputs: [
       {
         name: '',
@@ -359,44 +442,110 @@ export const abi = [
   {
     inputs: [
       {
-        name: '_newGovernor',
+        name: '_newGov',
         type: 'address',
       },
     ],
-    name: 'isValidLocalGovernor',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_newGovernor',
-        type: 'address',
-      },
-    ],
-    name: 'setLocalGovernor',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
+    name: 'changeGovernance',
+    outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'localGovernor',
+    name: 'confirmGovernanceChange',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'cancelGovernanceChange',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_numBlocks',
+        type: 'uint256',
+      },
+    ],
+    name: 'setGovernanceChangeDelay',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'governance',
     outputs: [
       {
         name: '',
         type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'pendingGov',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'newGov',
+            type: 'address',
+          },
+          {
+            name: 'initiatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'confirmBlock',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'govChangeDelay',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MIN_GOV_CHANGE_DELAY',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MAX_GOV_CHANGE_DELAY',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -1186,13 +1335,17 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x59918c90eD44a3D7a72375f60C0148Ae18001ADC'
+export const deployAddress: Address | undefined = '0x38Cd202B42b3906051573174e506b5b6BC83D47C'
 
 export type Contract = {
   calls: {
-    isGovernor: (address: `0x${string}`) => Promise<boolean>
-    isValidLocalGovernor: (newGovernor: `0x${string}`) => Promise<boolean>
-    localGovernor: () => Promise<`0x${string}`>
+    canGovern: (address: `0x${string}`) => Promise<boolean>
+    hasPendingGovChange: () => Promise<boolean>
+    governance: () => Promise<`0x${string}`>
+    pendingGov: () => Promise<{ newGov: `0x${string}`; initiatedBlock: bigint; confirmBlock: bigint }>
+    govChangeDelay: () => Promise<bigint>
+    MIN_GOV_CHANGE_DELAY: () => Promise<bigint>
+    MAX_GOV_CHANGE_DELAY: () => Promise<bigint>
     getCombinedSubData: (
       user: `0x${string}`,
       agent: `0x${string}`,
@@ -1280,7 +1433,10 @@ export type Contract = {
     MIN_PRICE_CHANGE_BUFFER: () => Promise<bigint>
   }
   mutations: {
-    setLocalGovernor: (newGovernor: `0x${string}`) => Promise<boolean>
+    changeGovernance: (newGov: `0x${string}`) => Promise<void>
+    confirmGovernanceChange: () => Promise<void>
+    cancelGovernanceChange: () => Promise<void>
+    setGovernanceChangeDelay: (numBlocks: bigint) => Promise<void>
     setAgentSubPrice: (
       agent: `0x${string}`,
       asset: `0x${string}`,
@@ -1378,7 +1534,15 @@ export type Contract = {
     ProtocolRecipientSet: (recipient: `0x${string}`) => Promise<void>
     PriceChangeDelaySet: (delayBlocks: bigint) => Promise<void>
     PriceSheetsActivated: (isActivated: boolean) => Promise<void>
-    LocalGovernorSet: (addr: `0x${string}`) => Promise<void>
+    GovChangeInitiated: (prevGov: `0x${string}`, newGov: `0x${string}`, confirmBlock: bigint) => Promise<void>
+    GovChangeConfirmed: (
+      prevGov: `0x${string}`,
+      newGov: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+    ) => Promise<void>
+    GovChangeCancelled: (cancelledGov: `0x${string}`, initiatedBlock: bigint, confirmBlock: bigint) => Promise<void>
+    GovChangeDelaySet: (delayBlocks: bigint) => Promise<void>
   }
 }
 
@@ -1442,10 +1606,16 @@ type CallType = {
 }
 
 export const call: CallType = {
-  isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => getRequest('isGovernor', args),
-  isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) =>
-    getRequest('isValidLocalGovernor', args),
-  localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => getRequest('localGovernor', args),
+  canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) => getRequest('canGovern', args),
+  hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
+    getRequest('hasPendingGovChange', args),
+  governance: (...args: ExtractArgs<Contract['calls']['governance']>) => getRequest('governance', args),
+  pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) => getRequest('pendingGov', args),
+  govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) => getRequest('govChangeDelay', args),
+  MIN_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>) =>
+    getRequest('MIN_GOV_CHANGE_DELAY', args),
+  MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
+    getRequest('MAX_GOV_CHANGE_DELAY', args),
   getCombinedSubData: (...args: ExtractArgs<Contract['calls']['getCombinedSubData']>) =>
     getRequest('getCombinedSubData', args),
   getAgentSubPriceData: (...args: ExtractArgs<Contract['calls']['getAgentSubPriceData']>) =>
@@ -1501,7 +1671,10 @@ export const mutation: {
     argsType: ExtractArgs<Contract['mutations'][K]> | undefined
   }
 } = {
-  setLocalGovernor: getMutation('setLocalGovernor'),
+  changeGovernance: getMutation('changeGovernance'),
+  confirmGovernanceChange: getMutation('confirmGovernanceChange'),
+  cancelGovernanceChange: getMutation('cancelGovernanceChange'),
+  setGovernanceChangeDelay: getMutation('setGovernanceChangeDelay'),
   setAgentSubPrice: getMutation('setAgentSubPrice'),
   finalizePendingAgentSubPrice: getMutation('finalizePendingAgentSubPrice'),
   removeAgentSubPrice: getMutation('removeAgentSubPrice'),
@@ -1516,11 +1689,19 @@ export const mutation: {
 }
 
 export type SDK = {
-  isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => Promise<CallReturn<'isGovernor'>>
-  isValidLocalGovernor: (
-    ...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>
-  ) => Promise<CallReturn<'isValidLocalGovernor'>>
-  localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => Promise<CallReturn<'localGovernor'>>
+  canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) => Promise<CallReturn<'canGovern'>>
+  hasPendingGovChange: (
+    ...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>
+  ) => Promise<CallReturn<'hasPendingGovChange'>>
+  governance: (...args: ExtractArgs<Contract['calls']['governance']>) => Promise<CallReturn<'governance'>>
+  pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) => Promise<CallReturn<'pendingGov'>>
+  govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) => Promise<CallReturn<'govChangeDelay'>>
+  MIN_GOV_CHANGE_DELAY: (
+    ...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>
+  ) => Promise<CallReturn<'MIN_GOV_CHANGE_DELAY'>>
+  MAX_GOV_CHANGE_DELAY: (
+    ...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>
+  ) => Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>
   getCombinedSubData: (
     ...args: ExtractArgs<Contract['calls']['getCombinedSubData']>
   ) => Promise<CallReturn<'getCombinedSubData'>>
@@ -1570,7 +1751,12 @@ export type SDK = {
   MIN_PRICE_CHANGE_BUFFER: (
     ...args: ExtractArgs<Contract['calls']['MIN_PRICE_CHANGE_BUFFER']>
   ) => Promise<CallReturn<'MIN_PRICE_CHANGE_BUFFER'>>
-  setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) => Promise<Address>
+  changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) => Promise<Address>
+  confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) => Promise<Address>
+  cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) => Promise<Address>
+  setGovernanceChangeDelay: (
+    ...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>
+  ) => Promise<Address>
   setAgentSubPrice: (...args: ExtractArgs<Contract['mutations']['setAgentSubPrice']>) => Promise<Address>
   finalizePendingAgentSubPrice: (
     ...args: ExtractArgs<Contract['mutations']['finalizePendingAgentSubPrice']>
@@ -1593,12 +1779,20 @@ export type SDK = {
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
     // Queries
-    isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) =>
-      singleQuery(publicClient!, call.isGovernor(...args)) as Promise<CallReturn<'isGovernor'>>,
-    isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) =>
-      singleQuery(publicClient!, call.isValidLocalGovernor(...args)) as Promise<CallReturn<'isValidLocalGovernor'>>,
-    localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) =>
-      singleQuery(publicClient!, call.localGovernor(...args)) as Promise<CallReturn<'localGovernor'>>,
+    canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) =>
+      singleQuery(publicClient!, call.canGovern(...args)) as Promise<CallReturn<'canGovern'>>,
+    hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
+      singleQuery(publicClient!, call.hasPendingGovChange(...args)) as Promise<CallReturn<'hasPendingGovChange'>>,
+    governance: (...args: ExtractArgs<Contract['calls']['governance']>) =>
+      singleQuery(publicClient!, call.governance(...args)) as Promise<CallReturn<'governance'>>,
+    pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) =>
+      singleQuery(publicClient!, call.pendingGov(...args)) as Promise<CallReturn<'pendingGov'>>,
+    govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) =>
+      singleQuery(publicClient!, call.govChangeDelay(...args)) as Promise<CallReturn<'govChangeDelay'>>,
+    MIN_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>) =>
+      singleQuery(publicClient!, call.MIN_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MIN_GOV_CHANGE_DELAY'>>,
+    MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
+      singleQuery(publicClient!, call.MAX_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>,
     getCombinedSubData: (...args: ExtractArgs<Contract['calls']['getCombinedSubData']>) =>
       singleQuery(publicClient!, call.getCombinedSubData(...args)) as Promise<CallReturn<'getCombinedSubData'>>,
     getAgentSubPriceData: (...args: ExtractArgs<Contract['calls']['getAgentSubPriceData']>) =>
@@ -1643,8 +1837,14 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       >,
 
     // Mutations
-    setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) =>
-      mutate(walletClient!, mutation.setLocalGovernor)(...args),
+    changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) =>
+      mutate(walletClient!, mutation.changeGovernance)(...args),
+    confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) =>
+      mutate(walletClient!, mutation.confirmGovernanceChange)(...args),
+    cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) =>
+      mutate(walletClient!, mutation.cancelGovernanceChange)(...args),
+    setGovernanceChangeDelay: (...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>) =>
+      mutate(walletClient!, mutation.setGovernanceChangeDelay)(...args),
     setAgentSubPrice: (...args: ExtractArgs<Contract['mutations']['setAgentSubPrice']>) =>
       mutate(walletClient!, mutation.setAgentSubPrice)(...args),
     finalizePendingAgentSubPrice: (...args: ExtractArgs<Contract['mutations']['finalizePendingAgentSubPrice']>) =>

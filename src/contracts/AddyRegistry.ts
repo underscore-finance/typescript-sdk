@@ -15,6 +15,116 @@ export const abi = [
     inputs: [
       {
         indexed: true,
+        name: 'prevGov',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'newGov',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+    ],
+    name: 'GovChangeInitiated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'prevGov',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'newGov',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+    ],
+    name: 'GovChangeConfirmed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'cancelledGov',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+    ],
+    name: 'GovChangeCancelled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'delayBlocks',
+        type: 'uint256',
+      },
+    ],
+    name: 'GovChangeDelaySet',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'NewAddyPending',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         name: 'addr',
         type: 'address',
       },
@@ -28,13 +138,60 @@ export const abi = [
         name: 'description',
         type: 'string',
       },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
     ],
-    name: 'NewAddyRegistered',
+    name: 'NewAddyConfirmed',
     type: 'event',
   },
   {
     anonymous: false,
     inputs: [
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'NewPendingAddyCancelled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
       {
         indexed: true,
         name: 'newAddr',
@@ -42,13 +199,8 @@ export const abi = [
       },
       {
         indexed: true,
-        name: 'prevAddy',
+        name: 'prevAddr',
         type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'addyId',
-        type: 'uint256',
       },
       {
         indexed: false,
@@ -57,25 +209,40 @@ export const abi = [
       },
       {
         indexed: false,
-        name: 'description',
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
         type: 'string',
       },
     ],
-    name: 'AddyIdUpdated',
+    name: 'AddyUpdatePending',
     type: 'event',
   },
   {
     anonymous: false,
     inputs: [
       {
-        indexed: true,
-        name: 'prevAddy',
-        type: 'address',
-      },
-      {
         indexed: false,
         name: 'addyId',
         type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'newAddr',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'prevAddr',
+        type: 'address',
       },
       {
         indexed: false,
@@ -84,23 +251,11 @@ export const abi = [
       },
       {
         indexed: false,
-        name: 'description',
+        name: 'registry',
         type: 'string',
       },
     ],
-    name: 'AddyIdDisabled',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'governor',
-        type: 'address',
-      },
-    ],
-    name: 'AddyRegistryGovernorSet',
+    name: 'AddyUpdateConfirmed',
     type: 'event',
   },
   {
@@ -108,17 +263,311 @@ export const abi = [
     inputs: [
       {
         indexed: false,
-        name: 'isActivated',
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'newAddr',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'prevAddr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyUpdateCancelled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'version',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyDisablePending',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'version',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyDisableConfirmed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'addyId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'description',
+        type: 'string',
+      },
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyDisableCancelled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'delayBlocks',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'registry',
+        type: 'string',
+      },
+    ],
+    name: 'AddyChangeDelaySet',
+    type: 'event',
+  },
+  {
+    inputs: [
+      {
+        name: '_address',
+        type: 'address',
+      },
+    ],
+    name: 'canGovern',
+    outputs: [
+      {
+        name: '',
         type: 'bool',
       },
     ],
-    name: 'AddyRegistryActivated',
-    type: 'event',
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'hasPendingGovChange',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
       {
-        name: '_addy',
+        name: '_newGov',
+        type: 'address',
+      },
+    ],
+    name: 'changeGovernance',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'confirmGovernanceChange',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'cancelGovernanceChange',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_numBlocks',
+        type: 'uint256',
+      },
+    ],
+    name: 'setGovernanceChangeDelay',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'governance',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'pendingGov',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'newGov',
+            type: 'address',
+          },
+          {
+            name: 'initiatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'confirmBlock',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'govChangeDelay',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MIN_GOV_CHANGE_DELAY',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MAX_GOV_CHANGE_DELAY',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addr',
         type: 'address',
       },
     ],
@@ -135,32 +584,11 @@ export const abi = [
   {
     inputs: [
       {
-        name: '_addy',
-        type: 'address',
-      },
-      {
-        name: '_description',
-        type: 'string',
-      },
-    ],
-    name: 'registerNewAddy',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         name: '_addyId',
         type: 'uint256',
       },
       {
-        name: '_newAddy',
+        name: '_newAddr',
         type: 'address',
       },
     ],
@@ -172,27 +600,6 @@ export const abi = [
       },
     ],
     stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_addyId',
-        type: 'uint256',
-      },
-      {
-        name: '_newAddy',
-        type: 'address',
-      },
-    ],
-    name: 'updateAddy',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -215,28 +622,11 @@ export const abi = [
   {
     inputs: [
       {
-        name: '_addyId',
-        type: 'uint256',
-      },
-    ],
-    name: 'disableAddy',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_addy',
+        name: '_addr',
         type: 'address',
       },
     ],
-    name: 'isValidAddy',
+    name: 'isValidAddyAddr',
     outputs: [
       {
         name: '',
@@ -266,7 +656,7 @@ export const abi = [
   {
     inputs: [
       {
-        name: '_addy',
+        name: '_addr',
         type: 'address',
       },
     ],
@@ -363,7 +753,7 @@ export const abi = [
   },
   {
     inputs: [],
-    name: 'getLastAddy',
+    name: 'getLastAddyAddr',
     outputs: [
       {
         name: '',
@@ -383,40 +773,6 @@ export const abi = [
       },
     ],
     stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_newGovernor',
-        type: 'address',
-      },
-    ],
-    name: 'isValidGovernor',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_newGovernor',
-        type: 'address',
-      },
-    ],
-    name: 'setGovernor',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -484,12 +840,31 @@ export const abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'governor',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'pendingNewAddy',
     outputs: [
       {
+        components: [
+          {
+            name: 'description',
+            type: 'string',
+          },
+          {
+            name: 'initiatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'confirmBlock',
+            type: 'uint256',
+          },
+        ],
         name: '',
-        type: 'address',
+        type: 'tuple',
       },
     ],
     stateMutability: 'view',
@@ -498,8 +873,308 @@ export const abi = [
   {
     inputs: [
       {
-        name: '_governor',
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    name: 'pendingAddyUpdate',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'newAddr',
+            type: 'address',
+          },
+          {
+            name: 'initiatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'confirmBlock',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    name: 'pendingAddyDisable',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'initiatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'confirmBlock',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'addyChangeDelay',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MIN_ADDY_CHANGE_DELAY',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MAX_ADDY_CHANGE_DELAY',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'REGISTRY_STR',
+    outputs: [
+      {
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addr',
         type: 'address',
+      },
+      {
+        name: '_description',
+        type: 'string',
+      },
+    ],
+    name: 'registerNewAddy',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+    ],
+    name: 'confirmNewAddy',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+    ],
+    name: 'cancelPendingNewAddy',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addyId',
+        type: 'uint256',
+      },
+      {
+        name: '_newAddr',
+        type: 'address',
+      },
+    ],
+    name: 'updateAddyAddr',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addyId',
+        type: 'uint256',
+      },
+    ],
+    name: 'confirmAddyUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addyId',
+        type: 'uint256',
+      },
+    ],
+    name: 'cancelPendingAddyUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addyId',
+        type: 'uint256',
+      },
+    ],
+    name: 'disableAddyAddr',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addyId',
+        type: 'uint256',
+      },
+    ],
+    name: 'confirmAddyDisable',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addyId',
+        type: 'uint256',
+      },
+    ],
+    name: 'cancelPendingAddyDisable',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_numBlocks',
+        type: 'uint256',
+      },
+    ],
+    name: 'setAddyChangeDelay',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_initialGov',
+        type: 'address',
+      },
+      {
+        name: '_minGovChangeDelay',
+        type: 'uint256',
+      },
+      {
+        name: '_maxGovChangeDelay',
+        type: 'uint256',
+      },
+      {
+        name: '_minRegistryChangeDelay',
+        type: 'uint256',
+      },
+      {
+        name: '_maxRegistryChangeDelay',
+        type: 'uint256',
       },
     ],
     outputs: [],
@@ -508,50 +1183,133 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x49B08551e452cA99da7dE9B3a60E39e5f10C13CD'
+export const deployAddress: Address | undefined = '0xdCCaB9855D7eE558409EBdf358a3A44a8b2415B3'
 
 export type Contract = {
   calls: {
-    isValidNewAddy: (addy: `0x${string}`) => Promise<boolean>
-    isValidAddyUpdate: (addyId: bigint, newAddy: `0x${string}`) => Promise<boolean>
+    canGovern: (address: `0x${string}`) => Promise<boolean>
+    hasPendingGovChange: () => Promise<boolean>
+    governance: () => Promise<`0x${string}`>
+    pendingGov: () => Promise<{ newGov: `0x${string}`; initiatedBlock: bigint; confirmBlock: bigint }>
+    govChangeDelay: () => Promise<bigint>
+    MIN_GOV_CHANGE_DELAY: () => Promise<bigint>
+    MAX_GOV_CHANGE_DELAY: () => Promise<bigint>
+    isValidNewAddy: (addr: `0x${string}`) => Promise<boolean>
+    isValidAddyUpdate: (addyId: bigint, newAddr: `0x${string}`) => Promise<boolean>
     isValidAddyDisable: (addyId: bigint) => Promise<boolean>
-    isValidAddy: (addy: `0x${string}`) => Promise<boolean>
+    isValidAddyAddr: (addr: `0x${string}`) => Promise<boolean>
     isValidAddyId: (addyId: bigint) => Promise<boolean>
-    getAddyId: (addy: `0x${string}`) => Promise<bigint>
+    getAddyId: (addr: `0x${string}`) => Promise<bigint>
     getAddy: (addyId: bigint) => Promise<`0x${string}`>
     getAddyInfo: (
       addyId: bigint,
     ) => Promise<{ addr: `0x${string}`; version: bigint; lastModified: bigint; description: string }>
     getAddyDescription: (addyId: bigint) => Promise<string>
     getNumAddys: () => Promise<bigint>
-    getLastAddy: () => Promise<`0x${string}`>
+    getLastAddyAddr: () => Promise<`0x${string}`>
     getLastAddyId: () => Promise<bigint>
-    isValidGovernor: (newGovernor: `0x${string}`) => Promise<boolean>
     addyInfo: (
       arg0: bigint,
     ) => Promise<{ addr: `0x${string}`; version: bigint; lastModified: bigint; description: string }>
     addyToId: (arg0: `0x${string}`) => Promise<bigint>
     numAddys: () => Promise<bigint>
-    governor: () => Promise<`0x${string}`>
+    pendingNewAddy: (
+      arg0: `0x${string}`,
+    ) => Promise<{ description: string; initiatedBlock: bigint; confirmBlock: bigint }>
+    pendingAddyUpdate: (
+      arg0: bigint,
+    ) => Promise<{ newAddr: `0x${string}`; initiatedBlock: bigint; confirmBlock: bigint }>
+    pendingAddyDisable: (arg0: bigint) => Promise<{ initiatedBlock: bigint; confirmBlock: bigint }>
+    addyChangeDelay: () => Promise<bigint>
+    MIN_ADDY_CHANGE_DELAY: () => Promise<bigint>
+    MAX_ADDY_CHANGE_DELAY: () => Promise<bigint>
+    REGISTRY_STR: () => Promise<string>
   }
   mutations: {
-    registerNewAddy: (addy: `0x${string}`, description: string) => Promise<bigint>
-    updateAddy: (addyId: bigint, newAddy: `0x${string}`) => Promise<boolean>
-    disableAddy: (addyId: bigint) => Promise<boolean>
-    setGovernor: (newGovernor: `0x${string}`) => Promise<boolean>
+    changeGovernance: (newGov: `0x${string}`) => Promise<void>
+    confirmGovernanceChange: () => Promise<void>
+    cancelGovernanceChange: () => Promise<void>
+    setGovernanceChangeDelay: (numBlocks: bigint) => Promise<void>
+    registerNewAddy: (addr: `0x${string}`, description: string) => Promise<boolean>
+    confirmNewAddy: (addr: `0x${string}`) => Promise<bigint>
+    cancelPendingNewAddy: (addr: `0x${string}`) => Promise<boolean>
+    updateAddyAddr: (addyId: bigint, newAddr: `0x${string}`) => Promise<boolean>
+    confirmAddyUpdate: (addyId: bigint) => Promise<boolean>
+    cancelPendingAddyUpdate: (addyId: bigint) => Promise<boolean>
+    disableAddyAddr: (addyId: bigint) => Promise<boolean>
+    confirmAddyDisable: (addyId: bigint) => Promise<boolean>
+    cancelPendingAddyDisable: (addyId: bigint) => Promise<boolean>
+    setAddyChangeDelay: (numBlocks: bigint) => Promise<boolean>
   }
   events: {
-    NewAddyRegistered: (addr: `0x${string}`, addyId: bigint, description: string) => Promise<void>
-    AddyIdUpdated: (
-      newAddr: `0x${string}`,
-      prevAddy: `0x${string}`,
-      addyId: bigint,
-      version: bigint,
-      description: string,
+    GovChangeInitiated: (prevGov: `0x${string}`, newGov: `0x${string}`, confirmBlock: bigint) => Promise<void>
+    GovChangeConfirmed: (
+      prevGov: `0x${string}`,
+      newGov: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
     ) => Promise<void>
-    AddyIdDisabled: (prevAddy: `0x${string}`, addyId: bigint, version: bigint, description: string) => Promise<void>
-    AddyRegistryGovernorSet: (governor: `0x${string}`) => Promise<void>
-    AddyRegistryActivated: (isActivated: boolean) => Promise<void>
+    GovChangeCancelled: (cancelledGov: `0x${string}`, initiatedBlock: bigint, confirmBlock: bigint) => Promise<void>
+    GovChangeDelaySet: (delayBlocks: bigint) => Promise<void>
+    NewAddyPending: (addr: `0x${string}`, description: string, confirmBlock: bigint, registry: string) => Promise<void>
+    NewAddyConfirmed: (addr: `0x${string}`, addyId: bigint, description: string, registry: string) => Promise<void>
+    NewPendingAddyCancelled: (
+      description: string,
+      addr: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyUpdatePending: (
+      addyId: bigint,
+      description: string,
+      newAddr: `0x${string}`,
+      prevAddr: `0x${string}`,
+      version: bigint,
+      confirmBlock: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyUpdateConfirmed: (
+      addyId: bigint,
+      description: string,
+      newAddr: `0x${string}`,
+      prevAddr: `0x${string}`,
+      version: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyUpdateCancelled: (
+      addyId: bigint,
+      description: string,
+      newAddr: `0x${string}`,
+      prevAddr: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyDisablePending: (
+      addyId: bigint,
+      description: string,
+      addr: `0x${string}`,
+      version: bigint,
+      confirmBlock: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyDisableConfirmed: (
+      addyId: bigint,
+      description: string,
+      addr: `0x${string}`,
+      version: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyDisableCancelled: (
+      addyId: bigint,
+      description: string,
+      addr: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddyChangeDelaySet: (delayBlocks: bigint, registry: string) => Promise<void>
   }
 }
 
@@ -615,12 +1373,22 @@ type CallType = {
 }
 
 export const call: CallType = {
+  canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) => getRequest('canGovern', args),
+  hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
+    getRequest('hasPendingGovChange', args),
+  governance: (...args: ExtractArgs<Contract['calls']['governance']>) => getRequest('governance', args),
+  pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) => getRequest('pendingGov', args),
+  govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) => getRequest('govChangeDelay', args),
+  MIN_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>) =>
+    getRequest('MIN_GOV_CHANGE_DELAY', args),
+  MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
+    getRequest('MAX_GOV_CHANGE_DELAY', args),
   isValidNewAddy: (...args: ExtractArgs<Contract['calls']['isValidNewAddy']>) => getRequest('isValidNewAddy', args),
   isValidAddyUpdate: (...args: ExtractArgs<Contract['calls']['isValidAddyUpdate']>) =>
     getRequest('isValidAddyUpdate', args),
   isValidAddyDisable: (...args: ExtractArgs<Contract['calls']['isValidAddyDisable']>) =>
     getRequest('isValidAddyDisable', args),
-  isValidAddy: (...args: ExtractArgs<Contract['calls']['isValidAddy']>) => getRequest('isValidAddy', args),
+  isValidAddyAddr: (...args: ExtractArgs<Contract['calls']['isValidAddyAddr']>) => getRequest('isValidAddyAddr', args),
   isValidAddyId: (...args: ExtractArgs<Contract['calls']['isValidAddyId']>) => getRequest('isValidAddyId', args),
   getAddyId: (...args: ExtractArgs<Contract['calls']['getAddyId']>) => getRequest('getAddyId', args),
   getAddy: (...args: ExtractArgs<Contract['calls']['getAddy']>) => getRequest('getAddy', args),
@@ -628,13 +1396,22 @@ export const call: CallType = {
   getAddyDescription: (...args: ExtractArgs<Contract['calls']['getAddyDescription']>) =>
     getRequest('getAddyDescription', args),
   getNumAddys: (...args: ExtractArgs<Contract['calls']['getNumAddys']>) => getRequest('getNumAddys', args),
-  getLastAddy: (...args: ExtractArgs<Contract['calls']['getLastAddy']>) => getRequest('getLastAddy', args),
+  getLastAddyAddr: (...args: ExtractArgs<Contract['calls']['getLastAddyAddr']>) => getRequest('getLastAddyAddr', args),
   getLastAddyId: (...args: ExtractArgs<Contract['calls']['getLastAddyId']>) => getRequest('getLastAddyId', args),
-  isValidGovernor: (...args: ExtractArgs<Contract['calls']['isValidGovernor']>) => getRequest('isValidGovernor', args),
   addyInfo: (...args: ExtractArgs<Contract['calls']['addyInfo']>) => getRequest('addyInfo', args),
   addyToId: (...args: ExtractArgs<Contract['calls']['addyToId']>) => getRequest('addyToId', args),
   numAddys: (...args: ExtractArgs<Contract['calls']['numAddys']>) => getRequest('numAddys', args),
-  governor: (...args: ExtractArgs<Contract['calls']['governor']>) => getRequest('governor', args),
+  pendingNewAddy: (...args: ExtractArgs<Contract['calls']['pendingNewAddy']>) => getRequest('pendingNewAddy', args),
+  pendingAddyUpdate: (...args: ExtractArgs<Contract['calls']['pendingAddyUpdate']>) =>
+    getRequest('pendingAddyUpdate', args),
+  pendingAddyDisable: (...args: ExtractArgs<Contract['calls']['pendingAddyDisable']>) =>
+    getRequest('pendingAddyDisable', args),
+  addyChangeDelay: (...args: ExtractArgs<Contract['calls']['addyChangeDelay']>) => getRequest('addyChangeDelay', args),
+  MIN_ADDY_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_ADDY_CHANGE_DELAY']>) =>
+    getRequest('MIN_ADDY_CHANGE_DELAY', args),
+  MAX_ADDY_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_ADDY_CHANGE_DELAY']>) =>
+    getRequest('MAX_ADDY_CHANGE_DELAY', args),
+  REGISTRY_STR: (...args: ExtractArgs<Contract['calls']['REGISTRY_STR']>) => getRequest('REGISTRY_STR', args),
 }
 
 export type Mutations = keyof Contract['mutations']
@@ -657,13 +1434,36 @@ export const mutation: {
     argsType: ExtractArgs<Contract['mutations'][K]> | undefined
   }
 } = {
+  changeGovernance: getMutation('changeGovernance'),
+  confirmGovernanceChange: getMutation('confirmGovernanceChange'),
+  cancelGovernanceChange: getMutation('cancelGovernanceChange'),
+  setGovernanceChangeDelay: getMutation('setGovernanceChangeDelay'),
   registerNewAddy: getMutation('registerNewAddy'),
-  updateAddy: getMutation('updateAddy'),
-  disableAddy: getMutation('disableAddy'),
-  setGovernor: getMutation('setGovernor'),
+  confirmNewAddy: getMutation('confirmNewAddy'),
+  cancelPendingNewAddy: getMutation('cancelPendingNewAddy'),
+  updateAddyAddr: getMutation('updateAddyAddr'),
+  confirmAddyUpdate: getMutation('confirmAddyUpdate'),
+  cancelPendingAddyUpdate: getMutation('cancelPendingAddyUpdate'),
+  disableAddyAddr: getMutation('disableAddyAddr'),
+  confirmAddyDisable: getMutation('confirmAddyDisable'),
+  cancelPendingAddyDisable: getMutation('cancelPendingAddyDisable'),
+  setAddyChangeDelay: getMutation('setAddyChangeDelay'),
 }
 
 export type SDK = {
+  canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) => Promise<CallReturn<'canGovern'>>
+  hasPendingGovChange: (
+    ...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>
+  ) => Promise<CallReturn<'hasPendingGovChange'>>
+  governance: (...args: ExtractArgs<Contract['calls']['governance']>) => Promise<CallReturn<'governance'>>
+  pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) => Promise<CallReturn<'pendingGov'>>
+  govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) => Promise<CallReturn<'govChangeDelay'>>
+  MIN_GOV_CHANGE_DELAY: (
+    ...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>
+  ) => Promise<CallReturn<'MIN_GOV_CHANGE_DELAY'>>
+  MAX_GOV_CHANGE_DELAY: (
+    ...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>
+  ) => Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>
   isValidNewAddy: (...args: ExtractArgs<Contract['calls']['isValidNewAddy']>) => Promise<CallReturn<'isValidNewAddy'>>
   isValidAddyUpdate: (
     ...args: ExtractArgs<Contract['calls']['isValidAddyUpdate']>
@@ -671,7 +1471,9 @@ export type SDK = {
   isValidAddyDisable: (
     ...args: ExtractArgs<Contract['calls']['isValidAddyDisable']>
   ) => Promise<CallReturn<'isValidAddyDisable'>>
-  isValidAddy: (...args: ExtractArgs<Contract['calls']['isValidAddy']>) => Promise<CallReturn<'isValidAddy'>>
+  isValidAddyAddr: (
+    ...args: ExtractArgs<Contract['calls']['isValidAddyAddr']>
+  ) => Promise<CallReturn<'isValidAddyAddr'>>
   isValidAddyId: (...args: ExtractArgs<Contract['calls']['isValidAddyId']>) => Promise<CallReturn<'isValidAddyId'>>
   getAddyId: (...args: ExtractArgs<Contract['calls']['getAddyId']>) => Promise<CallReturn<'getAddyId'>>
   getAddy: (...args: ExtractArgs<Contract['calls']['getAddy']>) => Promise<CallReturn<'getAddy'>>
@@ -680,32 +1482,75 @@ export type SDK = {
     ...args: ExtractArgs<Contract['calls']['getAddyDescription']>
   ) => Promise<CallReturn<'getAddyDescription'>>
   getNumAddys: (...args: ExtractArgs<Contract['calls']['getNumAddys']>) => Promise<CallReturn<'getNumAddys'>>
-  getLastAddy: (...args: ExtractArgs<Contract['calls']['getLastAddy']>) => Promise<CallReturn<'getLastAddy'>>
+  getLastAddyAddr: (
+    ...args: ExtractArgs<Contract['calls']['getLastAddyAddr']>
+  ) => Promise<CallReturn<'getLastAddyAddr'>>
   getLastAddyId: (...args: ExtractArgs<Contract['calls']['getLastAddyId']>) => Promise<CallReturn<'getLastAddyId'>>
-  isValidGovernor: (
-    ...args: ExtractArgs<Contract['calls']['isValidGovernor']>
-  ) => Promise<CallReturn<'isValidGovernor'>>
   addyInfo: (...args: ExtractArgs<Contract['calls']['addyInfo']>) => Promise<CallReturn<'addyInfo'>>
   addyToId: (...args: ExtractArgs<Contract['calls']['addyToId']>) => Promise<CallReturn<'addyToId'>>
   numAddys: (...args: ExtractArgs<Contract['calls']['numAddys']>) => Promise<CallReturn<'numAddys'>>
-  governor: (...args: ExtractArgs<Contract['calls']['governor']>) => Promise<CallReturn<'governor'>>
+  pendingNewAddy: (...args: ExtractArgs<Contract['calls']['pendingNewAddy']>) => Promise<CallReturn<'pendingNewAddy'>>
+  pendingAddyUpdate: (
+    ...args: ExtractArgs<Contract['calls']['pendingAddyUpdate']>
+  ) => Promise<CallReturn<'pendingAddyUpdate'>>
+  pendingAddyDisable: (
+    ...args: ExtractArgs<Contract['calls']['pendingAddyDisable']>
+  ) => Promise<CallReturn<'pendingAddyDisable'>>
+  addyChangeDelay: (
+    ...args: ExtractArgs<Contract['calls']['addyChangeDelay']>
+  ) => Promise<CallReturn<'addyChangeDelay'>>
+  MIN_ADDY_CHANGE_DELAY: (
+    ...args: ExtractArgs<Contract['calls']['MIN_ADDY_CHANGE_DELAY']>
+  ) => Promise<CallReturn<'MIN_ADDY_CHANGE_DELAY'>>
+  MAX_ADDY_CHANGE_DELAY: (
+    ...args: ExtractArgs<Contract['calls']['MAX_ADDY_CHANGE_DELAY']>
+  ) => Promise<CallReturn<'MAX_ADDY_CHANGE_DELAY'>>
+  REGISTRY_STR: (...args: ExtractArgs<Contract['calls']['REGISTRY_STR']>) => Promise<CallReturn<'REGISTRY_STR'>>
+  changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) => Promise<Address>
+  confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) => Promise<Address>
+  cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) => Promise<Address>
+  setGovernanceChangeDelay: (
+    ...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>
+  ) => Promise<Address>
   registerNewAddy: (...args: ExtractArgs<Contract['mutations']['registerNewAddy']>) => Promise<Address>
-  updateAddy: (...args: ExtractArgs<Contract['mutations']['updateAddy']>) => Promise<Address>
-  disableAddy: (...args: ExtractArgs<Contract['mutations']['disableAddy']>) => Promise<Address>
-  setGovernor: (...args: ExtractArgs<Contract['mutations']['setGovernor']>) => Promise<Address>
+  confirmNewAddy: (...args: ExtractArgs<Contract['mutations']['confirmNewAddy']>) => Promise<Address>
+  cancelPendingNewAddy: (...args: ExtractArgs<Contract['mutations']['cancelPendingNewAddy']>) => Promise<Address>
+  updateAddyAddr: (...args: ExtractArgs<Contract['mutations']['updateAddyAddr']>) => Promise<Address>
+  confirmAddyUpdate: (...args: ExtractArgs<Contract['mutations']['confirmAddyUpdate']>) => Promise<Address>
+  cancelPendingAddyUpdate: (...args: ExtractArgs<Contract['mutations']['cancelPendingAddyUpdate']>) => Promise<Address>
+  disableAddyAddr: (...args: ExtractArgs<Contract['mutations']['disableAddyAddr']>) => Promise<Address>
+  confirmAddyDisable: (...args: ExtractArgs<Contract['mutations']['confirmAddyDisable']>) => Promise<Address>
+  cancelPendingAddyDisable: (
+    ...args: ExtractArgs<Contract['mutations']['cancelPendingAddyDisable']>
+  ) => Promise<Address>
+  setAddyChangeDelay: (...args: ExtractArgs<Contract['mutations']['setAddyChangeDelay']>) => Promise<Address>
 }
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
     // Queries
+    canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) =>
+      singleQuery(publicClient!, call.canGovern(...args)) as Promise<CallReturn<'canGovern'>>,
+    hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
+      singleQuery(publicClient!, call.hasPendingGovChange(...args)) as Promise<CallReturn<'hasPendingGovChange'>>,
+    governance: (...args: ExtractArgs<Contract['calls']['governance']>) =>
+      singleQuery(publicClient!, call.governance(...args)) as Promise<CallReturn<'governance'>>,
+    pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) =>
+      singleQuery(publicClient!, call.pendingGov(...args)) as Promise<CallReturn<'pendingGov'>>,
+    govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) =>
+      singleQuery(publicClient!, call.govChangeDelay(...args)) as Promise<CallReturn<'govChangeDelay'>>,
+    MIN_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>) =>
+      singleQuery(publicClient!, call.MIN_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MIN_GOV_CHANGE_DELAY'>>,
+    MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
+      singleQuery(publicClient!, call.MAX_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>,
     isValidNewAddy: (...args: ExtractArgs<Contract['calls']['isValidNewAddy']>) =>
       singleQuery(publicClient!, call.isValidNewAddy(...args)) as Promise<CallReturn<'isValidNewAddy'>>,
     isValidAddyUpdate: (...args: ExtractArgs<Contract['calls']['isValidAddyUpdate']>) =>
       singleQuery(publicClient!, call.isValidAddyUpdate(...args)) as Promise<CallReturn<'isValidAddyUpdate'>>,
     isValidAddyDisable: (...args: ExtractArgs<Contract['calls']['isValidAddyDisable']>) =>
       singleQuery(publicClient!, call.isValidAddyDisable(...args)) as Promise<CallReturn<'isValidAddyDisable'>>,
-    isValidAddy: (...args: ExtractArgs<Contract['calls']['isValidAddy']>) =>
-      singleQuery(publicClient!, call.isValidAddy(...args)) as Promise<CallReturn<'isValidAddy'>>,
+    isValidAddyAddr: (...args: ExtractArgs<Contract['calls']['isValidAddyAddr']>) =>
+      singleQuery(publicClient!, call.isValidAddyAddr(...args)) as Promise<CallReturn<'isValidAddyAddr'>>,
     isValidAddyId: (...args: ExtractArgs<Contract['calls']['isValidAddyId']>) =>
       singleQuery(publicClient!, call.isValidAddyId(...args)) as Promise<CallReturn<'isValidAddyId'>>,
     getAddyId: (...args: ExtractArgs<Contract['calls']['getAddyId']>) =>
@@ -718,29 +1563,59 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.getAddyDescription(...args)) as Promise<CallReturn<'getAddyDescription'>>,
     getNumAddys: (...args: ExtractArgs<Contract['calls']['getNumAddys']>) =>
       singleQuery(publicClient!, call.getNumAddys(...args)) as Promise<CallReturn<'getNumAddys'>>,
-    getLastAddy: (...args: ExtractArgs<Contract['calls']['getLastAddy']>) =>
-      singleQuery(publicClient!, call.getLastAddy(...args)) as Promise<CallReturn<'getLastAddy'>>,
+    getLastAddyAddr: (...args: ExtractArgs<Contract['calls']['getLastAddyAddr']>) =>
+      singleQuery(publicClient!, call.getLastAddyAddr(...args)) as Promise<CallReturn<'getLastAddyAddr'>>,
     getLastAddyId: (...args: ExtractArgs<Contract['calls']['getLastAddyId']>) =>
       singleQuery(publicClient!, call.getLastAddyId(...args)) as Promise<CallReturn<'getLastAddyId'>>,
-    isValidGovernor: (...args: ExtractArgs<Contract['calls']['isValidGovernor']>) =>
-      singleQuery(publicClient!, call.isValidGovernor(...args)) as Promise<CallReturn<'isValidGovernor'>>,
     addyInfo: (...args: ExtractArgs<Contract['calls']['addyInfo']>) =>
       singleQuery(publicClient!, call.addyInfo(...args)) as Promise<CallReturn<'addyInfo'>>,
     addyToId: (...args: ExtractArgs<Contract['calls']['addyToId']>) =>
       singleQuery(publicClient!, call.addyToId(...args)) as Promise<CallReturn<'addyToId'>>,
     numAddys: (...args: ExtractArgs<Contract['calls']['numAddys']>) =>
       singleQuery(publicClient!, call.numAddys(...args)) as Promise<CallReturn<'numAddys'>>,
-    governor: (...args: ExtractArgs<Contract['calls']['governor']>) =>
-      singleQuery(publicClient!, call.governor(...args)) as Promise<CallReturn<'governor'>>,
+    pendingNewAddy: (...args: ExtractArgs<Contract['calls']['pendingNewAddy']>) =>
+      singleQuery(publicClient!, call.pendingNewAddy(...args)) as Promise<CallReturn<'pendingNewAddy'>>,
+    pendingAddyUpdate: (...args: ExtractArgs<Contract['calls']['pendingAddyUpdate']>) =>
+      singleQuery(publicClient!, call.pendingAddyUpdate(...args)) as Promise<CallReturn<'pendingAddyUpdate'>>,
+    pendingAddyDisable: (...args: ExtractArgs<Contract['calls']['pendingAddyDisable']>) =>
+      singleQuery(publicClient!, call.pendingAddyDisable(...args)) as Promise<CallReturn<'pendingAddyDisable'>>,
+    addyChangeDelay: (...args: ExtractArgs<Contract['calls']['addyChangeDelay']>) =>
+      singleQuery(publicClient!, call.addyChangeDelay(...args)) as Promise<CallReturn<'addyChangeDelay'>>,
+    MIN_ADDY_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_ADDY_CHANGE_DELAY']>) =>
+      singleQuery(publicClient!, call.MIN_ADDY_CHANGE_DELAY(...args)) as Promise<CallReturn<'MIN_ADDY_CHANGE_DELAY'>>,
+    MAX_ADDY_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_ADDY_CHANGE_DELAY']>) =>
+      singleQuery(publicClient!, call.MAX_ADDY_CHANGE_DELAY(...args)) as Promise<CallReturn<'MAX_ADDY_CHANGE_DELAY'>>,
+    REGISTRY_STR: (...args: ExtractArgs<Contract['calls']['REGISTRY_STR']>) =>
+      singleQuery(publicClient!, call.REGISTRY_STR(...args)) as Promise<CallReturn<'REGISTRY_STR'>>,
 
     // Mutations
+    changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) =>
+      mutate(walletClient!, mutation.changeGovernance)(...args),
+    confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) =>
+      mutate(walletClient!, mutation.confirmGovernanceChange)(...args),
+    cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) =>
+      mutate(walletClient!, mutation.cancelGovernanceChange)(...args),
+    setGovernanceChangeDelay: (...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>) =>
+      mutate(walletClient!, mutation.setGovernanceChangeDelay)(...args),
     registerNewAddy: (...args: ExtractArgs<Contract['mutations']['registerNewAddy']>) =>
       mutate(walletClient!, mutation.registerNewAddy)(...args),
-    updateAddy: (...args: ExtractArgs<Contract['mutations']['updateAddy']>) =>
-      mutate(walletClient!, mutation.updateAddy)(...args),
-    disableAddy: (...args: ExtractArgs<Contract['mutations']['disableAddy']>) =>
-      mutate(walletClient!, mutation.disableAddy)(...args),
-    setGovernor: (...args: ExtractArgs<Contract['mutations']['setGovernor']>) =>
-      mutate(walletClient!, mutation.setGovernor)(...args),
+    confirmNewAddy: (...args: ExtractArgs<Contract['mutations']['confirmNewAddy']>) =>
+      mutate(walletClient!, mutation.confirmNewAddy)(...args),
+    cancelPendingNewAddy: (...args: ExtractArgs<Contract['mutations']['cancelPendingNewAddy']>) =>
+      mutate(walletClient!, mutation.cancelPendingNewAddy)(...args),
+    updateAddyAddr: (...args: ExtractArgs<Contract['mutations']['updateAddyAddr']>) =>
+      mutate(walletClient!, mutation.updateAddyAddr)(...args),
+    confirmAddyUpdate: (...args: ExtractArgs<Contract['mutations']['confirmAddyUpdate']>) =>
+      mutate(walletClient!, mutation.confirmAddyUpdate)(...args),
+    cancelPendingAddyUpdate: (...args: ExtractArgs<Contract['mutations']['cancelPendingAddyUpdate']>) =>
+      mutate(walletClient!, mutation.cancelPendingAddyUpdate)(...args),
+    disableAddyAddr: (...args: ExtractArgs<Contract['mutations']['disableAddyAddr']>) =>
+      mutate(walletClient!, mutation.disableAddyAddr)(...args),
+    confirmAddyDisable: (...args: ExtractArgs<Contract['mutations']['confirmAddyDisable']>) =>
+      mutate(walletClient!, mutation.confirmAddyDisable)(...args),
+    cancelPendingAddyDisable: (...args: ExtractArgs<Contract['mutations']['cancelPendingAddyDisable']>) =>
+      mutate(walletClient!, mutation.cancelPendingAddyDisable)(...args),
+    setAddyChangeDelay: (...args: ExtractArgs<Contract['mutations']['setAddyChangeDelay']>) =>
+      mutate(walletClient!, mutation.setAddyChangeDelay)(...args),
   }
 }

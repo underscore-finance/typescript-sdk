@@ -719,39 +719,6 @@ export const abi = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        name: '_walletConfig',
-        type: 'address',
-      },
-      {
-        name: '_addyRegistry',
-        type: 'address',
-      },
-      {
-        name: '_wethAddr',
-        type: 'address',
-      },
-      {
-        name: '_trialFundsAsset',
-        type: 'address',
-      },
-      {
-        name: '_trialFundsInitialAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'initialize',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
     inputs: [],
     name: 'apiVersion',
     outputs: [
@@ -2449,18 +2416,6 @@ export const abi = [
   },
   {
     inputs: [],
-    name: 'addyRegistry',
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
     name: 'wethAddr',
     outputs: [
       {
@@ -2473,25 +2428,46 @@ export const abi = [
   },
   {
     inputs: [],
-    name: 'initialized',
+    name: 'ADDY_REGISTRY',
     outputs: [
       {
         name: '',
-        type: 'bool',
+        type: 'address',
       },
     ],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        name: '_walletConfig',
+        type: 'address',
+      },
+      {
+        name: '_addyRegistry',
+        type: 'address',
+      },
+      {
+        name: '_wethAddr',
+        type: 'address',
+      },
+      {
+        name: '_trialFundsAsset',
+        type: 'address',
+      },
+      {
+        name: '_trialFundsInitialAmount',
+        type: 'uint256',
+      },
+    ],
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'constructor',
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x6A5263B0645c7dFd2788eF46f95f210E947e0743'
+export const deployAddress: Address | undefined = '0xf614Bb656a8B1B8646b25f3Ca4a9655E407D38e5'
 
 export type Contract = {
   calls: {
@@ -2505,18 +2481,10 @@ export type Contract = {
     walletConfig: () => Promise<`0x${string}`>
     trialFundsAsset: () => Promise<`0x${string}`>
     trialFundsInitialAmount: () => Promise<bigint>
-    addyRegistry: () => Promise<`0x${string}`>
     wethAddr: () => Promise<`0x${string}`>
-    initialized: () => Promise<boolean>
+    ADDY_REGISTRY: () => Promise<`0x${string}`>
   }
   mutations: {
-    initialize: (
-      walletConfig: `0x${string}`,
-      addyRegistry: `0x${string}`,
-      wethAddr: `0x${string}`,
-      trialFundsAsset: `0x${string}`,
-      trialFundsInitialAmount: bigint,
-    ) => Promise<boolean>
     depositTokens: (
       legoId: bigint,
       asset: `0x${string}`,
@@ -2746,7 +2714,7 @@ export type Contract = {
 
 export type Calls = keyof Contract['calls']
 export type Request<M extends Calls> = {
-  contractName: 'WalletFunds'
+  contractName: 'UserWallet'
   method: M
   args: ExtractArgs<Contract['calls'][M]>
   address: Address | undefined
@@ -2774,7 +2742,7 @@ function getRequest<M extends Calls>(
   const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
 
   const call = {
-    contractName: 'WalletFunds' as const,
+    contractName: 'UserWallet' as const,
     method,
     args,
     address,
@@ -2811,15 +2779,14 @@ export const call: CallType = {
   trialFundsAsset: (...args: ExtractArgs<Contract['calls']['trialFundsAsset']>) => getRequest('trialFundsAsset', args),
   trialFundsInitialAmount: (...args: ExtractArgs<Contract['calls']['trialFundsInitialAmount']>) =>
     getRequest('trialFundsInitialAmount', args),
-  addyRegistry: (...args: ExtractArgs<Contract['calls']['addyRegistry']>) => getRequest('addyRegistry', args),
   wethAddr: (...args: ExtractArgs<Contract['calls']['wethAddr']>) => getRequest('wethAddr', args),
-  initialized: (...args: ExtractArgs<Contract['calls']['initialized']>) => getRequest('initialized', args),
+  ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => getRequest('ADDY_REGISTRY', args),
 }
 
 export type Mutations = keyof Contract['mutations']
 function getMutation<M extends Mutations>(functionName: M) {
   return {
-    contractName: 'WalletFunds' as const,
+    contractName: 'UserWallet' as const,
     functionName,
     deployAddress,
     argsType: undefined as ExtractArgs<Contract['mutations'][M]> | undefined,
@@ -2829,14 +2796,13 @@ function getMutation<M extends Mutations>(functionName: M) {
 
 export const mutation: {
   [K in Mutations]: {
-    contractName: 'WalletFunds'
+    contractName: 'UserWallet'
     deployAddress: Address | undefined
     getAbi: () => typeof abi
     functionName: K
     argsType: ExtractArgs<Contract['mutations'][K]> | undefined
   }
 } = {
-  initialize: getMutation('initialize'),
   depositTokens: getMutation('depositTokens'),
   withdrawTokens: getMutation('withdrawTokens'),
   rebalance: getMutation('rebalance'),
@@ -2865,10 +2831,8 @@ export type SDK = {
   trialFundsInitialAmount: (
     ...args: ExtractArgs<Contract['calls']['trialFundsInitialAmount']>
   ) => Promise<CallReturn<'trialFundsInitialAmount'>>
-  addyRegistry: (...args: ExtractArgs<Contract['calls']['addyRegistry']>) => Promise<CallReturn<'addyRegistry'>>
   wethAddr: (...args: ExtractArgs<Contract['calls']['wethAddr']>) => Promise<CallReturn<'wethAddr'>>
-  initialized: (...args: ExtractArgs<Contract['calls']['initialized']>) => Promise<CallReturn<'initialized'>>
-  initialize: (...args: ExtractArgs<Contract['mutations']['initialize']>) => Promise<Address>
+  ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => Promise<CallReturn<'ADDY_REGISTRY'>>
   depositTokens: (...args: ExtractArgs<Contract['mutations']['depositTokens']>) => Promise<Address>
   withdrawTokens: (...args: ExtractArgs<Contract['mutations']['withdrawTokens']>) => Promise<Address>
   rebalance: (...args: ExtractArgs<Contract['mutations']['rebalance']>) => Promise<Address>
@@ -2900,16 +2864,12 @@ export function toSdk(address: Address, publicClient?: PublicClient, walletClien
       singleQuery(publicClient!, call.trialFundsInitialAmount(...args).at(address)) as Promise<
         CallReturn<'trialFundsInitialAmount'>
       >,
-    addyRegistry: (...args: ExtractArgs<Contract['calls']['addyRegistry']>) =>
-      singleQuery(publicClient!, call.addyRegistry(...args).at(address)) as Promise<CallReturn<'addyRegistry'>>,
     wethAddr: (...args: ExtractArgs<Contract['calls']['wethAddr']>) =>
       singleQuery(publicClient!, call.wethAddr(...args).at(address)) as Promise<CallReturn<'wethAddr'>>,
-    initialized: (...args: ExtractArgs<Contract['calls']['initialized']>) =>
-      singleQuery(publicClient!, call.initialized(...args).at(address)) as Promise<CallReturn<'initialized'>>,
+    ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) =>
+      singleQuery(publicClient!, call.ADDY_REGISTRY(...args).at(address)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
 
     // Mutations
-    initialize: (...args: ExtractArgs<Contract['mutations']['initialize']>) =>
-      mutate(walletClient!, mutation.initialize, { address })(...args),
     depositTokens: (...args: ExtractArgs<Contract['mutations']['depositTokens']>) =>
       mutate(walletClient!, mutation.depositTokens, { address })(...args),
     withdrawTokens: (...args: ExtractArgs<Contract['mutations']['withdrawTokens']>) =>

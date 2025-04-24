@@ -107,11 +107,11 @@ class Underscore {
   }
 
   get UserWallet() {
-    return { at: (address: Address) => this.contracts.WalletFunds(address) }
+    return { at: (address: Address) => this.contracts.UserWallet(address) }
   }
 
   get UserWalletConfig() {
-    return { at: (address: Address) => this.contracts.WalletConfig(address) }
+    return { at: (address: Address) => this.contracts.UserWalletConfig(address) }
   }
 
   get ERC20() {
