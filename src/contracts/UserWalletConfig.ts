@@ -272,6 +272,18 @@ export const abi = [
     inputs: [
       {
         indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+    ],
+    name: 'WhitelistAddrSetViaMigration',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         name: 'asset',
         type: 'address',
       },
@@ -282,6 +294,30 @@ export const abi = [
       },
     ],
     name: 'ReserveAssetSet',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'canWalletBeAmbassador',
+        type: 'bool',
+      },
+    ],
+    name: 'CanWalletBeAmbassadorSet',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+    ],
+    name: 'AmbassadorForwarderSet',
     type: 'event',
   },
   {
@@ -304,6 +340,55 @@ export const abi = [
       },
     ],
     name: 'FundsRecovered',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'newWallet',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'numAssetsToMigrate',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'numWhitelistToMigrate',
+        type: 'uint256',
+      },
+    ],
+    name: 'UserWalletStartMigration',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'oldWallet',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'numWhitelistMigrated',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'numVaultTokensMigrated',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'numAssetsMigrated',
+        type: 'uint256',
+      },
+    ],
+    name: 'UserWalletFinishMigration',
     type: 'event',
   },
   {
@@ -744,6 +829,10 @@ export const abi = [
             type: 'address',
           },
           {
+            name: 'agentFactory',
+            type: 'address',
+          },
+          {
             name: 'legoRegistry',
             type: 'address',
           },
@@ -892,6 +981,10 @@ export const abi = [
             type: 'address',
           },
           {
+            name: 'agentFactory',
+            type: 'address',
+          },
+          {
             name: 'legoRegistry',
             type: 'address',
           },
@@ -924,6 +1017,215 @@ export const abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_vaultTokenAmountReceived',
+        type: 'uint256',
+      },
+      {
+        name: '_assetAmountDeposited',
+        type: 'uint256',
+      },
+      {
+        name: '_legoRegistry',
+        type: 'address',
+      },
+    ],
+    name: 'updateYieldTrackingOnDeposit',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_vaultTokenAmountBurned',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_assetAmountReceived',
+        type: 'uint256',
+      },
+      {
+        name: '_legoRegistry',
+        type: 'address',
+      },
+    ],
+    name: 'updateYieldTrackingOnWithdrawal',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_tokenOutAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_legoRegistry',
+        type: 'address',
+      },
+    ],
+    name: 'updateYieldTrackingOnSwap',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_legoRegistry',
+        type: 'address',
+      },
+    ],
+    name: 'updateYieldTrackingOnEntry',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_legoRegistry',
+        type: 'address',
+      },
+    ],
+    name: 'updateYieldTrackingOnExit',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_newWallet',
+        type: 'address',
+      },
+    ],
+    name: 'startMigrationOut',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_newWallet',
+        type: 'address',
+      },
+      {
+        name: '_assetsToMigrate',
+        type: 'address[]',
+      },
+    ],
+    name: 'startMigrationOut',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_newWallet',
+        type: 'address',
+      },
+      {
+        name: '_assetsToMigrate',
+        type: 'address[]',
+      },
+      {
+        name: '_whitelistToMigrate',
+        type: 'address[]',
+      },
+    ],
+    name: 'startMigrationOut',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_whitelistToMigrate',
+        type: 'address[]',
+      },
+      {
+        name: '_assetsMigrated',
+        type: 'address[]',
+      },
+      {
+        name: '_vaultTokensMigrated',
+        type: 'address[]',
+      },
+    ],
+    name: 'finishMigrationIn',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -1363,6 +1665,52 @@ export const abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'getProceedsAddr',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+    ],
+    name: 'setAmbassadorForwarder',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_canWalletBeAmbassador',
+        type: 'bool',
+      },
+    ],
+    name: 'setCanWalletBeAmbassador',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_asset',
@@ -1593,6 +1941,117 @@ export const abi = [
   },
   {
     inputs: [],
+    name: 'canWalletBeAmbassador',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'ambassadorForwarder',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'myAmbassador',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'didMigrateIn',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'didMigrateOut',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'isVaultToken',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'vaultTokenAmounts',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'depositedAmounts',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'ADDY_REGISTRY',
     outputs: [
       {
@@ -1614,6 +2073,10 @@ export const abi = [
         type: 'address',
       },
       {
+        name: '_ambassador',
+        type: 'address',
+      },
+      {
         name: '_addyRegistry',
         type: 'address',
       },
@@ -1632,7 +2095,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xAeE931cC57CfBE31328bCfF092Af7eC7dFD7EBC8'
+export const deployAddress: Address | undefined = '0x61293F1bF484d20dcc841175b4E4A0F46c26658c'
 
 export type Contract = {
   calls: {
@@ -1679,6 +2142,7 @@ export type Contract = {
         wallet: `0x${string}`
         walletConfig: `0x${string}`
         addyRegistry: `0x${string}`
+        agentFactory: `0x${string}`
         legoRegistry: `0x${string}`
         priceSheets: `0x${string}`
         oracleRegistry: `0x${string}`
@@ -1688,6 +2152,7 @@ export type Contract = {
     ) => Promise<bigint>
     canTransferToRecipient: (recipient: `0x${string}`) => Promise<boolean>
     doesWalletHaveSameOwner: (wallet: `0x${string}`) => Promise<boolean>
+    getProceedsAddr: () => Promise<`0x${string}`>
     wallet: () => Promise<`0x${string}`>
     didSetWallet: () => Promise<boolean>
     protocolSub: () => Promise<{ installBlock: bigint; paidThroughBlock: bigint }>
@@ -1718,6 +2183,14 @@ export type Contract = {
     isRecipientAllowed: (arg0: `0x${string}`) => Promise<boolean>
     pendingWhitelist: (arg0: `0x${string}`) => Promise<{ initiatedBlock: bigint; confirmBlock: bigint }>
     canTransferToAltOwnerWallets: () => Promise<boolean>
+    canWalletBeAmbassador: () => Promise<boolean>
+    ambassadorForwarder: () => Promise<`0x${string}`>
+    myAmbassador: () => Promise<`0x${string}`>
+    didMigrateIn: () => Promise<boolean>
+    didMigrateOut: () => Promise<boolean>
+    isVaultToken: (arg0: `0x${string}`) => Promise<boolean>
+    vaultTokenAmounts: (arg0: `0x${string}`) => Promise<bigint>
+    depositedAmounts: (arg0: `0x${string}`) => Promise<bigint>
     ADDY_REGISTRY: () => Promise<`0x${string}`>
   }
   mutations: {
@@ -1736,6 +2209,7 @@ export type Contract = {
         wallet: `0x${string}`
         walletConfig: `0x${string}`
         addyRegistry: `0x${string}`
+        agentFactory: `0x${string}`
         legoRegistry: `0x${string}`
         priceSheets: `0x${string}`
         oracleRegistry: `0x${string}`
@@ -1762,6 +2236,38 @@ export type Contract = {
         },
       ]
     >
+    updateYieldTrackingOnDeposit: (
+      asset: `0x${string}`,
+      vaultToken: `0x${string}`,
+      vaultTokenAmountReceived: bigint,
+      assetAmountDeposited: bigint,
+      legoRegistry: `0x${string}`,
+    ) => Promise<void>
+    updateYieldTrackingOnWithdrawal: (
+      vaultToken: `0x${string}`,
+      vaultTokenAmountBurned: bigint,
+      asset: `0x${string}`,
+      assetAmountReceived: bigint,
+      legoRegistry: `0x${string}`,
+    ) => Promise<bigint>
+    updateYieldTrackingOnSwap: (
+      tokenIn: `0x${string}`,
+      tokenOut: `0x${string}`,
+      tokenOutAmount: bigint,
+      legoRegistry: `0x${string}`,
+    ) => Promise<void>
+    updateYieldTrackingOnEntry: (asset: `0x${string}`, amount: bigint, legoRegistry: `0x${string}`) => Promise<void>
+    updateYieldTrackingOnExit: (asset: `0x${string}`, legoRegistry: `0x${string}`) => Promise<void>
+    startMigrationOut: (
+      newWallet: `0x${string}`,
+      assetsToMigrate?: `0x${string}`[],
+      whitelistToMigrate?: `0x${string}`[],
+    ) => Promise<boolean>
+    finishMigrationIn: (
+      whitelistToMigrate: `0x${string}`[],
+      assetsMigrated: `0x${string}`[],
+      vaultTokensMigrated: `0x${string}`[],
+    ) => Promise<boolean>
     addOrModifyAgent: (
       agent: `0x${string}`,
       allowedAssets?: `0x${string}`[],
@@ -1808,6 +2314,8 @@ export type Contract = {
     removeWhitelistAddr: (addr: `0x${string}`) => Promise<void>
     setReserveAsset: (asset: `0x${string}`, amount: bigint) => Promise<boolean>
     setManyReserveAssets: (assets: { asset: `0x${string}`; amount: bigint }[]) => Promise<boolean>
+    setAmbassadorForwarder: (addr: `0x${string}`) => Promise<boolean>
+    setCanWalletBeAmbassador: (canWalletBeAmbassador: boolean) => Promise<boolean>
     recoverFunds: (asset: `0x${string}`) => Promise<boolean>
   }
   events: {
@@ -1840,8 +2348,22 @@ export type Contract = {
       cancelledBy: `0x${string}`,
     ) => Promise<void>
     WhitelistAddrRemoved: (addr: `0x${string}`) => Promise<void>
+    WhitelistAddrSetViaMigration: (addr: `0x${string}`) => Promise<void>
     ReserveAssetSet: (asset: `0x${string}`, amount: bigint) => Promise<void>
+    CanWalletBeAmbassadorSet: (canWalletBeAmbassador: boolean) => Promise<void>
+    AmbassadorForwarderSet: (addr: `0x${string}`) => Promise<void>
     FundsRecovered: (asset: `0x${string}`, recipient: `0x${string}`, balance: bigint) => Promise<void>
+    UserWalletStartMigration: (
+      newWallet: `0x${string}`,
+      numAssetsToMigrate: bigint,
+      numWhitelistToMigrate: bigint,
+    ) => Promise<void>
+    UserWalletFinishMigration: (
+      oldWallet: `0x${string}`,
+      numWhitelistMigrated: bigint,
+      numVaultTokensMigrated: bigint,
+      numAssetsMigrated: bigint,
+    ) => Promise<void>
     OwnershipChangeInitiated: (prevOwner: `0x${string}`, newOwner: `0x${string}`, confirmBlock: bigint) => Promise<void>
     OwnershipChangeConfirmed: (
       prevOwner: `0x${string}`,
@@ -1945,6 +2467,7 @@ export const call: CallType = {
     getRequest('canTransferToRecipient', args),
   doesWalletHaveSameOwner: (...args: ExtractArgs<Contract['calls']['doesWalletHaveSameOwner']>) =>
     getRequest('doesWalletHaveSameOwner', args),
+  getProceedsAddr: (...args: ExtractArgs<Contract['calls']['getProceedsAddr']>) => getRequest('getProceedsAddr', args),
   wallet: (...args: ExtractArgs<Contract['calls']['wallet']>) => getRequest('wallet', args),
   didSetWallet: (...args: ExtractArgs<Contract['calls']['didSetWallet']>) => getRequest('didSetWallet', args),
   protocolSub: (...args: ExtractArgs<Contract['calls']['protocolSub']>) => getRequest('protocolSub', args),
@@ -1956,6 +2479,18 @@ export const call: CallType = {
     getRequest('pendingWhitelist', args),
   canTransferToAltOwnerWallets: (...args: ExtractArgs<Contract['calls']['canTransferToAltOwnerWallets']>) =>
     getRequest('canTransferToAltOwnerWallets', args),
+  canWalletBeAmbassador: (...args: ExtractArgs<Contract['calls']['canWalletBeAmbassador']>) =>
+    getRequest('canWalletBeAmbassador', args),
+  ambassadorForwarder: (...args: ExtractArgs<Contract['calls']['ambassadorForwarder']>) =>
+    getRequest('ambassadorForwarder', args),
+  myAmbassador: (...args: ExtractArgs<Contract['calls']['myAmbassador']>) => getRequest('myAmbassador', args),
+  didMigrateIn: (...args: ExtractArgs<Contract['calls']['didMigrateIn']>) => getRequest('didMigrateIn', args),
+  didMigrateOut: (...args: ExtractArgs<Contract['calls']['didMigrateOut']>) => getRequest('didMigrateOut', args),
+  isVaultToken: (...args: ExtractArgs<Contract['calls']['isVaultToken']>) => getRequest('isVaultToken', args),
+  vaultTokenAmounts: (...args: ExtractArgs<Contract['calls']['vaultTokenAmounts']>) =>
+    getRequest('vaultTokenAmounts', args),
+  depositedAmounts: (...args: ExtractArgs<Contract['calls']['depositedAmounts']>) =>
+    getRequest('depositedAmounts', args),
   ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => getRequest('ADDY_REGISTRY', args),
 }
 
@@ -1985,6 +2520,13 @@ export const mutation: {
   setOwnershipChangeDelay: getMutation('setOwnershipChangeDelay'),
   setWallet: getMutation('setWallet'),
   handleSubscriptionsAndPermissions: getMutation('handleSubscriptionsAndPermissions'),
+  updateYieldTrackingOnDeposit: getMutation('updateYieldTrackingOnDeposit'),
+  updateYieldTrackingOnWithdrawal: getMutation('updateYieldTrackingOnWithdrawal'),
+  updateYieldTrackingOnSwap: getMutation('updateYieldTrackingOnSwap'),
+  updateYieldTrackingOnEntry: getMutation('updateYieldTrackingOnEntry'),
+  updateYieldTrackingOnExit: getMutation('updateYieldTrackingOnExit'),
+  startMigrationOut: getMutation('startMigrationOut'),
+  finishMigrationIn: getMutation('finishMigrationIn'),
   addOrModifyAgent: getMutation('addOrModifyAgent'),
   disableAgent: getMutation('disableAgent'),
   addLegoIdForAgent: getMutation('addLegoIdForAgent'),
@@ -1997,6 +2539,8 @@ export const mutation: {
   removeWhitelistAddr: getMutation('removeWhitelistAddr'),
   setReserveAsset: getMutation('setReserveAsset'),
   setManyReserveAssets: getMutation('setManyReserveAssets'),
+  setAmbassadorForwarder: getMutation('setAmbassadorForwarder'),
+  setCanWalletBeAmbassador: getMutation('setCanWalletBeAmbassador'),
   recoverFunds: getMutation('recoverFunds'),
 }
 
@@ -2037,6 +2581,9 @@ export type SDK = {
   doesWalletHaveSameOwner: (
     ...args: ExtractArgs<Contract['calls']['doesWalletHaveSameOwner']>
   ) => Promise<CallReturn<'doesWalletHaveSameOwner'>>
+  getProceedsAddr: (
+    ...args: ExtractArgs<Contract['calls']['getProceedsAddr']>
+  ) => Promise<CallReturn<'getProceedsAddr'>>
   wallet: (...args: ExtractArgs<Contract['calls']['wallet']>) => Promise<CallReturn<'wallet'>>
   didSetWallet: (...args: ExtractArgs<Contract['calls']['didSetWallet']>) => Promise<CallReturn<'didSetWallet'>>
   protocolSub: (...args: ExtractArgs<Contract['calls']['protocolSub']>) => Promise<CallReturn<'protocolSub'>>
@@ -2051,6 +2598,22 @@ export type SDK = {
   canTransferToAltOwnerWallets: (
     ...args: ExtractArgs<Contract['calls']['canTransferToAltOwnerWallets']>
   ) => Promise<CallReturn<'canTransferToAltOwnerWallets'>>
+  canWalletBeAmbassador: (
+    ...args: ExtractArgs<Contract['calls']['canWalletBeAmbassador']>
+  ) => Promise<CallReturn<'canWalletBeAmbassador'>>
+  ambassadorForwarder: (
+    ...args: ExtractArgs<Contract['calls']['ambassadorForwarder']>
+  ) => Promise<CallReturn<'ambassadorForwarder'>>
+  myAmbassador: (...args: ExtractArgs<Contract['calls']['myAmbassador']>) => Promise<CallReturn<'myAmbassador'>>
+  didMigrateIn: (...args: ExtractArgs<Contract['calls']['didMigrateIn']>) => Promise<CallReturn<'didMigrateIn'>>
+  didMigrateOut: (...args: ExtractArgs<Contract['calls']['didMigrateOut']>) => Promise<CallReturn<'didMigrateOut'>>
+  isVaultToken: (...args: ExtractArgs<Contract['calls']['isVaultToken']>) => Promise<CallReturn<'isVaultToken'>>
+  vaultTokenAmounts: (
+    ...args: ExtractArgs<Contract['calls']['vaultTokenAmounts']>
+  ) => Promise<CallReturn<'vaultTokenAmounts'>>
+  depositedAmounts: (
+    ...args: ExtractArgs<Contract['calls']['depositedAmounts']>
+  ) => Promise<CallReturn<'depositedAmounts'>>
   ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => Promise<CallReturn<'ADDY_REGISTRY'>>
   changeOwnership: (...args: ExtractArgs<Contract['mutations']['changeOwnership']>) => Promise<Address>
   confirmOwnershipChange: (...args: ExtractArgs<Contract['mutations']['confirmOwnershipChange']>) => Promise<Address>
@@ -2060,6 +2623,23 @@ export type SDK = {
   handleSubscriptionsAndPermissions: (
     ...args: ExtractArgs<Contract['mutations']['handleSubscriptionsAndPermissions']>
   ) => Promise<Address>
+  updateYieldTrackingOnDeposit: (
+    ...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnDeposit']>
+  ) => Promise<Address>
+  updateYieldTrackingOnWithdrawal: (
+    ...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnWithdrawal']>
+  ) => Promise<Address>
+  updateYieldTrackingOnSwap: (
+    ...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnSwap']>
+  ) => Promise<Address>
+  updateYieldTrackingOnEntry: (
+    ...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnEntry']>
+  ) => Promise<Address>
+  updateYieldTrackingOnExit: (
+    ...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnExit']>
+  ) => Promise<Address>
+  startMigrationOut: (...args: ExtractArgs<Contract['mutations']['startMigrationOut']>) => Promise<Address>
+  finishMigrationIn: (...args: ExtractArgs<Contract['mutations']['finishMigrationIn']>) => Promise<Address>
   addOrModifyAgent: (...args: ExtractArgs<Contract['mutations']['addOrModifyAgent']>) => Promise<Address>
   disableAgent: (...args: ExtractArgs<Contract['mutations']['disableAgent']>) => Promise<Address>
   addLegoIdForAgent: (...args: ExtractArgs<Contract['mutations']['addLegoIdForAgent']>) => Promise<Address>
@@ -2076,6 +2656,10 @@ export type SDK = {
   removeWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['removeWhitelistAddr']>) => Promise<Address>
   setReserveAsset: (...args: ExtractArgs<Contract['mutations']['setReserveAsset']>) => Promise<Address>
   setManyReserveAssets: (...args: ExtractArgs<Contract['mutations']['setManyReserveAssets']>) => Promise<Address>
+  setAmbassadorForwarder: (...args: ExtractArgs<Contract['mutations']['setAmbassadorForwarder']>) => Promise<Address>
+  setCanWalletBeAmbassador: (
+    ...args: ExtractArgs<Contract['mutations']['setCanWalletBeAmbassador']>
+  ) => Promise<Address>
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
 }
 
@@ -2134,6 +2718,8 @@ export function toSdk(address: Address, publicClient?: PublicClient, walletClien
       singleQuery(publicClient!, call.doesWalletHaveSameOwner(...args).at(address)) as Promise<
         CallReturn<'doesWalletHaveSameOwner'>
       >,
+    getProceedsAddr: (...args: ExtractArgs<Contract['calls']['getProceedsAddr']>) =>
+      singleQuery(publicClient!, call.getProceedsAddr(...args).at(address)) as Promise<CallReturn<'getProceedsAddr'>>,
     wallet: (...args: ExtractArgs<Contract['calls']['wallet']>) =>
       singleQuery(publicClient!, call.wallet(...args).at(address)) as Promise<CallReturn<'wallet'>>,
     didSetWallet: (...args: ExtractArgs<Contract['calls']['didSetWallet']>) =>
@@ -2154,6 +2740,28 @@ export function toSdk(address: Address, publicClient?: PublicClient, walletClien
       singleQuery(publicClient!, call.canTransferToAltOwnerWallets(...args).at(address)) as Promise<
         CallReturn<'canTransferToAltOwnerWallets'>
       >,
+    canWalletBeAmbassador: (...args: ExtractArgs<Contract['calls']['canWalletBeAmbassador']>) =>
+      singleQuery(publicClient!, call.canWalletBeAmbassador(...args).at(address)) as Promise<
+        CallReturn<'canWalletBeAmbassador'>
+      >,
+    ambassadorForwarder: (...args: ExtractArgs<Contract['calls']['ambassadorForwarder']>) =>
+      singleQuery(publicClient!, call.ambassadorForwarder(...args).at(address)) as Promise<
+        CallReturn<'ambassadorForwarder'>
+      >,
+    myAmbassador: (...args: ExtractArgs<Contract['calls']['myAmbassador']>) =>
+      singleQuery(publicClient!, call.myAmbassador(...args).at(address)) as Promise<CallReturn<'myAmbassador'>>,
+    didMigrateIn: (...args: ExtractArgs<Contract['calls']['didMigrateIn']>) =>
+      singleQuery(publicClient!, call.didMigrateIn(...args).at(address)) as Promise<CallReturn<'didMigrateIn'>>,
+    didMigrateOut: (...args: ExtractArgs<Contract['calls']['didMigrateOut']>) =>
+      singleQuery(publicClient!, call.didMigrateOut(...args).at(address)) as Promise<CallReturn<'didMigrateOut'>>,
+    isVaultToken: (...args: ExtractArgs<Contract['calls']['isVaultToken']>) =>
+      singleQuery(publicClient!, call.isVaultToken(...args).at(address)) as Promise<CallReturn<'isVaultToken'>>,
+    vaultTokenAmounts: (...args: ExtractArgs<Contract['calls']['vaultTokenAmounts']>) =>
+      singleQuery(publicClient!, call.vaultTokenAmounts(...args).at(address)) as Promise<
+        CallReturn<'vaultTokenAmounts'>
+      >,
+    depositedAmounts: (...args: ExtractArgs<Contract['calls']['depositedAmounts']>) =>
+      singleQuery(publicClient!, call.depositedAmounts(...args).at(address)) as Promise<CallReturn<'depositedAmounts'>>,
     ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) =>
       singleQuery(publicClient!, call.ADDY_REGISTRY(...args).at(address)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
 
@@ -2171,6 +2779,20 @@ export function toSdk(address: Address, publicClient?: PublicClient, walletClien
     handleSubscriptionsAndPermissions: (
       ...args: ExtractArgs<Contract['mutations']['handleSubscriptionsAndPermissions']>
     ) => mutate(walletClient!, mutation.handleSubscriptionsAndPermissions, { address })(...args),
+    updateYieldTrackingOnDeposit: (...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnDeposit']>) =>
+      mutate(walletClient!, mutation.updateYieldTrackingOnDeposit, { address })(...args),
+    updateYieldTrackingOnWithdrawal: (...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnWithdrawal']>) =>
+      mutate(walletClient!, mutation.updateYieldTrackingOnWithdrawal, { address })(...args),
+    updateYieldTrackingOnSwap: (...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnSwap']>) =>
+      mutate(walletClient!, mutation.updateYieldTrackingOnSwap, { address })(...args),
+    updateYieldTrackingOnEntry: (...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnEntry']>) =>
+      mutate(walletClient!, mutation.updateYieldTrackingOnEntry, { address })(...args),
+    updateYieldTrackingOnExit: (...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnExit']>) =>
+      mutate(walletClient!, mutation.updateYieldTrackingOnExit, { address })(...args),
+    startMigrationOut: (...args: ExtractArgs<Contract['mutations']['startMigrationOut']>) =>
+      mutate(walletClient!, mutation.startMigrationOut, { address })(...args),
+    finishMigrationIn: (...args: ExtractArgs<Contract['mutations']['finishMigrationIn']>) =>
+      mutate(walletClient!, mutation.finishMigrationIn, { address })(...args),
     addOrModifyAgent: (...args: ExtractArgs<Contract['mutations']['addOrModifyAgent']>) =>
       mutate(walletClient!, mutation.addOrModifyAgent, { address })(...args),
     disableAgent: (...args: ExtractArgs<Contract['mutations']['disableAgent']>) =>
@@ -2195,6 +2817,10 @@ export function toSdk(address: Address, publicClient?: PublicClient, walletClien
       mutate(walletClient!, mutation.setReserveAsset, { address })(...args),
     setManyReserveAssets: (...args: ExtractArgs<Contract['mutations']['setManyReserveAssets']>) =>
       mutate(walletClient!, mutation.setManyReserveAssets, { address })(...args),
+    setAmbassadorForwarder: (...args: ExtractArgs<Contract['mutations']['setAmbassadorForwarder']>) =>
+      mutate(walletClient!, mutation.setAmbassadorForwarder, { address })(...args),
+    setCanWalletBeAmbassador: (...args: ExtractArgs<Contract['mutations']['setCanWalletBeAmbassador']>) =>
+      mutate(walletClient!, mutation.setCanWalletBeAmbassador, { address })(...args),
     recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) =>
       mutate(walletClient!, mutation.recoverFunds, { address })(...args),
   }

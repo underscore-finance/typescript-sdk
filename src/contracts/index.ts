@@ -6,6 +6,7 @@
 export * as AddyRegistry from './AddyRegistry.js'
 export * as Agent from './Agent.js'
 export * as AgentFactory from './AgentFactory.js'
+export * as AgentFactory_v2 from './AgentFactory_v2.js'
 export * as Agent_v1 from './Agent_v1.js'
 export * as ChainlinkFeeds from './ChainlinkFeeds.js'
 export * as ERC20 from './ERC20.js'

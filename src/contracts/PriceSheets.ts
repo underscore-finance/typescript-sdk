@@ -182,22 +182,7 @@ export const abi = [
     inputs: [
       {
         indexed: false,
-        name: 'depositFee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'withdrawalFee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'rebalanceFee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'transferFee',
+        name: 'yieldFee',
         type: 'uint256',
       },
       {
@@ -207,27 +192,7 @@ export const abi = [
       },
       {
         indexed: false,
-        name: 'addLiqFee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'removeLiqFee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
         name: 'claimRewardsFee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'borrowFee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'repayFee',
         type: 'uint256',
       },
     ],
@@ -239,22 +204,7 @@ export const abi = [
     inputs: [
       {
         indexed: false,
-        name: 'depositFee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'withdrawalFee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'rebalanceFee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'transferFee',
+        name: 'yieldFee',
         type: 'uint256',
       },
       {
@@ -264,27 +214,7 @@ export const abi = [
       },
       {
         indexed: false,
-        name: 'addLiqFee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'removeLiqFee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
         name: 'claimRewardsFee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'borrowFee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'repayFee',
         type: 'uint256',
       },
     ],
@@ -313,6 +243,18 @@ export const abi = [
       },
     ],
     name: 'PriceChangeDelaySet',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'ratio',
+        type: 'uint256',
+      },
+    ],
+    name: 'AmbassadorRatioSet',
     type: 'event',
   },
   {
@@ -840,6 +782,35 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'getTransactionFeeDataWithAmbassadorRatio',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_user',
+        type: 'address',
+      },
+      {
+        name: '_action',
+        type: 'uint256',
+      },
+    ],
     name: 'getTransactionFeeData',
     outputs: [
       {
@@ -857,19 +828,7 @@ export const abi = [
   {
     inputs: [
       {
-        name: '_depositFee',
-        type: 'uint256',
-      },
-      {
-        name: '_withdrawalFee',
-        type: 'uint256',
-      },
-      {
-        name: '_rebalanceFee',
-        type: 'uint256',
-      },
-      {
-        name: '_transferFee',
+        name: '_yieldFee',
         type: 'uint256',
       },
       {
@@ -877,23 +836,7 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_addLiqFee',
-        type: 'uint256',
-      },
-      {
-        name: '_removeLiqFee',
-        type: 'uint256',
-      },
-      {
         name: '_claimRewardsFee',
-        type: 'uint256',
-      },
-      {
-        name: '_borrowFee',
-        type: 'uint256',
-      },
-      {
-        name: '_repayFee',
         type: 'uint256',
       },
     ],
@@ -910,19 +853,7 @@ export const abi = [
   {
     inputs: [
       {
-        name: '_depositFee',
-        type: 'uint256',
-      },
-      {
-        name: '_withdrawalFee',
-        type: 'uint256',
-      },
-      {
-        name: '_rebalanceFee',
-        type: 'uint256',
-      },
-      {
-        name: '_transferFee',
+        name: '_yieldFee',
         type: 'uint256',
       },
       {
@@ -930,23 +861,7 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_addLiqFee',
-        type: 'uint256',
-      },
-      {
-        name: '_removeLiqFee',
-        type: 'uint256',
-      },
-      {
         name: '_claimRewardsFee',
-        type: 'uint256',
-      },
-      {
-        name: '_borrowFee',
-        type: 'uint256',
-      },
-      {
-        name: '_repayFee',
         type: 'uint256',
       },
     ],
@@ -1009,6 +924,23 @@ export const abi = [
   {
     inputs: [
       {
+        name: '_ratio',
+        type: 'uint256',
+      },
+    ],
+    name: 'setAmbassadorRatio',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         name: '_shouldActivate',
         type: 'bool',
       },
@@ -1037,19 +969,7 @@ export const abi = [
       {
         components: [
           {
-            name: 'depositFee',
-            type: 'uint256',
-          },
-          {
-            name: 'withdrawalFee',
-            type: 'uint256',
-          },
-          {
-            name: 'rebalanceFee',
-            type: 'uint256',
-          },
-          {
-            name: 'transferFee',
+            name: 'yieldFee',
             type: 'uint256',
           },
           {
@@ -1057,23 +977,7 @@ export const abi = [
             type: 'uint256',
           },
           {
-            name: 'addLiqFee',
-            type: 'uint256',
-          },
-          {
-            name: 'removeLiqFee',
-            type: 'uint256',
-          },
-          {
             name: 'claimRewardsFee',
-            type: 'uint256',
-          },
-          {
-            name: 'borrowFee',
-            type: 'uint256',
-          },
-          {
-            name: 'repayFee',
             type: 'uint256',
           },
         ],
@@ -1220,6 +1124,18 @@ export const abi = [
   },
   {
     inputs: [],
+    name: 'ambassadorRatio',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'ADDY_REGISTRY',
     outputs: [
       {
@@ -1335,7 +1251,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x38Cd202B42b3906051573174e506b5b6BC83D47C'
+export const deployAddress: Address | undefined = '0xD15331Cf355B5D8EF017c1FD49516b95593FA6aA'
 
 export type Contract = {
   calls: {
@@ -1381,32 +1297,14 @@ export type Contract = {
       trialPeriod: bigint,
       payPeriod: bigint,
     ) => Promise<boolean>
+    getTransactionFeeDataWithAmbassadorRatio: (
+      user: `0x${string}`,
+      action: bigint,
+    ) => Promise<[bigint, `0x${string}`, bigint]>
     getTransactionFeeData: (user: `0x${string}`, action: bigint) => Promise<[bigint, `0x${string}`]>
-    isValidTxPriceSheet: (
-      depositFee: bigint,
-      withdrawalFee: bigint,
-      rebalanceFee: bigint,
-      transferFee: bigint,
-      swapFee: bigint,
-      addLiqFee: bigint,
-      removeLiqFee: bigint,
-      claimRewardsFee: bigint,
-      borrowFee: bigint,
-      repayFee: bigint,
-    ) => Promise<boolean>
+    isValidTxPriceSheet: (yieldFee: bigint, swapFee: bigint, claimRewardsFee: bigint) => Promise<boolean>
     protocolRecipient: () => Promise<`0x${string}`>
-    protocolTxPriceData: () => Promise<{
-      depositFee: bigint
-      withdrawalFee: bigint
-      rebalanceFee: bigint
-      transferFee: bigint
-      swapFee: bigint
-      addLiqFee: bigint
-      removeLiqFee: bigint
-      claimRewardsFee: bigint
-      borrowFee: bigint
-      repayFee: bigint
-    }>
+    protocolTxPriceData: () => Promise<{ yieldFee: bigint; swapFee: bigint; claimRewardsFee: bigint }>
     protocolSubPriceData: () => Promise<{
       asset: `0x${string}`
       usdValue: bigint
@@ -1424,6 +1322,7 @@ export type Contract = {
       effectiveBlock: bigint
     }>
     priceChangeDelay: () => Promise<bigint>
+    ambassadorRatio: () => Promise<bigint>
     ADDY_REGISTRY: () => Promise<`0x${string}`>
     isActivated: () => Promise<boolean>
     MIN_TRIAL_PERIOD: () => Promise<bigint>
@@ -1454,21 +1353,11 @@ export type Contract = {
       payPeriod: bigint,
     ) => Promise<boolean>
     removeProtocolSubPrice: () => Promise<boolean>
-    setProtocolTxPriceSheet: (
-      depositFee: bigint,
-      withdrawalFee: bigint,
-      rebalanceFee: bigint,
-      transferFee: bigint,
-      swapFee: bigint,
-      addLiqFee: bigint,
-      removeLiqFee: bigint,
-      claimRewardsFee: bigint,
-      borrowFee: bigint,
-      repayFee: bigint,
-    ) => Promise<boolean>
+    setProtocolTxPriceSheet: (yieldFee: bigint, swapFee: bigint, claimRewardsFee: bigint) => Promise<boolean>
     removeProtocolTxPriceSheet: () => Promise<boolean>
     setProtocolRecipient: (recipient: `0x${string}`) => Promise<boolean>
     setPriceChangeDelay: (delayBlocks: bigint) => Promise<boolean>
+    setAmbassadorRatio: (ratio: bigint) => Promise<boolean>
     activate: (shouldActivate: boolean) => Promise<void>
   }
   events: {
@@ -1507,32 +1396,11 @@ export type Contract = {
       payPeriod: bigint,
     ) => Promise<void>
     AgentSubPricingEnabled: (isEnabled: boolean) => Promise<void>
-    ProtocolTxPriceSheetSet: (
-      depositFee: bigint,
-      withdrawalFee: bigint,
-      rebalanceFee: bigint,
-      transferFee: bigint,
-      swapFee: bigint,
-      addLiqFee: bigint,
-      removeLiqFee: bigint,
-      claimRewardsFee: bigint,
-      borrowFee: bigint,
-      repayFee: bigint,
-    ) => Promise<void>
-    ProtocolTxPriceSheetRemoved: (
-      depositFee: bigint,
-      withdrawalFee: bigint,
-      rebalanceFee: bigint,
-      transferFee: bigint,
-      swapFee: bigint,
-      addLiqFee: bigint,
-      removeLiqFee: bigint,
-      claimRewardsFee: bigint,
-      borrowFee: bigint,
-      repayFee: bigint,
-    ) => Promise<void>
+    ProtocolTxPriceSheetSet: (yieldFee: bigint, swapFee: bigint, claimRewardsFee: bigint) => Promise<void>
+    ProtocolTxPriceSheetRemoved: (yieldFee: bigint, swapFee: bigint, claimRewardsFee: bigint) => Promise<void>
     ProtocolRecipientSet: (recipient: `0x${string}`) => Promise<void>
     PriceChangeDelaySet: (delayBlocks: bigint) => Promise<void>
+    AmbassadorRatioSet: (ratio: bigint) => Promise<void>
     PriceSheetsActivated: (isActivated: boolean) => Promise<void>
     GovChangeInitiated: (prevGov: `0x${string}`, newGov: `0x${string}`, confirmBlock: bigint) => Promise<void>
     GovChangeConfirmed: (
@@ -1621,6 +1489,9 @@ export const call: CallType = {
   getAgentSubPriceData: (...args: ExtractArgs<Contract['calls']['getAgentSubPriceData']>) =>
     getRequest('getAgentSubPriceData', args),
   isValidSubPrice: (...args: ExtractArgs<Contract['calls']['isValidSubPrice']>) => getRequest('isValidSubPrice', args),
+  getTransactionFeeDataWithAmbassadorRatio: (
+    ...args: ExtractArgs<Contract['calls']['getTransactionFeeDataWithAmbassadorRatio']>
+  ) => getRequest('getTransactionFeeDataWithAmbassadorRatio', args),
   getTransactionFeeData: (...args: ExtractArgs<Contract['calls']['getTransactionFeeData']>) =>
     getRequest('getTransactionFeeData', args),
   isValidTxPriceSheet: (...args: ExtractArgs<Contract['calls']['isValidTxPriceSheet']>) =>
@@ -1639,6 +1510,7 @@ export const call: CallType = {
     getRequest('pendingAgentSubPrices', args),
   priceChangeDelay: (...args: ExtractArgs<Contract['calls']['priceChangeDelay']>) =>
     getRequest('priceChangeDelay', args),
+  ambassadorRatio: (...args: ExtractArgs<Contract['calls']['ambassadorRatio']>) => getRequest('ambassadorRatio', args),
   ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => getRequest('ADDY_REGISTRY', args),
   isActivated: (...args: ExtractArgs<Contract['calls']['isActivated']>) => getRequest('isActivated', args),
   MIN_TRIAL_PERIOD: (...args: ExtractArgs<Contract['calls']['MIN_TRIAL_PERIOD']>) =>
@@ -1685,6 +1557,7 @@ export const mutation: {
   removeProtocolTxPriceSheet: getMutation('removeProtocolTxPriceSheet'),
   setProtocolRecipient: getMutation('setProtocolRecipient'),
   setPriceChangeDelay: getMutation('setPriceChangeDelay'),
+  setAmbassadorRatio: getMutation('setAmbassadorRatio'),
   activate: getMutation('activate'),
 }
 
@@ -1711,6 +1584,9 @@ export type SDK = {
   isValidSubPrice: (
     ...args: ExtractArgs<Contract['calls']['isValidSubPrice']>
   ) => Promise<CallReturn<'isValidSubPrice'>>
+  getTransactionFeeDataWithAmbassadorRatio: (
+    ...args: ExtractArgs<Contract['calls']['getTransactionFeeDataWithAmbassadorRatio']>
+  ) => Promise<CallReturn<'getTransactionFeeDataWithAmbassadorRatio'>>
   getTransactionFeeData: (
     ...args: ExtractArgs<Contract['calls']['getTransactionFeeData']>
   ) => Promise<CallReturn<'getTransactionFeeData'>>
@@ -1738,6 +1614,9 @@ export type SDK = {
   priceChangeDelay: (
     ...args: ExtractArgs<Contract['calls']['priceChangeDelay']>
   ) => Promise<CallReturn<'priceChangeDelay'>>
+  ambassadorRatio: (
+    ...args: ExtractArgs<Contract['calls']['ambassadorRatio']>
+  ) => Promise<CallReturn<'ambassadorRatio'>>
   ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => Promise<CallReturn<'ADDY_REGISTRY'>>
   isActivated: (...args: ExtractArgs<Contract['calls']['isActivated']>) => Promise<CallReturn<'isActivated'>>
   MIN_TRIAL_PERIOD: (
@@ -1773,6 +1652,7 @@ export type SDK = {
   ) => Promise<Address>
   setProtocolRecipient: (...args: ExtractArgs<Contract['mutations']['setProtocolRecipient']>) => Promise<Address>
   setPriceChangeDelay: (...args: ExtractArgs<Contract['mutations']['setPriceChangeDelay']>) => Promise<Address>
+  setAmbassadorRatio: (...args: ExtractArgs<Contract['mutations']['setAmbassadorRatio']>) => Promise<Address>
   activate: (...args: ExtractArgs<Contract['mutations']['activate']>) => Promise<Address>
 }
 
@@ -1799,6 +1679,12 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.getAgentSubPriceData(...args)) as Promise<CallReturn<'getAgentSubPriceData'>>,
     isValidSubPrice: (...args: ExtractArgs<Contract['calls']['isValidSubPrice']>) =>
       singleQuery(publicClient!, call.isValidSubPrice(...args)) as Promise<CallReturn<'isValidSubPrice'>>,
+    getTransactionFeeDataWithAmbassadorRatio: (
+      ...args: ExtractArgs<Contract['calls']['getTransactionFeeDataWithAmbassadorRatio']>
+    ) =>
+      singleQuery(publicClient!, call.getTransactionFeeDataWithAmbassadorRatio(...args)) as Promise<
+        CallReturn<'getTransactionFeeDataWithAmbassadorRatio'>
+      >,
     getTransactionFeeData: (...args: ExtractArgs<Contract['calls']['getTransactionFeeData']>) =>
       singleQuery(publicClient!, call.getTransactionFeeData(...args)) as Promise<CallReturn<'getTransactionFeeData'>>,
     isValidTxPriceSheet: (...args: ExtractArgs<Contract['calls']['isValidTxPriceSheet']>) =>
@@ -1819,6 +1705,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.pendingAgentSubPrices(...args)) as Promise<CallReturn<'pendingAgentSubPrices'>>,
     priceChangeDelay: (...args: ExtractArgs<Contract['calls']['priceChangeDelay']>) =>
       singleQuery(publicClient!, call.priceChangeDelay(...args)) as Promise<CallReturn<'priceChangeDelay'>>,
+    ambassadorRatio: (...args: ExtractArgs<Contract['calls']['ambassadorRatio']>) =>
+      singleQuery(publicClient!, call.ambassadorRatio(...args)) as Promise<CallReturn<'ambassadorRatio'>>,
     ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) =>
       singleQuery(publicClient!, call.ADDY_REGISTRY(...args)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
     isActivated: (...args: ExtractArgs<Contract['calls']['isActivated']>) =>
@@ -1865,6 +1753,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.setProtocolRecipient)(...args),
     setPriceChangeDelay: (...args: ExtractArgs<Contract['mutations']['setPriceChangeDelay']>) =>
       mutate(walletClient!, mutation.setPriceChangeDelay)(...args),
+    setAmbassadorRatio: (...args: ExtractArgs<Contract['mutations']['setAmbassadorRatio']>) =>
+      mutate(walletClient!, mutation.setAmbassadorRatio)(...args),
     activate: (...args: ExtractArgs<Contract['mutations']['activate']>) =>
       mutate(walletClient!, mutation.activate)(...args),
   }

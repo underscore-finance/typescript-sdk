@@ -983,6 +983,31 @@ export const abi = [
         type: 'address',
       },
       {
+        name: '_isThing',
+        type: 'bool',
+      },
+      {
+        name: '_setUserWalletMap',
+        type: 'bool',
+      },
+    ],
+    name: 'setIsUserWalletOrAgent',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+      {
         name: '_description',
         type: 'string',
       },
@@ -1155,6 +1180,52 @@ export const abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'setAddyChangeDelayToMin',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'isUserWallet',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'isAgent',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_initialGov',
@@ -1183,7 +1254,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xdCCaB9855D7eE558409EBdf358a3A44a8b2415B3'
+export const deployAddress: Address | undefined = '0x7BcD6d471D1A068012A79347C7a944d1Df01a1AE'
 
 export type Contract = {
   calls: {
@@ -1224,12 +1295,15 @@ export type Contract = {
     MIN_ADDY_CHANGE_DELAY: () => Promise<bigint>
     MAX_ADDY_CHANGE_DELAY: () => Promise<bigint>
     REGISTRY_STR: () => Promise<string>
+    isUserWallet: (arg0: `0x${string}`) => Promise<boolean>
+    isAgent: (arg0: `0x${string}`) => Promise<boolean>
   }
   mutations: {
     changeGovernance: (newGov: `0x${string}`) => Promise<void>
     confirmGovernanceChange: () => Promise<void>
     cancelGovernanceChange: () => Promise<void>
     setGovernanceChangeDelay: (numBlocks: bigint) => Promise<void>
+    setIsUserWalletOrAgent: (addr: `0x${string}`, isThing: boolean, setUserWalletMap: boolean) => Promise<boolean>
     registerNewAddy: (addr: `0x${string}`, description: string) => Promise<boolean>
     confirmNewAddy: (addr: `0x${string}`) => Promise<bigint>
     cancelPendingNewAddy: (addr: `0x${string}`) => Promise<boolean>
@@ -1240,6 +1314,7 @@ export type Contract = {
     confirmAddyDisable: (addyId: bigint) => Promise<boolean>
     cancelPendingAddyDisable: (addyId: bigint) => Promise<boolean>
     setAddyChangeDelay: (numBlocks: bigint) => Promise<boolean>
+    setAddyChangeDelayToMin: () => Promise<boolean>
   }
   events: {
     GovChangeInitiated: (prevGov: `0x${string}`, newGov: `0x${string}`, confirmBlock: bigint) => Promise<void>
@@ -1412,6 +1487,8 @@ export const call: CallType = {
   MAX_ADDY_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_ADDY_CHANGE_DELAY']>) =>
     getRequest('MAX_ADDY_CHANGE_DELAY', args),
   REGISTRY_STR: (...args: ExtractArgs<Contract['calls']['REGISTRY_STR']>) => getRequest('REGISTRY_STR', args),
+  isUserWallet: (...args: ExtractArgs<Contract['calls']['isUserWallet']>) => getRequest('isUserWallet', args),
+  isAgent: (...args: ExtractArgs<Contract['calls']['isAgent']>) => getRequest('isAgent', args),
 }
 
 export type Mutations = keyof Contract['mutations']
@@ -1438,6 +1515,7 @@ export const mutation: {
   confirmGovernanceChange: getMutation('confirmGovernanceChange'),
   cancelGovernanceChange: getMutation('cancelGovernanceChange'),
   setGovernanceChangeDelay: getMutation('setGovernanceChangeDelay'),
+  setIsUserWalletOrAgent: getMutation('setIsUserWalletOrAgent'),
   registerNewAddy: getMutation('registerNewAddy'),
   confirmNewAddy: getMutation('confirmNewAddy'),
   cancelPendingNewAddy: getMutation('cancelPendingNewAddy'),
@@ -1448,6 +1526,7 @@ export const mutation: {
   confirmAddyDisable: getMutation('confirmAddyDisable'),
   cancelPendingAddyDisable: getMutation('cancelPendingAddyDisable'),
   setAddyChangeDelay: getMutation('setAddyChangeDelay'),
+  setAddyChangeDelayToMin: getMutation('setAddyChangeDelayToMin'),
 }
 
 export type SDK = {
@@ -1506,12 +1585,15 @@ export type SDK = {
     ...args: ExtractArgs<Contract['calls']['MAX_ADDY_CHANGE_DELAY']>
   ) => Promise<CallReturn<'MAX_ADDY_CHANGE_DELAY'>>
   REGISTRY_STR: (...args: ExtractArgs<Contract['calls']['REGISTRY_STR']>) => Promise<CallReturn<'REGISTRY_STR'>>
+  isUserWallet: (...args: ExtractArgs<Contract['calls']['isUserWallet']>) => Promise<CallReturn<'isUserWallet'>>
+  isAgent: (...args: ExtractArgs<Contract['calls']['isAgent']>) => Promise<CallReturn<'isAgent'>>
   changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) => Promise<Address>
   confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) => Promise<Address>
   cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) => Promise<Address>
   setGovernanceChangeDelay: (
     ...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>
   ) => Promise<Address>
+  setIsUserWalletOrAgent: (...args: ExtractArgs<Contract['mutations']['setIsUserWalletOrAgent']>) => Promise<Address>
   registerNewAddy: (...args: ExtractArgs<Contract['mutations']['registerNewAddy']>) => Promise<Address>
   confirmNewAddy: (...args: ExtractArgs<Contract['mutations']['confirmNewAddy']>) => Promise<Address>
   cancelPendingNewAddy: (...args: ExtractArgs<Contract['mutations']['cancelPendingNewAddy']>) => Promise<Address>
@@ -1524,6 +1606,7 @@ export type SDK = {
     ...args: ExtractArgs<Contract['mutations']['cancelPendingAddyDisable']>
   ) => Promise<Address>
   setAddyChangeDelay: (...args: ExtractArgs<Contract['mutations']['setAddyChangeDelay']>) => Promise<Address>
+  setAddyChangeDelayToMin: (...args: ExtractArgs<Contract['mutations']['setAddyChangeDelayToMin']>) => Promise<Address>
 }
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
@@ -1587,6 +1670,10 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.MAX_ADDY_CHANGE_DELAY(...args)) as Promise<CallReturn<'MAX_ADDY_CHANGE_DELAY'>>,
     REGISTRY_STR: (...args: ExtractArgs<Contract['calls']['REGISTRY_STR']>) =>
       singleQuery(publicClient!, call.REGISTRY_STR(...args)) as Promise<CallReturn<'REGISTRY_STR'>>,
+    isUserWallet: (...args: ExtractArgs<Contract['calls']['isUserWallet']>) =>
+      singleQuery(publicClient!, call.isUserWallet(...args)) as Promise<CallReturn<'isUserWallet'>>,
+    isAgent: (...args: ExtractArgs<Contract['calls']['isAgent']>) =>
+      singleQuery(publicClient!, call.isAgent(...args)) as Promise<CallReturn<'isAgent'>>,
 
     // Mutations
     changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) =>
@@ -1597,6 +1684,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.cancelGovernanceChange)(...args),
     setGovernanceChangeDelay: (...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>) =>
       mutate(walletClient!, mutation.setGovernanceChangeDelay)(...args),
+    setIsUserWalletOrAgent: (...args: ExtractArgs<Contract['mutations']['setIsUserWalletOrAgent']>) =>
+      mutate(walletClient!, mutation.setIsUserWalletOrAgent)(...args),
     registerNewAddy: (...args: ExtractArgs<Contract['mutations']['registerNewAddy']>) =>
       mutate(walletClient!, mutation.registerNewAddy)(...args),
     confirmNewAddy: (...args: ExtractArgs<Contract['mutations']['confirmNewAddy']>) =>
@@ -1617,5 +1706,7 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.cancelPendingAddyDisable)(...args),
     setAddyChangeDelay: (...args: ExtractArgs<Contract['mutations']['setAddyChangeDelay']>) =>
       mutate(walletClient!, mutation.setAddyChangeDelay)(...args),
+    setAddyChangeDelayToMin: (...args: ExtractArgs<Contract['mutations']['setAddyChangeDelayToMin']>) =>
+      mutate(walletClient!, mutation.setAddyChangeDelayToMin)(...args),
   }
 }

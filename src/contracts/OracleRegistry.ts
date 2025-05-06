@@ -1058,6 +1058,18 @@ export const abi = [
   },
   {
     inputs: [],
+    name: 'setOraclePartnerChangeDelayToMin',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'getPriorityOraclePartnerIds',
     outputs: [
       {
@@ -1402,7 +1414,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x4D97d514d92Efd711D0645fE0759fA68480facc5'
+export const deployAddress: Address | undefined = '0xe133F22aAdC23F9B7ca7A9f16B6D9A0C662Cf90b'
 
 export type Contract = {
   calls: {
@@ -1459,6 +1471,7 @@ export type Contract = {
     confirmOraclePartnerDisable: (oracleId: bigint) => Promise<boolean>
     cancelPendingOraclePartnerDisable: (oracleId: bigint) => Promise<boolean>
     setOraclePartnerChangeDelay: (numBlocks: bigint) => Promise<boolean>
+    setOraclePartnerChangeDelayToMin: () => Promise<boolean>
     setPriorityOraclePartnerIds: (priorityIds: bigint[]) => Promise<boolean>
     setStaleTime: (staleTime: bigint) => Promise<boolean>
   }
@@ -1688,6 +1701,7 @@ export const mutation: {
   confirmOraclePartnerDisable: getMutation('confirmOraclePartnerDisable'),
   cancelPendingOraclePartnerDisable: getMutation('cancelPendingOraclePartnerDisable'),
   setOraclePartnerChangeDelay: getMutation('setOraclePartnerChangeDelay'),
+  setOraclePartnerChangeDelayToMin: getMutation('setOraclePartnerChangeDelayToMin'),
   setPriorityOraclePartnerIds: getMutation('setPriorityOraclePartnerIds'),
   setStaleTime: getMutation('setStaleTime'),
 }
@@ -1803,6 +1817,9 @@ export type SDK = {
   ) => Promise<Address>
   setOraclePartnerChangeDelay: (
     ...args: ExtractArgs<Contract['mutations']['setOraclePartnerChangeDelay']>
+  ) => Promise<Address>
+  setOraclePartnerChangeDelayToMin: (
+    ...args: ExtractArgs<Contract['mutations']['setOraclePartnerChangeDelayToMin']>
   ) => Promise<Address>
   setPriorityOraclePartnerIds: (
     ...args: ExtractArgs<Contract['mutations']['setPriorityOraclePartnerIds']>
@@ -1934,6 +1951,9 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
     ) => mutate(walletClient!, mutation.cancelPendingOraclePartnerDisable)(...args),
     setOraclePartnerChangeDelay: (...args: ExtractArgs<Contract['mutations']['setOraclePartnerChangeDelay']>) =>
       mutate(walletClient!, mutation.setOraclePartnerChangeDelay)(...args),
+    setOraclePartnerChangeDelayToMin: (
+      ...args: ExtractArgs<Contract['mutations']['setOraclePartnerChangeDelayToMin']>
+    ) => mutate(walletClient!, mutation.setOraclePartnerChangeDelayToMin)(...args),
     setPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['mutations']['setPriorityOraclePartnerIds']>) =>
       mutate(walletClient!, mutation.setPriorityOraclePartnerIds)(...args),
     setStaleTime: (...args: ExtractArgs<Contract['mutations']['setStaleTime']>) =>

@@ -579,6 +579,23 @@ export const abi = [
   {
     inputs: [
       {
+        name: '_legoId',
+        type: 'uint256',
+      },
+    ],
+    name: 'isYieldLego',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         name: '_addr',
         type: 'address',
       },
@@ -827,6 +844,18 @@ export const abi = [
   },
   {
     inputs: [],
+    name: 'setLegoChangeDelayToMin',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'numLegosRaw',
     outputs: [
       {
@@ -1034,6 +1063,75 @@ export const abi = [
   {
     inputs: [
       {
+        name: '_user',
+        type: 'address',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    name: 'getVaultTokensForUser',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'vaultToken',
+            type: 'address',
+          },
+        ],
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    name: 'getLegoFromVaultToken',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    name: 'isVaultToken',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         name: '_helperAddr',
         type: 'address',
       },
@@ -1132,7 +1230,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x5dC5A7304a1f2feeadF491b8F62BD41687CB330b'
+export const deployAddress: Address | undefined = '0x8D8593FE154d14976352FA2CE30322EcDF99C72a'
 
 export type Contract = {
   calls: {
@@ -1143,6 +1241,7 @@ export type Contract = {
     govChangeDelay: () => Promise<bigint>
     MIN_GOV_CHANGE_DELAY: () => Promise<bigint>
     MAX_GOV_CHANGE_DELAY: () => Promise<bigint>
+    isYieldLego: (legoId: bigint) => Promise<boolean>
     isValidNewLegoAddr: (addr: `0x${string}`) => Promise<boolean>
     isValidLegoUpdate: (legoId: bigint, newAddr: `0x${string}`) => Promise<boolean>
     isValidLegoDisable: (legoId: bigint) => Promise<boolean>
@@ -1161,6 +1260,12 @@ export type Contract = {
     getLastLegoId: () => Promise<bigint>
     getUnderlyingAsset: (vaultToken: `0x${string}`) => Promise<`0x${string}`>
     getUnderlyingForUser: (user: `0x${string}`, asset: `0x${string}`) => Promise<bigint>
+    getVaultTokensForUser: (
+      user: `0x${string}`,
+      asset: `0x${string}`,
+    ) => Promise<{ legoId: bigint; vaultToken: `0x${string}` }[]>
+    getLegoFromVaultToken: (vaultToken: `0x${string}`) => Promise<[bigint, `0x${string}`]>
+    isVaultToken: (vaultToken: `0x${string}`) => Promise<boolean>
     isValidLegoHelper: (helperAddr: `0x${string}`) => Promise<boolean>
     pendingLegoType: (arg0: `0x${string}`) => Promise<bigint>
     legoIdToType: (arg0: bigint) => Promise<bigint>
@@ -1181,6 +1286,7 @@ export type Contract = {
     confirmLegoDisable: (legoId: bigint) => Promise<boolean>
     cancelPendingLegoDisable: (legoId: bigint) => Promise<boolean>
     setLegoChangeDelay: (numBlocks: bigint) => Promise<boolean>
+    setLegoChangeDelayToMin: () => Promise<boolean>
     setLegoHelper: (helperAddr: `0x${string}`) => Promise<boolean>
   }
   events: {
@@ -1326,6 +1432,7 @@ export const call: CallType = {
     getRequest('MIN_GOV_CHANGE_DELAY', args),
   MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
     getRequest('MAX_GOV_CHANGE_DELAY', args),
+  isYieldLego: (...args: ExtractArgs<Contract['calls']['isYieldLego']>) => getRequest('isYieldLego', args),
   isValidNewLegoAddr: (...args: ExtractArgs<Contract['calls']['isValidNewLegoAddr']>) =>
     getRequest('isValidNewLegoAddr', args),
   isValidLegoUpdate: (...args: ExtractArgs<Contract['calls']['isValidLegoUpdate']>) =>
@@ -1348,6 +1455,11 @@ export const call: CallType = {
     getRequest('getUnderlyingAsset', args),
   getUnderlyingForUser: (...args: ExtractArgs<Contract['calls']['getUnderlyingForUser']>) =>
     getRequest('getUnderlyingForUser', args),
+  getVaultTokensForUser: (...args: ExtractArgs<Contract['calls']['getVaultTokensForUser']>) =>
+    getRequest('getVaultTokensForUser', args),
+  getLegoFromVaultToken: (...args: ExtractArgs<Contract['calls']['getLegoFromVaultToken']>) =>
+    getRequest('getLegoFromVaultToken', args),
+  isVaultToken: (...args: ExtractArgs<Contract['calls']['isVaultToken']>) => getRequest('isVaultToken', args),
   isValidLegoHelper: (...args: ExtractArgs<Contract['calls']['isValidLegoHelper']>) =>
     getRequest('isValidLegoHelper', args),
   pendingLegoType: (...args: ExtractArgs<Contract['calls']['pendingLegoType']>) => getRequest('pendingLegoType', args),
@@ -1389,6 +1501,7 @@ export const mutation: {
   confirmLegoDisable: getMutation('confirmLegoDisable'),
   cancelPendingLegoDisable: getMutation('cancelPendingLegoDisable'),
   setLegoChangeDelay: getMutation('setLegoChangeDelay'),
+  setLegoChangeDelayToMin: getMutation('setLegoChangeDelayToMin'),
   setLegoHelper: getMutation('setLegoHelper'),
 }
 
@@ -1406,6 +1519,7 @@ export type SDK = {
   MAX_GOV_CHANGE_DELAY: (
     ...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>
   ) => Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>
+  isYieldLego: (...args: ExtractArgs<Contract['calls']['isYieldLego']>) => Promise<CallReturn<'isYieldLego'>>
   isValidNewLegoAddr: (
     ...args: ExtractArgs<Contract['calls']['isValidNewLegoAddr']>
   ) => Promise<CallReturn<'isValidNewLegoAddr'>>
@@ -1440,6 +1554,13 @@ export type SDK = {
   getUnderlyingForUser: (
     ...args: ExtractArgs<Contract['calls']['getUnderlyingForUser']>
   ) => Promise<CallReturn<'getUnderlyingForUser'>>
+  getVaultTokensForUser: (
+    ...args: ExtractArgs<Contract['calls']['getVaultTokensForUser']>
+  ) => Promise<CallReturn<'getVaultTokensForUser'>>
+  getLegoFromVaultToken: (
+    ...args: ExtractArgs<Contract['calls']['getLegoFromVaultToken']>
+  ) => Promise<CallReturn<'getLegoFromVaultToken'>>
+  isVaultToken: (...args: ExtractArgs<Contract['calls']['isVaultToken']>) => Promise<CallReturn<'isVaultToken'>>
   isValidLegoHelper: (
     ...args: ExtractArgs<Contract['calls']['isValidLegoHelper']>
   ) => Promise<CallReturn<'isValidLegoHelper'>>
@@ -1468,6 +1589,7 @@ export type SDK = {
     ...args: ExtractArgs<Contract['mutations']['cancelPendingLegoDisable']>
   ) => Promise<Address>
   setLegoChangeDelay: (...args: ExtractArgs<Contract['mutations']['setLegoChangeDelay']>) => Promise<Address>
+  setLegoChangeDelayToMin: (...args: ExtractArgs<Contract['mutations']['setLegoChangeDelayToMin']>) => Promise<Address>
   setLegoHelper: (...args: ExtractArgs<Contract['mutations']['setLegoHelper']>) => Promise<Address>
 }
 
@@ -1488,6 +1610,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.MIN_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MIN_GOV_CHANGE_DELAY'>>,
     MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
       singleQuery(publicClient!, call.MAX_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>,
+    isYieldLego: (...args: ExtractArgs<Contract['calls']['isYieldLego']>) =>
+      singleQuery(publicClient!, call.isYieldLego(...args)) as Promise<CallReturn<'isYieldLego'>>,
     isValidNewLegoAddr: (...args: ExtractArgs<Contract['calls']['isValidNewLegoAddr']>) =>
       singleQuery(publicClient!, call.isValidNewLegoAddr(...args)) as Promise<CallReturn<'isValidNewLegoAddr'>>,
     isValidLegoUpdate: (...args: ExtractArgs<Contract['calls']['isValidLegoUpdate']>) =>
@@ -1520,6 +1644,12 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.getUnderlyingAsset(...args)) as Promise<CallReturn<'getUnderlyingAsset'>>,
     getUnderlyingForUser: (...args: ExtractArgs<Contract['calls']['getUnderlyingForUser']>) =>
       singleQuery(publicClient!, call.getUnderlyingForUser(...args)) as Promise<CallReturn<'getUnderlyingForUser'>>,
+    getVaultTokensForUser: (...args: ExtractArgs<Contract['calls']['getVaultTokensForUser']>) =>
+      singleQuery(publicClient!, call.getVaultTokensForUser(...args)) as Promise<CallReturn<'getVaultTokensForUser'>>,
+    getLegoFromVaultToken: (...args: ExtractArgs<Contract['calls']['getLegoFromVaultToken']>) =>
+      singleQuery(publicClient!, call.getLegoFromVaultToken(...args)) as Promise<CallReturn<'getLegoFromVaultToken'>>,
+    isVaultToken: (...args: ExtractArgs<Contract['calls']['isVaultToken']>) =>
+      singleQuery(publicClient!, call.isVaultToken(...args)) as Promise<CallReturn<'isVaultToken'>>,
     isValidLegoHelper: (...args: ExtractArgs<Contract['calls']['isValidLegoHelper']>) =>
       singleQuery(publicClient!, call.isValidLegoHelper(...args)) as Promise<CallReturn<'isValidLegoHelper'>>,
     pendingLegoType: (...args: ExtractArgs<Contract['calls']['pendingLegoType']>) =>
@@ -1558,6 +1688,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.cancelPendingLegoDisable)(...args),
     setLegoChangeDelay: (...args: ExtractArgs<Contract['mutations']['setLegoChangeDelay']>) =>
       mutate(walletClient!, mutation.setLegoChangeDelay)(...args),
+    setLegoChangeDelayToMin: (...args: ExtractArgs<Contract['mutations']['setLegoChangeDelayToMin']>) =>
+      mutate(walletClient!, mutation.setLegoChangeDelayToMin)(...args),
     setLegoHelper: (...args: ExtractArgs<Contract['mutations']['setLegoHelper']>) =>
       mutate(walletClient!, mutation.setLegoHelper)(...args),
   }

@@ -35,6 +35,11 @@ export const abi = [
       },
       {
         indexed: false,
+        name: 'ambassador',
+        type: 'address',
+      },
+      {
+        indexed: false,
         name: 'creator',
         type: 'address',
       },
@@ -69,16 +74,26 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        name: 'template',
+        name: 'prevAddr',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'newAddr',
         type: 'address',
       },
       {
         indexed: false,
-        name: 'version',
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'addressType',
         type: 'uint256',
       },
     ],
-    name: 'UserWalletTemplateSet',
+    name: 'AddressUpdateInitiated',
     type: 'event',
   },
   {
@@ -86,16 +101,31 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        name: 'template',
+        name: 'prevAddr',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'newAddr',
         type: 'address',
       },
       {
         indexed: false,
-        name: 'version',
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'addressType',
         type: 'uint256',
       },
     ],
-    name: 'UserWalletConfigTemplateSet',
+    name: 'AddressUpdateConfirmed',
     type: 'event',
   },
   {
@@ -103,33 +133,38 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        name: 'template',
+        name: 'cancelledTemplate',
         type: 'address',
       },
       {
         indexed: false,
-        name: 'version',
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'addressType',
         type: 'uint256',
       },
     ],
-    name: 'AgentTemplateSet',
+    name: 'AddressUpdateCancelled',
     type: 'event',
   },
   {
     anonymous: false,
     inputs: [
       {
-        indexed: true,
-        name: 'asset',
-        type: 'address',
-      },
-      {
         indexed: false,
-        name: 'amount',
+        name: 'delayBlocks',
         type: 'uint256',
       },
     ],
-    name: 'TrialFundsDataSet',
+    name: 'AddressChangeDelaySet',
     type: 'event',
   },
   {
@@ -147,6 +182,18 @@ export const abi = [
       },
     ],
     name: 'WhitelistSet',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'shouldEnforce',
+        type: 'bool',
+      },
+    ],
+    name: 'ShouldEnforceWhitelistSet',
     type: 'event',
   },
   {
@@ -177,18 +224,6 @@ export const abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
-        name: 'shouldEnforce',
-        type: 'bool',
-      },
-    ],
-    name: 'ShouldEnforceWhitelistSet',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
         indexed: true,
         name: 'agentAddr',
         type: 'address',
@@ -200,6 +235,84 @@ export const abi = [
       },
     ],
     name: 'AgentBlacklistSet',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'addr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'canCancel',
+        type: 'bool',
+      },
+    ],
+    name: 'CanCriticalCancelSet',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'asset',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'TrialFundsDataSet',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'user',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'ambassador',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'asset',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'ratio',
+        type: 'uint256',
+      },
+    ],
+    name: 'AmbassadorYieldBonusPaid',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'ratio',
+        type: 'uint256',
+      },
+    ],
+    name: 'AmbassadorBonusRatioSet',
     type: 'event',
   },
   {
@@ -222,35 +335,6 @@ export const abi = [
       },
     ],
     name: 'AgentFactoryFundsRecovered',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'caller',
-        type: 'address',
-      },
-    ],
-    name: 'RecoveryCallerSet',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'addr',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'canCancel',
-        type: 'bool',
-      },
-    ],
-    name: 'CanCriticalCancelSet',
     type: 'event',
   },
   {
@@ -490,53 +574,13 @@ export const abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'currentUserWalletTemplate',
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'currentUserWalletConfigTemplate',
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'currentAgentTemplate',
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
-        name: '_owner',
-        type: 'address',
-      },
-      {
-        name: '_agent',
+        name: '_addr',
         type: 'address',
       },
     ],
-    name: 'isValidUserWalletSetup',
+    name: 'isUserWallet',
     outputs: [
       {
         name: '',
@@ -582,7 +626,7 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_agent',
+        name: '_ambassador',
         type: 'address',
       },
     ],
@@ -599,18 +643,26 @@ export const abi = [
   {
     inputs: [
       {
-        name: '_newAddr',
+        name: '_owner',
         type: 'address',
       },
-    ],
-    name: 'isValidUserWalletTemplate',
-    outputs: [
       {
-        name: '',
+        name: '_ambassador',
+        type: 'address',
+      },
+      {
+        name: '_shouldUseTrialFunds',
         type: 'bool',
       },
     ],
-    stateMutability: 'view',
+    name: 'createUserWallet',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -620,58 +672,7 @@ export const abi = [
         type: 'address',
       },
     ],
-    name: 'setUserWalletTemplate',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_newAddr',
-        type: 'address',
-      },
-    ],
-    name: 'isValidUserWalletConfigTemplate',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_addr',
-        type: 'address',
-      },
-    ],
-    name: 'setUserWalletConfigTemplate',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_owner',
-        type: 'address',
-      },
-    ],
-    name: 'isValidAgentSetup',
+    name: 'isAgent',
     outputs: [
       {
         name: '',
@@ -717,151 +718,124 @@ export const abi = [
         type: 'address',
       },
     ],
-    name: 'isValidAgentTemplate',
+    name: 'initiateUserWalletTemplateUpdate',
     outputs: [
       {
         name: '',
         type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'confirmUserWalletTemplateUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'cancelUserWalletTemplateUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getUserWalletTemplateAddr',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
       },
     ],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        name: '_addr',
-        type: 'address',
-      },
-    ],
-    name: 'setAgentTemplate',
+    inputs: [],
+    name: 'getUserWalletTemplateInfo',
     outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'isValidTrialFundsData',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'setTrialFundsData',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_wallet',
-        type: 'address',
-      },
-    ],
-    name: 'recoverTrialFunds',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_wallet',
-        type: 'address',
-      },
       {
         components: [
           {
-            name: 'legoId',
+            name: 'addr',
+            type: 'address',
+          },
+          {
+            name: 'version',
             type: 'uint256',
           },
           {
-            name: 'vaultToken',
-            type: 'address',
+            name: 'lastModified',
+            type: 'uint256',
           },
         ],
-        name: '_opportunities',
-        type: 'tuple[]',
-      },
-    ],
-    name: 'recoverTrialFunds',
-    outputs: [
-      {
         name: '',
-        type: 'bool',
+        type: 'tuple',
       },
     ],
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
+    inputs: [],
+    name: 'getPendingUserWalletTemplateUpdate',
+    outputs: [
       {
         components: [
           {
-            name: 'wallet',
+            name: 'newAddr',
             type: 'address',
           },
           {
-            components: [
-              {
-                name: 'legoId',
-                type: 'uint256',
-              },
-              {
-                name: 'vaultToken',
-                type: 'address',
-              },
-            ],
-            name: 'opportunities',
-            type: 'tuple[]',
+            name: 'initiatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'confirmBlock',
+            type: 'uint256',
           },
         ],
-        name: '_recoveries',
-        type: 'tuple[]',
+        name: '',
+        type: 'tuple',
       },
     ],
-    name: 'recoverTrialFundsMany',
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'hasPendingUserWalletTemplateUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_newAddr',
+        type: 'address',
+      },
+    ],
+    name: 'initiateUserWalletConfigTemplateUpdate',
     outputs: [
       {
         name: '',
@@ -872,19 +846,231 @@ export const abi = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        name: '_caller',
-        type: 'address',
-      },
-    ],
-    name: 'setRecoveryCaller',
+    inputs: [],
+    name: 'confirmUserWalletConfigTemplateUpdate',
     outputs: [
       {
         name: '',
         type: 'bool',
       },
     ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'cancelUserWalletConfigTemplateUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getUserWalletConfigTemplateAddr',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getUserWalletConfigTemplateInfo',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'addr',
+            type: 'address',
+          },
+          {
+            name: 'version',
+            type: 'uint256',
+          },
+          {
+            name: 'lastModified',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getPendingUserWalletConfigTemplateUpdate',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'newAddr',
+            type: 'address',
+          },
+          {
+            name: 'initiatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'confirmBlock',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'hasPendingUserWalletConfigTemplateUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_newAddr',
+        type: 'address',
+      },
+    ],
+    name: 'initiateAgentTemplateUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'confirmAgentTemplateUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'cancelAgentTemplateUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getAgentTemplateAddr',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getAgentTemplateInfo',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'addr',
+            type: 'address',
+          },
+          {
+            name: 'version',
+            type: 'uint256',
+          },
+          {
+            name: 'lastModified',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getPendingAgentTemplateUpdate',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'newAddr',
+            type: 'address',
+          },
+          {
+            name: 'initiatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'confirmBlock',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'hasPendingAgentTemplateUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_numBlocks',
+        type: 'uint256',
+      },
+    ],
+    name: 'setAddressChangeDelay',
+    outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
@@ -1008,27 +1194,6 @@ export const abi = [
   {
     inputs: [
       {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    name: 'recoverFunds',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         name: '_addr',
         type: 'address',
       },
@@ -1067,6 +1232,261 @@ export const abi = [
   {
     inputs: [
       {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'setTrialFundsData',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_wallets',
+        type: 'address[]',
+      },
+    ],
+    name: 'clawBackTrialFunds',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            name: 'wallet',
+            type: 'address',
+          },
+          {
+            components: [
+              {
+                name: 'legoId',
+                type: 'uint256',
+              },
+              {
+                name: 'vaultToken',
+                type: 'address',
+              },
+            ],
+            name: 'opportunities',
+            type: 'tuple[]',
+          },
+        ],
+        name: '_recoveries',
+        type: 'tuple[]',
+      },
+    ],
+    name: 'clawBackTrialFundsLegacy',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_ambassador',
+        type: 'address',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'payAmbassadorYieldBonus',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_bonusRatio',
+        type: 'uint256',
+      },
+    ],
+    name: 'setAmbassadorBonusRatio',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_newAddr',
+        type: 'address',
+      },
+    ],
+    name: 'initiateDefaultAgentUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'confirmDefaultAgentUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'cancelDefaultAgentUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getDefaultAgentAddr',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getDefaultAgentInfo',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'addr',
+            type: 'address',
+          },
+          {
+            name: 'version',
+            type: 'uint256',
+          },
+          {
+            name: 'lastModified',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getPendingDefaultAgentUpdate',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'newAddr',
+            type: 'address',
+          },
+          {
+            name: 'initiatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'confirmBlock',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'hasPendingDefaultAgentUpdate',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    name: 'recoverFundsFromAgentFactory',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         name: '_shouldActivate',
         type: 'bool',
       },
@@ -1077,99 +1497,13 @@ export const abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'trialFundsData',
-    outputs: [
-      {
-        components: [
-          {
-            name: 'asset',
-            type: 'address',
-          },
-          {
-            name: 'amount',
-            type: 'uint256',
-          },
-        ],
-        name: '',
-        type: 'tuple',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'recoveryCaller',
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'userWalletTemplate',
-    outputs: [
-      {
-        components: [
-          {
-            name: 'addr',
-            type: 'address',
-          },
-          {
-            name: 'version',
-            type: 'uint256',
-          },
-          {
-            name: 'lastModified',
-            type: 'uint256',
-          },
-        ],
-        name: '',
-        type: 'tuple',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'userWalletConfig',
-    outputs: [
-      {
-        components: [
-          {
-            name: 'addr',
-            type: 'address',
-          },
-          {
-            name: 'version',
-            type: 'uint256',
-          },
-          {
-            name: 'lastModified',
-            type: 'uint256',
-          },
-        ],
-        name: '',
-        type: 'tuple',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         name: 'arg0',
         type: 'address',
       },
     ],
-    name: 'isUserWallet',
+    name: 'isUserWalletLocal',
     outputs: [
       {
         name: '',
@@ -1192,39 +1526,13 @@ export const abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'agentTemplateInfo',
-    outputs: [
-      {
-        components: [
-          {
-            name: 'addr',
-            type: 'address',
-          },
-          {
-            name: 'version',
-            type: 'uint256',
-          },
-          {
-            name: 'lastModified',
-            type: 'uint256',
-          },
-        ],
-        name: '',
-        type: 'tuple',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         name: 'arg0',
         type: 'address',
       },
     ],
-    name: 'isAgent',
+    name: 'isAgentLocal',
     outputs: [
       {
         name: '',
@@ -1250,14 +1558,105 @@ export const abi = [
     inputs: [
       {
         name: 'arg0',
-        type: 'address',
+        type: 'uint256',
       },
     ],
-    name: 'agentBlacklist',
+    name: 'addressInfo',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'addr',
+            type: 'address',
+          },
+          {
+            name: 'version',
+            type: 'uint256',
+          },
+          {
+            name: 'lastModified',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    name: 'pendingAddress',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'newAddr',
+            type: 'address',
+          },
+          {
+            name: 'initiatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'confirmBlock',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'addressChangeDelay',
     outputs: [
       {
         name: '',
-        type: 'bool',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'ambassadorBonusRatio',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'trialFundsData',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'asset',
+            type: 'address',
+          },
+          {
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
       },
     ],
     stateMutability: 'view',
@@ -1307,6 +1706,23 @@ export const abi = [
   {
     inputs: [],
     name: 'shouldEnforceWhitelist',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'agentBlacklist',
     outputs: [
       {
         name: '',
@@ -1394,6 +1810,30 @@ export const abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'MIN_ADDRESS_CHANGE_DELAY',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MAX_ADDRESS_CHANGE_DELAY',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_addyRegistry',
@@ -1416,11 +1856,15 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_minOwnerChangeDelay',
+        name: '_defaultAgent',
+        type: 'address',
+      },
+      {
+        name: '_minChangeDelay',
         type: 'uint256',
       },
       {
-        name: '_maxOwnerChangeDelay',
+        name: '_maxChangeDelay',
         type: 'uint256',
       },
     ],
@@ -1430,7 +1874,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x484637E77C66eaE88C8Edb64E09c5057F52866BE'
+export const deployAddress: Address | undefined = '0xd5a1cc447D94114136A5a8828F59d5a1cfe65038'
 
 export type Contract = {
   calls: {
@@ -1441,63 +1885,102 @@ export type Contract = {
     govChangeDelay: () => Promise<bigint>
     MIN_GOV_CHANGE_DELAY: () => Promise<bigint>
     MAX_GOV_CHANGE_DELAY: () => Promise<bigint>
-    currentUserWalletTemplate: () => Promise<`0x${string}`>
-    currentUserWalletConfigTemplate: () => Promise<`0x${string}`>
-    currentAgentTemplate: () => Promise<`0x${string}`>
-    isValidUserWalletSetup: (owner: `0x${string}`, agent: `0x${string}`) => Promise<boolean>
-    isValidUserWalletTemplate: (newAddr: `0x${string}`) => Promise<boolean>
-    isValidUserWalletConfigTemplate: (newAddr: `0x${string}`) => Promise<boolean>
-    isValidAgentSetup: (owner: `0x${string}`) => Promise<boolean>
-    isValidAgentTemplate: (newAddr: `0x${string}`) => Promise<boolean>
-    isValidTrialFundsData: (asset: `0x${string}`, amount: bigint) => Promise<boolean>
+    isUserWallet: (addr: `0x${string}`) => Promise<boolean>
+    isAgent: (addr: `0x${string}`) => Promise<boolean>
+    getUserWalletTemplateAddr: () => Promise<`0x${string}`>
+    getUserWalletTemplateInfo: () => Promise<{ addr: `0x${string}`; version: bigint; lastModified: bigint }>
+    getPendingUserWalletTemplateUpdate: () => Promise<{
+      newAddr: `0x${string}`
+      initiatedBlock: bigint
+      confirmBlock: bigint
+    }>
+    hasPendingUserWalletTemplateUpdate: () => Promise<boolean>
+    getUserWalletConfigTemplateAddr: () => Promise<`0x${string}`>
+    getUserWalletConfigTemplateInfo: () => Promise<{ addr: `0x${string}`; version: bigint; lastModified: bigint }>
+    getPendingUserWalletConfigTemplateUpdate: () => Promise<{
+      newAddr: `0x${string}`
+      initiatedBlock: bigint
+      confirmBlock: bigint
+    }>
+    hasPendingUserWalletConfigTemplateUpdate: () => Promise<boolean>
+    getAgentTemplateAddr: () => Promise<`0x${string}`>
+    getAgentTemplateInfo: () => Promise<{ addr: `0x${string}`; version: bigint; lastModified: bigint }>
+    getPendingAgentTemplateUpdate: () => Promise<{
+      newAddr: `0x${string}`
+      initiatedBlock: bigint
+      confirmBlock: bigint
+    }>
+    hasPendingAgentTemplateUpdate: () => Promise<boolean>
     canCancelCriticalAction: (addr: `0x${string}`) => Promise<boolean>
-    trialFundsData: () => Promise<{ asset: `0x${string}`; amount: bigint }>
-    recoveryCaller: () => Promise<`0x${string}`>
-    userWalletTemplate: () => Promise<{ addr: `0x${string}`; version: bigint; lastModified: bigint }>
-    userWalletConfig: () => Promise<{ addr: `0x${string}`; version: bigint; lastModified: bigint }>
-    isUserWallet: (arg0: `0x${string}`) => Promise<boolean>
+    getDefaultAgentAddr: () => Promise<`0x${string}`>
+    getDefaultAgentInfo: () => Promise<{ addr: `0x${string}`; version: bigint; lastModified: bigint }>
+    getPendingDefaultAgentUpdate: () => Promise<{
+      newAddr: `0x${string}`
+      initiatedBlock: bigint
+      confirmBlock: bigint
+    }>
+    hasPendingDefaultAgentUpdate: () => Promise<boolean>
+    isUserWalletLocal: (arg0: `0x${string}`) => Promise<boolean>
     numUserWallets: () => Promise<bigint>
-    agentTemplateInfo: () => Promise<{ addr: `0x${string}`; version: bigint; lastModified: bigint }>
-    isAgent: (arg0: `0x${string}`) => Promise<boolean>
+    isAgentLocal: (arg0: `0x${string}`) => Promise<boolean>
     numAgents: () => Promise<bigint>
-    agentBlacklist: (arg0: `0x${string}`) => Promise<boolean>
+    addressInfo: (arg0: bigint) => Promise<{ addr: `0x${string}`; version: bigint; lastModified: bigint }>
+    pendingAddress: (arg0: bigint) => Promise<{ newAddr: `0x${string}`; initiatedBlock: bigint; confirmBlock: bigint }>
+    addressChangeDelay: () => Promise<bigint>
+    ambassadorBonusRatio: () => Promise<bigint>
+    trialFundsData: () => Promise<{ asset: `0x${string}`; amount: bigint }>
     numUserWalletsAllowed: () => Promise<bigint>
     numAgentsAllowed: () => Promise<bigint>
     whitelist: (arg0: `0x${string}`) => Promise<boolean>
     shouldEnforceWhitelist: () => Promise<boolean>
+    agentBlacklist: (arg0: `0x${string}`) => Promise<boolean>
     canCriticalCancel: (arg0: `0x${string}`) => Promise<boolean>
     isActivated: () => Promise<boolean>
     ADDY_REGISTRY: () => Promise<`0x${string}`>
     WETH_ADDR: () => Promise<`0x${string}`>
     MIN_OWNER_CHANGE_DELAY: () => Promise<bigint>
     MAX_OWNER_CHANGE_DELAY: () => Promise<bigint>
+    MIN_ADDRESS_CHANGE_DELAY: () => Promise<bigint>
+    MAX_ADDRESS_CHANGE_DELAY: () => Promise<bigint>
   }
   mutations: {
     changeGovernance: (newGov: `0x${string}`) => Promise<void>
     confirmGovernanceChange: () => Promise<void>
     cancelGovernanceChange: () => Promise<void>
     setGovernanceChangeDelay: (numBlocks: bigint) => Promise<void>
-    createUserWallet: (owner?: `0x${string}`, agent?: `0x${string}`) => Promise<`0x${string}`>
-    setUserWalletTemplate: (addr: `0x${string}`) => Promise<boolean>
-    setUserWalletConfigTemplate: (addr: `0x${string}`) => Promise<boolean>
+    createUserWallet: (
+      owner?: `0x${string}`,
+      ambassador?: `0x${string}`,
+      shouldUseTrialFunds?: boolean,
+    ) => Promise<`0x${string}`>
     createAgent: (owner?: `0x${string}`) => Promise<`0x${string}`>
-    setAgentTemplate: (addr: `0x${string}`) => Promise<boolean>
-    setTrialFundsData: (asset: `0x${string}`, amount: bigint) => Promise<boolean>
-    recoverTrialFunds: (
-      wallet: `0x${string}`,
-      opportunities?: { legoId: bigint; vaultToken: `0x${string}` }[],
-    ) => Promise<boolean>
-    recoverTrialFundsMany: (
-      recoveries: { wallet: `0x${string}`; opportunities: { legoId: bigint; vaultToken: `0x${string}` }[] }[],
-    ) => Promise<boolean>
-    setRecoveryCaller: (caller: `0x${string}`) => Promise<boolean>
+    initiateUserWalletTemplateUpdate: (newAddr: `0x${string}`) => Promise<boolean>
+    confirmUserWalletTemplateUpdate: () => Promise<boolean>
+    cancelUserWalletTemplateUpdate: () => Promise<boolean>
+    initiateUserWalletConfigTemplateUpdate: (newAddr: `0x${string}`) => Promise<boolean>
+    confirmUserWalletConfigTemplateUpdate: () => Promise<boolean>
+    cancelUserWalletConfigTemplateUpdate: () => Promise<boolean>
+    initiateAgentTemplateUpdate: (newAddr: `0x${string}`) => Promise<boolean>
+    confirmAgentTemplateUpdate: () => Promise<boolean>
+    cancelAgentTemplateUpdate: () => Promise<boolean>
+    setAddressChangeDelay: (numBlocks: bigint) => Promise<void>
     setWhitelist: (addr: `0x${string}`, shouldWhitelist: boolean) => Promise<boolean>
     setShouldEnforceWhitelist: (shouldEnforce: boolean) => Promise<boolean>
     setNumUserWalletsAllowed: (numAllowed?: bigint) => Promise<boolean>
     setNumAgentsAllowed: (numAllowed?: bigint) => Promise<boolean>
     setAgentBlacklist: (agentAddr: `0x${string}`, shouldBlacklist: boolean) => Promise<boolean>
-    recoverFunds: (asset: `0x${string}`, recipient: `0x${string}`) => Promise<boolean>
     setCanCriticalCancel: (addr: `0x${string}`, canCancel: boolean) => Promise<boolean>
+    setTrialFundsData: (asset: `0x${string}`, amount: bigint) => Promise<boolean>
+    clawBackTrialFunds: (wallets: `0x${string}`[]) => Promise<boolean>
+    clawBackTrialFundsLegacy: (
+      recoveries: { wallet: `0x${string}`; opportunities: { legoId: bigint; vaultToken: `0x${string}` }[] }[],
+    ) => Promise<boolean>
+    payAmbassadorYieldBonus: (ambassador: `0x${string}`, asset: `0x${string}`, amount: bigint) => Promise<boolean>
+    setAmbassadorBonusRatio: (bonusRatio: bigint) => Promise<boolean>
+    initiateDefaultAgentUpdate: (newAddr: `0x${string}`) => Promise<boolean>
+    confirmDefaultAgentUpdate: () => Promise<boolean>
+    cancelDefaultAgentUpdate: () => Promise<boolean>
+    recoverFundsFromAgentFactory: (asset: `0x${string}`, recipient: `0x${string}`) => Promise<boolean>
     activate: (shouldActivate: boolean) => Promise<void>
   }
   events: {
@@ -1506,21 +1989,46 @@ export type Contract = {
       configAddr: `0x${string}`,
       owner: `0x${string}`,
       agent: `0x${string}`,
+      ambassador: `0x${string}`,
       creator: `0x${string}`,
     ) => Promise<void>
     AgentCreated: (agent: `0x${string}`, owner: `0x${string}`, creator: `0x${string}`) => Promise<void>
-    UserWalletTemplateSet: (template: `0x${string}`, version: bigint) => Promise<void>
-    UserWalletConfigTemplateSet: (template: `0x${string}`, version: bigint) => Promise<void>
-    AgentTemplateSet: (template: `0x${string}`, version: bigint) => Promise<void>
-    TrialFundsDataSet: (asset: `0x${string}`, amount: bigint) => Promise<void>
+    AddressUpdateInitiated: (
+      prevAddr: `0x${string}`,
+      newAddr: `0x${string}`,
+      confirmBlock: bigint,
+      addressType: bigint,
+    ) => Promise<void>
+    AddressUpdateConfirmed: (
+      prevAddr: `0x${string}`,
+      newAddr: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+      addressType: bigint,
+    ) => Promise<void>
+    AddressUpdateCancelled: (
+      cancelledTemplate: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+      addressType: bigint,
+    ) => Promise<void>
+    AddressChangeDelaySet: (delayBlocks: bigint) => Promise<void>
     WhitelistSet: (addr: `0x${string}`, shouldWhitelist: boolean) => Promise<void>
+    ShouldEnforceWhitelistSet: (shouldEnforce: boolean) => Promise<void>
     NumUserWalletsAllowedSet: (numAllowed: bigint) => Promise<void>
     NumAgentsAllowedSet: (numAllowed: bigint) => Promise<void>
-    ShouldEnforceWhitelistSet: (shouldEnforce: boolean) => Promise<void>
     AgentBlacklistSet: (agentAddr: `0x${string}`, shouldBlacklist: boolean) => Promise<void>
-    AgentFactoryFundsRecovered: (asset: `0x${string}`, recipient: `0x${string}`, balance: bigint) => Promise<void>
-    RecoveryCallerSet: (caller: `0x${string}`) => Promise<void>
     CanCriticalCancelSet: (addr: `0x${string}`, canCancel: boolean) => Promise<void>
+    TrialFundsDataSet: (asset: `0x${string}`, amount: bigint) => Promise<void>
+    AmbassadorYieldBonusPaid: (
+      user: `0x${string}`,
+      ambassador: `0x${string}`,
+      asset: `0x${string}`,
+      amount: bigint,
+      ratio: bigint,
+    ) => Promise<void>
+    AmbassadorBonusRatioSet: (ratio: bigint) => Promise<void>
+    AgentFactoryFundsRecovered: (asset: `0x${string}`, recipient: `0x${string}`, balance: bigint) => Promise<void>
     AgentFactoryActivated: (isActivated: boolean) => Promise<void>
     GovChangeInitiated: (prevGov: `0x${string}`, newGov: `0x${string}`, confirmBlock: bigint) => Promise<void>
     GovChangeConfirmed: (
@@ -1604,39 +2112,56 @@ export const call: CallType = {
     getRequest('MIN_GOV_CHANGE_DELAY', args),
   MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
     getRequest('MAX_GOV_CHANGE_DELAY', args),
-  currentUserWalletTemplate: (...args: ExtractArgs<Contract['calls']['currentUserWalletTemplate']>) =>
-    getRequest('currentUserWalletTemplate', args),
-  currentUserWalletConfigTemplate: (...args: ExtractArgs<Contract['calls']['currentUserWalletConfigTemplate']>) =>
-    getRequest('currentUserWalletConfigTemplate', args),
-  currentAgentTemplate: (...args: ExtractArgs<Contract['calls']['currentAgentTemplate']>) =>
-    getRequest('currentAgentTemplate', args),
-  isValidUserWalletSetup: (...args: ExtractArgs<Contract['calls']['isValidUserWalletSetup']>) =>
-    getRequest('isValidUserWalletSetup', args),
-  isValidUserWalletTemplate: (...args: ExtractArgs<Contract['calls']['isValidUserWalletTemplate']>) =>
-    getRequest('isValidUserWalletTemplate', args),
-  isValidUserWalletConfigTemplate: (...args: ExtractArgs<Contract['calls']['isValidUserWalletConfigTemplate']>) =>
-    getRequest('isValidUserWalletConfigTemplate', args),
-  isValidAgentSetup: (...args: ExtractArgs<Contract['calls']['isValidAgentSetup']>) =>
-    getRequest('isValidAgentSetup', args),
-  isValidAgentTemplate: (...args: ExtractArgs<Contract['calls']['isValidAgentTemplate']>) =>
-    getRequest('isValidAgentTemplate', args),
-  isValidTrialFundsData: (...args: ExtractArgs<Contract['calls']['isValidTrialFundsData']>) =>
-    getRequest('isValidTrialFundsData', args),
+  isUserWallet: (...args: ExtractArgs<Contract['calls']['isUserWallet']>) => getRequest('isUserWallet', args),
+  isAgent: (...args: ExtractArgs<Contract['calls']['isAgent']>) => getRequest('isAgent', args),
+  getUserWalletTemplateAddr: (...args: ExtractArgs<Contract['calls']['getUserWalletTemplateAddr']>) =>
+    getRequest('getUserWalletTemplateAddr', args),
+  getUserWalletTemplateInfo: (...args: ExtractArgs<Contract['calls']['getUserWalletTemplateInfo']>) =>
+    getRequest('getUserWalletTemplateInfo', args),
+  getPendingUserWalletTemplateUpdate: (...args: ExtractArgs<Contract['calls']['getPendingUserWalletTemplateUpdate']>) =>
+    getRequest('getPendingUserWalletTemplateUpdate', args),
+  hasPendingUserWalletTemplateUpdate: (...args: ExtractArgs<Contract['calls']['hasPendingUserWalletTemplateUpdate']>) =>
+    getRequest('hasPendingUserWalletTemplateUpdate', args),
+  getUserWalletConfigTemplateAddr: (...args: ExtractArgs<Contract['calls']['getUserWalletConfigTemplateAddr']>) =>
+    getRequest('getUserWalletConfigTemplateAddr', args),
+  getUserWalletConfigTemplateInfo: (...args: ExtractArgs<Contract['calls']['getUserWalletConfigTemplateInfo']>) =>
+    getRequest('getUserWalletConfigTemplateInfo', args),
+  getPendingUserWalletConfigTemplateUpdate: (
+    ...args: ExtractArgs<Contract['calls']['getPendingUserWalletConfigTemplateUpdate']>
+  ) => getRequest('getPendingUserWalletConfigTemplateUpdate', args),
+  hasPendingUserWalletConfigTemplateUpdate: (
+    ...args: ExtractArgs<Contract['calls']['hasPendingUserWalletConfigTemplateUpdate']>
+  ) => getRequest('hasPendingUserWalletConfigTemplateUpdate', args),
+  getAgentTemplateAddr: (...args: ExtractArgs<Contract['calls']['getAgentTemplateAddr']>) =>
+    getRequest('getAgentTemplateAddr', args),
+  getAgentTemplateInfo: (...args: ExtractArgs<Contract['calls']['getAgentTemplateInfo']>) =>
+    getRequest('getAgentTemplateInfo', args),
+  getPendingAgentTemplateUpdate: (...args: ExtractArgs<Contract['calls']['getPendingAgentTemplateUpdate']>) =>
+    getRequest('getPendingAgentTemplateUpdate', args),
+  hasPendingAgentTemplateUpdate: (...args: ExtractArgs<Contract['calls']['hasPendingAgentTemplateUpdate']>) =>
+    getRequest('hasPendingAgentTemplateUpdate', args),
   canCancelCriticalAction: (...args: ExtractArgs<Contract['calls']['canCancelCriticalAction']>) =>
     getRequest('canCancelCriticalAction', args),
-  trialFundsData: (...args: ExtractArgs<Contract['calls']['trialFundsData']>) => getRequest('trialFundsData', args),
-  recoveryCaller: (...args: ExtractArgs<Contract['calls']['recoveryCaller']>) => getRequest('recoveryCaller', args),
-  userWalletTemplate: (...args: ExtractArgs<Contract['calls']['userWalletTemplate']>) =>
-    getRequest('userWalletTemplate', args),
-  userWalletConfig: (...args: ExtractArgs<Contract['calls']['userWalletConfig']>) =>
-    getRequest('userWalletConfig', args),
-  isUserWallet: (...args: ExtractArgs<Contract['calls']['isUserWallet']>) => getRequest('isUserWallet', args),
+  getDefaultAgentAddr: (...args: ExtractArgs<Contract['calls']['getDefaultAgentAddr']>) =>
+    getRequest('getDefaultAgentAddr', args),
+  getDefaultAgentInfo: (...args: ExtractArgs<Contract['calls']['getDefaultAgentInfo']>) =>
+    getRequest('getDefaultAgentInfo', args),
+  getPendingDefaultAgentUpdate: (...args: ExtractArgs<Contract['calls']['getPendingDefaultAgentUpdate']>) =>
+    getRequest('getPendingDefaultAgentUpdate', args),
+  hasPendingDefaultAgentUpdate: (...args: ExtractArgs<Contract['calls']['hasPendingDefaultAgentUpdate']>) =>
+    getRequest('hasPendingDefaultAgentUpdate', args),
+  isUserWalletLocal: (...args: ExtractArgs<Contract['calls']['isUserWalletLocal']>) =>
+    getRequest('isUserWalletLocal', args),
   numUserWallets: (...args: ExtractArgs<Contract['calls']['numUserWallets']>) => getRequest('numUserWallets', args),
-  agentTemplateInfo: (...args: ExtractArgs<Contract['calls']['agentTemplateInfo']>) =>
-    getRequest('agentTemplateInfo', args),
-  isAgent: (...args: ExtractArgs<Contract['calls']['isAgent']>) => getRequest('isAgent', args),
+  isAgentLocal: (...args: ExtractArgs<Contract['calls']['isAgentLocal']>) => getRequest('isAgentLocal', args),
   numAgents: (...args: ExtractArgs<Contract['calls']['numAgents']>) => getRequest('numAgents', args),
-  agentBlacklist: (...args: ExtractArgs<Contract['calls']['agentBlacklist']>) => getRequest('agentBlacklist', args),
+  addressInfo: (...args: ExtractArgs<Contract['calls']['addressInfo']>) => getRequest('addressInfo', args),
+  pendingAddress: (...args: ExtractArgs<Contract['calls']['pendingAddress']>) => getRequest('pendingAddress', args),
+  addressChangeDelay: (...args: ExtractArgs<Contract['calls']['addressChangeDelay']>) =>
+    getRequest('addressChangeDelay', args),
+  ambassadorBonusRatio: (...args: ExtractArgs<Contract['calls']['ambassadorBonusRatio']>) =>
+    getRequest('ambassadorBonusRatio', args),
+  trialFundsData: (...args: ExtractArgs<Contract['calls']['trialFundsData']>) => getRequest('trialFundsData', args),
   numUserWalletsAllowed: (...args: ExtractArgs<Contract['calls']['numUserWalletsAllowed']>) =>
     getRequest('numUserWalletsAllowed', args),
   numAgentsAllowed: (...args: ExtractArgs<Contract['calls']['numAgentsAllowed']>) =>
@@ -1644,6 +2169,7 @@ export const call: CallType = {
   whitelist: (...args: ExtractArgs<Contract['calls']['whitelist']>) => getRequest('whitelist', args),
   shouldEnforceWhitelist: (...args: ExtractArgs<Contract['calls']['shouldEnforceWhitelist']>) =>
     getRequest('shouldEnforceWhitelist', args),
+  agentBlacklist: (...args: ExtractArgs<Contract['calls']['agentBlacklist']>) => getRequest('agentBlacklist', args),
   canCriticalCancel: (...args: ExtractArgs<Contract['calls']['canCriticalCancel']>) =>
     getRequest('canCriticalCancel', args),
   isActivated: (...args: ExtractArgs<Contract['calls']['isActivated']>) => getRequest('isActivated', args),
@@ -1653,6 +2179,10 @@ export const call: CallType = {
     getRequest('MIN_OWNER_CHANGE_DELAY', args),
   MAX_OWNER_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_OWNER_CHANGE_DELAY']>) =>
     getRequest('MAX_OWNER_CHANGE_DELAY', args),
+  MIN_ADDRESS_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_ADDRESS_CHANGE_DELAY']>) =>
+    getRequest('MIN_ADDRESS_CHANGE_DELAY', args),
+  MAX_ADDRESS_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_ADDRESS_CHANGE_DELAY']>) =>
+    getRequest('MAX_ADDRESS_CHANGE_DELAY', args),
 }
 
 export type Mutations = keyof Contract['mutations']
@@ -1680,21 +2210,32 @@ export const mutation: {
   cancelGovernanceChange: getMutation('cancelGovernanceChange'),
   setGovernanceChangeDelay: getMutation('setGovernanceChangeDelay'),
   createUserWallet: getMutation('createUserWallet'),
-  setUserWalletTemplate: getMutation('setUserWalletTemplate'),
-  setUserWalletConfigTemplate: getMutation('setUserWalletConfigTemplate'),
   createAgent: getMutation('createAgent'),
-  setAgentTemplate: getMutation('setAgentTemplate'),
-  setTrialFundsData: getMutation('setTrialFundsData'),
-  recoverTrialFunds: getMutation('recoverTrialFunds'),
-  recoverTrialFundsMany: getMutation('recoverTrialFundsMany'),
-  setRecoveryCaller: getMutation('setRecoveryCaller'),
+  initiateUserWalletTemplateUpdate: getMutation('initiateUserWalletTemplateUpdate'),
+  confirmUserWalletTemplateUpdate: getMutation('confirmUserWalletTemplateUpdate'),
+  cancelUserWalletTemplateUpdate: getMutation('cancelUserWalletTemplateUpdate'),
+  initiateUserWalletConfigTemplateUpdate: getMutation('initiateUserWalletConfigTemplateUpdate'),
+  confirmUserWalletConfigTemplateUpdate: getMutation('confirmUserWalletConfigTemplateUpdate'),
+  cancelUserWalletConfigTemplateUpdate: getMutation('cancelUserWalletConfigTemplateUpdate'),
+  initiateAgentTemplateUpdate: getMutation('initiateAgentTemplateUpdate'),
+  confirmAgentTemplateUpdate: getMutation('confirmAgentTemplateUpdate'),
+  cancelAgentTemplateUpdate: getMutation('cancelAgentTemplateUpdate'),
+  setAddressChangeDelay: getMutation('setAddressChangeDelay'),
   setWhitelist: getMutation('setWhitelist'),
   setShouldEnforceWhitelist: getMutation('setShouldEnforceWhitelist'),
   setNumUserWalletsAllowed: getMutation('setNumUserWalletsAllowed'),
   setNumAgentsAllowed: getMutation('setNumAgentsAllowed'),
   setAgentBlacklist: getMutation('setAgentBlacklist'),
-  recoverFunds: getMutation('recoverFunds'),
   setCanCriticalCancel: getMutation('setCanCriticalCancel'),
+  setTrialFundsData: getMutation('setTrialFundsData'),
+  clawBackTrialFunds: getMutation('clawBackTrialFunds'),
+  clawBackTrialFundsLegacy: getMutation('clawBackTrialFundsLegacy'),
+  payAmbassadorYieldBonus: getMutation('payAmbassadorYieldBonus'),
+  setAmbassadorBonusRatio: getMutation('setAmbassadorBonusRatio'),
+  initiateDefaultAgentUpdate: getMutation('initiateDefaultAgentUpdate'),
+  confirmDefaultAgentUpdate: getMutation('confirmDefaultAgentUpdate'),
+  cancelDefaultAgentUpdate: getMutation('cancelDefaultAgentUpdate'),
+  recoverFundsFromAgentFactory: getMutation('recoverFundsFromAgentFactory'),
   activate: getMutation('activate'),
 }
 
@@ -1712,52 +2253,74 @@ export type SDK = {
   MAX_GOV_CHANGE_DELAY: (
     ...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>
   ) => Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>
-  currentUserWalletTemplate: (
-    ...args: ExtractArgs<Contract['calls']['currentUserWalletTemplate']>
-  ) => Promise<CallReturn<'currentUserWalletTemplate'>>
-  currentUserWalletConfigTemplate: (
-    ...args: ExtractArgs<Contract['calls']['currentUserWalletConfigTemplate']>
-  ) => Promise<CallReturn<'currentUserWalletConfigTemplate'>>
-  currentAgentTemplate: (
-    ...args: ExtractArgs<Contract['calls']['currentAgentTemplate']>
-  ) => Promise<CallReturn<'currentAgentTemplate'>>
-  isValidUserWalletSetup: (
-    ...args: ExtractArgs<Contract['calls']['isValidUserWalletSetup']>
-  ) => Promise<CallReturn<'isValidUserWalletSetup'>>
-  isValidUserWalletTemplate: (
-    ...args: ExtractArgs<Contract['calls']['isValidUserWalletTemplate']>
-  ) => Promise<CallReturn<'isValidUserWalletTemplate'>>
-  isValidUserWalletConfigTemplate: (
-    ...args: ExtractArgs<Contract['calls']['isValidUserWalletConfigTemplate']>
-  ) => Promise<CallReturn<'isValidUserWalletConfigTemplate'>>
-  isValidAgentSetup: (
-    ...args: ExtractArgs<Contract['calls']['isValidAgentSetup']>
-  ) => Promise<CallReturn<'isValidAgentSetup'>>
-  isValidAgentTemplate: (
-    ...args: ExtractArgs<Contract['calls']['isValidAgentTemplate']>
-  ) => Promise<CallReturn<'isValidAgentTemplate'>>
-  isValidTrialFundsData: (
-    ...args: ExtractArgs<Contract['calls']['isValidTrialFundsData']>
-  ) => Promise<CallReturn<'isValidTrialFundsData'>>
+  isUserWallet: (...args: ExtractArgs<Contract['calls']['isUserWallet']>) => Promise<CallReturn<'isUserWallet'>>
+  isAgent: (...args: ExtractArgs<Contract['calls']['isAgent']>) => Promise<CallReturn<'isAgent'>>
+  getUserWalletTemplateAddr: (
+    ...args: ExtractArgs<Contract['calls']['getUserWalletTemplateAddr']>
+  ) => Promise<CallReturn<'getUserWalletTemplateAddr'>>
+  getUserWalletTemplateInfo: (
+    ...args: ExtractArgs<Contract['calls']['getUserWalletTemplateInfo']>
+  ) => Promise<CallReturn<'getUserWalletTemplateInfo'>>
+  getPendingUserWalletTemplateUpdate: (
+    ...args: ExtractArgs<Contract['calls']['getPendingUserWalletTemplateUpdate']>
+  ) => Promise<CallReturn<'getPendingUserWalletTemplateUpdate'>>
+  hasPendingUserWalletTemplateUpdate: (
+    ...args: ExtractArgs<Contract['calls']['hasPendingUserWalletTemplateUpdate']>
+  ) => Promise<CallReturn<'hasPendingUserWalletTemplateUpdate'>>
+  getUserWalletConfigTemplateAddr: (
+    ...args: ExtractArgs<Contract['calls']['getUserWalletConfigTemplateAddr']>
+  ) => Promise<CallReturn<'getUserWalletConfigTemplateAddr'>>
+  getUserWalletConfigTemplateInfo: (
+    ...args: ExtractArgs<Contract['calls']['getUserWalletConfigTemplateInfo']>
+  ) => Promise<CallReturn<'getUserWalletConfigTemplateInfo'>>
+  getPendingUserWalletConfigTemplateUpdate: (
+    ...args: ExtractArgs<Contract['calls']['getPendingUserWalletConfigTemplateUpdate']>
+  ) => Promise<CallReturn<'getPendingUserWalletConfigTemplateUpdate'>>
+  hasPendingUserWalletConfigTemplateUpdate: (
+    ...args: ExtractArgs<Contract['calls']['hasPendingUserWalletConfigTemplateUpdate']>
+  ) => Promise<CallReturn<'hasPendingUserWalletConfigTemplateUpdate'>>
+  getAgentTemplateAddr: (
+    ...args: ExtractArgs<Contract['calls']['getAgentTemplateAddr']>
+  ) => Promise<CallReturn<'getAgentTemplateAddr'>>
+  getAgentTemplateInfo: (
+    ...args: ExtractArgs<Contract['calls']['getAgentTemplateInfo']>
+  ) => Promise<CallReturn<'getAgentTemplateInfo'>>
+  getPendingAgentTemplateUpdate: (
+    ...args: ExtractArgs<Contract['calls']['getPendingAgentTemplateUpdate']>
+  ) => Promise<CallReturn<'getPendingAgentTemplateUpdate'>>
+  hasPendingAgentTemplateUpdate: (
+    ...args: ExtractArgs<Contract['calls']['hasPendingAgentTemplateUpdate']>
+  ) => Promise<CallReturn<'hasPendingAgentTemplateUpdate'>>
   canCancelCriticalAction: (
     ...args: ExtractArgs<Contract['calls']['canCancelCriticalAction']>
   ) => Promise<CallReturn<'canCancelCriticalAction'>>
-  trialFundsData: (...args: ExtractArgs<Contract['calls']['trialFundsData']>) => Promise<CallReturn<'trialFundsData'>>
-  recoveryCaller: (...args: ExtractArgs<Contract['calls']['recoveryCaller']>) => Promise<CallReturn<'recoveryCaller'>>
-  userWalletTemplate: (
-    ...args: ExtractArgs<Contract['calls']['userWalletTemplate']>
-  ) => Promise<CallReturn<'userWalletTemplate'>>
-  userWalletConfig: (
-    ...args: ExtractArgs<Contract['calls']['userWalletConfig']>
-  ) => Promise<CallReturn<'userWalletConfig'>>
-  isUserWallet: (...args: ExtractArgs<Contract['calls']['isUserWallet']>) => Promise<CallReturn<'isUserWallet'>>
+  getDefaultAgentAddr: (
+    ...args: ExtractArgs<Contract['calls']['getDefaultAgentAddr']>
+  ) => Promise<CallReturn<'getDefaultAgentAddr'>>
+  getDefaultAgentInfo: (
+    ...args: ExtractArgs<Contract['calls']['getDefaultAgentInfo']>
+  ) => Promise<CallReturn<'getDefaultAgentInfo'>>
+  getPendingDefaultAgentUpdate: (
+    ...args: ExtractArgs<Contract['calls']['getPendingDefaultAgentUpdate']>
+  ) => Promise<CallReturn<'getPendingDefaultAgentUpdate'>>
+  hasPendingDefaultAgentUpdate: (
+    ...args: ExtractArgs<Contract['calls']['hasPendingDefaultAgentUpdate']>
+  ) => Promise<CallReturn<'hasPendingDefaultAgentUpdate'>>
+  isUserWalletLocal: (
+    ...args: ExtractArgs<Contract['calls']['isUserWalletLocal']>
+  ) => Promise<CallReturn<'isUserWalletLocal'>>
   numUserWallets: (...args: ExtractArgs<Contract['calls']['numUserWallets']>) => Promise<CallReturn<'numUserWallets'>>
-  agentTemplateInfo: (
-    ...args: ExtractArgs<Contract['calls']['agentTemplateInfo']>
-  ) => Promise<CallReturn<'agentTemplateInfo'>>
-  isAgent: (...args: ExtractArgs<Contract['calls']['isAgent']>) => Promise<CallReturn<'isAgent'>>
+  isAgentLocal: (...args: ExtractArgs<Contract['calls']['isAgentLocal']>) => Promise<CallReturn<'isAgentLocal'>>
   numAgents: (...args: ExtractArgs<Contract['calls']['numAgents']>) => Promise<CallReturn<'numAgents'>>
-  agentBlacklist: (...args: ExtractArgs<Contract['calls']['agentBlacklist']>) => Promise<CallReturn<'agentBlacklist'>>
+  addressInfo: (...args: ExtractArgs<Contract['calls']['addressInfo']>) => Promise<CallReturn<'addressInfo'>>
+  pendingAddress: (...args: ExtractArgs<Contract['calls']['pendingAddress']>) => Promise<CallReturn<'pendingAddress'>>
+  addressChangeDelay: (
+    ...args: ExtractArgs<Contract['calls']['addressChangeDelay']>
+  ) => Promise<CallReturn<'addressChangeDelay'>>
+  ambassadorBonusRatio: (
+    ...args: ExtractArgs<Contract['calls']['ambassadorBonusRatio']>
+  ) => Promise<CallReturn<'ambassadorBonusRatio'>>
+  trialFundsData: (...args: ExtractArgs<Contract['calls']['trialFundsData']>) => Promise<CallReturn<'trialFundsData'>>
   numUserWalletsAllowed: (
     ...args: ExtractArgs<Contract['calls']['numUserWalletsAllowed']>
   ) => Promise<CallReturn<'numUserWalletsAllowed'>>
@@ -1768,6 +2331,7 @@ export type SDK = {
   shouldEnforceWhitelist: (
     ...args: ExtractArgs<Contract['calls']['shouldEnforceWhitelist']>
   ) => Promise<CallReturn<'shouldEnforceWhitelist'>>
+  agentBlacklist: (...args: ExtractArgs<Contract['calls']['agentBlacklist']>) => Promise<CallReturn<'agentBlacklist'>>
   canCriticalCancel: (
     ...args: ExtractArgs<Contract['calls']['canCriticalCancel']>
   ) => Promise<CallReturn<'canCriticalCancel'>>
@@ -1780,6 +2344,12 @@ export type SDK = {
   MAX_OWNER_CHANGE_DELAY: (
     ...args: ExtractArgs<Contract['calls']['MAX_OWNER_CHANGE_DELAY']>
   ) => Promise<CallReturn<'MAX_OWNER_CHANGE_DELAY'>>
+  MIN_ADDRESS_CHANGE_DELAY: (
+    ...args: ExtractArgs<Contract['calls']['MIN_ADDRESS_CHANGE_DELAY']>
+  ) => Promise<CallReturn<'MIN_ADDRESS_CHANGE_DELAY'>>
+  MAX_ADDRESS_CHANGE_DELAY: (
+    ...args: ExtractArgs<Contract['calls']['MAX_ADDRESS_CHANGE_DELAY']>
+  ) => Promise<CallReturn<'MAX_ADDRESS_CHANGE_DELAY'>>
   changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) => Promise<Address>
   confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) => Promise<Address>
   cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) => Promise<Address>
@@ -1787,16 +2357,35 @@ export type SDK = {
     ...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>
   ) => Promise<Address>
   createUserWallet: (...args: ExtractArgs<Contract['mutations']['createUserWallet']>) => Promise<Address>
-  setUserWalletTemplate: (...args: ExtractArgs<Contract['mutations']['setUserWalletTemplate']>) => Promise<Address>
-  setUserWalletConfigTemplate: (
-    ...args: ExtractArgs<Contract['mutations']['setUserWalletConfigTemplate']>
-  ) => Promise<Address>
   createAgent: (...args: ExtractArgs<Contract['mutations']['createAgent']>) => Promise<Address>
-  setAgentTemplate: (...args: ExtractArgs<Contract['mutations']['setAgentTemplate']>) => Promise<Address>
-  setTrialFundsData: (...args: ExtractArgs<Contract['mutations']['setTrialFundsData']>) => Promise<Address>
-  recoverTrialFunds: (...args: ExtractArgs<Contract['mutations']['recoverTrialFunds']>) => Promise<Address>
-  recoverTrialFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverTrialFundsMany']>) => Promise<Address>
-  setRecoveryCaller: (...args: ExtractArgs<Contract['mutations']['setRecoveryCaller']>) => Promise<Address>
+  initiateUserWalletTemplateUpdate: (
+    ...args: ExtractArgs<Contract['mutations']['initiateUserWalletTemplateUpdate']>
+  ) => Promise<Address>
+  confirmUserWalletTemplateUpdate: (
+    ...args: ExtractArgs<Contract['mutations']['confirmUserWalletTemplateUpdate']>
+  ) => Promise<Address>
+  cancelUserWalletTemplateUpdate: (
+    ...args: ExtractArgs<Contract['mutations']['cancelUserWalletTemplateUpdate']>
+  ) => Promise<Address>
+  initiateUserWalletConfigTemplateUpdate: (
+    ...args: ExtractArgs<Contract['mutations']['initiateUserWalletConfigTemplateUpdate']>
+  ) => Promise<Address>
+  confirmUserWalletConfigTemplateUpdate: (
+    ...args: ExtractArgs<Contract['mutations']['confirmUserWalletConfigTemplateUpdate']>
+  ) => Promise<Address>
+  cancelUserWalletConfigTemplateUpdate: (
+    ...args: ExtractArgs<Contract['mutations']['cancelUserWalletConfigTemplateUpdate']>
+  ) => Promise<Address>
+  initiateAgentTemplateUpdate: (
+    ...args: ExtractArgs<Contract['mutations']['initiateAgentTemplateUpdate']>
+  ) => Promise<Address>
+  confirmAgentTemplateUpdate: (
+    ...args: ExtractArgs<Contract['mutations']['confirmAgentTemplateUpdate']>
+  ) => Promise<Address>
+  cancelAgentTemplateUpdate: (
+    ...args: ExtractArgs<Contract['mutations']['cancelAgentTemplateUpdate']>
+  ) => Promise<Address>
+  setAddressChangeDelay: (...args: ExtractArgs<Contract['mutations']['setAddressChangeDelay']>) => Promise<Address>
   setWhitelist: (...args: ExtractArgs<Contract['mutations']['setWhitelist']>) => Promise<Address>
   setShouldEnforceWhitelist: (
     ...args: ExtractArgs<Contract['mutations']['setShouldEnforceWhitelist']>
@@ -1806,8 +2395,26 @@ export type SDK = {
   ) => Promise<Address>
   setNumAgentsAllowed: (...args: ExtractArgs<Contract['mutations']['setNumAgentsAllowed']>) => Promise<Address>
   setAgentBlacklist: (...args: ExtractArgs<Contract['mutations']['setAgentBlacklist']>) => Promise<Address>
-  recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
   setCanCriticalCancel: (...args: ExtractArgs<Contract['mutations']['setCanCriticalCancel']>) => Promise<Address>
+  setTrialFundsData: (...args: ExtractArgs<Contract['mutations']['setTrialFundsData']>) => Promise<Address>
+  clawBackTrialFunds: (...args: ExtractArgs<Contract['mutations']['clawBackTrialFunds']>) => Promise<Address>
+  clawBackTrialFundsLegacy: (
+    ...args: ExtractArgs<Contract['mutations']['clawBackTrialFundsLegacy']>
+  ) => Promise<Address>
+  payAmbassadorYieldBonus: (...args: ExtractArgs<Contract['mutations']['payAmbassadorYieldBonus']>) => Promise<Address>
+  setAmbassadorBonusRatio: (...args: ExtractArgs<Contract['mutations']['setAmbassadorBonusRatio']>) => Promise<Address>
+  initiateDefaultAgentUpdate: (
+    ...args: ExtractArgs<Contract['mutations']['initiateDefaultAgentUpdate']>
+  ) => Promise<Address>
+  confirmDefaultAgentUpdate: (
+    ...args: ExtractArgs<Contract['mutations']['confirmDefaultAgentUpdate']>
+  ) => Promise<Address>
+  cancelDefaultAgentUpdate: (
+    ...args: ExtractArgs<Contract['mutations']['cancelDefaultAgentUpdate']>
+  ) => Promise<Address>
+  recoverFundsFromAgentFactory: (
+    ...args: ExtractArgs<Contract['mutations']['recoverFundsFromAgentFactory']>
+  ) => Promise<Address>
   activate: (...args: ExtractArgs<Contract['mutations']['activate']>) => Promise<Address>
 }
 
@@ -1828,56 +2435,96 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.MIN_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MIN_GOV_CHANGE_DELAY'>>,
     MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
       singleQuery(publicClient!, call.MAX_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>,
-    currentUserWalletTemplate: (...args: ExtractArgs<Contract['calls']['currentUserWalletTemplate']>) =>
-      singleQuery(publicClient!, call.currentUserWalletTemplate(...args)) as Promise<
-        CallReturn<'currentUserWalletTemplate'>
+    isUserWallet: (...args: ExtractArgs<Contract['calls']['isUserWallet']>) =>
+      singleQuery(publicClient!, call.isUserWallet(...args)) as Promise<CallReturn<'isUserWallet'>>,
+    isAgent: (...args: ExtractArgs<Contract['calls']['isAgent']>) =>
+      singleQuery(publicClient!, call.isAgent(...args)) as Promise<CallReturn<'isAgent'>>,
+    getUserWalletTemplateAddr: (...args: ExtractArgs<Contract['calls']['getUserWalletTemplateAddr']>) =>
+      singleQuery(publicClient!, call.getUserWalletTemplateAddr(...args)) as Promise<
+        CallReturn<'getUserWalletTemplateAddr'>
       >,
-    currentUserWalletConfigTemplate: (...args: ExtractArgs<Contract['calls']['currentUserWalletConfigTemplate']>) =>
-      singleQuery(publicClient!, call.currentUserWalletConfigTemplate(...args)) as Promise<
-        CallReturn<'currentUserWalletConfigTemplate'>
+    getUserWalletTemplateInfo: (...args: ExtractArgs<Contract['calls']['getUserWalletTemplateInfo']>) =>
+      singleQuery(publicClient!, call.getUserWalletTemplateInfo(...args)) as Promise<
+        CallReturn<'getUserWalletTemplateInfo'>
       >,
-    currentAgentTemplate: (...args: ExtractArgs<Contract['calls']['currentAgentTemplate']>) =>
-      singleQuery(publicClient!, call.currentAgentTemplate(...args)) as Promise<CallReturn<'currentAgentTemplate'>>,
-    isValidUserWalletSetup: (...args: ExtractArgs<Contract['calls']['isValidUserWalletSetup']>) =>
-      singleQuery(publicClient!, call.isValidUserWalletSetup(...args)) as Promise<CallReturn<'isValidUserWalletSetup'>>,
-    isValidUserWalletTemplate: (...args: ExtractArgs<Contract['calls']['isValidUserWalletTemplate']>) =>
-      singleQuery(publicClient!, call.isValidUserWalletTemplate(...args)) as Promise<
-        CallReturn<'isValidUserWalletTemplate'>
+    getPendingUserWalletTemplateUpdate: (
+      ...args: ExtractArgs<Contract['calls']['getPendingUserWalletTemplateUpdate']>
+    ) =>
+      singleQuery(publicClient!, call.getPendingUserWalletTemplateUpdate(...args)) as Promise<
+        CallReturn<'getPendingUserWalletTemplateUpdate'>
       >,
-    isValidUserWalletConfigTemplate: (...args: ExtractArgs<Contract['calls']['isValidUserWalletConfigTemplate']>) =>
-      singleQuery(publicClient!, call.isValidUserWalletConfigTemplate(...args)) as Promise<
-        CallReturn<'isValidUserWalletConfigTemplate'>
+    hasPendingUserWalletTemplateUpdate: (
+      ...args: ExtractArgs<Contract['calls']['hasPendingUserWalletTemplateUpdate']>
+    ) =>
+      singleQuery(publicClient!, call.hasPendingUserWalletTemplateUpdate(...args)) as Promise<
+        CallReturn<'hasPendingUserWalletTemplateUpdate'>
       >,
-    isValidAgentSetup: (...args: ExtractArgs<Contract['calls']['isValidAgentSetup']>) =>
-      singleQuery(publicClient!, call.isValidAgentSetup(...args)) as Promise<CallReturn<'isValidAgentSetup'>>,
-    isValidAgentTemplate: (...args: ExtractArgs<Contract['calls']['isValidAgentTemplate']>) =>
-      singleQuery(publicClient!, call.isValidAgentTemplate(...args)) as Promise<CallReturn<'isValidAgentTemplate'>>,
-    isValidTrialFundsData: (...args: ExtractArgs<Contract['calls']['isValidTrialFundsData']>) =>
-      singleQuery(publicClient!, call.isValidTrialFundsData(...args)) as Promise<CallReturn<'isValidTrialFundsData'>>,
+    getUserWalletConfigTemplateAddr: (...args: ExtractArgs<Contract['calls']['getUserWalletConfigTemplateAddr']>) =>
+      singleQuery(publicClient!, call.getUserWalletConfigTemplateAddr(...args)) as Promise<
+        CallReturn<'getUserWalletConfigTemplateAddr'>
+      >,
+    getUserWalletConfigTemplateInfo: (...args: ExtractArgs<Contract['calls']['getUserWalletConfigTemplateInfo']>) =>
+      singleQuery(publicClient!, call.getUserWalletConfigTemplateInfo(...args)) as Promise<
+        CallReturn<'getUserWalletConfigTemplateInfo'>
+      >,
+    getPendingUserWalletConfigTemplateUpdate: (
+      ...args: ExtractArgs<Contract['calls']['getPendingUserWalletConfigTemplateUpdate']>
+    ) =>
+      singleQuery(publicClient!, call.getPendingUserWalletConfigTemplateUpdate(...args)) as Promise<
+        CallReturn<'getPendingUserWalletConfigTemplateUpdate'>
+      >,
+    hasPendingUserWalletConfigTemplateUpdate: (
+      ...args: ExtractArgs<Contract['calls']['hasPendingUserWalletConfigTemplateUpdate']>
+    ) =>
+      singleQuery(publicClient!, call.hasPendingUserWalletConfigTemplateUpdate(...args)) as Promise<
+        CallReturn<'hasPendingUserWalletConfigTemplateUpdate'>
+      >,
+    getAgentTemplateAddr: (...args: ExtractArgs<Contract['calls']['getAgentTemplateAddr']>) =>
+      singleQuery(publicClient!, call.getAgentTemplateAddr(...args)) as Promise<CallReturn<'getAgentTemplateAddr'>>,
+    getAgentTemplateInfo: (...args: ExtractArgs<Contract['calls']['getAgentTemplateInfo']>) =>
+      singleQuery(publicClient!, call.getAgentTemplateInfo(...args)) as Promise<CallReturn<'getAgentTemplateInfo'>>,
+    getPendingAgentTemplateUpdate: (...args: ExtractArgs<Contract['calls']['getPendingAgentTemplateUpdate']>) =>
+      singleQuery(publicClient!, call.getPendingAgentTemplateUpdate(...args)) as Promise<
+        CallReturn<'getPendingAgentTemplateUpdate'>
+      >,
+    hasPendingAgentTemplateUpdate: (...args: ExtractArgs<Contract['calls']['hasPendingAgentTemplateUpdate']>) =>
+      singleQuery(publicClient!, call.hasPendingAgentTemplateUpdate(...args)) as Promise<
+        CallReturn<'hasPendingAgentTemplateUpdate'>
+      >,
     canCancelCriticalAction: (...args: ExtractArgs<Contract['calls']['canCancelCriticalAction']>) =>
       singleQuery(publicClient!, call.canCancelCriticalAction(...args)) as Promise<
         CallReturn<'canCancelCriticalAction'>
       >,
-    trialFundsData: (...args: ExtractArgs<Contract['calls']['trialFundsData']>) =>
-      singleQuery(publicClient!, call.trialFundsData(...args)) as Promise<CallReturn<'trialFundsData'>>,
-    recoveryCaller: (...args: ExtractArgs<Contract['calls']['recoveryCaller']>) =>
-      singleQuery(publicClient!, call.recoveryCaller(...args)) as Promise<CallReturn<'recoveryCaller'>>,
-    userWalletTemplate: (...args: ExtractArgs<Contract['calls']['userWalletTemplate']>) =>
-      singleQuery(publicClient!, call.userWalletTemplate(...args)) as Promise<CallReturn<'userWalletTemplate'>>,
-    userWalletConfig: (...args: ExtractArgs<Contract['calls']['userWalletConfig']>) =>
-      singleQuery(publicClient!, call.userWalletConfig(...args)) as Promise<CallReturn<'userWalletConfig'>>,
-    isUserWallet: (...args: ExtractArgs<Contract['calls']['isUserWallet']>) =>
-      singleQuery(publicClient!, call.isUserWallet(...args)) as Promise<CallReturn<'isUserWallet'>>,
+    getDefaultAgentAddr: (...args: ExtractArgs<Contract['calls']['getDefaultAgentAddr']>) =>
+      singleQuery(publicClient!, call.getDefaultAgentAddr(...args)) as Promise<CallReturn<'getDefaultAgentAddr'>>,
+    getDefaultAgentInfo: (...args: ExtractArgs<Contract['calls']['getDefaultAgentInfo']>) =>
+      singleQuery(publicClient!, call.getDefaultAgentInfo(...args)) as Promise<CallReturn<'getDefaultAgentInfo'>>,
+    getPendingDefaultAgentUpdate: (...args: ExtractArgs<Contract['calls']['getPendingDefaultAgentUpdate']>) =>
+      singleQuery(publicClient!, call.getPendingDefaultAgentUpdate(...args)) as Promise<
+        CallReturn<'getPendingDefaultAgentUpdate'>
+      >,
+    hasPendingDefaultAgentUpdate: (...args: ExtractArgs<Contract['calls']['hasPendingDefaultAgentUpdate']>) =>
+      singleQuery(publicClient!, call.hasPendingDefaultAgentUpdate(...args)) as Promise<
+        CallReturn<'hasPendingDefaultAgentUpdate'>
+      >,
+    isUserWalletLocal: (...args: ExtractArgs<Contract['calls']['isUserWalletLocal']>) =>
+      singleQuery(publicClient!, call.isUserWalletLocal(...args)) as Promise<CallReturn<'isUserWalletLocal'>>,
     numUserWallets: (...args: ExtractArgs<Contract['calls']['numUserWallets']>) =>
       singleQuery(publicClient!, call.numUserWallets(...args)) as Promise<CallReturn<'numUserWallets'>>,
-    agentTemplateInfo: (...args: ExtractArgs<Contract['calls']['agentTemplateInfo']>) =>
-      singleQuery(publicClient!, call.agentTemplateInfo(...args)) as Promise<CallReturn<'agentTemplateInfo'>>,
-    isAgent: (...args: ExtractArgs<Contract['calls']['isAgent']>) =>
-      singleQuery(publicClient!, call.isAgent(...args)) as Promise<CallReturn<'isAgent'>>,
+    isAgentLocal: (...args: ExtractArgs<Contract['calls']['isAgentLocal']>) =>
+      singleQuery(publicClient!, call.isAgentLocal(...args)) as Promise<CallReturn<'isAgentLocal'>>,
     numAgents: (...args: ExtractArgs<Contract['calls']['numAgents']>) =>
       singleQuery(publicClient!, call.numAgents(...args)) as Promise<CallReturn<'numAgents'>>,
-    agentBlacklist: (...args: ExtractArgs<Contract['calls']['agentBlacklist']>) =>
-      singleQuery(publicClient!, call.agentBlacklist(...args)) as Promise<CallReturn<'agentBlacklist'>>,
+    addressInfo: (...args: ExtractArgs<Contract['calls']['addressInfo']>) =>
+      singleQuery(publicClient!, call.addressInfo(...args)) as Promise<CallReturn<'addressInfo'>>,
+    pendingAddress: (...args: ExtractArgs<Contract['calls']['pendingAddress']>) =>
+      singleQuery(publicClient!, call.pendingAddress(...args)) as Promise<CallReturn<'pendingAddress'>>,
+    addressChangeDelay: (...args: ExtractArgs<Contract['calls']['addressChangeDelay']>) =>
+      singleQuery(publicClient!, call.addressChangeDelay(...args)) as Promise<CallReturn<'addressChangeDelay'>>,
+    ambassadorBonusRatio: (...args: ExtractArgs<Contract['calls']['ambassadorBonusRatio']>) =>
+      singleQuery(publicClient!, call.ambassadorBonusRatio(...args)) as Promise<CallReturn<'ambassadorBonusRatio'>>,
+    trialFundsData: (...args: ExtractArgs<Contract['calls']['trialFundsData']>) =>
+      singleQuery(publicClient!, call.trialFundsData(...args)) as Promise<CallReturn<'trialFundsData'>>,
     numUserWalletsAllowed: (...args: ExtractArgs<Contract['calls']['numUserWalletsAllowed']>) =>
       singleQuery(publicClient!, call.numUserWalletsAllowed(...args)) as Promise<CallReturn<'numUserWalletsAllowed'>>,
     numAgentsAllowed: (...args: ExtractArgs<Contract['calls']['numAgentsAllowed']>) =>
@@ -1886,6 +2533,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.whitelist(...args)) as Promise<CallReturn<'whitelist'>>,
     shouldEnforceWhitelist: (...args: ExtractArgs<Contract['calls']['shouldEnforceWhitelist']>) =>
       singleQuery(publicClient!, call.shouldEnforceWhitelist(...args)) as Promise<CallReturn<'shouldEnforceWhitelist'>>,
+    agentBlacklist: (...args: ExtractArgs<Contract['calls']['agentBlacklist']>) =>
+      singleQuery(publicClient!, call.agentBlacklist(...args)) as Promise<CallReturn<'agentBlacklist'>>,
     canCriticalCancel: (...args: ExtractArgs<Contract['calls']['canCriticalCancel']>) =>
       singleQuery(publicClient!, call.canCriticalCancel(...args)) as Promise<CallReturn<'canCriticalCancel'>>,
     isActivated: (...args: ExtractArgs<Contract['calls']['isActivated']>) =>
@@ -1898,6 +2547,14 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.MIN_OWNER_CHANGE_DELAY(...args)) as Promise<CallReturn<'MIN_OWNER_CHANGE_DELAY'>>,
     MAX_OWNER_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_OWNER_CHANGE_DELAY']>) =>
       singleQuery(publicClient!, call.MAX_OWNER_CHANGE_DELAY(...args)) as Promise<CallReturn<'MAX_OWNER_CHANGE_DELAY'>>,
+    MIN_ADDRESS_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_ADDRESS_CHANGE_DELAY']>) =>
+      singleQuery(publicClient!, call.MIN_ADDRESS_CHANGE_DELAY(...args)) as Promise<
+        CallReturn<'MIN_ADDRESS_CHANGE_DELAY'>
+      >,
+    MAX_ADDRESS_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_ADDRESS_CHANGE_DELAY']>) =>
+      singleQuery(publicClient!, call.MAX_ADDRESS_CHANGE_DELAY(...args)) as Promise<
+        CallReturn<'MAX_ADDRESS_CHANGE_DELAY'>
+      >,
 
     // Mutations
     changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) =>
@@ -1910,22 +2567,32 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.setGovernanceChangeDelay)(...args),
     createUserWallet: (...args: ExtractArgs<Contract['mutations']['createUserWallet']>) =>
       mutate(walletClient!, mutation.createUserWallet)(...args),
-    setUserWalletTemplate: (...args: ExtractArgs<Contract['mutations']['setUserWalletTemplate']>) =>
-      mutate(walletClient!, mutation.setUserWalletTemplate)(...args),
-    setUserWalletConfigTemplate: (...args: ExtractArgs<Contract['mutations']['setUserWalletConfigTemplate']>) =>
-      mutate(walletClient!, mutation.setUserWalletConfigTemplate)(...args),
     createAgent: (...args: ExtractArgs<Contract['mutations']['createAgent']>) =>
       mutate(walletClient!, mutation.createAgent)(...args),
-    setAgentTemplate: (...args: ExtractArgs<Contract['mutations']['setAgentTemplate']>) =>
-      mutate(walletClient!, mutation.setAgentTemplate)(...args),
-    setTrialFundsData: (...args: ExtractArgs<Contract['mutations']['setTrialFundsData']>) =>
-      mutate(walletClient!, mutation.setTrialFundsData)(...args),
-    recoverTrialFunds: (...args: ExtractArgs<Contract['mutations']['recoverTrialFunds']>) =>
-      mutate(walletClient!, mutation.recoverTrialFunds)(...args),
-    recoverTrialFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverTrialFundsMany']>) =>
-      mutate(walletClient!, mutation.recoverTrialFundsMany)(...args),
-    setRecoveryCaller: (...args: ExtractArgs<Contract['mutations']['setRecoveryCaller']>) =>
-      mutate(walletClient!, mutation.setRecoveryCaller)(...args),
+    initiateUserWalletTemplateUpdate: (
+      ...args: ExtractArgs<Contract['mutations']['initiateUserWalletTemplateUpdate']>
+    ) => mutate(walletClient!, mutation.initiateUserWalletTemplateUpdate)(...args),
+    confirmUserWalletTemplateUpdate: (...args: ExtractArgs<Contract['mutations']['confirmUserWalletTemplateUpdate']>) =>
+      mutate(walletClient!, mutation.confirmUserWalletTemplateUpdate)(...args),
+    cancelUserWalletTemplateUpdate: (...args: ExtractArgs<Contract['mutations']['cancelUserWalletTemplateUpdate']>) =>
+      mutate(walletClient!, mutation.cancelUserWalletTemplateUpdate)(...args),
+    initiateUserWalletConfigTemplateUpdate: (
+      ...args: ExtractArgs<Contract['mutations']['initiateUserWalletConfigTemplateUpdate']>
+    ) => mutate(walletClient!, mutation.initiateUserWalletConfigTemplateUpdate)(...args),
+    confirmUserWalletConfigTemplateUpdate: (
+      ...args: ExtractArgs<Contract['mutations']['confirmUserWalletConfigTemplateUpdate']>
+    ) => mutate(walletClient!, mutation.confirmUserWalletConfigTemplateUpdate)(...args),
+    cancelUserWalletConfigTemplateUpdate: (
+      ...args: ExtractArgs<Contract['mutations']['cancelUserWalletConfigTemplateUpdate']>
+    ) => mutate(walletClient!, mutation.cancelUserWalletConfigTemplateUpdate)(...args),
+    initiateAgentTemplateUpdate: (...args: ExtractArgs<Contract['mutations']['initiateAgentTemplateUpdate']>) =>
+      mutate(walletClient!, mutation.initiateAgentTemplateUpdate)(...args),
+    confirmAgentTemplateUpdate: (...args: ExtractArgs<Contract['mutations']['confirmAgentTemplateUpdate']>) =>
+      mutate(walletClient!, mutation.confirmAgentTemplateUpdate)(...args),
+    cancelAgentTemplateUpdate: (...args: ExtractArgs<Contract['mutations']['cancelAgentTemplateUpdate']>) =>
+      mutate(walletClient!, mutation.cancelAgentTemplateUpdate)(...args),
+    setAddressChangeDelay: (...args: ExtractArgs<Contract['mutations']['setAddressChangeDelay']>) =>
+      mutate(walletClient!, mutation.setAddressChangeDelay)(...args),
     setWhitelist: (...args: ExtractArgs<Contract['mutations']['setWhitelist']>) =>
       mutate(walletClient!, mutation.setWhitelist)(...args),
     setShouldEnforceWhitelist: (...args: ExtractArgs<Contract['mutations']['setShouldEnforceWhitelist']>) =>
@@ -1936,10 +2603,26 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.setNumAgentsAllowed)(...args),
     setAgentBlacklist: (...args: ExtractArgs<Contract['mutations']['setAgentBlacklist']>) =>
       mutate(walletClient!, mutation.setAgentBlacklist)(...args),
-    recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) =>
-      mutate(walletClient!, mutation.recoverFunds)(...args),
     setCanCriticalCancel: (...args: ExtractArgs<Contract['mutations']['setCanCriticalCancel']>) =>
       mutate(walletClient!, mutation.setCanCriticalCancel)(...args),
+    setTrialFundsData: (...args: ExtractArgs<Contract['mutations']['setTrialFundsData']>) =>
+      mutate(walletClient!, mutation.setTrialFundsData)(...args),
+    clawBackTrialFunds: (...args: ExtractArgs<Contract['mutations']['clawBackTrialFunds']>) =>
+      mutate(walletClient!, mutation.clawBackTrialFunds)(...args),
+    clawBackTrialFundsLegacy: (...args: ExtractArgs<Contract['mutations']['clawBackTrialFundsLegacy']>) =>
+      mutate(walletClient!, mutation.clawBackTrialFundsLegacy)(...args),
+    payAmbassadorYieldBonus: (...args: ExtractArgs<Contract['mutations']['payAmbassadorYieldBonus']>) =>
+      mutate(walletClient!, mutation.payAmbassadorYieldBonus)(...args),
+    setAmbassadorBonusRatio: (...args: ExtractArgs<Contract['mutations']['setAmbassadorBonusRatio']>) =>
+      mutate(walletClient!, mutation.setAmbassadorBonusRatio)(...args),
+    initiateDefaultAgentUpdate: (...args: ExtractArgs<Contract['mutations']['initiateDefaultAgentUpdate']>) =>
+      mutate(walletClient!, mutation.initiateDefaultAgentUpdate)(...args),
+    confirmDefaultAgentUpdate: (...args: ExtractArgs<Contract['mutations']['confirmDefaultAgentUpdate']>) =>
+      mutate(walletClient!, mutation.confirmDefaultAgentUpdate)(...args),
+    cancelDefaultAgentUpdate: (...args: ExtractArgs<Contract['mutations']['cancelDefaultAgentUpdate']>) =>
+      mutate(walletClient!, mutation.cancelDefaultAgentUpdate)(...args),
+    recoverFundsFromAgentFactory: (...args: ExtractArgs<Contract['mutations']['recoverFundsFromAgentFactory']>) =>
+      mutate(walletClient!, mutation.recoverFundsFromAgentFactory)(...args),
     activate: (...args: ExtractArgs<Contract['mutations']['activate']>) =>
       mutate(walletClient!, mutation.activate)(...args),
   }

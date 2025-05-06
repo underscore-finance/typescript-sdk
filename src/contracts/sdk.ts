@@ -8,6 +8,7 @@ import { PublicClient, WalletClient } from 'viem'
 import * as AddyRegistry from './AddyRegistry.js'
 import * as Agent from './Agent.js'
 import * as AgentFactory from './AgentFactory.js'
+import * as AgentFactory_v2 from './AgentFactory_v2.js'
 import * as Agent_v1 from './Agent_v1.js'
 import * as ChainlinkFeeds from './ChainlinkFeeds.js'
 import * as ERC20 from './ERC20.js'
@@ -41,6 +42,7 @@ export type SDK = {
   AddyRegistry: AddyRegistry.SDK
   Agent: (address: `0x${string}`) => Agent.SDK
   AgentFactory: AgentFactory.SDK
+  AgentFactory_v2: AgentFactory_v2.SDK
   Agent_v1: (address: `0x${string}`) => Agent_v1.SDK
   ChainlinkFeeds: ChainlinkFeeds.SDK
   ERC20: (address: `0x${string}`) => ERC20.SDK
@@ -76,6 +78,7 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     AddyRegistry: AddyRegistry.toSdk(publicClient, walletClient),
     Agent: (address: `0x${string}`) => Agent.toSdk(address, publicClient, walletClient),
     AgentFactory: AgentFactory.toSdk(publicClient, walletClient),
+    AgentFactory_v2: AgentFactory_v2.toSdk(publicClient, walletClient),
     Agent_v1: (address: `0x${string}`) => Agent_v1.toSdk(address, publicClient, walletClient),
     ChainlinkFeeds: ChainlinkFeeds.toSdk(publicClient, walletClient),
     ERC20: (address: `0x${string}`) => ERC20.toSdk(address, publicClient, walletClient),

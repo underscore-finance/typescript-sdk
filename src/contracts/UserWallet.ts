@@ -614,17 +614,27 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        name: 'recipient',
-        type: 'address',
-      },
-      {
-        indexed: true,
         name: 'asset',
         type: 'address',
       },
       {
+        indexed: true,
+        name: 'protocolRecipient',
+        type: 'address',
+      },
+      {
         indexed: false,
-        name: 'amount',
+        name: 'protocolAmount',
+        type: 'uint256',
+      },
+      {
+        indexed: true,
+        name: 'ambassadorRecipient',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'ambassadorAmount',
         type: 'uint256',
       },
       {
@@ -728,6 +738,18 @@ export const abi = [
       },
     ],
     stateMutability: 'pure',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'canBeAmbassador',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -2320,34 +2342,7 @@ export const abi = [
   },
   {
     inputs: [],
-    name: 'recoverTrialFunds',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        components: [
-          {
-            name: 'legoId',
-            type: 'uint256',
-          },
-          {
-            name: 'vaultToken',
-            type: 'address',
-          },
-        ],
-        name: '_opportunities',
-        type: 'tuple[]',
-      },
-    ],
-    name: 'recoverTrialFunds',
+    name: 'clawBackTrialFunds',
     outputs: [
       {
         name: '',
@@ -2369,6 +2364,31 @@ export const abi = [
       },
     ],
     name: 'recoverNft',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_newWallet',
+        type: 'address',
+      },
+      {
+        name: '_assetsToMigrate',
+        type: 'address[]',
+      },
+      {
+        name: '_whitelistToMigrate',
+        type: 'address[]',
+      },
+    ],
+    name: 'migrateWalletOut',
     outputs: [
       {
         name: '',
@@ -2467,7 +2487,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xf614Bb656a8B1B8646b25f3Ca4a9655E407D38e5'
+export const deployAddress: Address | undefined = '0xe43D5bD11a2A6A9348EFC516ad9Ac3D32164A5A0'
 
 export type Contract = {
   calls: {
@@ -2478,6 +2498,7 @@ export type Contract = {
       data: `0x${string}`,
     ) => Promise<`0x${string}`>
     apiVersion: () => Promise<string>
+    canBeAmbassador: () => Promise<boolean>
     walletConfig: () => Promise<`0x${string}`>
     trialFundsAsset: () => Promise<`0x${string}`>
     trialFundsInitialAmount: () => Promise<bigint>
@@ -2565,8 +2586,13 @@ export type Contract = {
       withdrawLegoId?: bigint,
       withdrawVaultToken?: `0x${string}`,
     ) => Promise<bigint>
-    recoverTrialFunds: (opportunities?: { legoId: bigint; vaultToken: `0x${string}` }[]) => Promise<boolean>
+    clawBackTrialFunds: () => Promise<boolean>
     recoverNft: (collection: `0x${string}`, nftTokenId: bigint) => Promise<boolean>
+    migrateWalletOut: (
+      newWallet: `0x${string}`,
+      assetsToMigrate: `0x${string}`[],
+      whitelistToMigrate: `0x${string}`[],
+    ) => Promise<boolean>
   }
   events: {
     UserWalletDeposit: (
@@ -2697,9 +2723,11 @@ export type Contract = {
       isAgent: boolean,
     ) => Promise<void>
     UserWalletTransactionFeePaid: (
-      recipient: `0x${string}`,
       asset: `0x${string}`,
-      amount: bigint,
+      protocolRecipient: `0x${string}`,
+      protocolAmount: bigint,
+      ambassadorRecipient: `0x${string}`,
+      ambassadorAmount: bigint,
       fee: bigint,
       action: bigint,
     ) => Promise<void>
@@ -2775,6 +2803,7 @@ export const call: CallType = {
   onERC721Received: (...args: ExtractArgs<Contract['calls']['onERC721Received']>) =>
     getRequest('onERC721Received', args),
   apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) => getRequest('apiVersion', args),
+  canBeAmbassador: (...args: ExtractArgs<Contract['calls']['canBeAmbassador']>) => getRequest('canBeAmbassador', args),
   walletConfig: (...args: ExtractArgs<Contract['calls']['walletConfig']>) => getRequest('walletConfig', args),
   trialFundsAsset: (...args: ExtractArgs<Contract['calls']['trialFundsAsset']>) => getRequest('trialFundsAsset', args),
   trialFundsInitialAmount: (...args: ExtractArgs<Contract['calls']['trialFundsInitialAmount']>) =>
@@ -2815,8 +2844,9 @@ export const mutation: {
   transferFunds: getMutation('transferFunds'),
   convertEthToWeth: getMutation('convertEthToWeth'),
   convertWethToEth: getMutation('convertWethToEth'),
-  recoverTrialFunds: getMutation('recoverTrialFunds'),
+  clawBackTrialFunds: getMutation('clawBackTrialFunds'),
   recoverNft: getMutation('recoverNft'),
+  migrateWalletOut: getMutation('migrateWalletOut'),
 }
 
 export type SDK = {
@@ -2824,6 +2854,9 @@ export type SDK = {
     ...args: ExtractArgs<Contract['calls']['onERC721Received']>
   ) => Promise<CallReturn<'onERC721Received'>>
   apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) => Promise<CallReturn<'apiVersion'>>
+  canBeAmbassador: (
+    ...args: ExtractArgs<Contract['calls']['canBeAmbassador']>
+  ) => Promise<CallReturn<'canBeAmbassador'>>
   walletConfig: (...args: ExtractArgs<Contract['calls']['walletConfig']>) => Promise<CallReturn<'walletConfig'>>
   trialFundsAsset: (
     ...args: ExtractArgs<Contract['calls']['trialFundsAsset']>
@@ -2845,8 +2878,9 @@ export type SDK = {
   transferFunds: (...args: ExtractArgs<Contract['mutations']['transferFunds']>) => Promise<Address>
   convertEthToWeth: (...args: ExtractArgs<Contract['mutations']['convertEthToWeth']>) => Promise<Address>
   convertWethToEth: (...args: ExtractArgs<Contract['mutations']['convertWethToEth']>) => Promise<Address>
-  recoverTrialFunds: (...args: ExtractArgs<Contract['mutations']['recoverTrialFunds']>) => Promise<Address>
+  clawBackTrialFunds: (...args: ExtractArgs<Contract['mutations']['clawBackTrialFunds']>) => Promise<Address>
   recoverNft: (...args: ExtractArgs<Contract['mutations']['recoverNft']>) => Promise<Address>
+  migrateWalletOut: (...args: ExtractArgs<Contract['mutations']['migrateWalletOut']>) => Promise<Address>
 }
 
 export function toSdk(address: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
@@ -2856,6 +2890,8 @@ export function toSdk(address: Address, publicClient?: PublicClient, walletClien
       singleQuery(publicClient!, call.onERC721Received(...args).at(address)) as Promise<CallReturn<'onERC721Received'>>,
     apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) =>
       singleQuery(publicClient!, call.apiVersion(...args).at(address)) as Promise<CallReturn<'apiVersion'>>,
+    canBeAmbassador: (...args: ExtractArgs<Contract['calls']['canBeAmbassador']>) =>
+      singleQuery(publicClient!, call.canBeAmbassador(...args).at(address)) as Promise<CallReturn<'canBeAmbassador'>>,
     walletConfig: (...args: ExtractArgs<Contract['calls']['walletConfig']>) =>
       singleQuery(publicClient!, call.walletConfig(...args).at(address)) as Promise<CallReturn<'walletConfig'>>,
     trialFundsAsset: (...args: ExtractArgs<Contract['calls']['trialFundsAsset']>) =>
@@ -2894,9 +2930,11 @@ export function toSdk(address: Address, publicClient?: PublicClient, walletClien
       mutate(walletClient!, mutation.convertEthToWeth, { address })(...args),
     convertWethToEth: (...args: ExtractArgs<Contract['mutations']['convertWethToEth']>) =>
       mutate(walletClient!, mutation.convertWethToEth, { address })(...args),
-    recoverTrialFunds: (...args: ExtractArgs<Contract['mutations']['recoverTrialFunds']>) =>
-      mutate(walletClient!, mutation.recoverTrialFunds, { address })(...args),
+    clawBackTrialFunds: (...args: ExtractArgs<Contract['mutations']['clawBackTrialFunds']>) =>
+      mutate(walletClient!, mutation.clawBackTrialFunds, { address })(...args),
     recoverNft: (...args: ExtractArgs<Contract['mutations']['recoverNft']>) =>
       mutate(walletClient!, mutation.recoverNft, { address })(...args),
+    migrateWalletOut: (...args: ExtractArgs<Contract['mutations']['migrateWalletOut']>) =>
+      mutate(walletClient!, mutation.migrateWalletOut, { address })(...args),
   }
 }

@@ -86,6 +86,13 @@ class Underscore {
     return this.contracts.AgentFactory
   }
 
+  /**
+   * @deprecated Use `Factory` instead. This version is for legacy compatibility.
+   */
+  get Factory_v2() {
+    return this.contracts.AgentFactory_v2
+  }
+
   get OracleRegistry() {
     return this.contracts.OracleRegistry
   }
