@@ -228,6 +228,18 @@ export const abi = [
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        name: 'isActivated',
+        type: 'bool',
+      },
+    ],
+    name: 'AgentFactoryActivated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: true,
         name: 'caller',
         type: 'address',
@@ -244,108 +256,8 @@ export const abi = [
         name: 'addr',
         type: 'address',
       },
-      {
-        indexed: false,
-        name: 'canCancel',
-        type: 'bool',
-      },
     ],
-    name: 'CanCriticalCancelSet',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        name: 'isActivated',
-        type: 'bool',
-      },
-    ],
-    name: 'AgentFactoryActivated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'prevGov',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        name: 'newGov',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'confirmBlock',
-        type: 'uint256',
-      },
-    ],
-    name: 'GovChangeInitiated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'prevGov',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        name: 'newGov',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'initiatedBlock',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'confirmBlock',
-        type: 'uint256',
-      },
-    ],
-    name: 'GovChangeConfirmed',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'cancelledGov',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'initiatedBlock',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'confirmBlock',
-        type: 'uint256',
-      },
-    ],
-    name: 'GovChangeCancelled',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        name: 'delayBlocks',
-        type: 'uint256',
-      },
-    ],
-    name: 'GovChangeDelaySet',
+    name: 'LocalGovernorSet',
     type: 'event',
   },
   {
@@ -355,19 +267,7 @@ export const abi = [
         type: 'address',
       },
     ],
-    name: 'canGovern',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'hasPendingGovChange',
+    name: 'isGovernor',
     outputs: [
       {
         name: '',
@@ -380,110 +280,44 @@ export const abi = [
   {
     inputs: [
       {
-        name: '_newGov',
+        name: '_newGovernor',
         type: 'address',
       },
     ],
-    name: 'changeGovernance',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'confirmGovernanceChange',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'cancelGovernanceChange',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    name: 'isValidLocalGovernor',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
       {
-        name: '_numBlocks',
-        type: 'uint256',
+        name: '_newGovernor',
+        type: 'address',
       },
     ],
-    name: 'setGovernanceChangeDelay',
-    outputs: [],
+    name: 'setLocalGovernor',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'governance',
+    name: 'localGovernor',
     outputs: [
       {
         name: '',
         type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'pendingGov',
-    outputs: [
-      {
-        components: [
-          {
-            name: 'newGov',
-            type: 'address',
-          },
-          {
-            name: 'initiatedBlock',
-            type: 'uint256',
-          },
-          {
-            name: 'confirmBlock',
-            type: 'uint256',
-          },
-        ],
-        name: '',
-        type: 'tuple',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'govChangeDelay',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MIN_GOV_CHANGE_DELAY',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MAX_GOV_CHANGE_DELAY',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -789,108 +623,6 @@ export const abi = [
   {
     inputs: [
       {
-        name: '_wallet',
-        type: 'address',
-      },
-    ],
-    name: 'recoverTrialFunds',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_wallet',
-        type: 'address',
-      },
-      {
-        components: [
-          {
-            name: 'legoId',
-            type: 'uint256',
-          },
-          {
-            name: 'vaultToken',
-            type: 'address',
-          },
-        ],
-        name: '_opportunities',
-        type: 'tuple[]',
-      },
-    ],
-    name: 'recoverTrialFunds',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        components: [
-          {
-            name: 'wallet',
-            type: 'address',
-          },
-          {
-            components: [
-              {
-                name: 'legoId',
-                type: 'uint256',
-              },
-              {
-                name: 'vaultToken',
-                type: 'address',
-              },
-            ],
-            name: 'opportunities',
-            type: 'tuple[]',
-          },
-        ],
-        name: '_recoveries',
-        type: 'tuple[]',
-      },
-    ],
-    name: 'recoverTrialFundsMany',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_caller',
-        type: 'address',
-      },
-    ],
-    name: 'setRecoveryCaller',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         name: '_addr',
         type: 'address',
       },
@@ -1029,32 +761,100 @@ export const abi = [
   {
     inputs: [
       {
-        name: '_addr',
+        name: '_wallet',
         type: 'address',
       },
     ],
-    name: 'canCancelCriticalAction',
+    name: 'recoverTrialFunds',
     outputs: [
       {
         name: '',
         type: 'bool',
       },
     ],
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [
       {
-        name: '_addr',
+        name: '_wallet',
         type: 'address',
       },
       {
-        name: '_canCancel',
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'vaultToken',
+            type: 'address',
+          },
+        ],
+        name: '_opportunities',
+        type: 'tuple[]',
+      },
+    ],
+    name: 'recoverTrialFunds',
+    outputs: [
+      {
+        name: '',
         type: 'bool',
       },
     ],
-    name: 'setCanCriticalCancel',
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'trialFundAsset',
+        type: 'address',
+      },
+      {
+        components: [
+          {
+            name: 'wallet',
+            type: 'address',
+          },
+          {
+            components: [
+              {
+                name: 'legoId',
+                type: 'uint256',
+              },
+              {
+                name: 'vaultToken',
+                type: 'address',
+              },
+            ],
+            name: 'opportunities',
+            type: 'tuple[]',
+          },
+        ],
+        name: '_recoveries',
+        type: 'tuple[]',
+      },
+    ],
+    name: 'recoverTrialFundsMany',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_caller',
+        type: 'address',
+      },
+    ],
+    name: 'setRecoveryCaller',
     outputs: [
       {
         name: '',
@@ -1334,23 +1134,6 @@ export const abi = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    name: 'canCriticalCancel',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [],
     name: 'isActivated',
     outputs: [
@@ -1387,30 +1170,6 @@ export const abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'MIN_OWNER_CHANGE_DELAY',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MAX_OWNER_CHANGE_DELAY',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         name: '_addyRegistry',
@@ -1432,14 +1191,6 @@ export const abi = [
         name: '_agentTemplate',
         type: 'address',
       },
-      {
-        name: '_minOwnerChangeDelay',
-        type: 'uint256',
-      },
-      {
-        name: '_maxOwnerChangeDelay',
-        type: 'uint256',
-      },
     ],
     outputs: [],
     stateMutability: 'nonpayable',
@@ -1447,17 +1198,13 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x5cd5Adb8CE20401D064da60aE051eFc3753CE436'
+export const deployAddress: Address | undefined = '0xf220F44b2308E3018F3D45106Cfdb8E11c868E21'
 
 export type Contract = {
   calls: {
-    canGovern: (address: `0x${string}`) => Promise<boolean>
-    hasPendingGovChange: () => Promise<boolean>
-    governance: () => Promise<`0x${string}`>
-    pendingGov: () => Promise<{ newGov: `0x${string}`; initiatedBlock: bigint; confirmBlock: bigint }>
-    govChangeDelay: () => Promise<bigint>
-    MIN_GOV_CHANGE_DELAY: () => Promise<bigint>
-    MAX_GOV_CHANGE_DELAY: () => Promise<bigint>
+    isGovernor: (address: `0x${string}`) => Promise<boolean>
+    isValidLocalGovernor: (newGovernor: `0x${string}`) => Promise<boolean>
+    localGovernor: () => Promise<`0x${string}`>
     currentUserWalletTemplate: () => Promise<`0x${string}`>
     currentUserWalletConfigTemplate: () => Promise<`0x${string}`>
     currentAgentTemplate: () => Promise<`0x${string}`>
@@ -1467,7 +1214,6 @@ export type Contract = {
     isValidAgentSetup: (owner: `0x${string}`) => Promise<boolean>
     isValidAgentTemplate: (newAddr: `0x${string}`) => Promise<boolean>
     isValidTrialFundsData: (asset: `0x${string}`, amount: bigint) => Promise<boolean>
-    canCancelCriticalAction: (addr: `0x${string}`) => Promise<boolean>
     isUserWallet: (addr: `0x${string}`) => Promise<boolean>
     trialFundsData: () => Promise<{ asset: `0x${string}`; amount: bigint }>
     recoveryCaller: () => Promise<`0x${string}`>
@@ -1483,39 +1229,33 @@ export type Contract = {
     numAgentsAllowed: () => Promise<bigint>
     whitelist: (arg0: `0x${string}`) => Promise<boolean>
     shouldEnforceWhitelist: () => Promise<boolean>
-    canCriticalCancel: (arg0: `0x${string}`) => Promise<boolean>
     isActivated: () => Promise<boolean>
     ADDY_REGISTRY: () => Promise<`0x${string}`>
     WETH_ADDR: () => Promise<`0x${string}`>
-    MIN_OWNER_CHANGE_DELAY: () => Promise<bigint>
-    MAX_OWNER_CHANGE_DELAY: () => Promise<bigint>
   }
   mutations: {
-    changeGovernance: (newGov: `0x${string}`) => Promise<void>
-    confirmGovernanceChange: () => Promise<void>
-    cancelGovernanceChange: () => Promise<void>
-    setGovernanceChangeDelay: (numBlocks: bigint) => Promise<void>
+    setLocalGovernor: (newGovernor: `0x${string}`) => Promise<boolean>
     createUserWallet: (owner?: `0x${string}`, agent?: `0x${string}`) => Promise<`0x${string}`>
     setUserWalletTemplate: (addr: `0x${string}`) => Promise<boolean>
     setUserWalletConfigTemplate: (addr: `0x${string}`) => Promise<boolean>
     createAgent: (owner?: `0x${string}`) => Promise<`0x${string}`>
     setAgentTemplate: (addr: `0x${string}`) => Promise<boolean>
     setTrialFundsData: (asset: `0x${string}`, amount: bigint) => Promise<boolean>
-    recoverTrialFunds: (
-      wallet: `0x${string}`,
-      opportunities?: { legoId: bigint; vaultToken: `0x${string}` }[],
-    ) => Promise<boolean>
-    recoverTrialFundsMany: (
-      recoveries: { wallet: `0x${string}`; opportunities: { legoId: bigint; vaultToken: `0x${string}` }[] }[],
-    ) => Promise<boolean>
-    setRecoveryCaller: (caller: `0x${string}`) => Promise<boolean>
     setWhitelist: (addr: `0x${string}`, shouldWhitelist: boolean) => Promise<boolean>
     setShouldEnforceWhitelist: (shouldEnforce: boolean) => Promise<boolean>
     setNumUserWalletsAllowed: (numAllowed?: bigint) => Promise<boolean>
     setNumAgentsAllowed: (numAllowed?: bigint) => Promise<boolean>
     setAgentBlacklist: (agentAddr: `0x${string}`, shouldBlacklist: boolean) => Promise<boolean>
     recoverFunds: (asset: `0x${string}`, recipient: `0x${string}`) => Promise<boolean>
-    setCanCriticalCancel: (addr: `0x${string}`, canCancel: boolean) => Promise<boolean>
+    recoverTrialFunds: (
+      wallet: `0x${string}`,
+      opportunities?: { legoId: bigint; vaultToken: `0x${string}` }[],
+    ) => Promise<boolean>
+    recoverTrialFundsMany: (
+      trialFundAsset: `0x${string}`,
+      recoveries: { wallet: `0x${string}`; opportunities: { legoId: bigint; vaultToken: `0x${string}` }[] }[],
+    ) => Promise<boolean>
+    setRecoveryCaller: (caller: `0x${string}`) => Promise<boolean>
     activate: (shouldActivate: boolean) => Promise<void>
   }
   events: {
@@ -1537,24 +1277,15 @@ export type Contract = {
     ShouldEnforceWhitelistSet: (shouldEnforce: boolean) => Promise<void>
     AgentBlacklistSet: (agentAddr: `0x${string}`, shouldBlacklist: boolean) => Promise<void>
     AgentFactoryFundsRecovered: (asset: `0x${string}`, recipient: `0x${string}`, balance: bigint) => Promise<void>
-    RecoveryCallerSet: (caller: `0x${string}`) => Promise<void>
-    CanCriticalCancelSet: (addr: `0x${string}`, canCancel: boolean) => Promise<void>
     AgentFactoryActivated: (isActivated: boolean) => Promise<void>
-    GovChangeInitiated: (prevGov: `0x${string}`, newGov: `0x${string}`, confirmBlock: bigint) => Promise<void>
-    GovChangeConfirmed: (
-      prevGov: `0x${string}`,
-      newGov: `0x${string}`,
-      initiatedBlock: bigint,
-      confirmBlock: bigint,
-    ) => Promise<void>
-    GovChangeCancelled: (cancelledGov: `0x${string}`, initiatedBlock: bigint, confirmBlock: bigint) => Promise<void>
-    GovChangeDelaySet: (delayBlocks: bigint) => Promise<void>
+    RecoveryCallerSet: (caller: `0x${string}`) => Promise<void>
+    LocalGovernorSet: (addr: `0x${string}`) => Promise<void>
   }
 }
 
 export type Calls = keyof Contract['calls']
 export type Request<M extends Calls> = {
-  contractName: 'AgentFactory_v2'
+  contractName: 'AgentFactory_v1'
   method: M
   args: ExtractArgs<Contract['calls'][M]>
   address: Address | undefined
@@ -1582,7 +1313,7 @@ function getRequest<M extends Calls>(
   const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
 
   const call = {
-    contractName: 'AgentFactory_v2' as const,
+    contractName: 'AgentFactory_v1' as const,
     method,
     args,
     address,
@@ -1612,16 +1343,10 @@ type CallType = {
 }
 
 export const call: CallType = {
-  canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) => getRequest('canGovern', args),
-  hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
-    getRequest('hasPendingGovChange', args),
-  governance: (...args: ExtractArgs<Contract['calls']['governance']>) => getRequest('governance', args),
-  pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) => getRequest('pendingGov', args),
-  govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) => getRequest('govChangeDelay', args),
-  MIN_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>) =>
-    getRequest('MIN_GOV_CHANGE_DELAY', args),
-  MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
-    getRequest('MAX_GOV_CHANGE_DELAY', args),
+  isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => getRequest('isGovernor', args),
+  isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) =>
+    getRequest('isValidLocalGovernor', args),
+  localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => getRequest('localGovernor', args),
   currentUserWalletTemplate: (...args: ExtractArgs<Contract['calls']['currentUserWalletTemplate']>) =>
     getRequest('currentUserWalletTemplate', args),
   currentUserWalletConfigTemplate: (...args: ExtractArgs<Contract['calls']['currentUserWalletConfigTemplate']>) =>
@@ -1640,8 +1365,6 @@ export const call: CallType = {
     getRequest('isValidAgentTemplate', args),
   isValidTrialFundsData: (...args: ExtractArgs<Contract['calls']['isValidTrialFundsData']>) =>
     getRequest('isValidTrialFundsData', args),
-  canCancelCriticalAction: (...args: ExtractArgs<Contract['calls']['canCancelCriticalAction']>) =>
-    getRequest('canCancelCriticalAction', args),
   isUserWallet: (...args: ExtractArgs<Contract['calls']['isUserWallet']>) => getRequest('isUserWallet', args),
   trialFundsData: (...args: ExtractArgs<Contract['calls']['trialFundsData']>) => getRequest('trialFundsData', args),
   recoveryCaller: (...args: ExtractArgs<Contract['calls']['recoveryCaller']>) => getRequest('recoveryCaller', args),
@@ -1663,21 +1386,15 @@ export const call: CallType = {
   whitelist: (...args: ExtractArgs<Contract['calls']['whitelist']>) => getRequest('whitelist', args),
   shouldEnforceWhitelist: (...args: ExtractArgs<Contract['calls']['shouldEnforceWhitelist']>) =>
     getRequest('shouldEnforceWhitelist', args),
-  canCriticalCancel: (...args: ExtractArgs<Contract['calls']['canCriticalCancel']>) =>
-    getRequest('canCriticalCancel', args),
   isActivated: (...args: ExtractArgs<Contract['calls']['isActivated']>) => getRequest('isActivated', args),
   ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => getRequest('ADDY_REGISTRY', args),
   WETH_ADDR: (...args: ExtractArgs<Contract['calls']['WETH_ADDR']>) => getRequest('WETH_ADDR', args),
-  MIN_OWNER_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_OWNER_CHANGE_DELAY']>) =>
-    getRequest('MIN_OWNER_CHANGE_DELAY', args),
-  MAX_OWNER_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_OWNER_CHANGE_DELAY']>) =>
-    getRequest('MAX_OWNER_CHANGE_DELAY', args),
 }
 
 export type Mutations = keyof Contract['mutations']
 function getMutation<M extends Mutations>(functionName: M) {
   return {
-    contractName: 'AgentFactory_v2' as const,
+    contractName: 'AgentFactory_v1' as const,
     functionName,
     deployAddress,
     argsType: undefined as ExtractArgs<Contract['mutations'][M]> | undefined,
@@ -1687,50 +1404,38 @@ function getMutation<M extends Mutations>(functionName: M) {
 
 export const mutation: {
   [K in Mutations]: {
-    contractName: 'AgentFactory_v2'
+    contractName: 'AgentFactory_v1'
     deployAddress: Address | undefined
     getAbi: () => typeof abi
     functionName: K
     argsType: ExtractArgs<Contract['mutations'][K]> | undefined
   }
 } = {
-  changeGovernance: getMutation('changeGovernance'),
-  confirmGovernanceChange: getMutation('confirmGovernanceChange'),
-  cancelGovernanceChange: getMutation('cancelGovernanceChange'),
-  setGovernanceChangeDelay: getMutation('setGovernanceChangeDelay'),
+  setLocalGovernor: getMutation('setLocalGovernor'),
   createUserWallet: getMutation('createUserWallet'),
   setUserWalletTemplate: getMutation('setUserWalletTemplate'),
   setUserWalletConfigTemplate: getMutation('setUserWalletConfigTemplate'),
   createAgent: getMutation('createAgent'),
   setAgentTemplate: getMutation('setAgentTemplate'),
   setTrialFundsData: getMutation('setTrialFundsData'),
-  recoverTrialFunds: getMutation('recoverTrialFunds'),
-  recoverTrialFundsMany: getMutation('recoverTrialFundsMany'),
-  setRecoveryCaller: getMutation('setRecoveryCaller'),
   setWhitelist: getMutation('setWhitelist'),
   setShouldEnforceWhitelist: getMutation('setShouldEnforceWhitelist'),
   setNumUserWalletsAllowed: getMutation('setNumUserWalletsAllowed'),
   setNumAgentsAllowed: getMutation('setNumAgentsAllowed'),
   setAgentBlacklist: getMutation('setAgentBlacklist'),
   recoverFunds: getMutation('recoverFunds'),
-  setCanCriticalCancel: getMutation('setCanCriticalCancel'),
+  recoverTrialFunds: getMutation('recoverTrialFunds'),
+  recoverTrialFundsMany: getMutation('recoverTrialFundsMany'),
+  setRecoveryCaller: getMutation('setRecoveryCaller'),
   activate: getMutation('activate'),
 }
 
 export type SDK = {
-  canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) => Promise<CallReturn<'canGovern'>>
-  hasPendingGovChange: (
-    ...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>
-  ) => Promise<CallReturn<'hasPendingGovChange'>>
-  governance: (...args: ExtractArgs<Contract['calls']['governance']>) => Promise<CallReturn<'governance'>>
-  pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) => Promise<CallReturn<'pendingGov'>>
-  govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) => Promise<CallReturn<'govChangeDelay'>>
-  MIN_GOV_CHANGE_DELAY: (
-    ...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>
-  ) => Promise<CallReturn<'MIN_GOV_CHANGE_DELAY'>>
-  MAX_GOV_CHANGE_DELAY: (
-    ...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>
-  ) => Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>
+  isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => Promise<CallReturn<'isGovernor'>>
+  isValidLocalGovernor: (
+    ...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>
+  ) => Promise<CallReturn<'isValidLocalGovernor'>>
+  localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) => Promise<CallReturn<'localGovernor'>>
   currentUserWalletTemplate: (
     ...args: ExtractArgs<Contract['calls']['currentUserWalletTemplate']>
   ) => Promise<CallReturn<'currentUserWalletTemplate'>>
@@ -1758,9 +1463,6 @@ export type SDK = {
   isValidTrialFundsData: (
     ...args: ExtractArgs<Contract['calls']['isValidTrialFundsData']>
   ) => Promise<CallReturn<'isValidTrialFundsData'>>
-  canCancelCriticalAction: (
-    ...args: ExtractArgs<Contract['calls']['canCancelCriticalAction']>
-  ) => Promise<CallReturn<'canCancelCriticalAction'>>
   isUserWallet: (...args: ExtractArgs<Contract['calls']['isUserWallet']>) => Promise<CallReturn<'isUserWallet'>>
   trialFundsData: (...args: ExtractArgs<Contract['calls']['trialFundsData']>) => Promise<CallReturn<'trialFundsData'>>
   recoveryCaller: (...args: ExtractArgs<Contract['calls']['recoveryCaller']>) => Promise<CallReturn<'recoveryCaller'>>
@@ -1788,24 +1490,10 @@ export type SDK = {
   shouldEnforceWhitelist: (
     ...args: ExtractArgs<Contract['calls']['shouldEnforceWhitelist']>
   ) => Promise<CallReturn<'shouldEnforceWhitelist'>>
-  canCriticalCancel: (
-    ...args: ExtractArgs<Contract['calls']['canCriticalCancel']>
-  ) => Promise<CallReturn<'canCriticalCancel'>>
   isActivated: (...args: ExtractArgs<Contract['calls']['isActivated']>) => Promise<CallReturn<'isActivated'>>
   ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => Promise<CallReturn<'ADDY_REGISTRY'>>
   WETH_ADDR: (...args: ExtractArgs<Contract['calls']['WETH_ADDR']>) => Promise<CallReturn<'WETH_ADDR'>>
-  MIN_OWNER_CHANGE_DELAY: (
-    ...args: ExtractArgs<Contract['calls']['MIN_OWNER_CHANGE_DELAY']>
-  ) => Promise<CallReturn<'MIN_OWNER_CHANGE_DELAY'>>
-  MAX_OWNER_CHANGE_DELAY: (
-    ...args: ExtractArgs<Contract['calls']['MAX_OWNER_CHANGE_DELAY']>
-  ) => Promise<CallReturn<'MAX_OWNER_CHANGE_DELAY'>>
-  changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) => Promise<Address>
-  confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) => Promise<Address>
-  cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) => Promise<Address>
-  setGovernanceChangeDelay: (
-    ...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>
-  ) => Promise<Address>
+  setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) => Promise<Address>
   createUserWallet: (...args: ExtractArgs<Contract['mutations']['createUserWallet']>) => Promise<Address>
   setUserWalletTemplate: (...args: ExtractArgs<Contract['mutations']['setUserWalletTemplate']>) => Promise<Address>
   setUserWalletConfigTemplate: (
@@ -1814,9 +1502,6 @@ export type SDK = {
   createAgent: (...args: ExtractArgs<Contract['mutations']['createAgent']>) => Promise<Address>
   setAgentTemplate: (...args: ExtractArgs<Contract['mutations']['setAgentTemplate']>) => Promise<Address>
   setTrialFundsData: (...args: ExtractArgs<Contract['mutations']['setTrialFundsData']>) => Promise<Address>
-  recoverTrialFunds: (...args: ExtractArgs<Contract['mutations']['recoverTrialFunds']>) => Promise<Address>
-  recoverTrialFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverTrialFundsMany']>) => Promise<Address>
-  setRecoveryCaller: (...args: ExtractArgs<Contract['mutations']['setRecoveryCaller']>) => Promise<Address>
   setWhitelist: (...args: ExtractArgs<Contract['mutations']['setWhitelist']>) => Promise<Address>
   setShouldEnforceWhitelist: (
     ...args: ExtractArgs<Contract['mutations']['setShouldEnforceWhitelist']>
@@ -1827,27 +1512,21 @@ export type SDK = {
   setNumAgentsAllowed: (...args: ExtractArgs<Contract['mutations']['setNumAgentsAllowed']>) => Promise<Address>
   setAgentBlacklist: (...args: ExtractArgs<Contract['mutations']['setAgentBlacklist']>) => Promise<Address>
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
-  setCanCriticalCancel: (...args: ExtractArgs<Contract['mutations']['setCanCriticalCancel']>) => Promise<Address>
+  recoverTrialFunds: (...args: ExtractArgs<Contract['mutations']['recoverTrialFunds']>) => Promise<Address>
+  recoverTrialFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverTrialFundsMany']>) => Promise<Address>
+  setRecoveryCaller: (...args: ExtractArgs<Contract['mutations']['setRecoveryCaller']>) => Promise<Address>
   activate: (...args: ExtractArgs<Contract['mutations']['activate']>) => Promise<Address>
 }
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
     // Queries
-    canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) =>
-      singleQuery(publicClient!, call.canGovern(...args)) as Promise<CallReturn<'canGovern'>>,
-    hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
-      singleQuery(publicClient!, call.hasPendingGovChange(...args)) as Promise<CallReturn<'hasPendingGovChange'>>,
-    governance: (...args: ExtractArgs<Contract['calls']['governance']>) =>
-      singleQuery(publicClient!, call.governance(...args)) as Promise<CallReturn<'governance'>>,
-    pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) =>
-      singleQuery(publicClient!, call.pendingGov(...args)) as Promise<CallReturn<'pendingGov'>>,
-    govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) =>
-      singleQuery(publicClient!, call.govChangeDelay(...args)) as Promise<CallReturn<'govChangeDelay'>>,
-    MIN_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MIN_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MIN_GOV_CHANGE_DELAY'>>,
-    MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MAX_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>,
+    isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) =>
+      singleQuery(publicClient!, call.isGovernor(...args)) as Promise<CallReturn<'isGovernor'>>,
+    isValidLocalGovernor: (...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>) =>
+      singleQuery(publicClient!, call.isValidLocalGovernor(...args)) as Promise<CallReturn<'isValidLocalGovernor'>>,
+    localGovernor: (...args: ExtractArgs<Contract['calls']['localGovernor']>) =>
+      singleQuery(publicClient!, call.localGovernor(...args)) as Promise<CallReturn<'localGovernor'>>,
     currentUserWalletTemplate: (...args: ExtractArgs<Contract['calls']['currentUserWalletTemplate']>) =>
       singleQuery(publicClient!, call.currentUserWalletTemplate(...args)) as Promise<
         CallReturn<'currentUserWalletTemplate'>
@@ -1874,10 +1553,6 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.isValidAgentTemplate(...args)) as Promise<CallReturn<'isValidAgentTemplate'>>,
     isValidTrialFundsData: (...args: ExtractArgs<Contract['calls']['isValidTrialFundsData']>) =>
       singleQuery(publicClient!, call.isValidTrialFundsData(...args)) as Promise<CallReturn<'isValidTrialFundsData'>>,
-    canCancelCriticalAction: (...args: ExtractArgs<Contract['calls']['canCancelCriticalAction']>) =>
-      singleQuery(publicClient!, call.canCancelCriticalAction(...args)) as Promise<
-        CallReturn<'canCancelCriticalAction'>
-      >,
     isUserWallet: (...args: ExtractArgs<Contract['calls']['isUserWallet']>) =>
       singleQuery(publicClient!, call.isUserWallet(...args)) as Promise<CallReturn<'isUserWallet'>>,
     trialFundsData: (...args: ExtractArgs<Contract['calls']['trialFundsData']>) =>
@@ -1908,28 +1583,16 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.whitelist(...args)) as Promise<CallReturn<'whitelist'>>,
     shouldEnforceWhitelist: (...args: ExtractArgs<Contract['calls']['shouldEnforceWhitelist']>) =>
       singleQuery(publicClient!, call.shouldEnforceWhitelist(...args)) as Promise<CallReturn<'shouldEnforceWhitelist'>>,
-    canCriticalCancel: (...args: ExtractArgs<Contract['calls']['canCriticalCancel']>) =>
-      singleQuery(publicClient!, call.canCriticalCancel(...args)) as Promise<CallReturn<'canCriticalCancel'>>,
     isActivated: (...args: ExtractArgs<Contract['calls']['isActivated']>) =>
       singleQuery(publicClient!, call.isActivated(...args)) as Promise<CallReturn<'isActivated'>>,
     ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) =>
       singleQuery(publicClient!, call.ADDY_REGISTRY(...args)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
     WETH_ADDR: (...args: ExtractArgs<Contract['calls']['WETH_ADDR']>) =>
       singleQuery(publicClient!, call.WETH_ADDR(...args)) as Promise<CallReturn<'WETH_ADDR'>>,
-    MIN_OWNER_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_OWNER_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MIN_OWNER_CHANGE_DELAY(...args)) as Promise<CallReturn<'MIN_OWNER_CHANGE_DELAY'>>,
-    MAX_OWNER_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_OWNER_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MAX_OWNER_CHANGE_DELAY(...args)) as Promise<CallReturn<'MAX_OWNER_CHANGE_DELAY'>>,
 
     // Mutations
-    changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) =>
-      mutate(walletClient!, mutation.changeGovernance)(...args),
-    confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) =>
-      mutate(walletClient!, mutation.confirmGovernanceChange)(...args),
-    cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) =>
-      mutate(walletClient!, mutation.cancelGovernanceChange)(...args),
-    setGovernanceChangeDelay: (...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>) =>
-      mutate(walletClient!, mutation.setGovernanceChangeDelay)(...args),
+    setLocalGovernor: (...args: ExtractArgs<Contract['mutations']['setLocalGovernor']>) =>
+      mutate(walletClient!, mutation.setLocalGovernor)(...args),
     createUserWallet: (...args: ExtractArgs<Contract['mutations']['createUserWallet']>) =>
       mutate(walletClient!, mutation.createUserWallet)(...args),
     setUserWalletTemplate: (...args: ExtractArgs<Contract['mutations']['setUserWalletTemplate']>) =>
@@ -1942,12 +1605,6 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.setAgentTemplate)(...args),
     setTrialFundsData: (...args: ExtractArgs<Contract['mutations']['setTrialFundsData']>) =>
       mutate(walletClient!, mutation.setTrialFundsData)(...args),
-    recoverTrialFunds: (...args: ExtractArgs<Contract['mutations']['recoverTrialFunds']>) =>
-      mutate(walletClient!, mutation.recoverTrialFunds)(...args),
-    recoverTrialFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverTrialFundsMany']>) =>
-      mutate(walletClient!, mutation.recoverTrialFundsMany)(...args),
-    setRecoveryCaller: (...args: ExtractArgs<Contract['mutations']['setRecoveryCaller']>) =>
-      mutate(walletClient!, mutation.setRecoveryCaller)(...args),
     setWhitelist: (...args: ExtractArgs<Contract['mutations']['setWhitelist']>) =>
       mutate(walletClient!, mutation.setWhitelist)(...args),
     setShouldEnforceWhitelist: (...args: ExtractArgs<Contract['mutations']['setShouldEnforceWhitelist']>) =>
@@ -1960,8 +1617,12 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.setAgentBlacklist)(...args),
     recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) =>
       mutate(walletClient!, mutation.recoverFunds)(...args),
-    setCanCriticalCancel: (...args: ExtractArgs<Contract['mutations']['setCanCriticalCancel']>) =>
-      mutate(walletClient!, mutation.setCanCriticalCancel)(...args),
+    recoverTrialFunds: (...args: ExtractArgs<Contract['mutations']['recoverTrialFunds']>) =>
+      mutate(walletClient!, mutation.recoverTrialFunds)(...args),
+    recoverTrialFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverTrialFundsMany']>) =>
+      mutate(walletClient!, mutation.recoverTrialFundsMany)(...args),
+    setRecoveryCaller: (...args: ExtractArgs<Contract['mutations']['setRecoveryCaller']>) =>
+      mutate(walletClient!, mutation.setRecoveryCaller)(...args),
     activate: (...args: ExtractArgs<Contract['mutations']['activate']>) =>
       mutate(walletClient!, mutation.activate)(...args),
   }

@@ -82,6 +82,24 @@ class Underscore {
     return instructions.result as DeepMutable<typeof instructions.result>
   }
 
+  get Registry() {
+    return this.contracts.AddyRegistry
+  }
+
+  /**
+   * @deprecated Use `Registry` instead. This version is for legacy compatibility.
+   */
+  get Registry_v1() {
+    return this.contracts.AddyRegistry_v1
+  }
+
+  /**
+   * @deprecated Use `Registry` instead. This version is for legacy compatibility.
+   */
+  get Registry_v2() {
+    return this.contracts.AddyRegistry_v2
+  }
+
   get Factory() {
     return this.contracts.AgentFactory
   }
@@ -91,6 +109,13 @@ class Underscore {
    */
   get Factory_v2() {
     return this.contracts.AgentFactory_v2
+  }
+
+  /**
+   * @deprecated Use `Factory` instead. This version is for legacy compatibility.
+   */
+  get Factory_v1() {
+    return this.contracts.AgentFactory_v1
   }
 
   get OracleRegistry() {
@@ -120,12 +145,47 @@ class Underscore {
     return { at: (address: Address) => this.contracts.Agent_v1(address) }
   }
 
+  /**
+   * @deprecated Use `Agent` instead. This version is for legacy compatibility.
+   */
+  get Agent_v2() {
+    return { at: (address: Address) => this.contracts.Agent_v2(address) }
+  }
+
   get UserWallet() {
     return { at: (address: Address) => this.contracts.UserWallet(address) }
   }
 
+  /**
+   * @deprecated Use `UserWallet` instead. This version is for legacy compatibility.
+   */
+  get UserWallet_v1() {
+    return { at: (address: Address) => this.contracts.UserWallet_v1(address) }
+  }
+
+  /**
+   * @deprecated Use `UserWallet` instead. This version is for legacy compatibility.
+   */
+  get UserWallet_v2() {
+    return { at: (address: Address) => this.contracts.UserWallet_v2(address) }
+  }
+
   get UserWalletConfig() {
     return { at: (address: Address) => this.contracts.UserWalletConfig(address) }
+  }
+
+  /**
+   * @deprecated Use `UserWalletConfig` instead. This version is for legacy compatibility.
+   */
+  get UserWalletConfig_v1() {
+    return { at: (address: Address) => this.contracts.UserWalletConfig_v1(address) }
+  }
+
+  /**
+   * @deprecated Use `UserWalletConfig` instead. This version is for legacy compatibility.
+   */
+  get UserWalletConfig_v2() {
+    return { at: (address: Address) => this.contracts.UserWalletConfig_v2(address) }
   }
 
   get ERC20() {

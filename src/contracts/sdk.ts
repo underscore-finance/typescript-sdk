@@ -6,10 +6,14 @@
 import { PublicClient, WalletClient } from 'viem'
 
 import * as AddyRegistry from './AddyRegistry.js'
+import * as AddyRegistry_v1 from './AddyRegistry_v1.js'
+import * as AddyRegistry_v2 from './AddyRegistry_v2.js'
 import * as Agent from './Agent.js'
 import * as AgentFactory from './AgentFactory.js'
+import * as AgentFactory_v1 from './AgentFactory_v1.js'
 import * as AgentFactory_v2 from './AgentFactory_v2.js'
 import * as Agent_v1 from './Agent_v1.js'
+import * as Agent_v2 from './Agent_v2.js'
 import * as ChainlinkFeeds from './ChainlinkFeeds.js'
 import * as ERC20 from './ERC20.js'
 import * as LegoAaveV3 from './LegoAaveV3.js'
@@ -37,13 +41,21 @@ import * as PythFeeds from './PythFeeds.js'
 import * as StorkFeeds from './StorkFeeds.js'
 import * as UserWallet from './UserWallet.js'
 import * as UserWalletConfig from './UserWalletConfig.js'
+import * as UserWalletConfig_v1 from './UserWalletConfig_v1.js'
+import * as UserWalletConfig_v2 from './UserWalletConfig_v2.js'
+import * as UserWallet_v1 from './UserWallet_v1.js'
+import * as UserWallet_v2 from './UserWallet_v2.js'
 
 export type SDK = {
   AddyRegistry: AddyRegistry.SDK
+  AddyRegistry_v1: AddyRegistry_v1.SDK
+  AddyRegistry_v2: AddyRegistry_v2.SDK
   Agent: (address: `0x${string}`) => Agent.SDK
   AgentFactory: AgentFactory.SDK
+  AgentFactory_v1: AgentFactory_v1.SDK
   AgentFactory_v2: AgentFactory_v2.SDK
   Agent_v1: (address: `0x${string}`) => Agent_v1.SDK
+  Agent_v2: (address: `0x${string}`) => Agent_v2.SDK
   ChainlinkFeeds: ChainlinkFeeds.SDK
   ERC20: (address: `0x${string}`) => ERC20.SDK
   LegoAaveV3: LegoAaveV3.SDK
@@ -71,15 +83,23 @@ export type SDK = {
   StorkFeeds: StorkFeeds.SDK
   UserWallet: (address: `0x${string}`) => UserWallet.SDK
   UserWalletConfig: (address: `0x${string}`) => UserWalletConfig.SDK
+  UserWalletConfig_v1: (address: `0x${string}`) => UserWalletConfig_v1.SDK
+  UserWalletConfig_v2: (address: `0x${string}`) => UserWalletConfig_v2.SDK
+  UserWallet_v1: (address: `0x${string}`) => UserWallet_v1.SDK
+  UserWallet_v2: (address: `0x${string}`) => UserWallet_v2.SDK
 }
 
 export default function createSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
     AddyRegistry: AddyRegistry.toSdk(publicClient, walletClient),
+    AddyRegistry_v1: AddyRegistry_v1.toSdk(publicClient, walletClient),
+    AddyRegistry_v2: AddyRegistry_v2.toSdk(publicClient, walletClient),
     Agent: (address: `0x${string}`) => Agent.toSdk(address, publicClient, walletClient),
     AgentFactory: AgentFactory.toSdk(publicClient, walletClient),
+    AgentFactory_v1: AgentFactory_v1.toSdk(publicClient, walletClient),
     AgentFactory_v2: AgentFactory_v2.toSdk(publicClient, walletClient),
     Agent_v1: (address: `0x${string}`) => Agent_v1.toSdk(address, publicClient, walletClient),
+    Agent_v2: (address: `0x${string}`) => Agent_v2.toSdk(address, publicClient, walletClient),
     ChainlinkFeeds: ChainlinkFeeds.toSdk(publicClient, walletClient),
     ERC20: (address: `0x${string}`) => ERC20.toSdk(address, publicClient, walletClient),
     LegoAaveV3: LegoAaveV3.toSdk(publicClient, walletClient),
@@ -107,5 +127,9 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     StorkFeeds: StorkFeeds.toSdk(publicClient, walletClient),
     UserWallet: (address: `0x${string}`) => UserWallet.toSdk(address, publicClient, walletClient),
     UserWalletConfig: (address: `0x${string}`) => UserWalletConfig.toSdk(address, publicClient, walletClient),
+    UserWalletConfig_v1: (address: `0x${string}`) => UserWalletConfig_v1.toSdk(address, publicClient, walletClient),
+    UserWalletConfig_v2: (address: `0x${string}`) => UserWalletConfig_v2.toSdk(address, publicClient, walletClient),
+    UserWallet_v1: (address: `0x${string}`) => UserWallet_v1.toSdk(address, publicClient, walletClient),
+    UserWallet_v2: (address: `0x${string}`) => UserWallet_v2.toSdk(address, publicClient, walletClient),
   }
 }
