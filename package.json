@@ -1,6 +1,6 @@
 {
   "name": "@underscore-finance/sdk",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "SDK for interacting with Underscore Finance Smart Contracts with TypeScript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@dappql/async": "^1.0.3",
+    "dappql": "^2.0.29",
     "viem": "^2.23.7"
   }
 }
