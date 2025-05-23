@@ -1431,6 +1431,8 @@ export const mutation: {
 }
 
 export type SDK = {
+  deployAddress: Address | undefined
+  abi: typeof abi
   isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) => Promise<CallReturn<'isGovernor'>>
   isValidLocalGovernor: (
     ...args: ExtractArgs<Contract['calls']['isValidLocalGovernor']>
@@ -1520,6 +1522,8 @@ export type SDK = {
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
+    deployAddress,
+    abi,
     // Queries
     isGovernor: (...args: ExtractArgs<Contract['calls']['isGovernor']>) =>
       singleQuery(publicClient!, call.isGovernor(...args)) as Promise<CallReturn<'isGovernor'>>,

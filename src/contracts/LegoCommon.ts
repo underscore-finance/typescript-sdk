@@ -261,6 +261,8 @@ export const mutation: {
 }
 
 export type SDK = {
+  deployAddress: Address | undefined
+  abi: typeof abi
   getRegistries: (...args: ExtractArgs<Contract['calls']['getRegistries']>) => Promise<CallReturn<'getRegistries'>>
   getAccessForLego: (
     ...args: ExtractArgs<Contract['calls']['getAccessForLego']>
@@ -274,26 +276,30 @@ export type SDK = {
   setLegoId: (...args: ExtractArgs<Contract['mutations']['setLegoId']>) => Promise<Address>
 }
 
-export function toSdk(address: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(deployAddress: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
+    deployAddress,
+    abi,
     // Queries
     getRegistries: (...args: ExtractArgs<Contract['calls']['getRegistries']>) =>
-      singleQuery(publicClient!, call.getRegistries(...args).at(address)) as Promise<CallReturn<'getRegistries'>>,
+      singleQuery(publicClient!, call.getRegistries(...args).at(deployAddress)) as Promise<CallReturn<'getRegistries'>>,
     getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
-      singleQuery(publicClient!, call.getAccessForLego(...args).at(address)) as Promise<CallReturn<'getAccessForLego'>>,
+      singleQuery(publicClient!, call.getAccessForLego(...args).at(deployAddress)) as Promise<
+        CallReturn<'getAccessForLego'>
+      >,
     legoId: (...args: ExtractArgs<Contract['calls']['legoId']>) =>
-      singleQuery(publicClient!, call.legoId(...args).at(address)) as Promise<CallReturn<'legoId'>>,
+      singleQuery(publicClient!, call.legoId(...args).at(deployAddress)) as Promise<CallReturn<'legoId'>>,
     hasClaimableRewards: (...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>) =>
-      singleQuery(publicClient!, call.hasClaimableRewards(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.hasClaimableRewards(...args).at(deployAddress)) as Promise<
         CallReturn<'hasClaimableRewards'>
       >,
 
     // Mutations
     claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) =>
-      mutate(walletClient!, mutation.claimRewards, { address })(...args),
+      mutate(walletClient!, mutation.claimRewards, { address: deployAddress })(...args),
     recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) =>
-      mutate(walletClient!, mutation.recoverFunds, { address })(...args),
+      mutate(walletClient!, mutation.recoverFunds, { address: deployAddress })(...args),
     setLegoId: (...args: ExtractArgs<Contract['mutations']['setLegoId']>) =>
-      mutate(walletClient!, mutation.setLegoId, { address })(...args),
+      mutate(walletClient!, mutation.setLegoId, { address: deployAddress })(...args),
   }
 }

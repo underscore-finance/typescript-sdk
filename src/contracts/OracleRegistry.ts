@@ -1707,6 +1707,8 @@ export const mutation: {
 }
 
 export type SDK = {
+  deployAddress: Address | undefined
+  abi: typeof abi
   canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) => Promise<CallReturn<'canGovern'>>
   hasPendingGovChange: (
     ...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>
@@ -1827,136 +1829,172 @@ export type SDK = {
   setStaleTime: (...args: ExtractArgs<Contract['mutations']['setStaleTime']>) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(deployAddress: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
+    deployAddress,
+    abi,
     // Queries
     canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) =>
-      singleQuery(publicClient!, call.canGovern(...args)) as Promise<CallReturn<'canGovern'>>,
+      singleQuery(publicClient!, call.canGovern(...args).at(deployAddress)) as Promise<CallReturn<'canGovern'>>,
     hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
-      singleQuery(publicClient!, call.hasPendingGovChange(...args)) as Promise<CallReturn<'hasPendingGovChange'>>,
+      singleQuery(publicClient!, call.hasPendingGovChange(...args).at(deployAddress)) as Promise<
+        CallReturn<'hasPendingGovChange'>
+      >,
     governance: (...args: ExtractArgs<Contract['calls']['governance']>) =>
-      singleQuery(publicClient!, call.governance(...args)) as Promise<CallReturn<'governance'>>,
+      singleQuery(publicClient!, call.governance(...args).at(deployAddress)) as Promise<CallReturn<'governance'>>,
     pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) =>
-      singleQuery(publicClient!, call.pendingGov(...args)) as Promise<CallReturn<'pendingGov'>>,
+      singleQuery(publicClient!, call.pendingGov(...args).at(deployAddress)) as Promise<CallReturn<'pendingGov'>>,
     govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) =>
-      singleQuery(publicClient!, call.govChangeDelay(...args)) as Promise<CallReturn<'govChangeDelay'>>,
+      singleQuery(publicClient!, call.govChangeDelay(...args).at(deployAddress)) as Promise<
+        CallReturn<'govChangeDelay'>
+      >,
     MIN_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MIN_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MIN_GOV_CHANGE_DELAY'>>,
+      singleQuery(publicClient!, call.MIN_GOV_CHANGE_DELAY(...args).at(deployAddress)) as Promise<
+        CallReturn<'MIN_GOV_CHANGE_DELAY'>
+      >,
     MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MAX_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>,
+      singleQuery(publicClient!, call.MAX_GOV_CHANGE_DELAY(...args).at(deployAddress)) as Promise<
+        CallReturn<'MAX_GOV_CHANGE_DELAY'>
+      >,
     getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) =>
-      singleQuery(publicClient!, call.getPrice(...args)) as Promise<CallReturn<'getPrice'>>,
+      singleQuery(publicClient!, call.getPrice(...args).at(deployAddress)) as Promise<CallReturn<'getPrice'>>,
     getUsdValue: (...args: ExtractArgs<Contract['calls']['getUsdValue']>) =>
-      singleQuery(publicClient!, call.getUsdValue(...args)) as Promise<CallReturn<'getUsdValue'>>,
+      singleQuery(publicClient!, call.getUsdValue(...args).at(deployAddress)) as Promise<CallReturn<'getUsdValue'>>,
     getAssetAmount: (...args: ExtractArgs<Contract['calls']['getAssetAmount']>) =>
-      singleQuery(publicClient!, call.getAssetAmount(...args)) as Promise<CallReturn<'getAssetAmount'>>,
+      singleQuery(publicClient!, call.getAssetAmount(...args).at(deployAddress)) as Promise<
+        CallReturn<'getAssetAmount'>
+      >,
     hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) =>
-      singleQuery(publicClient!, call.hasPriceFeed(...args)) as Promise<CallReturn<'hasPriceFeed'>>,
+      singleQuery(publicClient!, call.hasPriceFeed(...args).at(deployAddress)) as Promise<CallReturn<'hasPriceFeed'>>,
     getEthUsdValue: (...args: ExtractArgs<Contract['calls']['getEthUsdValue']>) =>
-      singleQuery(publicClient!, call.getEthUsdValue(...args)) as Promise<CallReturn<'getEthUsdValue'>>,
+      singleQuery(publicClient!, call.getEthUsdValue(...args).at(deployAddress)) as Promise<
+        CallReturn<'getEthUsdValue'>
+      >,
     getEthAmount: (...args: ExtractArgs<Contract['calls']['getEthAmount']>) =>
-      singleQuery(publicClient!, call.getEthAmount(...args)) as Promise<CallReturn<'getEthAmount'>>,
+      singleQuery(publicClient!, call.getEthAmount(...args).at(deployAddress)) as Promise<CallReturn<'getEthAmount'>>,
     isValidNewOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['isValidNewOraclePartnerAddr']>) =>
-      singleQuery(publicClient!, call.isValidNewOraclePartnerAddr(...args)) as Promise<
+      singleQuery(publicClient!, call.isValidNewOraclePartnerAddr(...args).at(deployAddress)) as Promise<
         CallReturn<'isValidNewOraclePartnerAddr'>
       >,
     isValidOraclePartnerUpdate: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerUpdate']>) =>
-      singleQuery(publicClient!, call.isValidOraclePartnerUpdate(...args)) as Promise<
+      singleQuery(publicClient!, call.isValidOraclePartnerUpdate(...args).at(deployAddress)) as Promise<
         CallReturn<'isValidOraclePartnerUpdate'>
       >,
     isValidOraclePartnerDisable: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerDisable']>) =>
-      singleQuery(publicClient!, call.isValidOraclePartnerDisable(...args)) as Promise<
+      singleQuery(publicClient!, call.isValidOraclePartnerDisable(...args).at(deployAddress)) as Promise<
         CallReturn<'isValidOraclePartnerDisable'>
       >,
     oracleChangeDelay: (...args: ExtractArgs<Contract['calls']['oracleChangeDelay']>) =>
-      singleQuery(publicClient!, call.oracleChangeDelay(...args)) as Promise<CallReturn<'oracleChangeDelay'>>,
+      singleQuery(publicClient!, call.oracleChangeDelay(...args).at(deployAddress)) as Promise<
+        CallReturn<'oracleChangeDelay'>
+      >,
     getPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['getPriorityOraclePartnerIds']>) =>
-      singleQuery(publicClient!, call.getPriorityOraclePartnerIds(...args)) as Promise<
+      singleQuery(publicClient!, call.getPriorityOraclePartnerIds(...args).at(deployAddress)) as Promise<
         CallReturn<'getPriorityOraclePartnerIds'>
       >,
     areValidPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['areValidPriorityOraclePartnerIds']>) =>
-      singleQuery(publicClient!, call.areValidPriorityOraclePartnerIds(...args)) as Promise<
+      singleQuery(publicClient!, call.areValidPriorityOraclePartnerIds(...args).at(deployAddress)) as Promise<
         CallReturn<'areValidPriorityOraclePartnerIds'>
       >,
     isValidStaleTime: (...args: ExtractArgs<Contract['calls']['isValidStaleTime']>) =>
-      singleQuery(publicClient!, call.isValidStaleTime(...args)) as Promise<CallReturn<'isValidStaleTime'>>,
+      singleQuery(publicClient!, call.isValidStaleTime(...args).at(deployAddress)) as Promise<
+        CallReturn<'isValidStaleTime'>
+      >,
     numOraclePartnersRaw: (...args: ExtractArgs<Contract['calls']['numOraclePartnersRaw']>) =>
-      singleQuery(publicClient!, call.numOraclePartnersRaw(...args)) as Promise<CallReturn<'numOraclePartnersRaw'>>,
+      singleQuery(publicClient!, call.numOraclePartnersRaw(...args).at(deployAddress)) as Promise<
+        CallReturn<'numOraclePartnersRaw'>
+      >,
     isValidOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerAddr']>) =>
-      singleQuery(publicClient!, call.isValidOraclePartnerAddr(...args)) as Promise<
+      singleQuery(publicClient!, call.isValidOraclePartnerAddr(...args).at(deployAddress)) as Promise<
         CallReturn<'isValidOraclePartnerAddr'>
       >,
     isValidOraclePartnerId: (...args: ExtractArgs<Contract['calls']['isValidOraclePartnerId']>) =>
-      singleQuery(publicClient!, call.isValidOraclePartnerId(...args)) as Promise<CallReturn<'isValidOraclePartnerId'>>,
+      singleQuery(publicClient!, call.isValidOraclePartnerId(...args).at(deployAddress)) as Promise<
+        CallReturn<'isValidOraclePartnerId'>
+      >,
     getOraclePartnerId: (...args: ExtractArgs<Contract['calls']['getOraclePartnerId']>) =>
-      singleQuery(publicClient!, call.getOraclePartnerId(...args)) as Promise<CallReturn<'getOraclePartnerId'>>,
+      singleQuery(publicClient!, call.getOraclePartnerId(...args).at(deployAddress)) as Promise<
+        CallReturn<'getOraclePartnerId'>
+      >,
     getOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['getOraclePartnerAddr']>) =>
-      singleQuery(publicClient!, call.getOraclePartnerAddr(...args)) as Promise<CallReturn<'getOraclePartnerAddr'>>,
+      singleQuery(publicClient!, call.getOraclePartnerAddr(...args).at(deployAddress)) as Promise<
+        CallReturn<'getOraclePartnerAddr'>
+      >,
     getOraclePartnerInfo: (...args: ExtractArgs<Contract['calls']['getOraclePartnerInfo']>) =>
-      singleQuery(publicClient!, call.getOraclePartnerInfo(...args)) as Promise<CallReturn<'getOraclePartnerInfo'>>,
+      singleQuery(publicClient!, call.getOraclePartnerInfo(...args).at(deployAddress)) as Promise<
+        CallReturn<'getOraclePartnerInfo'>
+      >,
     getOraclePartnerDescription: (...args: ExtractArgs<Contract['calls']['getOraclePartnerDescription']>) =>
-      singleQuery(publicClient!, call.getOraclePartnerDescription(...args)) as Promise<
+      singleQuery(publicClient!, call.getOraclePartnerDescription(...args).at(deployAddress)) as Promise<
         CallReturn<'getOraclePartnerDescription'>
       >,
     getNumOraclePartners: (...args: ExtractArgs<Contract['calls']['getNumOraclePartners']>) =>
-      singleQuery(publicClient!, call.getNumOraclePartners(...args)) as Promise<CallReturn<'getNumOraclePartners'>>,
+      singleQuery(publicClient!, call.getNumOraclePartners(...args).at(deployAddress)) as Promise<
+        CallReturn<'getNumOraclePartners'>
+      >,
     getLastOraclePartnerAddr: (...args: ExtractArgs<Contract['calls']['getLastOraclePartnerAddr']>) =>
-      singleQuery(publicClient!, call.getLastOraclePartnerAddr(...args)) as Promise<
+      singleQuery(publicClient!, call.getLastOraclePartnerAddr(...args).at(deployAddress)) as Promise<
         CallReturn<'getLastOraclePartnerAddr'>
       >,
     getLastOraclePartnerId: (...args: ExtractArgs<Contract['calls']['getLastOraclePartnerId']>) =>
-      singleQuery(publicClient!, call.getLastOraclePartnerId(...args)) as Promise<CallReturn<'getLastOraclePartnerId'>>,
+      singleQuery(publicClient!, call.getLastOraclePartnerId(...args).at(deployAddress)) as Promise<
+        CallReturn<'getLastOraclePartnerId'>
+      >,
     priorityOraclePartnerIds: (...args: ExtractArgs<Contract['calls']['priorityOraclePartnerIds']>) =>
-      singleQuery(publicClient!, call.priorityOraclePartnerIds(...args)) as Promise<
+      singleQuery(publicClient!, call.priorityOraclePartnerIds(...args).at(deployAddress)) as Promise<
         CallReturn<'priorityOraclePartnerIds'>
       >,
     staleTime: (...args: ExtractArgs<Contract['calls']['staleTime']>) =>
-      singleQuery(publicClient!, call.staleTime(...args)) as Promise<CallReturn<'staleTime'>>,
+      singleQuery(publicClient!, call.staleTime(...args).at(deployAddress)) as Promise<CallReturn<'staleTime'>>,
     ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) =>
-      singleQuery(publicClient!, call.ETH(...args)) as Promise<CallReturn<'ETH'>>,
+      singleQuery(publicClient!, call.ETH(...args).at(deployAddress)) as Promise<CallReturn<'ETH'>>,
     MIN_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MIN_STALE_TIME']>) =>
-      singleQuery(publicClient!, call.MIN_STALE_TIME(...args)) as Promise<CallReturn<'MIN_STALE_TIME'>>,
+      singleQuery(publicClient!, call.MIN_STALE_TIME(...args).at(deployAddress)) as Promise<
+        CallReturn<'MIN_STALE_TIME'>
+      >,
     MAX_STALE_TIME: (...args: ExtractArgs<Contract['calls']['MAX_STALE_TIME']>) =>
-      singleQuery(publicClient!, call.MAX_STALE_TIME(...args)) as Promise<CallReturn<'MAX_STALE_TIME'>>,
+      singleQuery(publicClient!, call.MAX_STALE_TIME(...args).at(deployAddress)) as Promise<
+        CallReturn<'MAX_STALE_TIME'>
+      >,
 
     // Mutations
     changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) =>
-      mutate(walletClient!, mutation.changeGovernance)(...args),
+      mutate(walletClient!, mutation.changeGovernance, { address: deployAddress })(...args),
     confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) =>
-      mutate(walletClient!, mutation.confirmGovernanceChange)(...args),
+      mutate(walletClient!, mutation.confirmGovernanceChange, { address: deployAddress })(...args),
     cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) =>
-      mutate(walletClient!, mutation.cancelGovernanceChange)(...args),
+      mutate(walletClient!, mutation.cancelGovernanceChange, { address: deployAddress })(...args),
     setGovernanceChangeDelay: (...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>) =>
-      mutate(walletClient!, mutation.setGovernanceChangeDelay)(...args),
+      mutate(walletClient!, mutation.setGovernanceChangeDelay, { address: deployAddress })(...args),
     registerNewOraclePartner: (...args: ExtractArgs<Contract['mutations']['registerNewOraclePartner']>) =>
-      mutate(walletClient!, mutation.registerNewOraclePartner)(...args),
+      mutate(walletClient!, mutation.registerNewOraclePartner, { address: deployAddress })(...args),
     confirmNewOraclePartnerRegistration: (
       ...args: ExtractArgs<Contract['mutations']['confirmNewOraclePartnerRegistration']>
-    ) => mutate(walletClient!, mutation.confirmNewOraclePartnerRegistration)(...args),
+    ) => mutate(walletClient!, mutation.confirmNewOraclePartnerRegistration, { address: deployAddress })(...args),
     cancelPendingNewOraclePartner: (...args: ExtractArgs<Contract['mutations']['cancelPendingNewOraclePartner']>) =>
-      mutate(walletClient!, mutation.cancelPendingNewOraclePartner)(...args),
+      mutate(walletClient!, mutation.cancelPendingNewOraclePartner, { address: deployAddress })(...args),
     updateOraclePartnerAddr: (...args: ExtractArgs<Contract['mutations']['updateOraclePartnerAddr']>) =>
-      mutate(walletClient!, mutation.updateOraclePartnerAddr)(...args),
+      mutate(walletClient!, mutation.updateOraclePartnerAddr, { address: deployAddress })(...args),
     confirmOraclePartnerUpdate: (...args: ExtractArgs<Contract['mutations']['confirmOraclePartnerUpdate']>) =>
-      mutate(walletClient!, mutation.confirmOraclePartnerUpdate)(...args),
+      mutate(walletClient!, mutation.confirmOraclePartnerUpdate, { address: deployAddress })(...args),
     cancelPendingOraclePartnerUpdate: (
       ...args: ExtractArgs<Contract['mutations']['cancelPendingOraclePartnerUpdate']>
-    ) => mutate(walletClient!, mutation.cancelPendingOraclePartnerUpdate)(...args),
+    ) => mutate(walletClient!, mutation.cancelPendingOraclePartnerUpdate, { address: deployAddress })(...args),
     disableOraclePartnerAddr: (...args: ExtractArgs<Contract['mutations']['disableOraclePartnerAddr']>) =>
-      mutate(walletClient!, mutation.disableOraclePartnerAddr)(...args),
+      mutate(walletClient!, mutation.disableOraclePartnerAddr, { address: deployAddress })(...args),
     confirmOraclePartnerDisable: (...args: ExtractArgs<Contract['mutations']['confirmOraclePartnerDisable']>) =>
-      mutate(walletClient!, mutation.confirmOraclePartnerDisable)(...args),
+      mutate(walletClient!, mutation.confirmOraclePartnerDisable, { address: deployAddress })(...args),
     cancelPendingOraclePartnerDisable: (
       ...args: ExtractArgs<Contract['mutations']['cancelPendingOraclePartnerDisable']>
-    ) => mutate(walletClient!, mutation.cancelPendingOraclePartnerDisable)(...args),
+    ) => mutate(walletClient!, mutation.cancelPendingOraclePartnerDisable, { address: deployAddress })(...args),
     setOraclePartnerChangeDelay: (...args: ExtractArgs<Contract['mutations']['setOraclePartnerChangeDelay']>) =>
-      mutate(walletClient!, mutation.setOraclePartnerChangeDelay)(...args),
+      mutate(walletClient!, mutation.setOraclePartnerChangeDelay, { address: deployAddress })(...args),
     setOraclePartnerChangeDelayToMin: (
       ...args: ExtractArgs<Contract['mutations']['setOraclePartnerChangeDelayToMin']>
-    ) => mutate(walletClient!, mutation.setOraclePartnerChangeDelayToMin)(...args),
+    ) => mutate(walletClient!, mutation.setOraclePartnerChangeDelayToMin, { address: deployAddress })(...args),
     setPriorityOraclePartnerIds: (...args: ExtractArgs<Contract['mutations']['setPriorityOraclePartnerIds']>) =>
-      mutate(walletClient!, mutation.setPriorityOraclePartnerIds)(...args),
+      mutate(walletClient!, mutation.setPriorityOraclePartnerIds, { address: deployAddress })(...args),
     setStaleTime: (...args: ExtractArgs<Contract['mutations']['setStaleTime']>) =>
-      mutate(walletClient!, mutation.setStaleTime)(...args),
+      mutate(walletClient!, mutation.setStaleTime, { address: deployAddress })(...args),
   }
 }

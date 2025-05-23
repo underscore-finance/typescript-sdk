@@ -588,6 +588,8 @@ export const mutation: {
 }
 
 export type SDK = {
+  deployAddress: Address | undefined
+  abi: typeof abi
   getAssetOpportunities: (
     ...args: ExtractArgs<Contract['calls']['getAssetOpportunities']>
   ) => Promise<CallReturn<'getAssetOpportunities'>>
@@ -614,46 +616,48 @@ export type SDK = {
   withdrawTokens: (...args: ExtractArgs<Contract['mutations']['withdrawTokens']>) => Promise<Address>
 }
 
-export function toSdk(address: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(deployAddress: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
+    deployAddress,
+    abi,
     // Queries
     getAssetOpportunities: (...args: ExtractArgs<Contract['calls']['getAssetOpportunities']>) =>
-      singleQuery(publicClient!, call.getAssetOpportunities(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getAssetOpportunities(...args).at(deployAddress)) as Promise<
         CallReturn<'getAssetOpportunities'>
       >,
     getUnderlyingAmount: (...args: ExtractArgs<Contract['calls']['getUnderlyingAmount']>) =>
-      singleQuery(publicClient!, call.getUnderlyingAmount(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getUnderlyingAmount(...args).at(deployAddress)) as Promise<
         CallReturn<'getUnderlyingAmount'>
       >,
     getUnderlyingAsset: (...args: ExtractArgs<Contract['calls']['getUnderlyingAsset']>) =>
-      singleQuery(publicClient!, call.getUnderlyingAsset(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getUnderlyingAsset(...args).at(deployAddress)) as Promise<
         CallReturn<'getUnderlyingAsset'>
       >,
     getAssets: (...args: ExtractArgs<Contract['calls']['getAssets']>) =>
-      singleQuery(publicClient!, call.getAssets(...args).at(address)) as Promise<CallReturn<'getAssets'>>,
+      singleQuery(publicClient!, call.getAssets(...args).at(deployAddress)) as Promise<CallReturn<'getAssets'>>,
     isVaultToken: (...args: ExtractArgs<Contract['calls']['isVaultToken']>) =>
-      singleQuery(publicClient!, call.isVaultToken(...args).at(address)) as Promise<CallReturn<'isVaultToken'>>,
+      singleQuery(publicClient!, call.isVaultToken(...args).at(deployAddress)) as Promise<CallReturn<'isVaultToken'>>,
     getVaultTokenAmount: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>) =>
-      singleQuery(publicClient!, call.getVaultTokenAmount(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getVaultTokenAmount(...args).at(deployAddress)) as Promise<
         CallReturn<'getVaultTokenAmount'>
       >,
     getUsdValueOfVaultToken: (...args: ExtractArgs<Contract['calls']['getUsdValueOfVaultToken']>) =>
-      singleQuery(publicClient!, call.getUsdValueOfVaultToken(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getUsdValueOfVaultToken(...args).at(deployAddress)) as Promise<
         CallReturn<'getUsdValueOfVaultToken'>
       >,
     getUnderlyingData: (...args: ExtractArgs<Contract['calls']['getUnderlyingData']>) =>
-      singleQuery(publicClient!, call.getUnderlyingData(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getUnderlyingData(...args).at(deployAddress)) as Promise<
         CallReturn<'getUnderlyingData'>
       >,
     totalAssets: (...args: ExtractArgs<Contract['calls']['totalAssets']>) =>
-      singleQuery(publicClient!, call.totalAssets(...args).at(address)) as Promise<CallReturn<'totalAssets'>>,
+      singleQuery(publicClient!, call.totalAssets(...args).at(deployAddress)) as Promise<CallReturn<'totalAssets'>>,
     totalBorrows: (...args: ExtractArgs<Contract['calls']['totalBorrows']>) =>
-      singleQuery(publicClient!, call.totalBorrows(...args).at(address)) as Promise<CallReturn<'totalBorrows'>>,
+      singleQuery(publicClient!, call.totalBorrows(...args).at(deployAddress)) as Promise<CallReturn<'totalBorrows'>>,
 
     // Mutations
     depositTokens: (...args: ExtractArgs<Contract['mutations']['depositTokens']>) =>
-      mutate(walletClient!, mutation.depositTokens, { address })(...args),
+      mutate(walletClient!, mutation.depositTokens, { address: deployAddress })(...args),
     withdrawTokens: (...args: ExtractArgs<Contract['mutations']['withdrawTokens']>) =>
-      mutate(walletClient!, mutation.withdrawTokens, { address })(...args),
+      mutate(walletClient!, mutation.withdrawTokens, { address: deployAddress })(...args),
   }
 }

@@ -321,6 +321,8 @@ export const mutation: {
 }
 
 export type SDK = {
+  deployAddress: Address | undefined
+  abi: typeof abi
   getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => Promise<CallReturn<'getPrice'>>
   getPriceAndHasFeed: (
     ...args: ExtractArgs<Contract['calls']['getPriceAndHasFeed']>
@@ -335,26 +337,30 @@ export type SDK = {
   setOraclePartnerId: (...args: ExtractArgs<Contract['mutations']['setOraclePartnerId']>) => Promise<Address>
 }
 
-export function toSdk(address: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(deployAddress: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
+    deployAddress,
+    abi,
     // Queries
     getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) =>
-      singleQuery(publicClient!, call.getPrice(...args).at(address)) as Promise<CallReturn<'getPrice'>>,
+      singleQuery(publicClient!, call.getPrice(...args).at(deployAddress)) as Promise<CallReturn<'getPrice'>>,
     getPriceAndHasFeed: (...args: ExtractArgs<Contract['calls']['getPriceAndHasFeed']>) =>
-      singleQuery(publicClient!, call.getPriceAndHasFeed(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getPriceAndHasFeed(...args).at(deployAddress)) as Promise<
         CallReturn<'getPriceAndHasFeed'>
       >,
     hasPriceFeed: (...args: ExtractArgs<Contract['calls']['hasPriceFeed']>) =>
-      singleQuery(publicClient!, call.hasPriceFeed(...args).at(address)) as Promise<CallReturn<'hasPriceFeed'>>,
+      singleQuery(publicClient!, call.hasPriceFeed(...args).at(deployAddress)) as Promise<CallReturn<'hasPriceFeed'>>,
     oraclePartnerId: (...args: ExtractArgs<Contract['calls']['oraclePartnerId']>) =>
-      singleQuery(publicClient!, call.oraclePartnerId(...args).at(address)) as Promise<CallReturn<'oraclePartnerId'>>,
+      singleQuery(publicClient!, call.oraclePartnerId(...args).at(deployAddress)) as Promise<
+        CallReturn<'oraclePartnerId'>
+      >,
     getConfiguredAssets: (...args: ExtractArgs<Contract['calls']['getConfiguredAssets']>) =>
-      singleQuery(publicClient!, call.getConfiguredAssets(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getConfiguredAssets(...args).at(deployAddress)) as Promise<
         CallReturn<'getConfiguredAssets'>
       >,
 
     // Mutations
     setOraclePartnerId: (...args: ExtractArgs<Contract['mutations']['setOraclePartnerId']>) =>
-      mutate(walletClient!, mutation.setOraclePartnerId, { address })(...args),
+      mutate(walletClient!, mutation.setOraclePartnerId, { address: deployAddress })(...args),
   }
 }

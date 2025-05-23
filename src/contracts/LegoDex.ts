@@ -893,6 +893,8 @@ export const mutation: {
 }
 
 export type SDK = {
+  deployAddress: Address | undefined
+  abi: typeof abi
   getLpToken: (...args: ExtractArgs<Contract['calls']['getLpToken']>) => Promise<CallReturn<'getLpToken'>>
   getPoolForLpToken: (
     ...args: ExtractArgs<Contract['calls']['getPoolForLpToken']>
@@ -924,48 +926,56 @@ export type SDK = {
   removeLiquidity: (...args: ExtractArgs<Contract['mutations']['removeLiquidity']>) => Promise<Address>
 }
 
-export function toSdk(address: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(deployAddress: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
+    deployAddress,
+    abi,
     // Queries
     getLpToken: (...args: ExtractArgs<Contract['calls']['getLpToken']>) =>
-      singleQuery(publicClient!, call.getLpToken(...args).at(address)) as Promise<CallReturn<'getLpToken'>>,
+      singleQuery(publicClient!, call.getLpToken(...args).at(deployAddress)) as Promise<CallReturn<'getLpToken'>>,
     getPoolForLpToken: (...args: ExtractArgs<Contract['calls']['getPoolForLpToken']>) =>
-      singleQuery(publicClient!, call.getPoolForLpToken(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getPoolForLpToken(...args).at(deployAddress)) as Promise<
         CallReturn<'getPoolForLpToken'>
       >,
     getSwapAmountOut: (...args: ExtractArgs<Contract['calls']['getSwapAmountOut']>) =>
-      singleQuery(publicClient!, call.getSwapAmountOut(...args).at(address)) as Promise<CallReturn<'getSwapAmountOut'>>,
+      singleQuery(publicClient!, call.getSwapAmountOut(...args).at(deployAddress)) as Promise<
+        CallReturn<'getSwapAmountOut'>
+      >,
     getSwapAmountIn: (...args: ExtractArgs<Contract['calls']['getSwapAmountIn']>) =>
-      singleQuery(publicClient!, call.getSwapAmountIn(...args).at(address)) as Promise<CallReturn<'getSwapAmountIn'>>,
+      singleQuery(publicClient!, call.getSwapAmountIn(...args).at(deployAddress)) as Promise<
+        CallReturn<'getSwapAmountIn'>
+      >,
     getAddLiqAmountsIn: (...args: ExtractArgs<Contract['calls']['getAddLiqAmountsIn']>) =>
-      singleQuery(publicClient!, call.getAddLiqAmountsIn(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getAddLiqAmountsIn(...args).at(deployAddress)) as Promise<
         CallReturn<'getAddLiqAmountsIn'>
       >,
     getRemoveLiqAmountsOut: (...args: ExtractArgs<Contract['calls']['getRemoveLiqAmountsOut']>) =>
-      singleQuery(publicClient!, call.getRemoveLiqAmountsOut(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getRemoveLiqAmountsOut(...args).at(deployAddress)) as Promise<
         CallReturn<'getRemoveLiqAmountsOut'>
       >,
     getPriceUnsafe: (...args: ExtractArgs<Contract['calls']['getPriceUnsafe']>) =>
-      singleQuery(publicClient!, call.getPriceUnsafe(...args).at(address)) as Promise<CallReturn<'getPriceUnsafe'>>,
+      singleQuery(publicClient!, call.getPriceUnsafe(...args).at(deployAddress)) as Promise<
+        CallReturn<'getPriceUnsafe'>
+      >,
     getBestSwapAmountOut: (...args: ExtractArgs<Contract['calls']['getBestSwapAmountOut']>) =>
-      singleQuery(publicClient!, call.getBestSwapAmountOut(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getBestSwapAmountOut(...args).at(deployAddress)) as Promise<
         CallReturn<'getBestSwapAmountOut'>
       >,
     getBestSwapAmountIn: (...args: ExtractArgs<Contract['calls']['getBestSwapAmountIn']>) =>
-      singleQuery(publicClient!, call.getBestSwapAmountIn(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getBestSwapAmountIn(...args).at(deployAddress)) as Promise<
         CallReturn<'getBestSwapAmountIn'>
       >,
     getCoreRouterPool: (...args: ExtractArgs<Contract['calls']['getCoreRouterPool']>) =>
-      singleQuery(publicClient!, call.getCoreRouterPool(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getCoreRouterPool(...args).at(deployAddress)) as Promise<
         CallReturn<'getCoreRouterPool'>
       >,
 
     // Mutations
     swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) =>
-      mutate(walletClient!, mutation.swapTokens, { address })(...args),
+      mutate(walletClient!, mutation.swapTokens, { address: deployAddress })(...args),
     addLiquidity: (...args: ExtractArgs<Contract['mutations']['addLiquidity']>) =>
-      mutate(walletClient!, mutation.addLiquidity, { address })(...args),
+      mutate(walletClient!, mutation.addLiquidity, { address: deployAddress })(...args),
     removeLiquidity: (...args: ExtractArgs<Contract['mutations']['removeLiquidity']>) =>
-      mutate(walletClient!, mutation.removeLiquidity, { address })(...args),
+      mutate(walletClient!, mutation.removeLiquidity, { address: deployAddress })(...args),
   }
 }

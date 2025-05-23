@@ -1509,6 +1509,8 @@ export const mutation: {
 }
 
 export type SDK = {
+  deployAddress: Address | undefined
+  abi: typeof abi
   getAssetOpportunities: (
     ...args: ExtractArgs<Contract['calls']['getAssetOpportunities']>
   ) => Promise<CallReturn<'getAssetOpportunities'>>
@@ -1591,6 +1593,8 @@ export type SDK = {
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
+    deployAddress,
+    abi,
     // Queries
     getAssetOpportunities: (...args: ExtractArgs<Contract['calls']['getAssetOpportunities']>) =>
       singleQuery(publicClient!, call.getAssetOpportunities(...args)) as Promise<CallReturn<'getAssetOpportunities'>>,

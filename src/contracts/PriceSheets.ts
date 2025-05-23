@@ -1562,6 +1562,8 @@ export const mutation: {
 }
 
 export type SDK = {
+  deployAddress: Address | undefined
+  abi: typeof abi
   canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) => Promise<CallReturn<'canGovern'>>
   hasPendingGovChange: (
     ...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>
@@ -1656,106 +1658,148 @@ export type SDK = {
   activate: (...args: ExtractArgs<Contract['mutations']['activate']>) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(deployAddress: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
+    deployAddress,
+    abi,
     // Queries
     canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) =>
-      singleQuery(publicClient!, call.canGovern(...args)) as Promise<CallReturn<'canGovern'>>,
+      singleQuery(publicClient!, call.canGovern(...args).at(deployAddress)) as Promise<CallReturn<'canGovern'>>,
     hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
-      singleQuery(publicClient!, call.hasPendingGovChange(...args)) as Promise<CallReturn<'hasPendingGovChange'>>,
+      singleQuery(publicClient!, call.hasPendingGovChange(...args).at(deployAddress)) as Promise<
+        CallReturn<'hasPendingGovChange'>
+      >,
     governance: (...args: ExtractArgs<Contract['calls']['governance']>) =>
-      singleQuery(publicClient!, call.governance(...args)) as Promise<CallReturn<'governance'>>,
+      singleQuery(publicClient!, call.governance(...args).at(deployAddress)) as Promise<CallReturn<'governance'>>,
     pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) =>
-      singleQuery(publicClient!, call.pendingGov(...args)) as Promise<CallReturn<'pendingGov'>>,
+      singleQuery(publicClient!, call.pendingGov(...args).at(deployAddress)) as Promise<CallReturn<'pendingGov'>>,
     govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) =>
-      singleQuery(publicClient!, call.govChangeDelay(...args)) as Promise<CallReturn<'govChangeDelay'>>,
+      singleQuery(publicClient!, call.govChangeDelay(...args).at(deployAddress)) as Promise<
+        CallReturn<'govChangeDelay'>
+      >,
     MIN_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MIN_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MIN_GOV_CHANGE_DELAY'>>,
+      singleQuery(publicClient!, call.MIN_GOV_CHANGE_DELAY(...args).at(deployAddress)) as Promise<
+        CallReturn<'MIN_GOV_CHANGE_DELAY'>
+      >,
     MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MAX_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>,
+      singleQuery(publicClient!, call.MAX_GOV_CHANGE_DELAY(...args).at(deployAddress)) as Promise<
+        CallReturn<'MAX_GOV_CHANGE_DELAY'>
+      >,
     getCombinedSubData: (...args: ExtractArgs<Contract['calls']['getCombinedSubData']>) =>
-      singleQuery(publicClient!, call.getCombinedSubData(...args)) as Promise<CallReturn<'getCombinedSubData'>>,
+      singleQuery(publicClient!, call.getCombinedSubData(...args).at(deployAddress)) as Promise<
+        CallReturn<'getCombinedSubData'>
+      >,
     getAgentSubPriceData: (...args: ExtractArgs<Contract['calls']['getAgentSubPriceData']>) =>
-      singleQuery(publicClient!, call.getAgentSubPriceData(...args)) as Promise<CallReturn<'getAgentSubPriceData'>>,
+      singleQuery(publicClient!, call.getAgentSubPriceData(...args).at(deployAddress)) as Promise<
+        CallReturn<'getAgentSubPriceData'>
+      >,
     isValidSubPrice: (...args: ExtractArgs<Contract['calls']['isValidSubPrice']>) =>
-      singleQuery(publicClient!, call.isValidSubPrice(...args)) as Promise<CallReturn<'isValidSubPrice'>>,
+      singleQuery(publicClient!, call.isValidSubPrice(...args).at(deployAddress)) as Promise<
+        CallReturn<'isValidSubPrice'>
+      >,
     getTransactionFeeDataWithAmbassadorRatio: (
       ...args: ExtractArgs<Contract['calls']['getTransactionFeeDataWithAmbassadorRatio']>
     ) =>
-      singleQuery(publicClient!, call.getTransactionFeeDataWithAmbassadorRatio(...args)) as Promise<
+      singleQuery(publicClient!, call.getTransactionFeeDataWithAmbassadorRatio(...args).at(deployAddress)) as Promise<
         CallReturn<'getTransactionFeeDataWithAmbassadorRatio'>
       >,
     getTransactionFeeData: (...args: ExtractArgs<Contract['calls']['getTransactionFeeData']>) =>
-      singleQuery(publicClient!, call.getTransactionFeeData(...args)) as Promise<CallReturn<'getTransactionFeeData'>>,
+      singleQuery(publicClient!, call.getTransactionFeeData(...args).at(deployAddress)) as Promise<
+        CallReturn<'getTransactionFeeData'>
+      >,
     isValidTxPriceSheet: (...args: ExtractArgs<Contract['calls']['isValidTxPriceSheet']>) =>
-      singleQuery(publicClient!, call.isValidTxPriceSheet(...args)) as Promise<CallReturn<'isValidTxPriceSheet'>>,
+      singleQuery(publicClient!, call.isValidTxPriceSheet(...args).at(deployAddress)) as Promise<
+        CallReturn<'isValidTxPriceSheet'>
+      >,
     protocolRecipient: (...args: ExtractArgs<Contract['calls']['protocolRecipient']>) =>
-      singleQuery(publicClient!, call.protocolRecipient(...args)) as Promise<CallReturn<'protocolRecipient'>>,
+      singleQuery(publicClient!, call.protocolRecipient(...args).at(deployAddress)) as Promise<
+        CallReturn<'protocolRecipient'>
+      >,
     protocolTxPriceData: (...args: ExtractArgs<Contract['calls']['protocolTxPriceData']>) =>
-      singleQuery(publicClient!, call.protocolTxPriceData(...args)) as Promise<CallReturn<'protocolTxPriceData'>>,
+      singleQuery(publicClient!, call.protocolTxPriceData(...args).at(deployAddress)) as Promise<
+        CallReturn<'protocolTxPriceData'>
+      >,
     protocolSubPriceData: (...args: ExtractArgs<Contract['calls']['protocolSubPriceData']>) =>
-      singleQuery(publicClient!, call.protocolSubPriceData(...args)) as Promise<CallReturn<'protocolSubPriceData'>>,
+      singleQuery(publicClient!, call.protocolSubPriceData(...args).at(deployAddress)) as Promise<
+        CallReturn<'protocolSubPriceData'>
+      >,
     isAgentSubPricingEnabled: (...args: ExtractArgs<Contract['calls']['isAgentSubPricingEnabled']>) =>
-      singleQuery(publicClient!, call.isAgentSubPricingEnabled(...args)) as Promise<
+      singleQuery(publicClient!, call.isAgentSubPricingEnabled(...args).at(deployAddress)) as Promise<
         CallReturn<'isAgentSubPricingEnabled'>
       >,
     agentSubPriceData: (...args: ExtractArgs<Contract['calls']['agentSubPriceData']>) =>
-      singleQuery(publicClient!, call.agentSubPriceData(...args)) as Promise<CallReturn<'agentSubPriceData'>>,
+      singleQuery(publicClient!, call.agentSubPriceData(...args).at(deployAddress)) as Promise<
+        CallReturn<'agentSubPriceData'>
+      >,
     pendingAgentSubPrices: (...args: ExtractArgs<Contract['calls']['pendingAgentSubPrices']>) =>
-      singleQuery(publicClient!, call.pendingAgentSubPrices(...args)) as Promise<CallReturn<'pendingAgentSubPrices'>>,
+      singleQuery(publicClient!, call.pendingAgentSubPrices(...args).at(deployAddress)) as Promise<
+        CallReturn<'pendingAgentSubPrices'>
+      >,
     priceChangeDelay: (...args: ExtractArgs<Contract['calls']['priceChangeDelay']>) =>
-      singleQuery(publicClient!, call.priceChangeDelay(...args)) as Promise<CallReturn<'priceChangeDelay'>>,
+      singleQuery(publicClient!, call.priceChangeDelay(...args).at(deployAddress)) as Promise<
+        CallReturn<'priceChangeDelay'>
+      >,
     ambassadorRatio: (...args: ExtractArgs<Contract['calls']['ambassadorRatio']>) =>
-      singleQuery(publicClient!, call.ambassadorRatio(...args)) as Promise<CallReturn<'ambassadorRatio'>>,
+      singleQuery(publicClient!, call.ambassadorRatio(...args).at(deployAddress)) as Promise<
+        CallReturn<'ambassadorRatio'>
+      >,
     ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) =>
-      singleQuery(publicClient!, call.ADDY_REGISTRY(...args)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
+      singleQuery(publicClient!, call.ADDY_REGISTRY(...args).at(deployAddress)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
     isActivated: (...args: ExtractArgs<Contract['calls']['isActivated']>) =>
-      singleQuery(publicClient!, call.isActivated(...args)) as Promise<CallReturn<'isActivated'>>,
+      singleQuery(publicClient!, call.isActivated(...args).at(deployAddress)) as Promise<CallReturn<'isActivated'>>,
     MIN_TRIAL_PERIOD: (...args: ExtractArgs<Contract['calls']['MIN_TRIAL_PERIOD']>) =>
-      singleQuery(publicClient!, call.MIN_TRIAL_PERIOD(...args)) as Promise<CallReturn<'MIN_TRIAL_PERIOD'>>,
+      singleQuery(publicClient!, call.MIN_TRIAL_PERIOD(...args).at(deployAddress)) as Promise<
+        CallReturn<'MIN_TRIAL_PERIOD'>
+      >,
     MAX_TRIAL_PERIOD: (...args: ExtractArgs<Contract['calls']['MAX_TRIAL_PERIOD']>) =>
-      singleQuery(publicClient!, call.MAX_TRIAL_PERIOD(...args)) as Promise<CallReturn<'MAX_TRIAL_PERIOD'>>,
+      singleQuery(publicClient!, call.MAX_TRIAL_PERIOD(...args).at(deployAddress)) as Promise<
+        CallReturn<'MAX_TRIAL_PERIOD'>
+      >,
     MIN_PAY_PERIOD: (...args: ExtractArgs<Contract['calls']['MIN_PAY_PERIOD']>) =>
-      singleQuery(publicClient!, call.MIN_PAY_PERIOD(...args)) as Promise<CallReturn<'MIN_PAY_PERIOD'>>,
+      singleQuery(publicClient!, call.MIN_PAY_PERIOD(...args).at(deployAddress)) as Promise<
+        CallReturn<'MIN_PAY_PERIOD'>
+      >,
     MAX_PAY_PERIOD: (...args: ExtractArgs<Contract['calls']['MAX_PAY_PERIOD']>) =>
-      singleQuery(publicClient!, call.MAX_PAY_PERIOD(...args)) as Promise<CallReturn<'MAX_PAY_PERIOD'>>,
+      singleQuery(publicClient!, call.MAX_PAY_PERIOD(...args).at(deployAddress)) as Promise<
+        CallReturn<'MAX_PAY_PERIOD'>
+      >,
     MIN_PRICE_CHANGE_BUFFER: (...args: ExtractArgs<Contract['calls']['MIN_PRICE_CHANGE_BUFFER']>) =>
-      singleQuery(publicClient!, call.MIN_PRICE_CHANGE_BUFFER(...args)) as Promise<
+      singleQuery(publicClient!, call.MIN_PRICE_CHANGE_BUFFER(...args).at(deployAddress)) as Promise<
         CallReturn<'MIN_PRICE_CHANGE_BUFFER'>
       >,
 
     // Mutations
     changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) =>
-      mutate(walletClient!, mutation.changeGovernance)(...args),
+      mutate(walletClient!, mutation.changeGovernance, { address: deployAddress })(...args),
     confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) =>
-      mutate(walletClient!, mutation.confirmGovernanceChange)(...args),
+      mutate(walletClient!, mutation.confirmGovernanceChange, { address: deployAddress })(...args),
     cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) =>
-      mutate(walletClient!, mutation.cancelGovernanceChange)(...args),
+      mutate(walletClient!, mutation.cancelGovernanceChange, { address: deployAddress })(...args),
     setGovernanceChangeDelay: (...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>) =>
-      mutate(walletClient!, mutation.setGovernanceChangeDelay)(...args),
+      mutate(walletClient!, mutation.setGovernanceChangeDelay, { address: deployAddress })(...args),
     setAgentSubPrice: (...args: ExtractArgs<Contract['mutations']['setAgentSubPrice']>) =>
-      mutate(walletClient!, mutation.setAgentSubPrice)(...args),
+      mutate(walletClient!, mutation.setAgentSubPrice, { address: deployAddress })(...args),
     finalizePendingAgentSubPrice: (...args: ExtractArgs<Contract['mutations']['finalizePendingAgentSubPrice']>) =>
-      mutate(walletClient!, mutation.finalizePendingAgentSubPrice)(...args),
+      mutate(walletClient!, mutation.finalizePendingAgentSubPrice, { address: deployAddress })(...args),
     removeAgentSubPrice: (...args: ExtractArgs<Contract['mutations']['removeAgentSubPrice']>) =>
-      mutate(walletClient!, mutation.removeAgentSubPrice)(...args),
+      mutate(walletClient!, mutation.removeAgentSubPrice, { address: deployAddress })(...args),
     setAgentSubPricingEnabled: (...args: ExtractArgs<Contract['mutations']['setAgentSubPricingEnabled']>) =>
-      mutate(walletClient!, mutation.setAgentSubPricingEnabled)(...args),
+      mutate(walletClient!, mutation.setAgentSubPricingEnabled, { address: deployAddress })(...args),
     setProtocolSubPrice: (...args: ExtractArgs<Contract['mutations']['setProtocolSubPrice']>) =>
-      mutate(walletClient!, mutation.setProtocolSubPrice)(...args),
+      mutate(walletClient!, mutation.setProtocolSubPrice, { address: deployAddress })(...args),
     removeProtocolSubPrice: (...args: ExtractArgs<Contract['mutations']['removeProtocolSubPrice']>) =>
-      mutate(walletClient!, mutation.removeProtocolSubPrice)(...args),
+      mutate(walletClient!, mutation.removeProtocolSubPrice, { address: deployAddress })(...args),
     setProtocolTxPriceSheet: (...args: ExtractArgs<Contract['mutations']['setProtocolTxPriceSheet']>) =>
-      mutate(walletClient!, mutation.setProtocolTxPriceSheet)(...args),
+      mutate(walletClient!, mutation.setProtocolTxPriceSheet, { address: deployAddress })(...args),
     removeProtocolTxPriceSheet: (...args: ExtractArgs<Contract['mutations']['removeProtocolTxPriceSheet']>) =>
-      mutate(walletClient!, mutation.removeProtocolTxPriceSheet)(...args),
+      mutate(walletClient!, mutation.removeProtocolTxPriceSheet, { address: deployAddress })(...args),
     setProtocolRecipient: (...args: ExtractArgs<Contract['mutations']['setProtocolRecipient']>) =>
-      mutate(walletClient!, mutation.setProtocolRecipient)(...args),
+      mutate(walletClient!, mutation.setProtocolRecipient, { address: deployAddress })(...args),
     setPriceChangeDelay: (...args: ExtractArgs<Contract['mutations']['setPriceChangeDelay']>) =>
-      mutate(walletClient!, mutation.setPriceChangeDelay)(...args),
+      mutate(walletClient!, mutation.setPriceChangeDelay, { address: deployAddress })(...args),
     setAmbassadorRatio: (...args: ExtractArgs<Contract['mutations']['setAmbassadorRatio']>) =>
-      mutate(walletClient!, mutation.setAmbassadorRatio)(...args),
+      mutate(walletClient!, mutation.setAmbassadorRatio, { address: deployAddress })(...args),
     activate: (...args: ExtractArgs<Contract['mutations']['activate']>) =>
-      mutate(walletClient!, mutation.activate)(...args),
+      mutate(walletClient!, mutation.activate, { address: deployAddress })(...args),
   }
 }

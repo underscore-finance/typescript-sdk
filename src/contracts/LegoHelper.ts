@@ -2171,6 +2171,8 @@ export const mutation: {
 }
 
 export type SDK = {
+  deployAddress: Address | undefined
+  abi: typeof abi
   aaveV3: (...args: ExtractArgs<Contract['calls']['aaveV3']>) => Promise<CallReturn<'aaveV3'>>
   aaveV3Id: (...args: ExtractArgs<Contract['calls']['aaveV3Id']>) => Promise<CallReturn<'aaveV3Id'>>
   compoundV3: (...args: ExtractArgs<Contract['calls']['compoundV3']>) => Promise<CallReturn<'compoundV3'>>
@@ -2260,123 +2262,137 @@ export type SDK = {
   ) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(deployAddress: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
+    deployAddress,
+    abi,
     // Queries
     aaveV3: (...args: ExtractArgs<Contract['calls']['aaveV3']>) =>
-      singleQuery(publicClient!, call.aaveV3(...args)) as Promise<CallReturn<'aaveV3'>>,
+      singleQuery(publicClient!, call.aaveV3(...args).at(deployAddress)) as Promise<CallReturn<'aaveV3'>>,
     aaveV3Id: (...args: ExtractArgs<Contract['calls']['aaveV3Id']>) =>
-      singleQuery(publicClient!, call.aaveV3Id(...args)) as Promise<CallReturn<'aaveV3Id'>>,
+      singleQuery(publicClient!, call.aaveV3Id(...args).at(deployAddress)) as Promise<CallReturn<'aaveV3Id'>>,
     compoundV3: (...args: ExtractArgs<Contract['calls']['compoundV3']>) =>
-      singleQuery(publicClient!, call.compoundV3(...args)) as Promise<CallReturn<'compoundV3'>>,
+      singleQuery(publicClient!, call.compoundV3(...args).at(deployAddress)) as Promise<CallReturn<'compoundV3'>>,
     compoundV3Id: (...args: ExtractArgs<Contract['calls']['compoundV3Id']>) =>
-      singleQuery(publicClient!, call.compoundV3Id(...args)) as Promise<CallReturn<'compoundV3Id'>>,
+      singleQuery(publicClient!, call.compoundV3Id(...args).at(deployAddress)) as Promise<CallReturn<'compoundV3Id'>>,
     euler: (...args: ExtractArgs<Contract['calls']['euler']>) =>
-      singleQuery(publicClient!, call.euler(...args)) as Promise<CallReturn<'euler'>>,
+      singleQuery(publicClient!, call.euler(...args).at(deployAddress)) as Promise<CallReturn<'euler'>>,
     eulerId: (...args: ExtractArgs<Contract['calls']['eulerId']>) =>
-      singleQuery(publicClient!, call.eulerId(...args)) as Promise<CallReturn<'eulerId'>>,
+      singleQuery(publicClient!, call.eulerId(...args).at(deployAddress)) as Promise<CallReturn<'eulerId'>>,
     fluid: (...args: ExtractArgs<Contract['calls']['fluid']>) =>
-      singleQuery(publicClient!, call.fluid(...args)) as Promise<CallReturn<'fluid'>>,
+      singleQuery(publicClient!, call.fluid(...args).at(deployAddress)) as Promise<CallReturn<'fluid'>>,
     fluidId: (...args: ExtractArgs<Contract['calls']['fluidId']>) =>
-      singleQuery(publicClient!, call.fluidId(...args)) as Promise<CallReturn<'fluidId'>>,
+      singleQuery(publicClient!, call.fluidId(...args).at(deployAddress)) as Promise<CallReturn<'fluidId'>>,
     moonwell: (...args: ExtractArgs<Contract['calls']['moonwell']>) =>
-      singleQuery(publicClient!, call.moonwell(...args)) as Promise<CallReturn<'moonwell'>>,
+      singleQuery(publicClient!, call.moonwell(...args).at(deployAddress)) as Promise<CallReturn<'moonwell'>>,
     moonwellId: (...args: ExtractArgs<Contract['calls']['moonwellId']>) =>
-      singleQuery(publicClient!, call.moonwellId(...args)) as Promise<CallReturn<'moonwellId'>>,
+      singleQuery(publicClient!, call.moonwellId(...args).at(deployAddress)) as Promise<CallReturn<'moonwellId'>>,
     morpho: (...args: ExtractArgs<Contract['calls']['morpho']>) =>
-      singleQuery(publicClient!, call.morpho(...args)) as Promise<CallReturn<'morpho'>>,
+      singleQuery(publicClient!, call.morpho(...args).at(deployAddress)) as Promise<CallReturn<'morpho'>>,
     morphoId: (...args: ExtractArgs<Contract['calls']['morphoId']>) =>
-      singleQuery(publicClient!, call.morphoId(...args)) as Promise<CallReturn<'morphoId'>>,
+      singleQuery(publicClient!, call.morphoId(...args).at(deployAddress)) as Promise<CallReturn<'morphoId'>>,
     sky: (...args: ExtractArgs<Contract['calls']['sky']>) =>
-      singleQuery(publicClient!, call.sky(...args)) as Promise<CallReturn<'sky'>>,
+      singleQuery(publicClient!, call.sky(...args).at(deployAddress)) as Promise<CallReturn<'sky'>>,
     skyId: (...args: ExtractArgs<Contract['calls']['skyId']>) =>
-      singleQuery(publicClient!, call.skyId(...args)) as Promise<CallReturn<'skyId'>>,
+      singleQuery(publicClient!, call.skyId(...args).at(deployAddress)) as Promise<CallReturn<'skyId'>>,
     uniswapV2: (...args: ExtractArgs<Contract['calls']['uniswapV2']>) =>
-      singleQuery(publicClient!, call.uniswapV2(...args)) as Promise<CallReturn<'uniswapV2'>>,
+      singleQuery(publicClient!, call.uniswapV2(...args).at(deployAddress)) as Promise<CallReturn<'uniswapV2'>>,
     uniswapV2Id: (...args: ExtractArgs<Contract['calls']['uniswapV2Id']>) =>
-      singleQuery(publicClient!, call.uniswapV2Id(...args)) as Promise<CallReturn<'uniswapV2Id'>>,
+      singleQuery(publicClient!, call.uniswapV2Id(...args).at(deployAddress)) as Promise<CallReturn<'uniswapV2Id'>>,
     uniswapV3: (...args: ExtractArgs<Contract['calls']['uniswapV3']>) =>
-      singleQuery(publicClient!, call.uniswapV3(...args)) as Promise<CallReturn<'uniswapV3'>>,
+      singleQuery(publicClient!, call.uniswapV3(...args).at(deployAddress)) as Promise<CallReturn<'uniswapV3'>>,
     uniswapV3Id: (...args: ExtractArgs<Contract['calls']['uniswapV3Id']>) =>
-      singleQuery(publicClient!, call.uniswapV3Id(...args)) as Promise<CallReturn<'uniswapV3Id'>>,
+      singleQuery(publicClient!, call.uniswapV3Id(...args).at(deployAddress)) as Promise<CallReturn<'uniswapV3Id'>>,
     aerodrome: (...args: ExtractArgs<Contract['calls']['aerodrome']>) =>
-      singleQuery(publicClient!, call.aerodrome(...args)) as Promise<CallReturn<'aerodrome'>>,
+      singleQuery(publicClient!, call.aerodrome(...args).at(deployAddress)) as Promise<CallReturn<'aerodrome'>>,
     aerodromeId: (...args: ExtractArgs<Contract['calls']['aerodromeId']>) =>
-      singleQuery(publicClient!, call.aerodromeId(...args)) as Promise<CallReturn<'aerodromeId'>>,
+      singleQuery(publicClient!, call.aerodromeId(...args).at(deployAddress)) as Promise<CallReturn<'aerodromeId'>>,
     aerodromeSlipstream: (...args: ExtractArgs<Contract['calls']['aerodromeSlipstream']>) =>
-      singleQuery(publicClient!, call.aerodromeSlipstream(...args)) as Promise<CallReturn<'aerodromeSlipstream'>>,
+      singleQuery(publicClient!, call.aerodromeSlipstream(...args).at(deployAddress)) as Promise<
+        CallReturn<'aerodromeSlipstream'>
+      >,
     aerodromeSlipstreamId: (...args: ExtractArgs<Contract['calls']['aerodromeSlipstreamId']>) =>
-      singleQuery(publicClient!, call.aerodromeSlipstreamId(...args)) as Promise<CallReturn<'aerodromeSlipstreamId'>>,
+      singleQuery(publicClient!, call.aerodromeSlipstreamId(...args).at(deployAddress)) as Promise<
+        CallReturn<'aerodromeSlipstreamId'>
+      >,
     curve: (...args: ExtractArgs<Contract['calls']['curve']>) =>
-      singleQuery(publicClient!, call.curve(...args)) as Promise<CallReturn<'curve'>>,
+      singleQuery(publicClient!, call.curve(...args).at(deployAddress)) as Promise<CallReturn<'curve'>>,
     curveId: (...args: ExtractArgs<Contract['calls']['curveId']>) =>
-      singleQuery(publicClient!, call.curveId(...args)) as Promise<CallReturn<'curveId'>>,
+      singleQuery(publicClient!, call.curveId(...args).at(deployAddress)) as Promise<CallReturn<'curveId'>>,
     getVaultTokenAmount: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>) =>
-      singleQuery(publicClient!, call.getVaultTokenAmount(...args)) as Promise<CallReturn<'getVaultTokenAmount'>>,
+      singleQuery(publicClient!, call.getVaultTokenAmount(...args).at(deployAddress)) as Promise<
+        CallReturn<'getVaultTokenAmount'>
+      >,
     getLegoFromVaultToken: (...args: ExtractArgs<Contract['calls']['getLegoFromVaultToken']>) =>
-      singleQuery(publicClient!, call.getLegoFromVaultToken(...args)) as Promise<CallReturn<'getLegoFromVaultToken'>>,
+      singleQuery(publicClient!, call.getLegoFromVaultToken(...args).at(deployAddress)) as Promise<
+        CallReturn<'getLegoFromVaultToken'>
+      >,
     getUnderlyingData: (...args: ExtractArgs<Contract['calls']['getUnderlyingData']>) =>
-      singleQuery(publicClient!, call.getUnderlyingData(...args)) as Promise<CallReturn<'getUnderlyingData'>>,
+      singleQuery(publicClient!, call.getUnderlyingData(...args).at(deployAddress)) as Promise<
+        CallReturn<'getUnderlyingData'>
+      >,
     ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) =>
-      singleQuery(publicClient!, call.ADDY_REGISTRY(...args)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
+      singleQuery(publicClient!, call.ADDY_REGISTRY(...args).at(deployAddress)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
     ROUTER_TOKENA: (...args: ExtractArgs<Contract['calls']['ROUTER_TOKENA']>) =>
-      singleQuery(publicClient!, call.ROUTER_TOKENA(...args)) as Promise<CallReturn<'ROUTER_TOKENA'>>,
+      singleQuery(publicClient!, call.ROUTER_TOKENA(...args).at(deployAddress)) as Promise<CallReturn<'ROUTER_TOKENA'>>,
     ROUTER_TOKENB: (...args: ExtractArgs<Contract['calls']['ROUTER_TOKENB']>) =>
-      singleQuery(publicClient!, call.ROUTER_TOKENB(...args)) as Promise<CallReturn<'ROUTER_TOKENB'>>,
+      singleQuery(publicClient!, call.ROUTER_TOKENB(...args).at(deployAddress)) as Promise<CallReturn<'ROUTER_TOKENB'>>,
     AAVE_V3_ID: (...args: ExtractArgs<Contract['calls']['AAVE_V3_ID']>) =>
-      singleQuery(publicClient!, call.AAVE_V3_ID(...args)) as Promise<CallReturn<'AAVE_V3_ID'>>,
+      singleQuery(publicClient!, call.AAVE_V3_ID(...args).at(deployAddress)) as Promise<CallReturn<'AAVE_V3_ID'>>,
     COMPOUND_V3_ID: (...args: ExtractArgs<Contract['calls']['COMPOUND_V3_ID']>) =>
-      singleQuery(publicClient!, call.COMPOUND_V3_ID(...args)) as Promise<CallReturn<'COMPOUND_V3_ID'>>,
+      singleQuery(publicClient!, call.COMPOUND_V3_ID(...args).at(deployAddress)) as Promise<
+        CallReturn<'COMPOUND_V3_ID'>
+      >,
     EULER_ID: (...args: ExtractArgs<Contract['calls']['EULER_ID']>) =>
-      singleQuery(publicClient!, call.EULER_ID(...args)) as Promise<CallReturn<'EULER_ID'>>,
+      singleQuery(publicClient!, call.EULER_ID(...args).at(deployAddress)) as Promise<CallReturn<'EULER_ID'>>,
     FLUID_ID: (...args: ExtractArgs<Contract['calls']['FLUID_ID']>) =>
-      singleQuery(publicClient!, call.FLUID_ID(...args)) as Promise<CallReturn<'FLUID_ID'>>,
+      singleQuery(publicClient!, call.FLUID_ID(...args).at(deployAddress)) as Promise<CallReturn<'FLUID_ID'>>,
     MOONWELL_ID: (...args: ExtractArgs<Contract['calls']['MOONWELL_ID']>) =>
-      singleQuery(publicClient!, call.MOONWELL_ID(...args)) as Promise<CallReturn<'MOONWELL_ID'>>,
+      singleQuery(publicClient!, call.MOONWELL_ID(...args).at(deployAddress)) as Promise<CallReturn<'MOONWELL_ID'>>,
     MORPHO_ID: (...args: ExtractArgs<Contract['calls']['MORPHO_ID']>) =>
-      singleQuery(publicClient!, call.MORPHO_ID(...args)) as Promise<CallReturn<'MORPHO_ID'>>,
+      singleQuery(publicClient!, call.MORPHO_ID(...args).at(deployAddress)) as Promise<CallReturn<'MORPHO_ID'>>,
     SKY_ID: (...args: ExtractArgs<Contract['calls']['SKY_ID']>) =>
-      singleQuery(publicClient!, call.SKY_ID(...args)) as Promise<CallReturn<'SKY_ID'>>,
+      singleQuery(publicClient!, call.SKY_ID(...args).at(deployAddress)) as Promise<CallReturn<'SKY_ID'>>,
     UNISWAP_V2_ID: (...args: ExtractArgs<Contract['calls']['UNISWAP_V2_ID']>) =>
-      singleQuery(publicClient!, call.UNISWAP_V2_ID(...args)) as Promise<CallReturn<'UNISWAP_V2_ID'>>,
+      singleQuery(publicClient!, call.UNISWAP_V2_ID(...args).at(deployAddress)) as Promise<CallReturn<'UNISWAP_V2_ID'>>,
     UNISWAP_V3_ID: (...args: ExtractArgs<Contract['calls']['UNISWAP_V3_ID']>) =>
-      singleQuery(publicClient!, call.UNISWAP_V3_ID(...args)) as Promise<CallReturn<'UNISWAP_V3_ID'>>,
+      singleQuery(publicClient!, call.UNISWAP_V3_ID(...args).at(deployAddress)) as Promise<CallReturn<'UNISWAP_V3_ID'>>,
     AERODROME_ID: (...args: ExtractArgs<Contract['calls']['AERODROME_ID']>) =>
-      singleQuery(publicClient!, call.AERODROME_ID(...args)) as Promise<CallReturn<'AERODROME_ID'>>,
+      singleQuery(publicClient!, call.AERODROME_ID(...args).at(deployAddress)) as Promise<CallReturn<'AERODROME_ID'>>,
     AERODROME_SLIPSTREAM_ID: (...args: ExtractArgs<Contract['calls']['AERODROME_SLIPSTREAM_ID']>) =>
-      singleQuery(publicClient!, call.AERODROME_SLIPSTREAM_ID(...args)) as Promise<
+      singleQuery(publicClient!, call.AERODROME_SLIPSTREAM_ID(...args).at(deployAddress)) as Promise<
         CallReturn<'AERODROME_SLIPSTREAM_ID'>
       >,
     CURVE_ID: (...args: ExtractArgs<Contract['calls']['CURVE_ID']>) =>
-      singleQuery(publicClient!, call.CURVE_ID(...args)) as Promise<CallReturn<'CURVE_ID'>>,
+      singleQuery(publicClient!, call.CURVE_ID(...args).at(deployAddress)) as Promise<CallReturn<'CURVE_ID'>>,
 
     // Mutations
     getRoutesAndSwapInstructionsAmountOut: (
       ...args: ExtractArgs<Contract['mutations']['getRoutesAndSwapInstructionsAmountOut']>
-    ) => mutate(walletClient!, mutation.getRoutesAndSwapInstructionsAmountOut)(...args),
+    ) => mutate(walletClient!, mutation.getRoutesAndSwapInstructionsAmountOut, { address: deployAddress })(...args),
     getRoutesAndSwapInstructionsAmountIn: (
       ...args: ExtractArgs<Contract['mutations']['getRoutesAndSwapInstructionsAmountIn']>
-    ) => mutate(walletClient!, mutation.getRoutesAndSwapInstructionsAmountIn)(...args),
+    ) => mutate(walletClient!, mutation.getRoutesAndSwapInstructionsAmountIn, { address: deployAddress })(...args),
     prepareSwapInstructionsAmountOut: (
       ...args: ExtractArgs<Contract['mutations']['prepareSwapInstructionsAmountOut']>
-    ) => mutate(walletClient!, mutation.prepareSwapInstructionsAmountOut)(...args),
+    ) => mutate(walletClient!, mutation.prepareSwapInstructionsAmountOut, { address: deployAddress })(...args),
     getBestSwapRoutesAmountOut: (...args: ExtractArgs<Contract['mutations']['getBestSwapRoutesAmountOut']>) =>
-      mutate(walletClient!, mutation.getBestSwapRoutesAmountOut)(...args),
+      mutate(walletClient!, mutation.getBestSwapRoutesAmountOut, { address: deployAddress })(...args),
     getBestSwapAmountOutWithRouterPool: (
       ...args: ExtractArgs<Contract['mutations']['getBestSwapAmountOutWithRouterPool']>
-    ) => mutate(walletClient!, mutation.getBestSwapAmountOutWithRouterPool)(...args),
+    ) => mutate(walletClient!, mutation.getBestSwapAmountOutWithRouterPool, { address: deployAddress })(...args),
     getBestSwapAmountOutSinglePool: (...args: ExtractArgs<Contract['mutations']['getBestSwapAmountOutSinglePool']>) =>
-      mutate(walletClient!, mutation.getBestSwapAmountOutSinglePool)(...args),
+      mutate(walletClient!, mutation.getBestSwapAmountOutSinglePool, { address: deployAddress })(...args),
     getSwapAmountOutViaRouterPool: (...args: ExtractArgs<Contract['mutations']['getSwapAmountOutViaRouterPool']>) =>
-      mutate(walletClient!, mutation.getSwapAmountOutViaRouterPool)(...args),
+      mutate(walletClient!, mutation.getSwapAmountOutViaRouterPool, { address: deployAddress })(...args),
     getBestSwapRoutesAmountIn: (...args: ExtractArgs<Contract['mutations']['getBestSwapRoutesAmountIn']>) =>
-      mutate(walletClient!, mutation.getBestSwapRoutesAmountIn)(...args),
+      mutate(walletClient!, mutation.getBestSwapRoutesAmountIn, { address: deployAddress })(...args),
     getBestSwapAmountInWithRouterPool: (
       ...args: ExtractArgs<Contract['mutations']['getBestSwapAmountInWithRouterPool']>
-    ) => mutate(walletClient!, mutation.getBestSwapAmountInWithRouterPool)(...args),
+    ) => mutate(walletClient!, mutation.getBestSwapAmountInWithRouterPool, { address: deployAddress })(...args),
     getBestSwapAmountInSinglePool: (...args: ExtractArgs<Contract['mutations']['getBestSwapAmountInSinglePool']>) =>
-      mutate(walletClient!, mutation.getBestSwapAmountInSinglePool)(...args),
+      mutate(walletClient!, mutation.getBestSwapAmountInSinglePool, { address: deployAddress })(...args),
     getSwapAmountInViaRouterPool: (...args: ExtractArgs<Contract['mutations']['getSwapAmountInViaRouterPool']>) =>
-      mutate(walletClient!, mutation.getSwapAmountInViaRouterPool)(...args),
+      mutate(walletClient!, mutation.getSwapAmountInViaRouterPool, { address: deployAddress })(...args),
   }
 }

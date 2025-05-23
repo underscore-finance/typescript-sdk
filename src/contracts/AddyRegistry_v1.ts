@@ -664,6 +664,8 @@ export const mutation: {
 }
 
 export type SDK = {
+  deployAddress: Address | undefined
+  abi: typeof abi
   isValidNewAddy: (...args: ExtractArgs<Contract['calls']['isValidNewAddy']>) => Promise<CallReturn<'isValidNewAddy'>>
   isValidAddyUpdate: (
     ...args: ExtractArgs<Contract['calls']['isValidAddyUpdate']>
@@ -697,6 +699,8 @@ export type SDK = {
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
+    deployAddress,
+    abi,
     // Queries
     isValidNewAddy: (...args: ExtractArgs<Contract['calls']['isValidNewAddy']>) =>
       singleQuery(publicClient!, call.isValidNewAddy(...args)) as Promise<CallReturn<'isValidNewAddy'>>,

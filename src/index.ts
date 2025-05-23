@@ -1,10 +1,23 @@
 import { Address, createPublicClient, http, PublicClient, WalletClient } from 'viem'
-import { base } from 'viem/chains'
+import { base, baseSepolia } from 'viem/chains'
 
+import { AddyRegistry, AgentFactory, LegoRegistry, OracleRegistry, PriceSheets } from './contracts/index.js'
 import * as LegoHelper from './contracts/LegoHelper.js'
 import createSdk, { SDK } from './contracts/sdk.js'
 
 export * from './contracts/index.js'
+
+const TESTNET_ADDRESSES = {
+  AddyRegistry: '0xa89a59E14333187829528C50eBAaE6EC12Bae95d',
+  AgentFactory: '0x50d08c554b0F7F4784B7108103e586eccb522b8E',
+  UserWalletTemplate: '0x5081a0ff1F3518aE7D3c6E5106CC820EB5d472a5',
+  UserWalletConfigTemplate: '0xC12152418FDF2daE2A45C3D07AdFf9f6f1249BbA',
+  AgentTemplate: '0xfd1255e086b0E045EfBFa9E3e99aE9A450BDc486',
+  LegoRegistry: '0xf6a8bE55c84b94Fe071575EF52F095A23c282eea',
+  OracleRegistry: '0x2c794b3864480fAfF791cD46400E061f818cE42f',
+  PriceSheets: '0x155d0ECd672D7a1050d34eC0a1006d67823C3123',
+  LegoHelper: '0x98dD9D8591D826E285052f23F450c8d702f07a18',
+} as const
 
 type DeepMutable<T> = {
   -readonly [P in keyof T]: T[P] extends object ? DeepMutable<T[P]> : T[P]
@@ -14,23 +27,26 @@ interface UnderscoreConfig {
   rpcUrl?: string
   publicClient?: PublicClient
   walletClient?: WalletClient
+  isTestnet?: boolean
 }
 
 class Underscore {
   public publicClient: PublicClient
   public walletClient: WalletClient | undefined
   public contracts: SDK
+  public isTestnet: boolean
 
   constructor(config?: UnderscoreConfig) {
     this.publicClient =
       config?.publicClient ||
       (createPublicClient({
-        chain: base,
+        chain: config?.isTestnet ? baseSepolia : base,
         transport: http(config?.rpcUrl),
       }) as PublicClient)
 
     this.walletClient = config?.walletClient
     this.contracts = createSdk(this.publicClient, this.walletClient)
+    this.isTestnet = config?.isTestnet ?? false
   }
 
   setWalletClient(walletClient: WalletClient) {
@@ -83,7 +99,11 @@ class Underscore {
   }
 
   get Registry() {
-    return this.contracts.AddyRegistry
+    const deployAddress = this.isTestnet ? TESTNET_ADDRESSES.AddyRegistry : AddyRegistry.deployAddress!
+    return {
+      ...this.contracts.AddyRegistry(deployAddress),
+      deployAddress,
+    }
   }
 
   /**
@@ -101,7 +121,11 @@ class Underscore {
   }
 
   get Factory() {
-    return this.contracts.AgentFactory
+    const deployAddress = this.isTestnet ? TESTNET_ADDRESSES.AgentFactory : AgentFactory.deployAddress!
+    return {
+      ...this.contracts.AgentFactory(deployAddress),
+      deployAddress,
+    }
   }
 
   /**
@@ -119,19 +143,35 @@ class Underscore {
   }
 
   get OracleRegistry() {
-    return this.contracts.OracleRegistry
+    const deployAddress = this.isTestnet ? TESTNET_ADDRESSES.OracleRegistry : OracleRegistry.deployAddress!
+    return {
+      ...this.contracts.OracleRegistry(deployAddress),
+      deployAddress,
+    }
   }
 
   get LegoRegistry() {
-    return this.contracts.LegoRegistry
+    const deployAddress = this.isTestnet ? TESTNET_ADDRESSES.LegoRegistry : LegoRegistry.deployAddress!
+    return {
+      ...this.contracts.LegoRegistry(deployAddress),
+      deployAddress,
+    }
   }
 
   get LegoHelper() {
-    return this.contracts.LegoHelper
+    const deployAddress = this.isTestnet ? TESTNET_ADDRESSES.LegoHelper : LegoHelper.deployAddress!
+    return {
+      ...this.contracts.LegoHelper(deployAddress),
+      deployAddress,
+    }
   }
 
   get PriceSheets() {
-    return this.contracts.PriceSheets
+    const deployAddress = this.isTestnet ? TESTNET_ADDRESSES.PriceSheets : PriceSheets.deployAddress!
+    return {
+      ...this.contracts.PriceSheets(deployAddress),
+      deployAddress,
+    }
   }
 
   get Agent() {

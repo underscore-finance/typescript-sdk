@@ -1506,6 +1506,8 @@ export const mutation: {
 }
 
 export type SDK = {
+  deployAddress: Address | undefined
+  abi: typeof abi
   canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) => Promise<CallReturn<'canGovern'>>
   hasPendingGovChange: (
     ...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>
@@ -1593,104 +1595,140 @@ export type SDK = {
   setLegoHelper: (...args: ExtractArgs<Contract['mutations']['setLegoHelper']>) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(deployAddress: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
+    deployAddress,
+    abi,
     // Queries
     canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) =>
-      singleQuery(publicClient!, call.canGovern(...args)) as Promise<CallReturn<'canGovern'>>,
+      singleQuery(publicClient!, call.canGovern(...args).at(deployAddress)) as Promise<CallReturn<'canGovern'>>,
     hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
-      singleQuery(publicClient!, call.hasPendingGovChange(...args)) as Promise<CallReturn<'hasPendingGovChange'>>,
+      singleQuery(publicClient!, call.hasPendingGovChange(...args).at(deployAddress)) as Promise<
+        CallReturn<'hasPendingGovChange'>
+      >,
     governance: (...args: ExtractArgs<Contract['calls']['governance']>) =>
-      singleQuery(publicClient!, call.governance(...args)) as Promise<CallReturn<'governance'>>,
+      singleQuery(publicClient!, call.governance(...args).at(deployAddress)) as Promise<CallReturn<'governance'>>,
     pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) =>
-      singleQuery(publicClient!, call.pendingGov(...args)) as Promise<CallReturn<'pendingGov'>>,
+      singleQuery(publicClient!, call.pendingGov(...args).at(deployAddress)) as Promise<CallReturn<'pendingGov'>>,
     govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) =>
-      singleQuery(publicClient!, call.govChangeDelay(...args)) as Promise<CallReturn<'govChangeDelay'>>,
+      singleQuery(publicClient!, call.govChangeDelay(...args).at(deployAddress)) as Promise<
+        CallReturn<'govChangeDelay'>
+      >,
     MIN_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MIN_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MIN_GOV_CHANGE_DELAY'>>,
+      singleQuery(publicClient!, call.MIN_GOV_CHANGE_DELAY(...args).at(deployAddress)) as Promise<
+        CallReturn<'MIN_GOV_CHANGE_DELAY'>
+      >,
     MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MAX_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>,
+      singleQuery(publicClient!, call.MAX_GOV_CHANGE_DELAY(...args).at(deployAddress)) as Promise<
+        CallReturn<'MAX_GOV_CHANGE_DELAY'>
+      >,
     isYieldLego: (...args: ExtractArgs<Contract['calls']['isYieldLego']>) =>
-      singleQuery(publicClient!, call.isYieldLego(...args)) as Promise<CallReturn<'isYieldLego'>>,
+      singleQuery(publicClient!, call.isYieldLego(...args).at(deployAddress)) as Promise<CallReturn<'isYieldLego'>>,
     isValidNewLegoAddr: (...args: ExtractArgs<Contract['calls']['isValidNewLegoAddr']>) =>
-      singleQuery(publicClient!, call.isValidNewLegoAddr(...args)) as Promise<CallReturn<'isValidNewLegoAddr'>>,
+      singleQuery(publicClient!, call.isValidNewLegoAddr(...args).at(deployAddress)) as Promise<
+        CallReturn<'isValidNewLegoAddr'>
+      >,
     isValidLegoUpdate: (...args: ExtractArgs<Contract['calls']['isValidLegoUpdate']>) =>
-      singleQuery(publicClient!, call.isValidLegoUpdate(...args)) as Promise<CallReturn<'isValidLegoUpdate'>>,
+      singleQuery(publicClient!, call.isValidLegoUpdate(...args).at(deployAddress)) as Promise<
+        CallReturn<'isValidLegoUpdate'>
+      >,
     isValidLegoDisable: (...args: ExtractArgs<Contract['calls']['isValidLegoDisable']>) =>
-      singleQuery(publicClient!, call.isValidLegoDisable(...args)) as Promise<CallReturn<'isValidLegoDisable'>>,
+      singleQuery(publicClient!, call.isValidLegoDisable(...args).at(deployAddress)) as Promise<
+        CallReturn<'isValidLegoDisable'>
+      >,
     legoChangeDelay: (...args: ExtractArgs<Contract['calls']['legoChangeDelay']>) =>
-      singleQuery(publicClient!, call.legoChangeDelay(...args)) as Promise<CallReturn<'legoChangeDelay'>>,
+      singleQuery(publicClient!, call.legoChangeDelay(...args).at(deployAddress)) as Promise<
+        CallReturn<'legoChangeDelay'>
+      >,
     numLegosRaw: (...args: ExtractArgs<Contract['calls']['numLegosRaw']>) =>
-      singleQuery(publicClient!, call.numLegosRaw(...args)) as Promise<CallReturn<'numLegosRaw'>>,
+      singleQuery(publicClient!, call.numLegosRaw(...args).at(deployAddress)) as Promise<CallReturn<'numLegosRaw'>>,
     isValidLegoAddr: (...args: ExtractArgs<Contract['calls']['isValidLegoAddr']>) =>
-      singleQuery(publicClient!, call.isValidLegoAddr(...args)) as Promise<CallReturn<'isValidLegoAddr'>>,
+      singleQuery(publicClient!, call.isValidLegoAddr(...args).at(deployAddress)) as Promise<
+        CallReturn<'isValidLegoAddr'>
+      >,
     isValidLegoId: (...args: ExtractArgs<Contract['calls']['isValidLegoId']>) =>
-      singleQuery(publicClient!, call.isValidLegoId(...args)) as Promise<CallReturn<'isValidLegoId'>>,
+      singleQuery(publicClient!, call.isValidLegoId(...args).at(deployAddress)) as Promise<CallReturn<'isValidLegoId'>>,
     getLegoId: (...args: ExtractArgs<Contract['calls']['getLegoId']>) =>
-      singleQuery(publicClient!, call.getLegoId(...args)) as Promise<CallReturn<'getLegoId'>>,
+      singleQuery(publicClient!, call.getLegoId(...args).at(deployAddress)) as Promise<CallReturn<'getLegoId'>>,
     getLegoAddr: (...args: ExtractArgs<Contract['calls']['getLegoAddr']>) =>
-      singleQuery(publicClient!, call.getLegoAddr(...args)) as Promise<CallReturn<'getLegoAddr'>>,
+      singleQuery(publicClient!, call.getLegoAddr(...args).at(deployAddress)) as Promise<CallReturn<'getLegoAddr'>>,
     getLegoInfo: (...args: ExtractArgs<Contract['calls']['getLegoInfo']>) =>
-      singleQuery(publicClient!, call.getLegoInfo(...args)) as Promise<CallReturn<'getLegoInfo'>>,
+      singleQuery(publicClient!, call.getLegoInfo(...args).at(deployAddress)) as Promise<CallReturn<'getLegoInfo'>>,
     getLegoDescription: (...args: ExtractArgs<Contract['calls']['getLegoDescription']>) =>
-      singleQuery(publicClient!, call.getLegoDescription(...args)) as Promise<CallReturn<'getLegoDescription'>>,
+      singleQuery(publicClient!, call.getLegoDescription(...args).at(deployAddress)) as Promise<
+        CallReturn<'getLegoDescription'>
+      >,
     getNumLegos: (...args: ExtractArgs<Contract['calls']['getNumLegos']>) =>
-      singleQuery(publicClient!, call.getNumLegos(...args)) as Promise<CallReturn<'getNumLegos'>>,
+      singleQuery(publicClient!, call.getNumLegos(...args).at(deployAddress)) as Promise<CallReturn<'getNumLegos'>>,
     getLastLegoAddr: (...args: ExtractArgs<Contract['calls']['getLastLegoAddr']>) =>
-      singleQuery(publicClient!, call.getLastLegoAddr(...args)) as Promise<CallReturn<'getLastLegoAddr'>>,
+      singleQuery(publicClient!, call.getLastLegoAddr(...args).at(deployAddress)) as Promise<
+        CallReturn<'getLastLegoAddr'>
+      >,
     getLastLegoId: (...args: ExtractArgs<Contract['calls']['getLastLegoId']>) =>
-      singleQuery(publicClient!, call.getLastLegoId(...args)) as Promise<CallReturn<'getLastLegoId'>>,
+      singleQuery(publicClient!, call.getLastLegoId(...args).at(deployAddress)) as Promise<CallReturn<'getLastLegoId'>>,
     getUnderlyingAsset: (...args: ExtractArgs<Contract['calls']['getUnderlyingAsset']>) =>
-      singleQuery(publicClient!, call.getUnderlyingAsset(...args)) as Promise<CallReturn<'getUnderlyingAsset'>>,
+      singleQuery(publicClient!, call.getUnderlyingAsset(...args).at(deployAddress)) as Promise<
+        CallReturn<'getUnderlyingAsset'>
+      >,
     getUnderlyingForUser: (...args: ExtractArgs<Contract['calls']['getUnderlyingForUser']>) =>
-      singleQuery(publicClient!, call.getUnderlyingForUser(...args)) as Promise<CallReturn<'getUnderlyingForUser'>>,
+      singleQuery(publicClient!, call.getUnderlyingForUser(...args).at(deployAddress)) as Promise<
+        CallReturn<'getUnderlyingForUser'>
+      >,
     getVaultTokensForUser: (...args: ExtractArgs<Contract['calls']['getVaultTokensForUser']>) =>
-      singleQuery(publicClient!, call.getVaultTokensForUser(...args)) as Promise<CallReturn<'getVaultTokensForUser'>>,
+      singleQuery(publicClient!, call.getVaultTokensForUser(...args).at(deployAddress)) as Promise<
+        CallReturn<'getVaultTokensForUser'>
+      >,
     getLegoFromVaultToken: (...args: ExtractArgs<Contract['calls']['getLegoFromVaultToken']>) =>
-      singleQuery(publicClient!, call.getLegoFromVaultToken(...args)) as Promise<CallReturn<'getLegoFromVaultToken'>>,
+      singleQuery(publicClient!, call.getLegoFromVaultToken(...args).at(deployAddress)) as Promise<
+        CallReturn<'getLegoFromVaultToken'>
+      >,
     isVaultToken: (...args: ExtractArgs<Contract['calls']['isVaultToken']>) =>
-      singleQuery(publicClient!, call.isVaultToken(...args)) as Promise<CallReturn<'isVaultToken'>>,
+      singleQuery(publicClient!, call.isVaultToken(...args).at(deployAddress)) as Promise<CallReturn<'isVaultToken'>>,
     isValidLegoHelper: (...args: ExtractArgs<Contract['calls']['isValidLegoHelper']>) =>
-      singleQuery(publicClient!, call.isValidLegoHelper(...args)) as Promise<CallReturn<'isValidLegoHelper'>>,
+      singleQuery(publicClient!, call.isValidLegoHelper(...args).at(deployAddress)) as Promise<
+        CallReturn<'isValidLegoHelper'>
+      >,
     pendingLegoType: (...args: ExtractArgs<Contract['calls']['pendingLegoType']>) =>
-      singleQuery(publicClient!, call.pendingLegoType(...args)) as Promise<CallReturn<'pendingLegoType'>>,
+      singleQuery(publicClient!, call.pendingLegoType(...args).at(deployAddress)) as Promise<
+        CallReturn<'pendingLegoType'>
+      >,
     legoIdToType: (...args: ExtractArgs<Contract['calls']['legoIdToType']>) =>
-      singleQuery(publicClient!, call.legoIdToType(...args)) as Promise<CallReturn<'legoIdToType'>>,
+      singleQuery(publicClient!, call.legoIdToType(...args).at(deployAddress)) as Promise<CallReturn<'legoIdToType'>>,
     legoHelper: (...args: ExtractArgs<Contract['calls']['legoHelper']>) =>
-      singleQuery(publicClient!, call.legoHelper(...args)) as Promise<CallReturn<'legoHelper'>>,
+      singleQuery(publicClient!, call.legoHelper(...args).at(deployAddress)) as Promise<CallReturn<'legoHelper'>>,
 
     // Mutations
     changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) =>
-      mutate(walletClient!, mutation.changeGovernance)(...args),
+      mutate(walletClient!, mutation.changeGovernance, { address: deployAddress })(...args),
     confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) =>
-      mutate(walletClient!, mutation.confirmGovernanceChange)(...args),
+      mutate(walletClient!, mutation.confirmGovernanceChange, { address: deployAddress })(...args),
     cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) =>
-      mutate(walletClient!, mutation.cancelGovernanceChange)(...args),
+      mutate(walletClient!, mutation.cancelGovernanceChange, { address: deployAddress })(...args),
     setGovernanceChangeDelay: (...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>) =>
-      mutate(walletClient!, mutation.setGovernanceChangeDelay)(...args),
+      mutate(walletClient!, mutation.setGovernanceChangeDelay, { address: deployAddress })(...args),
     registerNewLego: (...args: ExtractArgs<Contract['mutations']['registerNewLego']>) =>
-      mutate(walletClient!, mutation.registerNewLego)(...args),
+      mutate(walletClient!, mutation.registerNewLego, { address: deployAddress })(...args),
     confirmNewLegoRegistration: (...args: ExtractArgs<Contract['mutations']['confirmNewLegoRegistration']>) =>
-      mutate(walletClient!, mutation.confirmNewLegoRegistration)(...args),
+      mutate(walletClient!, mutation.confirmNewLegoRegistration, { address: deployAddress })(...args),
     cancelPendingNewLego: (...args: ExtractArgs<Contract['mutations']['cancelPendingNewLego']>) =>
-      mutate(walletClient!, mutation.cancelPendingNewLego)(...args),
+      mutate(walletClient!, mutation.cancelPendingNewLego, { address: deployAddress })(...args),
     updateLegoAddr: (...args: ExtractArgs<Contract['mutations']['updateLegoAddr']>) =>
-      mutate(walletClient!, mutation.updateLegoAddr)(...args),
+      mutate(walletClient!, mutation.updateLegoAddr, { address: deployAddress })(...args),
     confirmLegoUpdate: (...args: ExtractArgs<Contract['mutations']['confirmLegoUpdate']>) =>
-      mutate(walletClient!, mutation.confirmLegoUpdate)(...args),
+      mutate(walletClient!, mutation.confirmLegoUpdate, { address: deployAddress })(...args),
     cancelPendingLegoUpdate: (...args: ExtractArgs<Contract['mutations']['cancelPendingLegoUpdate']>) =>
-      mutate(walletClient!, mutation.cancelPendingLegoUpdate)(...args),
+      mutate(walletClient!, mutation.cancelPendingLegoUpdate, { address: deployAddress })(...args),
     disableLegoAddr: (...args: ExtractArgs<Contract['mutations']['disableLegoAddr']>) =>
-      mutate(walletClient!, mutation.disableLegoAddr)(...args),
+      mutate(walletClient!, mutation.disableLegoAddr, { address: deployAddress })(...args),
     confirmLegoDisable: (...args: ExtractArgs<Contract['mutations']['confirmLegoDisable']>) =>
-      mutate(walletClient!, mutation.confirmLegoDisable)(...args),
+      mutate(walletClient!, mutation.confirmLegoDisable, { address: deployAddress })(...args),
     cancelPendingLegoDisable: (...args: ExtractArgs<Contract['mutations']['cancelPendingLegoDisable']>) =>
-      mutate(walletClient!, mutation.cancelPendingLegoDisable)(...args),
+      mutate(walletClient!, mutation.cancelPendingLegoDisable, { address: deployAddress })(...args),
     setLegoChangeDelay: (...args: ExtractArgs<Contract['mutations']['setLegoChangeDelay']>) =>
-      mutate(walletClient!, mutation.setLegoChangeDelay)(...args),
+      mutate(walletClient!, mutation.setLegoChangeDelay, { address: deployAddress })(...args),
     setLegoChangeDelayToMin: (...args: ExtractArgs<Contract['mutations']['setLegoChangeDelayToMin']>) =>
-      mutate(walletClient!, mutation.setLegoChangeDelayToMin)(...args),
+      mutate(walletClient!, mutation.setLegoChangeDelayToMin, { address: deployAddress })(...args),
     setLegoHelper: (...args: ExtractArgs<Contract['mutations']['setLegoHelper']>) =>
-      mutate(walletClient!, mutation.setLegoHelper)(...args),
+      mutate(walletClient!, mutation.setLegoHelper, { address: deployAddress })(...args),
   }
 }

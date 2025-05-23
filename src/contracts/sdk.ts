@@ -47,11 +47,11 @@ import * as UserWallet_v1 from './UserWallet_v1.js'
 import * as UserWallet_v2 from './UserWallet_v2.js'
 
 export type SDK = {
-  AddyRegistry: AddyRegistry.SDK
+  AddyRegistry: (address: `0x${string}`) => AddyRegistry.SDK
   AddyRegistry_v1: AddyRegistry_v1.SDK
   AddyRegistry_v2: AddyRegistry_v2.SDK
   Agent: (address: `0x${string}`) => Agent.SDK
-  AgentFactory: AgentFactory.SDK
+  AgentFactory: (address: `0x${string}`) => AgentFactory.SDK
   AgentFactory_v1: AgentFactory_v1.SDK
   AgentFactory_v2: AgentFactory_v2.SDK
   Agent_v1: (address: `0x${string}`) => Agent_v1.SDK
@@ -68,17 +68,17 @@ export type SDK = {
   LegoDex: (address: `0x${string}`) => LegoDex.SDK
   LegoEuler: LegoEuler.SDK
   LegoFluid: LegoFluid.SDK
-  LegoHelper: LegoHelper.SDK
+  LegoHelper: (address: `0x${string}`) => LegoHelper.SDK
   LegoMoonwell: LegoMoonwell.SDK
   LegoMorpho: LegoMorpho.SDK
-  LegoRegistry: LegoRegistry.SDK
+  LegoRegistry: (address: `0x${string}`) => LegoRegistry.SDK
   LegoSky: LegoSky.SDK
   LegoUniswapV2: LegoUniswapV2.SDK
   LegoUniswapV3: LegoUniswapV3.SDK
   LegoYield: (address: `0x${string}`) => LegoYield.SDK
   OracleParser: (address: `0x${string}`) => OracleParser.SDK
-  OracleRegistry: OracleRegistry.SDK
-  PriceSheets: PriceSheets.SDK
+  OracleRegistry: (address: `0x${string}`) => OracleRegistry.SDK
+  PriceSheets: (address: `0x${string}`) => PriceSheets.SDK
   PythFeeds: PythFeeds.SDK
   StorkFeeds: StorkFeeds.SDK
   UserWallet: (address: `0x${string}`) => UserWallet.SDK
@@ -91,11 +91,11 @@ export type SDK = {
 
 export default function createSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
-    AddyRegistry: AddyRegistry.toSdk(publicClient, walletClient),
+    AddyRegistry: (address: `0x${string}`) => AddyRegistry.toSdk(address, publicClient, walletClient),
     AddyRegistry_v1: AddyRegistry_v1.toSdk(publicClient, walletClient),
     AddyRegistry_v2: AddyRegistry_v2.toSdk(publicClient, walletClient),
     Agent: (address: `0x${string}`) => Agent.toSdk(address, publicClient, walletClient),
-    AgentFactory: AgentFactory.toSdk(publicClient, walletClient),
+    AgentFactory: (address: `0x${string}`) => AgentFactory.toSdk(address, publicClient, walletClient),
     AgentFactory_v1: AgentFactory_v1.toSdk(publicClient, walletClient),
     AgentFactory_v2: AgentFactory_v2.toSdk(publicClient, walletClient),
     Agent_v1: (address: `0x${string}`) => Agent_v1.toSdk(address, publicClient, walletClient),
@@ -112,17 +112,17 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     LegoDex: (address: `0x${string}`) => LegoDex.toSdk(address, publicClient, walletClient),
     LegoEuler: LegoEuler.toSdk(publicClient, walletClient),
     LegoFluid: LegoFluid.toSdk(publicClient, walletClient),
-    LegoHelper: LegoHelper.toSdk(publicClient, walletClient),
+    LegoHelper: (address: `0x${string}`) => LegoHelper.toSdk(address, publicClient, walletClient),
     LegoMoonwell: LegoMoonwell.toSdk(publicClient, walletClient),
     LegoMorpho: LegoMorpho.toSdk(publicClient, walletClient),
-    LegoRegistry: LegoRegistry.toSdk(publicClient, walletClient),
+    LegoRegistry: (address: `0x${string}`) => LegoRegistry.toSdk(address, publicClient, walletClient),
     LegoSky: LegoSky.toSdk(publicClient, walletClient),
     LegoUniswapV2: LegoUniswapV2.toSdk(publicClient, walletClient),
     LegoUniswapV3: LegoUniswapV3.toSdk(publicClient, walletClient),
     LegoYield: (address: `0x${string}`) => LegoYield.toSdk(address, publicClient, walletClient),
     OracleParser: (address: `0x${string}`) => OracleParser.toSdk(address, publicClient, walletClient),
-    OracleRegistry: OracleRegistry.toSdk(publicClient, walletClient),
-    PriceSheets: PriceSheets.toSdk(publicClient, walletClient),
+    OracleRegistry: (address: `0x${string}`) => OracleRegistry.toSdk(address, publicClient, walletClient),
+    PriceSheets: (address: `0x${string}`) => PriceSheets.toSdk(address, publicClient, walletClient),
     PythFeeds: PythFeeds.toSdk(publicClient, walletClient),
     StorkFeeds: StorkFeeds.toSdk(publicClient, walletClient),
     UserWallet: (address: `0x${string}`) => UserWallet.toSdk(address, publicClient, walletClient),

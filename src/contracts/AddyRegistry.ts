@@ -1530,6 +1530,8 @@ export const mutation: {
 }
 
 export type SDK = {
+  deployAddress: Address | undefined
+  abi: typeof abi
   canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) => Promise<CallReturn<'canGovern'>>
   hasPendingGovChange: (
     ...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>
@@ -1609,104 +1611,138 @@ export type SDK = {
   setAddyChangeDelayToMin: (...args: ExtractArgs<Contract['mutations']['setAddyChangeDelayToMin']>) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(deployAddress: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
+    deployAddress,
+    abi,
     // Queries
     canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) =>
-      singleQuery(publicClient!, call.canGovern(...args)) as Promise<CallReturn<'canGovern'>>,
+      singleQuery(publicClient!, call.canGovern(...args).at(deployAddress)) as Promise<CallReturn<'canGovern'>>,
     hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
-      singleQuery(publicClient!, call.hasPendingGovChange(...args)) as Promise<CallReturn<'hasPendingGovChange'>>,
+      singleQuery(publicClient!, call.hasPendingGovChange(...args).at(deployAddress)) as Promise<
+        CallReturn<'hasPendingGovChange'>
+      >,
     governance: (...args: ExtractArgs<Contract['calls']['governance']>) =>
-      singleQuery(publicClient!, call.governance(...args)) as Promise<CallReturn<'governance'>>,
+      singleQuery(publicClient!, call.governance(...args).at(deployAddress)) as Promise<CallReturn<'governance'>>,
     pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) =>
-      singleQuery(publicClient!, call.pendingGov(...args)) as Promise<CallReturn<'pendingGov'>>,
+      singleQuery(publicClient!, call.pendingGov(...args).at(deployAddress)) as Promise<CallReturn<'pendingGov'>>,
     govChangeDelay: (...args: ExtractArgs<Contract['calls']['govChangeDelay']>) =>
-      singleQuery(publicClient!, call.govChangeDelay(...args)) as Promise<CallReturn<'govChangeDelay'>>,
+      singleQuery(publicClient!, call.govChangeDelay(...args).at(deployAddress)) as Promise<
+        CallReturn<'govChangeDelay'>
+      >,
     MIN_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_GOV_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MIN_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MIN_GOV_CHANGE_DELAY'>>,
+      singleQuery(publicClient!, call.MIN_GOV_CHANGE_DELAY(...args).at(deployAddress)) as Promise<
+        CallReturn<'MIN_GOV_CHANGE_DELAY'>
+      >,
     MAX_GOV_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_GOV_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MAX_GOV_CHANGE_DELAY(...args)) as Promise<CallReturn<'MAX_GOV_CHANGE_DELAY'>>,
+      singleQuery(publicClient!, call.MAX_GOV_CHANGE_DELAY(...args).at(deployAddress)) as Promise<
+        CallReturn<'MAX_GOV_CHANGE_DELAY'>
+      >,
     isValidNewAddy: (...args: ExtractArgs<Contract['calls']['isValidNewAddy']>) =>
-      singleQuery(publicClient!, call.isValidNewAddy(...args)) as Promise<CallReturn<'isValidNewAddy'>>,
+      singleQuery(publicClient!, call.isValidNewAddy(...args).at(deployAddress)) as Promise<
+        CallReturn<'isValidNewAddy'>
+      >,
     isValidAddyUpdate: (...args: ExtractArgs<Contract['calls']['isValidAddyUpdate']>) =>
-      singleQuery(publicClient!, call.isValidAddyUpdate(...args)) as Promise<CallReturn<'isValidAddyUpdate'>>,
+      singleQuery(publicClient!, call.isValidAddyUpdate(...args).at(deployAddress)) as Promise<
+        CallReturn<'isValidAddyUpdate'>
+      >,
     isValidAddyDisable: (...args: ExtractArgs<Contract['calls']['isValidAddyDisable']>) =>
-      singleQuery(publicClient!, call.isValidAddyDisable(...args)) as Promise<CallReturn<'isValidAddyDisable'>>,
+      singleQuery(publicClient!, call.isValidAddyDisable(...args).at(deployAddress)) as Promise<
+        CallReturn<'isValidAddyDisable'>
+      >,
     isValidAddyAddr: (...args: ExtractArgs<Contract['calls']['isValidAddyAddr']>) =>
-      singleQuery(publicClient!, call.isValidAddyAddr(...args)) as Promise<CallReturn<'isValidAddyAddr'>>,
+      singleQuery(publicClient!, call.isValidAddyAddr(...args).at(deployAddress)) as Promise<
+        CallReturn<'isValidAddyAddr'>
+      >,
     isValidAddyId: (...args: ExtractArgs<Contract['calls']['isValidAddyId']>) =>
-      singleQuery(publicClient!, call.isValidAddyId(...args)) as Promise<CallReturn<'isValidAddyId'>>,
+      singleQuery(publicClient!, call.isValidAddyId(...args).at(deployAddress)) as Promise<CallReturn<'isValidAddyId'>>,
     getAddyId: (...args: ExtractArgs<Contract['calls']['getAddyId']>) =>
-      singleQuery(publicClient!, call.getAddyId(...args)) as Promise<CallReturn<'getAddyId'>>,
+      singleQuery(publicClient!, call.getAddyId(...args).at(deployAddress)) as Promise<CallReturn<'getAddyId'>>,
     getAddy: (...args: ExtractArgs<Contract['calls']['getAddy']>) =>
-      singleQuery(publicClient!, call.getAddy(...args)) as Promise<CallReturn<'getAddy'>>,
+      singleQuery(publicClient!, call.getAddy(...args).at(deployAddress)) as Promise<CallReturn<'getAddy'>>,
     getAddyInfo: (...args: ExtractArgs<Contract['calls']['getAddyInfo']>) =>
-      singleQuery(publicClient!, call.getAddyInfo(...args)) as Promise<CallReturn<'getAddyInfo'>>,
+      singleQuery(publicClient!, call.getAddyInfo(...args).at(deployAddress)) as Promise<CallReturn<'getAddyInfo'>>,
     getAddyDescription: (...args: ExtractArgs<Contract['calls']['getAddyDescription']>) =>
-      singleQuery(publicClient!, call.getAddyDescription(...args)) as Promise<CallReturn<'getAddyDescription'>>,
+      singleQuery(publicClient!, call.getAddyDescription(...args).at(deployAddress)) as Promise<
+        CallReturn<'getAddyDescription'>
+      >,
     getNumAddys: (...args: ExtractArgs<Contract['calls']['getNumAddys']>) =>
-      singleQuery(publicClient!, call.getNumAddys(...args)) as Promise<CallReturn<'getNumAddys'>>,
+      singleQuery(publicClient!, call.getNumAddys(...args).at(deployAddress)) as Promise<CallReturn<'getNumAddys'>>,
     getLastAddyAddr: (...args: ExtractArgs<Contract['calls']['getLastAddyAddr']>) =>
-      singleQuery(publicClient!, call.getLastAddyAddr(...args)) as Promise<CallReturn<'getLastAddyAddr'>>,
+      singleQuery(publicClient!, call.getLastAddyAddr(...args).at(deployAddress)) as Promise<
+        CallReturn<'getLastAddyAddr'>
+      >,
     getLastAddyId: (...args: ExtractArgs<Contract['calls']['getLastAddyId']>) =>
-      singleQuery(publicClient!, call.getLastAddyId(...args)) as Promise<CallReturn<'getLastAddyId'>>,
+      singleQuery(publicClient!, call.getLastAddyId(...args).at(deployAddress)) as Promise<CallReturn<'getLastAddyId'>>,
     addyInfo: (...args: ExtractArgs<Contract['calls']['addyInfo']>) =>
-      singleQuery(publicClient!, call.addyInfo(...args)) as Promise<CallReturn<'addyInfo'>>,
+      singleQuery(publicClient!, call.addyInfo(...args).at(deployAddress)) as Promise<CallReturn<'addyInfo'>>,
     addyToId: (...args: ExtractArgs<Contract['calls']['addyToId']>) =>
-      singleQuery(publicClient!, call.addyToId(...args)) as Promise<CallReturn<'addyToId'>>,
+      singleQuery(publicClient!, call.addyToId(...args).at(deployAddress)) as Promise<CallReturn<'addyToId'>>,
     numAddys: (...args: ExtractArgs<Contract['calls']['numAddys']>) =>
-      singleQuery(publicClient!, call.numAddys(...args)) as Promise<CallReturn<'numAddys'>>,
+      singleQuery(publicClient!, call.numAddys(...args).at(deployAddress)) as Promise<CallReturn<'numAddys'>>,
     pendingNewAddy: (...args: ExtractArgs<Contract['calls']['pendingNewAddy']>) =>
-      singleQuery(publicClient!, call.pendingNewAddy(...args)) as Promise<CallReturn<'pendingNewAddy'>>,
+      singleQuery(publicClient!, call.pendingNewAddy(...args).at(deployAddress)) as Promise<
+        CallReturn<'pendingNewAddy'>
+      >,
     pendingAddyUpdate: (...args: ExtractArgs<Contract['calls']['pendingAddyUpdate']>) =>
-      singleQuery(publicClient!, call.pendingAddyUpdate(...args)) as Promise<CallReturn<'pendingAddyUpdate'>>,
+      singleQuery(publicClient!, call.pendingAddyUpdate(...args).at(deployAddress)) as Promise<
+        CallReturn<'pendingAddyUpdate'>
+      >,
     pendingAddyDisable: (...args: ExtractArgs<Contract['calls']['pendingAddyDisable']>) =>
-      singleQuery(publicClient!, call.pendingAddyDisable(...args)) as Promise<CallReturn<'pendingAddyDisable'>>,
+      singleQuery(publicClient!, call.pendingAddyDisable(...args).at(deployAddress)) as Promise<
+        CallReturn<'pendingAddyDisable'>
+      >,
     addyChangeDelay: (...args: ExtractArgs<Contract['calls']['addyChangeDelay']>) =>
-      singleQuery(publicClient!, call.addyChangeDelay(...args)) as Promise<CallReturn<'addyChangeDelay'>>,
+      singleQuery(publicClient!, call.addyChangeDelay(...args).at(deployAddress)) as Promise<
+        CallReturn<'addyChangeDelay'>
+      >,
     MIN_ADDY_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_ADDY_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MIN_ADDY_CHANGE_DELAY(...args)) as Promise<CallReturn<'MIN_ADDY_CHANGE_DELAY'>>,
+      singleQuery(publicClient!, call.MIN_ADDY_CHANGE_DELAY(...args).at(deployAddress)) as Promise<
+        CallReturn<'MIN_ADDY_CHANGE_DELAY'>
+      >,
     MAX_ADDY_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_ADDY_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MAX_ADDY_CHANGE_DELAY(...args)) as Promise<CallReturn<'MAX_ADDY_CHANGE_DELAY'>>,
+      singleQuery(publicClient!, call.MAX_ADDY_CHANGE_DELAY(...args).at(deployAddress)) as Promise<
+        CallReturn<'MAX_ADDY_CHANGE_DELAY'>
+      >,
     REGISTRY_STR: (...args: ExtractArgs<Contract['calls']['REGISTRY_STR']>) =>
-      singleQuery(publicClient!, call.REGISTRY_STR(...args)) as Promise<CallReturn<'REGISTRY_STR'>>,
+      singleQuery(publicClient!, call.REGISTRY_STR(...args).at(deployAddress)) as Promise<CallReturn<'REGISTRY_STR'>>,
     isUserWallet: (...args: ExtractArgs<Contract['calls']['isUserWallet']>) =>
-      singleQuery(publicClient!, call.isUserWallet(...args)) as Promise<CallReturn<'isUserWallet'>>,
+      singleQuery(publicClient!, call.isUserWallet(...args).at(deployAddress)) as Promise<CallReturn<'isUserWallet'>>,
     isAgent: (...args: ExtractArgs<Contract['calls']['isAgent']>) =>
-      singleQuery(publicClient!, call.isAgent(...args)) as Promise<CallReturn<'isAgent'>>,
+      singleQuery(publicClient!, call.isAgent(...args).at(deployAddress)) as Promise<CallReturn<'isAgent'>>,
 
     // Mutations
     changeGovernance: (...args: ExtractArgs<Contract['mutations']['changeGovernance']>) =>
-      mutate(walletClient!, mutation.changeGovernance)(...args),
+      mutate(walletClient!, mutation.changeGovernance, { address: deployAddress })(...args),
     confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) =>
-      mutate(walletClient!, mutation.confirmGovernanceChange)(...args),
+      mutate(walletClient!, mutation.confirmGovernanceChange, { address: deployAddress })(...args),
     cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) =>
-      mutate(walletClient!, mutation.cancelGovernanceChange)(...args),
+      mutate(walletClient!, mutation.cancelGovernanceChange, { address: deployAddress })(...args),
     setGovernanceChangeDelay: (...args: ExtractArgs<Contract['mutations']['setGovernanceChangeDelay']>) =>
-      mutate(walletClient!, mutation.setGovernanceChangeDelay)(...args),
+      mutate(walletClient!, mutation.setGovernanceChangeDelay, { address: deployAddress })(...args),
     setIsUserWalletOrAgent: (...args: ExtractArgs<Contract['mutations']['setIsUserWalletOrAgent']>) =>
-      mutate(walletClient!, mutation.setIsUserWalletOrAgent)(...args),
+      mutate(walletClient!, mutation.setIsUserWalletOrAgent, { address: deployAddress })(...args),
     registerNewAddy: (...args: ExtractArgs<Contract['mutations']['registerNewAddy']>) =>
-      mutate(walletClient!, mutation.registerNewAddy)(...args),
+      mutate(walletClient!, mutation.registerNewAddy, { address: deployAddress })(...args),
     confirmNewAddy: (...args: ExtractArgs<Contract['mutations']['confirmNewAddy']>) =>
-      mutate(walletClient!, mutation.confirmNewAddy)(...args),
+      mutate(walletClient!, mutation.confirmNewAddy, { address: deployAddress })(...args),
     cancelPendingNewAddy: (...args: ExtractArgs<Contract['mutations']['cancelPendingNewAddy']>) =>
-      mutate(walletClient!, mutation.cancelPendingNewAddy)(...args),
+      mutate(walletClient!, mutation.cancelPendingNewAddy, { address: deployAddress })(...args),
     updateAddyAddr: (...args: ExtractArgs<Contract['mutations']['updateAddyAddr']>) =>
-      mutate(walletClient!, mutation.updateAddyAddr)(...args),
+      mutate(walletClient!, mutation.updateAddyAddr, { address: deployAddress })(...args),
     confirmAddyUpdate: (...args: ExtractArgs<Contract['mutations']['confirmAddyUpdate']>) =>
-      mutate(walletClient!, mutation.confirmAddyUpdate)(...args),
+      mutate(walletClient!, mutation.confirmAddyUpdate, { address: deployAddress })(...args),
     cancelPendingAddyUpdate: (...args: ExtractArgs<Contract['mutations']['cancelPendingAddyUpdate']>) =>
-      mutate(walletClient!, mutation.cancelPendingAddyUpdate)(...args),
+      mutate(walletClient!, mutation.cancelPendingAddyUpdate, { address: deployAddress })(...args),
     disableAddyAddr: (...args: ExtractArgs<Contract['mutations']['disableAddyAddr']>) =>
-      mutate(walletClient!, mutation.disableAddyAddr)(...args),
+      mutate(walletClient!, mutation.disableAddyAddr, { address: deployAddress })(...args),
     confirmAddyDisable: (...args: ExtractArgs<Contract['mutations']['confirmAddyDisable']>) =>
-      mutate(walletClient!, mutation.confirmAddyDisable)(...args),
+      mutate(walletClient!, mutation.confirmAddyDisable, { address: deployAddress })(...args),
     cancelPendingAddyDisable: (...args: ExtractArgs<Contract['mutations']['cancelPendingAddyDisable']>) =>
-      mutate(walletClient!, mutation.cancelPendingAddyDisable)(...args),
+      mutate(walletClient!, mutation.cancelPendingAddyDisable, { address: deployAddress })(...args),
     setAddyChangeDelay: (...args: ExtractArgs<Contract['mutations']['setAddyChangeDelay']>) =>
-      mutate(walletClient!, mutation.setAddyChangeDelay)(...args),
+      mutate(walletClient!, mutation.setAddyChangeDelay, { address: deployAddress })(...args),
     setAddyChangeDelayToMin: (...args: ExtractArgs<Contract['mutations']['setAddyChangeDelayToMin']>) =>
-      mutate(walletClient!, mutation.setAddyChangeDelayToMin)(...args),
+      mutate(walletClient!, mutation.setAddyChangeDelayToMin, { address: deployAddress })(...args),
   }
 }

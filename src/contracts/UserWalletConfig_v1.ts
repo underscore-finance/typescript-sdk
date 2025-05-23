@@ -1909,6 +1909,8 @@ export const mutation: {
 }
 
 export type SDK = {
+  deployAddress: Address | undefined
+  abi: typeof abi
   apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) => Promise<CallReturn<'apiVersion'>>
   isAgentActive: (...args: ExtractArgs<Contract['calls']['isAgentActive']>) => Promise<CallReturn<'isAgentActive'>>
   canAgentAccess: (...args: ExtractArgs<Contract['calls']['canAgentAccess']>) => Promise<CallReturn<'canAgentAccess'>>
@@ -1977,111 +1979,117 @@ export type SDK = {
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
 }
 
-export function toSdk(address: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(deployAddress: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
+    deployAddress,
+    abi,
     // Queries
     apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) =>
-      singleQuery(publicClient!, call.apiVersion(...args).at(address)) as Promise<CallReturn<'apiVersion'>>,
+      singleQuery(publicClient!, call.apiVersion(...args).at(deployAddress)) as Promise<CallReturn<'apiVersion'>>,
     isAgentActive: (...args: ExtractArgs<Contract['calls']['isAgentActive']>) =>
-      singleQuery(publicClient!, call.isAgentActive(...args).at(address)) as Promise<CallReturn<'isAgentActive'>>,
+      singleQuery(publicClient!, call.isAgentActive(...args).at(deployAddress)) as Promise<CallReturn<'isAgentActive'>>,
     canAgentAccess: (...args: ExtractArgs<Contract['calls']['canAgentAccess']>) =>
-      singleQuery(publicClient!, call.canAgentAccess(...args).at(address)) as Promise<CallReturn<'canAgentAccess'>>,
+      singleQuery(publicClient!, call.canAgentAccess(...args).at(deployAddress)) as Promise<
+        CallReturn<'canAgentAccess'>
+      >,
     getAgentSubscriptionStatus: (...args: ExtractArgs<Contract['calls']['getAgentSubscriptionStatus']>) =>
-      singleQuery(publicClient!, call.getAgentSubscriptionStatus(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getAgentSubscriptionStatus(...args).at(deployAddress)) as Promise<
         CallReturn<'getAgentSubscriptionStatus'>
       >,
     getProtocolSubscriptionStatus: (...args: ExtractArgs<Contract['calls']['getProtocolSubscriptionStatus']>) =>
-      singleQuery(publicClient!, call.getProtocolSubscriptionStatus(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getProtocolSubscriptionStatus(...args).at(deployAddress)) as Promise<
         CallReturn<'getProtocolSubscriptionStatus'>
       >,
     canMakeSubscriptionPayments: (...args: ExtractArgs<Contract['calls']['canMakeSubscriptionPayments']>) =>
-      singleQuery(publicClient!, call.canMakeSubscriptionPayments(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.canMakeSubscriptionPayments(...args).at(deployAddress)) as Promise<
         CallReturn<'canMakeSubscriptionPayments'>
       >,
     getAvailableTxAmount: (...args: ExtractArgs<Contract['calls']['getAvailableTxAmount']>) =>
-      singleQuery(publicClient!, call.getAvailableTxAmount(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getAvailableTxAmount(...args).at(deployAddress)) as Promise<
         CallReturn<'getAvailableTxAmount'>
       >,
     canTransferToRecipient: (...args: ExtractArgs<Contract['calls']['canTransferToRecipient']>) =>
-      singleQuery(publicClient!, call.canTransferToRecipient(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.canTransferToRecipient(...args).at(deployAddress)) as Promise<
         CallReturn<'canTransferToRecipient'>
       >,
     hasPendingOwnerChange: (...args: ExtractArgs<Contract['calls']['hasPendingOwnerChange']>) =>
-      singleQuery(publicClient!, call.hasPendingOwnerChange(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.hasPendingOwnerChange(...args).at(deployAddress)) as Promise<
         CallReturn<'hasPendingOwnerChange'>
       >,
     wallet: (...args: ExtractArgs<Contract['calls']['wallet']>) =>
-      singleQuery(publicClient!, call.wallet(...args).at(address)) as Promise<CallReturn<'wallet'>>,
+      singleQuery(publicClient!, call.wallet(...args).at(deployAddress)) as Promise<CallReturn<'wallet'>>,
     owner: (...args: ExtractArgs<Contract['calls']['owner']>) =>
-      singleQuery(publicClient!, call.owner(...args).at(address)) as Promise<CallReturn<'owner'>>,
+      singleQuery(publicClient!, call.owner(...args).at(deployAddress)) as Promise<CallReturn<'owner'>>,
     pendingOwner: (...args: ExtractArgs<Contract['calls']['pendingOwner']>) =>
-      singleQuery(publicClient!, call.pendingOwner(...args).at(address)) as Promise<CallReturn<'pendingOwner'>>,
+      singleQuery(publicClient!, call.pendingOwner(...args).at(deployAddress)) as Promise<CallReturn<'pendingOwner'>>,
     ownershipChangeDelay: (...args: ExtractArgs<Contract['calls']['ownershipChangeDelay']>) =>
-      singleQuery(publicClient!, call.ownershipChangeDelay(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.ownershipChangeDelay(...args).at(deployAddress)) as Promise<
         CallReturn<'ownershipChangeDelay'>
       >,
     protocolSub: (...args: ExtractArgs<Contract['calls']['protocolSub']>) =>
-      singleQuery(publicClient!, call.protocolSub(...args).at(address)) as Promise<CallReturn<'protocolSub'>>,
+      singleQuery(publicClient!, call.protocolSub(...args).at(deployAddress)) as Promise<CallReturn<'protocolSub'>>,
     reserveAssets: (...args: ExtractArgs<Contract['calls']['reserveAssets']>) =>
-      singleQuery(publicClient!, call.reserveAssets(...args).at(address)) as Promise<CallReturn<'reserveAssets'>>,
+      singleQuery(publicClient!, call.reserveAssets(...args).at(deployAddress)) as Promise<CallReturn<'reserveAssets'>>,
     agentSettings: (...args: ExtractArgs<Contract['calls']['agentSettings']>) =>
-      singleQuery(publicClient!, call.agentSettings(...args).at(address)) as Promise<CallReturn<'agentSettings'>>,
+      singleQuery(publicClient!, call.agentSettings(...args).at(deployAddress)) as Promise<CallReturn<'agentSettings'>>,
     isRecipientAllowed: (...args: ExtractArgs<Contract['calls']['isRecipientAllowed']>) =>
-      singleQuery(publicClient!, call.isRecipientAllowed(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.isRecipientAllowed(...args).at(deployAddress)) as Promise<
         CallReturn<'isRecipientAllowed'>
       >,
     pendingWhitelist: (...args: ExtractArgs<Contract['calls']['pendingWhitelist']>) =>
-      singleQuery(publicClient!, call.pendingWhitelist(...args).at(address)) as Promise<CallReturn<'pendingWhitelist'>>,
+      singleQuery(publicClient!, call.pendingWhitelist(...args).at(deployAddress)) as Promise<
+        CallReturn<'pendingWhitelist'>
+      >,
     addyRegistry: (...args: ExtractArgs<Contract['calls']['addyRegistry']>) =>
-      singleQuery(publicClient!, call.addyRegistry(...args).at(address)) as Promise<CallReturn<'addyRegistry'>>,
+      singleQuery(publicClient!, call.addyRegistry(...args).at(deployAddress)) as Promise<CallReturn<'addyRegistry'>>,
     initialized: (...args: ExtractArgs<Contract['calls']['initialized']>) =>
-      singleQuery(publicClient!, call.initialized(...args).at(address)) as Promise<CallReturn<'initialized'>>,
+      singleQuery(publicClient!, call.initialized(...args).at(deployAddress)) as Promise<CallReturn<'initialized'>>,
     MIN_OWNER_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_OWNER_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MIN_OWNER_CHANGE_DELAY(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.MIN_OWNER_CHANGE_DELAY(...args).at(deployAddress)) as Promise<
         CallReturn<'MIN_OWNER_CHANGE_DELAY'>
       >,
     MAX_OWNER_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_OWNER_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MAX_OWNER_CHANGE_DELAY(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.MAX_OWNER_CHANGE_DELAY(...args).at(deployAddress)) as Promise<
         CallReturn<'MAX_OWNER_CHANGE_DELAY'>
       >,
 
     // Mutations
     initialize: (...args: ExtractArgs<Contract['mutations']['initialize']>) =>
-      mutate(walletClient!, mutation.initialize, { address })(...args),
+      mutate(walletClient!, mutation.initialize, { address: deployAddress })(...args),
     handleSubscriptionsAndPermissions: (
       ...args: ExtractArgs<Contract['mutations']['handleSubscriptionsAndPermissions']>
-    ) => mutate(walletClient!, mutation.handleSubscriptionsAndPermissions, { address })(...args),
+    ) => mutate(walletClient!, mutation.handleSubscriptionsAndPermissions, { address: deployAddress })(...args),
     addOrModifyAgent: (...args: ExtractArgs<Contract['mutations']['addOrModifyAgent']>) =>
-      mutate(walletClient!, mutation.addOrModifyAgent, { address })(...args),
+      mutate(walletClient!, mutation.addOrModifyAgent, { address: deployAddress })(...args),
     disableAgent: (...args: ExtractArgs<Contract['mutations']['disableAgent']>) =>
-      mutate(walletClient!, mutation.disableAgent, { address })(...args),
+      mutate(walletClient!, mutation.disableAgent, { address: deployAddress })(...args),
     addLegoIdForAgent: (...args: ExtractArgs<Contract['mutations']['addLegoIdForAgent']>) =>
-      mutate(walletClient!, mutation.addLegoIdForAgent, { address })(...args),
+      mutate(walletClient!, mutation.addLegoIdForAgent, { address: deployAddress })(...args),
     addAssetForAgent: (...args: ExtractArgs<Contract['mutations']['addAssetForAgent']>) =>
-      mutate(walletClient!, mutation.addAssetForAgent, { address })(...args),
+      mutate(walletClient!, mutation.addAssetForAgent, { address: deployAddress })(...args),
     modifyAllowedActions: (...args: ExtractArgs<Contract['mutations']['modifyAllowedActions']>) =>
-      mutate(walletClient!, mutation.modifyAllowedActions, { address })(...args),
+      mutate(walletClient!, mutation.modifyAllowedActions, { address: deployAddress })(...args),
     addWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['addWhitelistAddr']>) =>
-      mutate(walletClient!, mutation.addWhitelistAddr, { address })(...args),
+      mutate(walletClient!, mutation.addWhitelistAddr, { address: deployAddress })(...args),
     confirmWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['confirmWhitelistAddr']>) =>
-      mutate(walletClient!, mutation.confirmWhitelistAddr, { address })(...args),
+      mutate(walletClient!, mutation.confirmWhitelistAddr, { address: deployAddress })(...args),
     cancelPendingWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['cancelPendingWhitelistAddr']>) =>
-      mutate(walletClient!, mutation.cancelPendingWhitelistAddr, { address })(...args),
+      mutate(walletClient!, mutation.cancelPendingWhitelistAddr, { address: deployAddress })(...args),
     removeWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['removeWhitelistAddr']>) =>
-      mutate(walletClient!, mutation.removeWhitelistAddr, { address })(...args),
+      mutate(walletClient!, mutation.removeWhitelistAddr, { address: deployAddress })(...args),
     setReserveAsset: (...args: ExtractArgs<Contract['mutations']['setReserveAsset']>) =>
-      mutate(walletClient!, mutation.setReserveAsset, { address })(...args),
+      mutate(walletClient!, mutation.setReserveAsset, { address: deployAddress })(...args),
     setManyReserveAssets: (...args: ExtractArgs<Contract['mutations']['setManyReserveAssets']>) =>
-      mutate(walletClient!, mutation.setManyReserveAssets, { address })(...args),
+      mutate(walletClient!, mutation.setManyReserveAssets, { address: deployAddress })(...args),
     changeOwnership: (...args: ExtractArgs<Contract['mutations']['changeOwnership']>) =>
-      mutate(walletClient!, mutation.changeOwnership, { address })(...args),
+      mutate(walletClient!, mutation.changeOwnership, { address: deployAddress })(...args),
     confirmOwnershipChange: (...args: ExtractArgs<Contract['mutations']['confirmOwnershipChange']>) =>
-      mutate(walletClient!, mutation.confirmOwnershipChange, { address })(...args),
+      mutate(walletClient!, mutation.confirmOwnershipChange, { address: deployAddress })(...args),
     cancelOwnershipChange: (...args: ExtractArgs<Contract['mutations']['cancelOwnershipChange']>) =>
-      mutate(walletClient!, mutation.cancelOwnershipChange, { address })(...args),
+      mutate(walletClient!, mutation.cancelOwnershipChange, { address: deployAddress })(...args),
     setOwnershipChangeDelay: (...args: ExtractArgs<Contract['mutations']['setOwnershipChangeDelay']>) =>
-      mutate(walletClient!, mutation.setOwnershipChangeDelay, { address })(...args),
+      mutate(walletClient!, mutation.setOwnershipChangeDelay, { address: deployAddress })(...args),
     recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) =>
-      mutate(walletClient!, mutation.recoverFunds, { address })(...args),
+      mutate(walletClient!, mutation.recoverFunds, { address: deployAddress })(...args),
   }
 }

@@ -3614,6 +3614,8 @@ export const mutation: {
 }
 
 export type SDK = {
+  deployAddress: Address | undefined
+  abi: typeof abi
   apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) => Promise<CallReturn<'apiVersion'>>
   getSwapActionHash: (
     ...args: ExtractArgs<Contract['calls']['getSwapActionHash']>
@@ -3658,80 +3660,86 @@ export type SDK = {
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
 }
 
-export function toSdk(address: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(deployAddress: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
+    deployAddress,
+    abi,
     // Queries
     apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) =>
-      singleQuery(publicClient!, call.apiVersion(...args).at(address)) as Promise<CallReturn<'apiVersion'>>,
+      singleQuery(publicClient!, call.apiVersion(...args).at(deployAddress)) as Promise<CallReturn<'apiVersion'>>,
     getSwapActionHash: (...args: ExtractArgs<Contract['calls']['getSwapActionHash']>) =>
-      singleQuery(publicClient!, call.getSwapActionHash(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getSwapActionHash(...args).at(deployAddress)) as Promise<
         CallReturn<'getSwapActionHash'>
       >,
     getBatchActionHash: (...args: ExtractArgs<Contract['calls']['getBatchActionHash']>) =>
-      singleQuery(publicClient!, call.getBatchActionHash(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.getBatchActionHash(...args).at(deployAddress)) as Promise<
         CallReturn<'getBatchActionHash'>
       >,
     DOMAIN_SEPARATOR: (...args: ExtractArgs<Contract['calls']['DOMAIN_SEPARATOR']>) =>
-      singleQuery(publicClient!, call.DOMAIN_SEPARATOR(...args).at(address)) as Promise<CallReturn<'DOMAIN_SEPARATOR'>>,
+      singleQuery(publicClient!, call.DOMAIN_SEPARATOR(...args).at(deployAddress)) as Promise<
+        CallReturn<'DOMAIN_SEPARATOR'>
+      >,
     initialized: (...args: ExtractArgs<Contract['calls']['initialized']>) =>
-      singleQuery(publicClient!, call.initialized(...args).at(address)) as Promise<CallReturn<'initialized'>>,
+      singleQuery(publicClient!, call.initialized(...args).at(deployAddress)) as Promise<CallReturn<'initialized'>>,
     usedSignatures: (...args: ExtractArgs<Contract['calls']['usedSignatures']>) =>
-      singleQuery(publicClient!, call.usedSignatures(...args).at(address)) as Promise<CallReturn<'usedSignatures'>>,
+      singleQuery(publicClient!, call.usedSignatures(...args).at(deployAddress)) as Promise<
+        CallReturn<'usedSignatures'>
+      >,
     owner: (...args: ExtractArgs<Contract['calls']['owner']>) =>
-      singleQuery(publicClient!, call.owner(...args).at(address)) as Promise<CallReturn<'owner'>>,
+      singleQuery(publicClient!, call.owner(...args).at(deployAddress)) as Promise<CallReturn<'owner'>>,
     pendingOwner: (...args: ExtractArgs<Contract['calls']['pendingOwner']>) =>
-      singleQuery(publicClient!, call.pendingOwner(...args).at(address)) as Promise<CallReturn<'pendingOwner'>>,
+      singleQuery(publicClient!, call.pendingOwner(...args).at(deployAddress)) as Promise<CallReturn<'pendingOwner'>>,
     ownershipChangeDelay: (...args: ExtractArgs<Contract['calls']['ownershipChangeDelay']>) =>
-      singleQuery(publicClient!, call.ownershipChangeDelay(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.ownershipChangeDelay(...args).at(deployAddress)) as Promise<
         CallReturn<'ownershipChangeDelay'>
       >,
     MIN_OWNER_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_OWNER_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MIN_OWNER_CHANGE_DELAY(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.MIN_OWNER_CHANGE_DELAY(...args).at(deployAddress)) as Promise<
         CallReturn<'MIN_OWNER_CHANGE_DELAY'>
       >,
     MAX_OWNER_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_OWNER_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MAX_OWNER_CHANGE_DELAY(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.MAX_OWNER_CHANGE_DELAY(...args).at(deployAddress)) as Promise<
         CallReturn<'MAX_OWNER_CHANGE_DELAY'>
       >,
 
     // Mutations
     initialize: (...args: ExtractArgs<Contract['mutations']['initialize']>) =>
-      mutate(walletClient!, mutation.initialize, { address })(...args),
+      mutate(walletClient!, mutation.initialize, { address: deployAddress })(...args),
     depositTokens: (...args: ExtractArgs<Contract['mutations']['depositTokens']>) =>
-      mutate(walletClient!, mutation.depositTokens, { address })(...args),
+      mutate(walletClient!, mutation.depositTokens, { address: deployAddress })(...args),
     withdrawTokens: (...args: ExtractArgs<Contract['mutations']['withdrawTokens']>) =>
-      mutate(walletClient!, mutation.withdrawTokens, { address })(...args),
+      mutate(walletClient!, mutation.withdrawTokens, { address: deployAddress })(...args),
     rebalance: (...args: ExtractArgs<Contract['mutations']['rebalance']>) =>
-      mutate(walletClient!, mutation.rebalance, { address })(...args),
+      mutate(walletClient!, mutation.rebalance, { address: deployAddress })(...args),
     swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) =>
-      mutate(walletClient!, mutation.swapTokens, { address })(...args),
+      mutate(walletClient!, mutation.swapTokens, { address: deployAddress })(...args),
     borrow: (...args: ExtractArgs<Contract['mutations']['borrow']>) =>
-      mutate(walletClient!, mutation.borrow, { address })(...args),
+      mutate(walletClient!, mutation.borrow, { address: deployAddress })(...args),
     repayDebt: (...args: ExtractArgs<Contract['mutations']['repayDebt']>) =>
-      mutate(walletClient!, mutation.repayDebt, { address })(...args),
+      mutate(walletClient!, mutation.repayDebt, { address: deployAddress })(...args),
     claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) =>
-      mutate(walletClient!, mutation.claimRewards, { address })(...args),
+      mutate(walletClient!, mutation.claimRewards, { address: deployAddress })(...args),
     addLiquidity: (...args: ExtractArgs<Contract['mutations']['addLiquidity']>) =>
-      mutate(walletClient!, mutation.addLiquidity, { address })(...args),
+      mutate(walletClient!, mutation.addLiquidity, { address: deployAddress })(...args),
     removeLiquidity: (...args: ExtractArgs<Contract['mutations']['removeLiquidity']>) =>
-      mutate(walletClient!, mutation.removeLiquidity, { address })(...args),
+      mutate(walletClient!, mutation.removeLiquidity, { address: deployAddress })(...args),
     transferFunds: (...args: ExtractArgs<Contract['mutations']['transferFunds']>) =>
-      mutate(walletClient!, mutation.transferFunds, { address })(...args),
+      mutate(walletClient!, mutation.transferFunds, { address: deployAddress })(...args),
     convertEthToWeth: (...args: ExtractArgs<Contract['mutations']['convertEthToWeth']>) =>
-      mutate(walletClient!, mutation.convertEthToWeth, { address })(...args),
+      mutate(walletClient!, mutation.convertEthToWeth, { address: deployAddress })(...args),
     convertWethToEth: (...args: ExtractArgs<Contract['mutations']['convertWethToEth']>) =>
-      mutate(walletClient!, mutation.convertWethToEth, { address })(...args),
+      mutate(walletClient!, mutation.convertWethToEth, { address: deployAddress })(...args),
     performBatchActions: (...args: ExtractArgs<Contract['mutations']['performBatchActions']>) =>
-      mutate(walletClient!, mutation.performBatchActions, { address })(...args),
+      mutate(walletClient!, mutation.performBatchActions, { address: deployAddress })(...args),
     changeOwnership: (...args: ExtractArgs<Contract['mutations']['changeOwnership']>) =>
-      mutate(walletClient!, mutation.changeOwnership, { address })(...args),
+      mutate(walletClient!, mutation.changeOwnership, { address: deployAddress })(...args),
     confirmOwnershipChange: (...args: ExtractArgs<Contract['mutations']['confirmOwnershipChange']>) =>
-      mutate(walletClient!, mutation.confirmOwnershipChange, { address })(...args),
+      mutate(walletClient!, mutation.confirmOwnershipChange, { address: deployAddress })(...args),
     cancelOwnershipChange: (...args: ExtractArgs<Contract['mutations']['cancelOwnershipChange']>) =>
-      mutate(walletClient!, mutation.cancelOwnershipChange, { address })(...args),
+      mutate(walletClient!, mutation.cancelOwnershipChange, { address: deployAddress })(...args),
     setOwnershipChangeDelay: (...args: ExtractArgs<Contract['mutations']['setOwnershipChangeDelay']>) =>
-      mutate(walletClient!, mutation.setOwnershipChangeDelay, { address })(...args),
+      mutate(walletClient!, mutation.setOwnershipChangeDelay, { address: deployAddress })(...args),
     recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) =>
-      mutate(walletClient!, mutation.recoverFunds, { address })(...args),
+      mutate(walletClient!, mutation.recoverFunds, { address: deployAddress })(...args),
   }
 }

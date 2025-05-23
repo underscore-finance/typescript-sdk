@@ -400,6 +400,8 @@ export const mutation: {
 }
 
 export type SDK = {
+  deployAddress: Address | undefined
+  abi: typeof abi
   name: (...args: ExtractArgs<Contract['calls']['name']>) => Promise<CallReturn<'name'>>
   symbol: (...args: ExtractArgs<Contract['calls']['symbol']>) => Promise<CallReturn<'symbol'>>
   decimals: (...args: ExtractArgs<Contract['calls']['decimals']>) => Promise<CallReturn<'decimals'>>
@@ -416,34 +418,38 @@ export type SDK = {
   permit: (...args: ExtractArgs<Contract['mutations']['permit']>) => Promise<Address>
 }
 
-export function toSdk(address: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(deployAddress: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
+    deployAddress,
+    abi,
     // Queries
     name: (...args: ExtractArgs<Contract['calls']['name']>) =>
-      singleQuery(publicClient!, call.name(...args).at(address)) as Promise<CallReturn<'name'>>,
+      singleQuery(publicClient!, call.name(...args).at(deployAddress)) as Promise<CallReturn<'name'>>,
     symbol: (...args: ExtractArgs<Contract['calls']['symbol']>) =>
-      singleQuery(publicClient!, call.symbol(...args).at(address)) as Promise<CallReturn<'symbol'>>,
+      singleQuery(publicClient!, call.symbol(...args).at(deployAddress)) as Promise<CallReturn<'symbol'>>,
     decimals: (...args: ExtractArgs<Contract['calls']['decimals']>) =>
-      singleQuery(publicClient!, call.decimals(...args).at(address)) as Promise<CallReturn<'decimals'>>,
+      singleQuery(publicClient!, call.decimals(...args).at(deployAddress)) as Promise<CallReturn<'decimals'>>,
     totalSupply: (...args: ExtractArgs<Contract['calls']['totalSupply']>) =>
-      singleQuery(publicClient!, call.totalSupply(...args).at(address)) as Promise<CallReturn<'totalSupply'>>,
+      singleQuery(publicClient!, call.totalSupply(...args).at(deployAddress)) as Promise<CallReturn<'totalSupply'>>,
     balanceOf: (...args: ExtractArgs<Contract['calls']['balanceOf']>) =>
-      singleQuery(publicClient!, call.balanceOf(...args).at(address)) as Promise<CallReturn<'balanceOf'>>,
+      singleQuery(publicClient!, call.balanceOf(...args).at(deployAddress)) as Promise<CallReturn<'balanceOf'>>,
     allowance: (...args: ExtractArgs<Contract['calls']['allowance']>) =>
-      singleQuery(publicClient!, call.allowance(...args).at(address)) as Promise<CallReturn<'allowance'>>,
+      singleQuery(publicClient!, call.allowance(...args).at(deployAddress)) as Promise<CallReturn<'allowance'>>,
     nonces: (...args: ExtractArgs<Contract['calls']['nonces']>) =>
-      singleQuery(publicClient!, call.nonces(...args).at(address)) as Promise<CallReturn<'nonces'>>,
+      singleQuery(publicClient!, call.nonces(...args).at(deployAddress)) as Promise<CallReturn<'nonces'>>,
     DOMAIN_SEPARATOR: (...args: ExtractArgs<Contract['calls']['DOMAIN_SEPARATOR']>) =>
-      singleQuery(publicClient!, call.DOMAIN_SEPARATOR(...args).at(address)) as Promise<CallReturn<'DOMAIN_SEPARATOR'>>,
+      singleQuery(publicClient!, call.DOMAIN_SEPARATOR(...args).at(deployAddress)) as Promise<
+        CallReturn<'DOMAIN_SEPARATOR'>
+      >,
 
     // Mutations
     transfer: (...args: ExtractArgs<Contract['mutations']['transfer']>) =>
-      mutate(walletClient!, mutation.transfer, { address })(...args),
+      mutate(walletClient!, mutation.transfer, { address: deployAddress })(...args),
     transferFrom: (...args: ExtractArgs<Contract['mutations']['transferFrom']>) =>
-      mutate(walletClient!, mutation.transferFrom, { address })(...args),
+      mutate(walletClient!, mutation.transferFrom, { address: deployAddress })(...args),
     approve: (...args: ExtractArgs<Contract['mutations']['approve']>) =>
-      mutate(walletClient!, mutation.approve, { address })(...args),
+      mutate(walletClient!, mutation.approve, { address: deployAddress })(...args),
     permit: (...args: ExtractArgs<Contract['mutations']['permit']>) =>
-      mutate(walletClient!, mutation.permit, { address })(...args),
+      mutate(walletClient!, mutation.permit, { address: deployAddress })(...args),
   }
 }

@@ -2820,6 +2820,8 @@ export const mutation: {
 }
 
 export type SDK = {
+  deployAddress: Address | undefined
+  abi: typeof abi
   onERC721Received: (
     ...args: ExtractArgs<Contract['calls']['onERC721Received']>
   ) => Promise<CallReturn<'onERC721Received'>>
@@ -2849,54 +2851,60 @@ export type SDK = {
   recoverNft: (...args: ExtractArgs<Contract['mutations']['recoverNft']>) => Promise<Address>
 }
 
-export function toSdk(address: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(deployAddress: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
   return {
+    deployAddress,
+    abi,
     // Queries
     onERC721Received: (...args: ExtractArgs<Contract['calls']['onERC721Received']>) =>
-      singleQuery(publicClient!, call.onERC721Received(...args).at(address)) as Promise<CallReturn<'onERC721Received'>>,
+      singleQuery(publicClient!, call.onERC721Received(...args).at(deployAddress)) as Promise<
+        CallReturn<'onERC721Received'>
+      >,
     apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) =>
-      singleQuery(publicClient!, call.apiVersion(...args).at(address)) as Promise<CallReturn<'apiVersion'>>,
+      singleQuery(publicClient!, call.apiVersion(...args).at(deployAddress)) as Promise<CallReturn<'apiVersion'>>,
     walletConfig: (...args: ExtractArgs<Contract['calls']['walletConfig']>) =>
-      singleQuery(publicClient!, call.walletConfig(...args).at(address)) as Promise<CallReturn<'walletConfig'>>,
+      singleQuery(publicClient!, call.walletConfig(...args).at(deployAddress)) as Promise<CallReturn<'walletConfig'>>,
     trialFundsAsset: (...args: ExtractArgs<Contract['calls']['trialFundsAsset']>) =>
-      singleQuery(publicClient!, call.trialFundsAsset(...args).at(address)) as Promise<CallReturn<'trialFundsAsset'>>,
+      singleQuery(publicClient!, call.trialFundsAsset(...args).at(deployAddress)) as Promise<
+        CallReturn<'trialFundsAsset'>
+      >,
     trialFundsInitialAmount: (...args: ExtractArgs<Contract['calls']['trialFundsInitialAmount']>) =>
-      singleQuery(publicClient!, call.trialFundsInitialAmount(...args).at(address)) as Promise<
+      singleQuery(publicClient!, call.trialFundsInitialAmount(...args).at(deployAddress)) as Promise<
         CallReturn<'trialFundsInitialAmount'>
       >,
     wethAddr: (...args: ExtractArgs<Contract['calls']['wethAddr']>) =>
-      singleQuery(publicClient!, call.wethAddr(...args).at(address)) as Promise<CallReturn<'wethAddr'>>,
+      singleQuery(publicClient!, call.wethAddr(...args).at(deployAddress)) as Promise<CallReturn<'wethAddr'>>,
     ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) =>
-      singleQuery(publicClient!, call.ADDY_REGISTRY(...args).at(address)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
+      singleQuery(publicClient!, call.ADDY_REGISTRY(...args).at(deployAddress)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
 
     // Mutations
     depositTokens: (...args: ExtractArgs<Contract['mutations']['depositTokens']>) =>
-      mutate(walletClient!, mutation.depositTokens, { address })(...args),
+      mutate(walletClient!, mutation.depositTokens, { address: deployAddress })(...args),
     withdrawTokens: (...args: ExtractArgs<Contract['mutations']['withdrawTokens']>) =>
-      mutate(walletClient!, mutation.withdrawTokens, { address })(...args),
+      mutate(walletClient!, mutation.withdrawTokens, { address: deployAddress })(...args),
     rebalance: (...args: ExtractArgs<Contract['mutations']['rebalance']>) =>
-      mutate(walletClient!, mutation.rebalance, { address })(...args),
+      mutate(walletClient!, mutation.rebalance, { address: deployAddress })(...args),
     swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) =>
-      mutate(walletClient!, mutation.swapTokens, { address })(...args),
+      mutate(walletClient!, mutation.swapTokens, { address: deployAddress })(...args),
     borrow: (...args: ExtractArgs<Contract['mutations']['borrow']>) =>
-      mutate(walletClient!, mutation.borrow, { address })(...args),
+      mutate(walletClient!, mutation.borrow, { address: deployAddress })(...args),
     repayDebt: (...args: ExtractArgs<Contract['mutations']['repayDebt']>) =>
-      mutate(walletClient!, mutation.repayDebt, { address })(...args),
+      mutate(walletClient!, mutation.repayDebt, { address: deployAddress })(...args),
     claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) =>
-      mutate(walletClient!, mutation.claimRewards, { address })(...args),
+      mutate(walletClient!, mutation.claimRewards, { address: deployAddress })(...args),
     addLiquidity: (...args: ExtractArgs<Contract['mutations']['addLiquidity']>) =>
-      mutate(walletClient!, mutation.addLiquidity, { address })(...args),
+      mutate(walletClient!, mutation.addLiquidity, { address: deployAddress })(...args),
     removeLiquidity: (...args: ExtractArgs<Contract['mutations']['removeLiquidity']>) =>
-      mutate(walletClient!, mutation.removeLiquidity, { address })(...args),
+      mutate(walletClient!, mutation.removeLiquidity, { address: deployAddress })(...args),
     transferFunds: (...args: ExtractArgs<Contract['mutations']['transferFunds']>) =>
-      mutate(walletClient!, mutation.transferFunds, { address })(...args),
+      mutate(walletClient!, mutation.transferFunds, { address: deployAddress })(...args),
     convertEthToWeth: (...args: ExtractArgs<Contract['mutations']['convertEthToWeth']>) =>
-      mutate(walletClient!, mutation.convertEthToWeth, { address })(...args),
+      mutate(walletClient!, mutation.convertEthToWeth, { address: deployAddress })(...args),
     convertWethToEth: (...args: ExtractArgs<Contract['mutations']['convertWethToEth']>) =>
-      mutate(walletClient!, mutation.convertWethToEth, { address })(...args),
+      mutate(walletClient!, mutation.convertWethToEth, { address: deployAddress })(...args),
     recoverTrialFunds: (...args: ExtractArgs<Contract['mutations']['recoverTrialFunds']>) =>
-      mutate(walletClient!, mutation.recoverTrialFunds, { address })(...args),
+      mutate(walletClient!, mutation.recoverTrialFunds, { address: deployAddress })(...args),
     recoverNft: (...args: ExtractArgs<Contract['mutations']['recoverNft']>) =>
-      mutate(walletClient!, mutation.recoverNft, { address })(...args),
+      mutate(walletClient!, mutation.recoverNft, { address: deployAddress })(...args),
   }
 }
