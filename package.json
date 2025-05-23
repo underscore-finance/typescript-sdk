@@ -1,6 +1,6 @@
 {
   "name": "@underscore-finance/sdk",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "SDK for interacting with Underscore Finance Smart Contracts with TypeScript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
