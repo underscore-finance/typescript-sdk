@@ -1,7 +1,8 @@
+import { GetItemCallFunction, iteratorQuery, query, RequestCollection } from '@dappql/async'
 import { Address, createPublicClient, http, PublicClient, WalletClient } from 'viem'
 import { base, baseSepolia } from 'viem/chains'
 
-import { AddyRegistry, AgentFactory, LegoRegistry, OracleRegistry, PriceSheets } from './contracts/index.js'
+import * as CONTRACTS from './contracts/index.js'
 import * as LegoHelper from './contracts/LegoHelper.js'
 import createSdk, { SDK } from './contracts/sdk.js'
 
@@ -69,7 +70,7 @@ class Underscore {
     const { tokenIn, tokenOut, amountIn, slippage, includeLegoIds } = payload
 
     const instructions = await this.publicClient.simulateContract({
-      address: LegoHelper.deployAddress!,
+      address: this.LegoHelper.deployAddress!,
       abi: LegoHelper.abi,
       functionName: 'getRoutesAndSwapInstructionsAmountOut',
       args: [tokenIn, tokenOut, amountIn, slippage, includeLegoIds ?? []],
@@ -89,7 +90,7 @@ class Underscore {
     const { tokenIn, tokenOut, amountOut, amountInAvailable, slippage, includeLegoIds } = payload
 
     const instructions = await this.publicClient.simulateContract({
-      address: LegoHelper.deployAddress!,
+      address: this.LegoHelper.deployAddress!,
       abi: LegoHelper.abi,
       functionName: 'getRoutesAndSwapInstructionsAmountIn',
       args: [tokenIn, tokenOut, amountOut, amountInAvailable, slippage, includeLegoIds ?? []],
@@ -98,8 +99,8 @@ class Underscore {
     return instructions.result as DeepMutable<typeof instructions.result>
   }
 
-  get Registry() {
-    const deployAddress = this.isTestnet ? TESTNET_ADDRESSES.AddyRegistry : AddyRegistry.deployAddress!
+  get AddyRegistry() {
+    const deployAddress = this.isTestnet ? TESTNET_ADDRESSES.AddyRegistry : CONTRACTS.AddyRegistry.deployAddress!
     return {
       ...this.contracts.AddyRegistry(deployAddress),
       deployAddress,
@@ -109,19 +110,19 @@ class Underscore {
   /**
    * @deprecated Use `Registry` instead. This version is for legacy compatibility.
    */
-  get Registry_v1() {
+  get AddyRegistry_v1() {
     return this.contracts.AddyRegistry_v1
   }
 
   /**
    * @deprecated Use `Registry` instead. This version is for legacy compatibility.
    */
-  get Registry_v2() {
+  get AddyRegistry_v2() {
     return this.contracts.AddyRegistry_v2
   }
 
-  get Factory() {
-    const deployAddress = this.isTestnet ? TESTNET_ADDRESSES.AgentFactory : AgentFactory.deployAddress!
+  get AgentFactory() {
+    const deployAddress = this.isTestnet ? TESTNET_ADDRESSES.AgentFactory : CONTRACTS.AgentFactory.deployAddress!
     return {
       ...this.contracts.AgentFactory(deployAddress),
       deployAddress,
@@ -131,19 +132,19 @@ class Underscore {
   /**
    * @deprecated Use `Factory` instead. This version is for legacy compatibility.
    */
-  get Factory_v2() {
+  get AgentFactory_v2() {
     return this.contracts.AgentFactory_v2
   }
 
   /**
    * @deprecated Use `Factory` instead. This version is for legacy compatibility.
    */
-  get Factory_v1() {
+  get AgentFactory_v1() {
     return this.contracts.AgentFactory_v1
   }
 
   get OracleRegistry() {
-    const deployAddress = this.isTestnet ? TESTNET_ADDRESSES.OracleRegistry : OracleRegistry.deployAddress!
+    const deployAddress = this.isTestnet ? TESTNET_ADDRESSES.OracleRegistry : CONTRACTS.OracleRegistry.deployAddress!
     return {
       ...this.contracts.OracleRegistry(deployAddress),
       deployAddress,
@@ -151,7 +152,7 @@ class Underscore {
   }
 
   get LegoRegistry() {
-    const deployAddress = this.isTestnet ? TESTNET_ADDRESSES.LegoRegistry : LegoRegistry.deployAddress!
+    const deployAddress = this.isTestnet ? TESTNET_ADDRESSES.LegoRegistry : CONTRACTS.LegoRegistry.deployAddress!
     return {
       ...this.contracts.LegoRegistry(deployAddress),
       deployAddress,
@@ -167,7 +168,7 @@ class Underscore {
   }
 
   get PriceSheets() {
-    const deployAddress = this.isTestnet ? TESTNET_ADDRESSES.PriceSheets : PriceSheets.deployAddress!
+    const deployAddress = this.isTestnet ? TESTNET_ADDRESSES.PriceSheets : CONTRACTS.PriceSheets.deployAddress!
     return {
       ...this.contracts.PriceSheets(deployAddress),
       deployAddress,
@@ -250,6 +251,41 @@ class Underscore {
 
   get OracleParser() {
     return { at: (address: Address) => this.contracts.OracleParser(address) }
+  }
+
+  get addressResolver() {
+    return (contractName: string) => {
+      if (this.isTestnet) {
+        const address = TESTNET_ADDRESSES[contractName as keyof typeof TESTNET_ADDRESSES]
+        if (!address) {
+          throw new Error(`Address for ${contractName} not found`)
+        }
+        return address!
+      }
+      return CONTRACTS[contractName as keyof typeof CONTRACTS].deployAddress! as `0x${string}`
+    }
+  }
+
+  async multicall<T extends RequestCollection>(
+    cb: (contracts: typeof CONTRACTS) => T,
+    options: { blockNumber?: bigint } = {},
+  ) {
+    const request = cb(CONTRACTS)
+    return query(this.publicClient, request, options, this.addressResolver)
+  }
+
+  async iterate<T>(
+    cb: (contracts: typeof CONTRACTS) => {
+      total: bigint
+      getItem: GetItemCallFunction<T>
+    },
+    options: {
+      blockNumber?: bigint
+      firstIndex?: bigint
+    } = {},
+  ) {
+    const { total, getItem } = cb(CONTRACTS)
+    return iteratorQuery(this.publicClient, total, getItem, options, this.addressResolver)
   }
 }
 
