@@ -8,6 +8,9 @@ import createSdk, { SDK } from './contracts/sdk.js'
 
 export * from './contracts/index.js'
 
+export type Contracts = typeof CONTRACTS
+export type ContractsNames = keyof typeof CONTRACTS
+
 const TESTNET_ADDRESSES = {
   AddyRegistry: '0xa89a59E14333187829528C50eBAaE6EC12Bae95d',
   AgentFactory: '0x50d08c554b0F7F4784B7108103e586eccb522b8E',
@@ -267,7 +270,7 @@ class Underscore {
   }
 
   async multicall<T extends RequestCollection>(
-    cb: (contracts: typeof CONTRACTS) => T,
+    cb: (contracts: Contracts) => T,
     options: { blockNumber?: bigint } = {},
   ) {
     const request = cb(CONTRACTS)
@@ -275,7 +278,7 @@ class Underscore {
   }
 
   async iterate<T>(
-    cb: (contracts: typeof CONTRACTS) => {
+    cb: (contracts: Contracts) => {
       total: bigint
       getItem: GetItemCallFunction<T>
     },
