@@ -1,3 +1,8 @@
+import { createRequire } from 'module'
+
+const require = createRequire(import.meta.url)
+const Manifest = require('../underscore-protocol/migration_history/base-mainnet/v1/current-manifest.json')
+
 export default {
   name: 'Underscore Finance',
   description: 'Underscore Finance',
@@ -8,40 +13,22 @@ export default {
   isModule: true,
   isSdk: true,
   contracts: {
-    AddyRegistry: { isTemplate: true, address: '0x7BcD6d471D1A068012A79347C7a944d1Df01a1AE' },
-    AddyRegistry_v1: { address: '0x49B08551e452cA99da7dE9B3a60E39e5f10C13CD' },
-    AddyRegistry_v2: { address: '0xdCCaB9855D7eE558409EBdf358a3A44a8b2415B3' },
-    AgentFactory: { isTemplate: true, address: '0x7C4be37a65E8410c0fb03d62059E3cB04f78c565' },
-    AgentFactory_v2: { address: '0x5cd5Adb8CE20401D064da60aE051eFc3753CE436' },
-    AgentFactory_v1: { address: '0xf220F44b2308E3018F3D45106Cfdb8E11c868E21' },
-    UserWallet: { isTemplate: true, address: '0xe43D5bD11a2A6A9348EFC516ad9Ac3D32164A5A0' },
-    UserWallet_v2: { isTemplate: true, address: '0xf614Bb656a8B1B8646b25f3Ca4a9655E407D38e5' },
-    UserWallet_v1: { isTemplate: true, address: '0x6A5263B0645c7dFd2788eF46f95f210E947e0743' },
-    UserWalletConfig: { isTemplate: true, address: '0x61293F1bF484d20dcc841175b4E4A0F46c26658c' },
-    UserWalletConfig_v2: { isTemplate: true, address: '0xAeE931cC57CfBE31328bCfF092Af7eC7dFD7EBC8' },
-    UserWalletConfig_v1: { isTemplate: true, address: '0x45D1a9429Fd603c13Cdab685dc2540f4F57Df464' },
-    Agent: { isTemplate: true, address: '0x76Eb19Ae42c07a7AD50aFD58b579a7c45bd70183' },
-    Agent_v2: { isTemplate: true, address: '0x76Eb19Ae42c07a7AD50aFD58b579a7c45bd70183' },
-    Agent_v1: { isTemplate: true, address: '0x70418b3AAa1044eC8bFF6a461B4E43460bb5699E' },
-    LegoRegistry: { isTemplate: true, address: '0x8D8593FE154d14976352FA2CE30322EcDF99C72a' },
-    OracleRegistry: { isTemplate: true, address: '0xe133F22aAdC23F9B7ca7A9f16B6D9A0C662Cf90b' },
-    PriceSheets: { isTemplate: true, address: '0xD15331Cf355B5D8EF017c1FD49516b95593FA6aA' },
-    LegoHelper: { isTemplate: true, address: '0xF80b87DD1096f9E68739f55B9807Df1CB21422E3' },
-    ChainlinkFeeds: { address: '0x605c6ab843d65dD14b00CEB33f445D7f9bbb7930' },
-    PythFeeds: { address: '0x415a2fe1e591619c6c12Df09eAEc8a598224F9fE' },
-    StorkFeeds: { address: '0xD47D74C56c17Bf3B7236e8a7eb97D3194c3d477c' },
-    LegoAaveV3: { address: '0x8c94cfC11A9340e45032e5021881cc312993Bf15' },
-    LegoCompoundV3: { address: '0xF86d1D68C951d163aBc383C508740df6ddED500C' },
-    LegoEuler: { address: '0xB2a1cdC1D896eE37cD432b591FeC2664294286FB' },
-    LegoFluid: { address: '0xc4a864F5543D3CDB06D5F3419c18315f2cDe9675' },
-    LegoMoonwell: { address: '0x3890573c04A13d1D982104c7DaDb17F66cb1aE6c' },
-    LegoMorpho: { address: '0x825309418B066603C2732fdA08d39A79CAA5CC8e' },
-    LegoSky: { address: '0x3514536163D5c0c5207A6A1230fc76bEe8CE8506' },
-    LegoAeroClassic: { address: '0x61C8D98F01B066fA99eb2cf2E6069a7e5d891313' },
-    LegoAeroSlipstream: { address: '0x0891DdE2eC48f9663A1c9a81820c283dD8846594' },
-    LegoCurve: { address: '0x6118D44763a556Cf8d113ebBce853E14a0C67997' },
-    LegoUniswapV2: { address: '0x9973e271Bd6cAb8Ce1CAEaBAB8a1bEbcB6EdD535' },
-    LegoUniswapV3: { address: '0x6bfd82031a968685358DA84ebB797c3C068EC704' },
+    ...Manifest.contracts,
+    UserWallet: {
+      isTemplate: true,
+      address: Manifest.contracts.UserWallet.address,
+      abi: Manifest.contracts.UserWallet.abi,
+    },
+    UserWalletConfig: {
+      isTemplate: true,
+      address: Manifest.contracts.UserWalletConfig.address,
+      abi: Manifest.contracts.UserWalletConfig.abi,
+    },
+    Agent: {
+      isTemplate: true,
+      address: Manifest.contracts.AgentWrapper.address,
+      abi: Manifest.contracts.AgentWrapper.abi,
+    },
 
     ERC20: {
       isTemplate: true,
@@ -307,7 +294,43 @@ export default {
         },
       ],
     },
-    LegoCredit: {
+    // Previous versions
+    v0_3_AddyRegistry: { address: '0x7BcD6d471D1A068012A79347C7a944d1Df01a1AE' },
+    v0_1_AddyRegistry: { address: '0x49B08551e452cA99da7dE9B3a60E39e5f10C13CD' },
+    v0_2_AddyRegistry: { address: '0xdCCaB9855D7eE558409EBdf358a3A44a8b2415B3' },
+    v0_3_AgentFactory: { address: '0x7C4be37a65E8410c0fb03d62059E3cB04f78c565' },
+    v0_2_AgentFactory: { address: '0x5cd5Adb8CE20401D064da60aE051eFc3753CE436' },
+    v0_1_AgentFactory: { address: '0xf220F44b2308E3018F3D45106Cfdb8E11c868E21' },
+    v0_3_UserWallet: { isTemplate: true, address: '0xe43D5bD11a2A6A9348EFC516ad9Ac3D32164A5A0' },
+    v0_2_UserWallet: { isTemplate: true, address: '0xf614Bb656a8B1B8646b25f3Ca4a9655E407D38e5' },
+    v0_1_UserWallet: { isTemplate: true, address: '0x6A5263B0645c7dFd2788eF46f95f210E947e0743' },
+    v0_3_UserWalletConfig: { isTemplate: true, address: '0x61293F1bF484d20dcc841175b4E4A0F46c26658c' },
+    v0_2_UserWalletConfig: { isTemplate: true, address: '0xAeE931cC57CfBE31328bCfF092Af7eC7dFD7EBC8' },
+    v0_1_UserWalletConfig: { isTemplate: true, address: '0x45D1a9429Fd603c13Cdab685dc2540f4F57Df464' },
+    v0_3_Agent: { isTemplate: true, address: '0x76Eb19Ae42c07a7AD50aFD58b579a7c45bd70183' },
+    v0_2_Agent: { isTemplate: true, address: '0x76Eb19Ae42c07a7AD50aFD58b579a7c45bd70183' },
+    v0_1_Agent: { isTemplate: true, address: '0x70418b3AAa1044eC8bFF6a461B4E43460bb5699E' },
+    v0_3_LegoRegistry: { address: '0x8D8593FE154d14976352FA2CE30322EcDF99C72a' },
+    v0_3_OracleRegistry: { address: '0xe133F22aAdC23F9B7ca7A9f16B6D9A0C662Cf90b' },
+    v0_3_PriceSheets: { address: '0xD15331Cf355B5D8EF017c1FD49516b95593FA6aA' },
+    v0_3_LegoHelper: { address: '0xF80b87DD1096f9E68739f55B9807Df1CB21422E3' },
+    v0_3_ChainlinkFeeds: { address: '0x605c6ab843d65dD14b00CEB33f445D7f9bbb7930' },
+    v0_3_PythFeeds: { address: '0x415a2fe1e591619c6c12Df09eAEc8a598224F9fE' },
+    v0_3_StorkFeeds: { address: '0xD47D74C56c17Bf3B7236e8a7eb97D3194c3d477c' },
+    v0_3_LegoAaveV3: { address: '0x8c94cfC11A9340e45032e5021881cc312993Bf15' },
+    v0_3_LegoCompoundV3: { address: '0xF86d1D68C951d163aBc383C508740df6ddED500C' },
+    v0_3_LegoEuler: { address: '0xB2a1cdC1D896eE37cD432b591FeC2664294286FB' },
+    v0_3_LegoFluid: { address: '0xc4a864F5543D3CDB06D5F3419c18315f2cDe9675' },
+    v0_3_LegoMoonwell: { address: '0x3890573c04A13d1D982104c7DaDb17F66cb1aE6c' },
+    v0_3_LegoMorpho: { address: '0x825309418B066603C2732fdA08d39A79CAA5CC8e' },
+    v0_3_LegoSky: { address: '0x3514536163D5c0c5207A6A1230fc76bEe8CE8506' },
+    v0_3_LegoAeroClassic: { address: '0x61C8D98F01B066fA99eb2cf2E6069a7e5d891313' },
+    v0_3_LegoAeroSlipstream: { address: '0x0891DdE2eC48f9663A1c9a81820c283dD8846594' },
+    v0_3_LegoCurve: { address: '0x6118D44763a556Cf8d113ebBce853E14a0C67997' },
+    LegoUniswapV0_2: { address: '0x9973e271Bd6cAb8Ce1CAEaBAB8a1bEbcB6EdD535' },
+    v0_3_LegoUniswapV3: { address: '0x6bfd82031a968685358DA84ebB797c3C068EC704' },
+
+    v0_3_LegoCredit: {
       isTemplate: true,
       abi: [
         {
@@ -376,7 +399,7 @@ export default {
         },
       ],
     },
-    LegoYield: {
+    v0_3_LegoYield: {
       isTemplate: true,
       abi: [
         {
@@ -566,7 +589,7 @@ export default {
         },
       ],
     },
-    LegoCommon: {
+    v0_3_LegoCommon: {
       isTemplate: true,
       abi: [
         {
@@ -633,7 +656,7 @@ export default {
         },
       ],
     },
-    LegoDex: {
+    v0_3_LegoDex: {
       isTemplate: true,
       abi: [
         {
@@ -907,7 +930,7 @@ export default {
         },
       ],
     },
-    OracleParser: {
+    v0_3_OracleParser: {
       isTemplate: true,
       abi: [
         {

@@ -11,541 +11,227 @@ type Address = `0x${string}`
 
 export const abi = [
   {
-    anonymous: false,
+    name: 'EjectionModeSet',
     inputs: [
       {
-        indexed: true,
-        name: 'agent',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'allowedAssets',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'allowedLegoIds',
-        type: 'uint256',
-      },
-    ],
-    name: 'AgentAdded',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'agent',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'allowedAssets',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'allowedLegoIds',
-        type: 'uint256',
-      },
-    ],
-    name: 'AgentModified',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'agent',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'prevAllowedAssets',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'prevAllowedLegoIds',
-        type: 'uint256',
-      },
-    ],
-    name: 'AgentDisabled',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'agent',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        name: 'legoId',
-        type: 'uint256',
-      },
-    ],
-    name: 'LegoIdAddedToAgent',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'agent',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        name: 'asset',
-        type: 'address',
-      },
-    ],
-    name: 'AssetAddedToAgent',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'agent',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'canDeposit',
+        name: 'inEjectMode',
         type: 'bool',
-      },
-      {
         indexed: false,
-        name: 'canWithdraw',
-        type: 'bool',
-      },
-      {
-        indexed: false,
-        name: 'canRebalance',
-        type: 'bool',
-      },
-      {
-        indexed: false,
-        name: 'canTransfer',
-        type: 'bool',
-      },
-      {
-        indexed: false,
-        name: 'canSwap',
-        type: 'bool',
-      },
-      {
-        indexed: false,
-        name: 'canConvert',
-        type: 'bool',
-      },
-      {
-        indexed: false,
-        name: 'canAddLiq',
-        type: 'bool',
-      },
-      {
-        indexed: false,
-        name: 'canRemoveLiq',
-        type: 'bool',
-      },
-      {
-        indexed: false,
-        name: 'canClaimRewards',
-        type: 'bool',
-      },
-      {
-        indexed: false,
-        name: 'canBorrow',
-        type: 'bool',
-      },
-      {
-        indexed: false,
-        name: 'canRepay',
-        type: 'bool',
       },
     ],
-    name: 'AllowedActionsModified',
+    anonymous: false,
     type: 'event',
   },
   {
-    anonymous: false,
+    name: 'FrozenSet',
     inputs: [
       {
-        indexed: false,
-        name: 'canTransfer',
+        name: 'isFrozen',
         type: 'bool',
+        indexed: false,
       },
-    ],
-    name: 'CanTransferToAltOwnerWalletsSet',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
       {
-        indexed: true,
-        name: 'addr',
+        name: 'caller',
         type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'NftRecovered',
+    inputs: [
+      {
+        name: 'collection',
+        type: 'address',
+        indexed: true,
       },
       {
-        indexed: false,
-        name: 'confirmBlock',
+        name: 'nftTokenId',
         type: 'uint256',
-      },
-    ],
-    name: 'WhitelistAddrPending',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'addr',
-        type: 'address',
-      },
-      {
         indexed: false,
-        name: 'initiatedBlock',
-        type: 'uint256',
       },
       {
-        indexed: false,
-        name: 'confirmBlock',
-        type: 'uint256',
-      },
-    ],
-    name: 'WhitelistAddrConfirmed',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'addr',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'initiatedBlock',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'confirmBlock',
-        type: 'uint256',
-      },
-      {
-        indexed: true,
-        name: 'cancelledBy',
-        type: 'address',
-      },
-    ],
-    name: 'WhitelistAddrCancelled',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'addr',
-        type: 'address',
-      },
-    ],
-    name: 'WhitelistAddrRemoved',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'addr',
-        type: 'address',
-      },
-    ],
-    name: 'WhitelistAddrSetViaMigration',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'asset',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'ReserveAssetSet',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        name: 'canWalletBeAmbassador',
-        type: 'bool',
-      },
-    ],
-    name: 'CanWalletBeAmbassadorSet',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'addr',
-        type: 'address',
-      },
-    ],
-    name: 'AmbassadorForwarderSet',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'asset',
-        type: 'address',
-      },
-      {
-        indexed: true,
         name: 'recipient',
         type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'balance',
-        type: 'uint256',
+        indexed: true,
       },
     ],
-    name: 'FundsRecovered',
+    anonymous: false,
     type: 'event',
   },
   {
-    anonymous: false,
+    name: 'OwnershipChangeInitiated',
     inputs: [
       {
-        indexed: true,
-        name: 'newWallet',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'numAssetsToMigrate',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'numWhitelistToMigrate',
-        type: 'uint256',
-      },
-    ],
-    name: 'UserWalletStartMigration',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: 'oldWallet',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        name: 'numWhitelistMigrated',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'numVaultTokensMigrated',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        name: 'numAssetsMigrated',
-        type: 'uint256',
-      },
-    ],
-    name: 'UserWalletFinishMigration',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
         name: 'prevOwner',
         type: 'address',
+        indexed: true,
       },
       {
-        indexed: true,
         name: 'newOwner',
         type: 'address',
+        indexed: true,
       },
       {
-        indexed: false,
         name: 'confirmBlock',
         type: 'uint256',
+        indexed: false,
       },
     ],
-    name: 'OwnershipChangeInitiated',
+    anonymous: false,
     type: 'event',
   },
   {
-    anonymous: false,
+    name: 'OwnershipChangeConfirmed',
     inputs: [
       {
-        indexed: true,
         name: 'prevOwner',
         type: 'address',
+        indexed: true,
       },
       {
-        indexed: true,
         name: 'newOwner',
         type: 'address',
+        indexed: true,
       },
       {
-        indexed: false,
         name: 'initiatedBlock',
         type: 'uint256',
+        indexed: false,
       },
       {
-        indexed: false,
         name: 'confirmBlock',
         type: 'uint256',
+        indexed: false,
       },
     ],
-    name: 'OwnershipChangeConfirmed',
+    anonymous: false,
     type: 'event',
   },
   {
-    anonymous: false,
+    name: 'OwnershipChangeCancelled',
     inputs: [
       {
-        indexed: true,
         name: 'cancelledOwner',
         type: 'address',
+        indexed: true,
       },
       {
-        indexed: true,
         name: 'cancelledBy',
         type: 'address',
+        indexed: true,
       },
       {
-        indexed: false,
         name: 'initiatedBlock',
         type: 'uint256',
+        indexed: false,
       },
       {
-        indexed: false,
         name: 'confirmBlock',
         type: 'uint256',
+        indexed: false,
       },
     ],
-    name: 'OwnershipChangeCancelled',
+    anonymous: false,
     type: 'event',
   },
   {
-    anonymous: false,
+    name: 'OwnershipTimeLockSet',
     inputs: [
       {
-        indexed: false,
-        name: 'delayBlocks',
+        name: 'numBlocks',
         type: 'uint256',
+        indexed: false,
       },
     ],
-    name: 'OwnershipChangeDelaySet',
+    anonymous: false,
     type: 'event',
   },
   {
-    inputs: [],
-    name: 'hasPendingOwnerChange',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
     type: 'function',
-  },
-  {
+    name: 'changeOwnership',
     inputs: [
       {
         name: '_newOwner',
         type: 'address',
       },
     ],
-    name: 'changeOwnership',
     outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
-    inputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'confirmOwnershipChange',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
     inputs: [],
-    name: 'cancelOwnershipChange',
     outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'cancelOwnershipChange',
+    inputs: [],
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'hasPendingOwnerChange',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setOwnershipTimeLock',
     inputs: [
       {
         name: '_numBlocks',
         type: 'uint256',
       },
     ],
-    name: 'setOwnershipChangeDelay',
     outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
-    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
     name: 'owner',
+    inputs: [],
     outputs: [
       {
         name: '',
         type: 'address',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'ownershipTimeLock',
     inputs: [],
-    name: 'pendingOwner',
     outputs: [
       {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingOwner',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
         components: [
           {
             name: 'newOwner',
@@ -560,111 +246,271 @@ export const abi = [
             type: 'uint256',
           },
         ],
-        name: '',
-        type: 'tuple',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'MIN_OWNERSHIP_TIMELOCK',
     inputs: [],
-    name: 'ownershipChangeDelay',
     outputs: [
       {
         name: '',
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'MAX_OWNERSHIP_TIMELOCK',
     inputs: [],
-    name: 'MIN_OWNER_CHANGE_DELAY',
     outputs: [
       {
         name: '',
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
-    inputs: [],
-    name: 'MAX_OWNER_CHANGE_DELAY',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
     type: 'function',
-  },
-  {
-    inputs: [],
-    name: '_ADDY_REGISTRY',
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
+    name: 'setWallet',
     inputs: [
       {
         name: '_wallet',
         type: 'address',
       },
     ],
-    name: 'setWallet',
     outputs: [
       {
         name: '',
         type: 'bool',
       },
     ],
-    stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
-    inputs: [],
+    stateMutability: 'pure',
+    type: 'function',
     name: 'apiVersion',
+    inputs: [],
     outputs: [
       {
         name: '',
         type: 'string',
       },
     ],
-    stateMutability: 'pure',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'checkSignerPermissionsAndGetBundle',
     inputs: [
       {
-        name: '_agent',
+        name: '_signer',
         type: 'address',
       },
+      {
+        name: '_action',
+        type: 'uint256',
+      },
     ],
-    name: 'isAgentActive',
     outputs: [
       {
         name: '',
-        type: 'bool',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'hatchery',
+            type: 'address',
+          },
+          {
+            name: 'lootDistributor',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+          {
+            name: 'billing',
+            type: 'address',
+          },
+          {
+            name: 'wallet',
+            type: 'address',
+          },
+          {
+            name: 'walletConfig',
+            type: 'address',
+          },
+          {
+            name: 'walletOwner',
+            type: 'address',
+          },
+          {
+            name: 'inEjectMode',
+            type: 'bool',
+          },
+          {
+            name: 'isFrozen',
+            type: 'bool',
+          },
+          {
+            name: 'lastTotalUsdValue',
+            type: 'uint256',
+          },
+          {
+            name: 'signer',
+            type: 'address',
+          },
+          {
+            name: 'isManager',
+            type: 'bool',
+          },
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'legoAddr',
+            type: 'address',
+          },
+          {
+            name: 'eth',
+            type: 'address',
+          },
+          {
+            name: 'weth',
+            type: 'address',
+          },
+        ],
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'checkSignerPermissionsAndGetBundle',
     inputs: [
       {
-        name: '_agent',
+        name: '_signer',
+        type: 'address',
+      },
+      {
+        name: '_action',
+        type: 'uint256',
+      },
+      {
+        name: '_assets',
+        type: 'address[]',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'hatchery',
+            type: 'address',
+          },
+          {
+            name: 'lootDistributor',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+          {
+            name: 'billing',
+            type: 'address',
+          },
+          {
+            name: 'wallet',
+            type: 'address',
+          },
+          {
+            name: 'walletConfig',
+            type: 'address',
+          },
+          {
+            name: 'walletOwner',
+            type: 'address',
+          },
+          {
+            name: 'inEjectMode',
+            type: 'bool',
+          },
+          {
+            name: 'isFrozen',
+            type: 'bool',
+          },
+          {
+            name: 'lastTotalUsdValue',
+            type: 'uint256',
+          },
+          {
+            name: 'signer',
+            type: 'address',
+          },
+          {
+            name: 'isManager',
+            type: 'bool',
+          },
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'legoAddr',
+            type: 'address',
+          },
+          {
+            name: 'eth',
+            type: 'address',
+          },
+          {
+            name: 'weth',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'checkSignerPermissionsAndGetBundle',
+    inputs: [
+      {
+        name: '_signer',
         type: 'address',
       },
       {
@@ -680,122 +526,98 @@ export const abi = [
         type: 'uint256[]',
       },
     ],
-    name: 'canAgentAccess',
     outputs: [
       {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agent',
-        type: 'address',
-      },
-    ],
-    name: 'getAgentSubscriptionStatus',
-    outputs: [
-      {
-        components: [
-          {
-            name: 'recipient',
-            type: 'address',
-          },
-          {
-            name: 'asset',
-            type: 'address',
-          },
-          {
-            name: 'amount',
-            type: 'uint256',
-          },
-          {
-            name: 'usdValue',
-            type: 'uint256',
-          },
-          {
-            name: 'paidThroughBlock',
-            type: 'uint256',
-          },
-          {
-            name: 'didChange',
-            type: 'bool',
-          },
-        ],
         name: '',
         type: 'tuple',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'getProtocolSubscriptionStatus',
-    outputs: [
-      {
         components: [
           {
-            name: 'recipient',
+            name: 'ledger',
             type: 'address',
           },
           {
-            name: 'asset',
+            name: 'missionControl',
             type: 'address',
           },
           {
-            name: 'amount',
-            type: 'uint256',
+            name: 'legoBook',
+            type: 'address',
           },
           {
-            name: 'usdValue',
-            type: 'uint256',
+            name: 'hatchery',
+            type: 'address',
           },
           {
-            name: 'paidThroughBlock',
-            type: 'uint256',
+            name: 'lootDistributor',
+            type: 'address',
           },
           {
-            name: 'didChange',
+            name: 'appraiser',
+            type: 'address',
+          },
+          {
+            name: 'billing',
+            type: 'address',
+          },
+          {
+            name: 'wallet',
+            type: 'address',
+          },
+          {
+            name: 'walletConfig',
+            type: 'address',
+          },
+          {
+            name: 'walletOwner',
+            type: 'address',
+          },
+          {
+            name: 'inEjectMode',
             type: 'bool',
           },
+          {
+            name: 'isFrozen',
+            type: 'bool',
+          },
+          {
+            name: 'lastTotalUsdValue',
+            type: 'uint256',
+          },
+          {
+            name: 'signer',
+            type: 'address',
+          },
+          {
+            name: 'isManager',
+            type: 'bool',
+          },
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'legoAddr',
+            type: 'address',
+          },
+          {
+            name: 'eth',
+            type: 'address',
+          },
+          {
+            name: 'weth',
+            type: 'address',
+          },
         ],
-        name: '',
-        type: 'tuple',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
-    inputs: [
-      {
-        name: '_agent',
-        type: 'address',
-      },
-    ],
-    name: 'canMakeSubscriptionPayments',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
     stateMutability: 'view',
     type: 'function',
-  },
-  {
+    name: 'checkSignerPermissionsAndGetBundle',
     inputs: [
       {
-        name: '_agent',
+        name: '_signer',
         type: 'address',
       },
       {
@@ -811,9 +633,41 @@ export const abi = [
         type: 'uint256[]',
       },
       {
+        name: '_transferRecipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
         components: [
           {
-            name: 'owner',
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'hatchery',
+            type: 'address',
+          },
+          {
+            name: 'lootDistributor',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+          {
+            name: 'billing',
             type: 'address',
           },
           {
@@ -825,799 +679,83 @@ export const abi = [
             type: 'address',
           },
           {
-            name: 'addyRegistry',
+            name: 'walletOwner',
             type: 'address',
           },
           {
-            name: 'agentFactory',
-            type: 'address',
+            name: 'inEjectMode',
+            type: 'bool',
           },
           {
-            name: 'legoRegistry',
-            type: 'address',
+            name: 'isFrozen',
+            type: 'bool',
           },
           {
-            name: 'priceSheets',
-            type: 'address',
-          },
-          {
-            name: 'oracleRegistry',
-            type: 'address',
-          },
-          {
-            name: 'trialFundsAsset',
-            type: 'address',
-          },
-          {
-            name: 'trialFundsInitialAmount',
+            name: 'lastTotalUsdValue',
             type: 'uint256',
+          },
+          {
+            name: 'signer',
+            type: 'address',
+          },
+          {
+            name: 'isManager',
+            type: 'bool',
+          },
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'legoAddr',
+            type: 'address',
+          },
+          {
+            name: 'eth',
+            type: 'address',
+          },
+          {
+            name: 'weth',
+            type: 'address',
           },
         ],
-        name: '_cd',
-        type: 'tuple',
       },
     ],
-    name: 'handleSubscriptionsAndPermissions',
-    outputs: [
-      {
-        components: [
-          {
-            name: 'recipient',
-            type: 'address',
-          },
-          {
-            name: 'asset',
-            type: 'address',
-          },
-          {
-            name: 'amount',
-            type: 'uint256',
-          },
-          {
-            name: 'usdValue',
-            type: 'uint256',
-          },
-          {
-            name: 'paidThroughBlock',
-            type: 'uint256',
-          },
-          {
-            name: 'didChange',
-            type: 'bool',
-          },
-        ],
-        name: '',
-        type: 'tuple',
-      },
-      {
-        components: [
-          {
-            name: 'recipient',
-            type: 'address',
-          },
-          {
-            name: 'asset',
-            type: 'address',
-          },
-          {
-            name: 'amount',
-            type: 'uint256',
-          },
-          {
-            name: 'usdValue',
-            type: 'uint256',
-          },
-          {
-            name: 'paidThroughBlock',
-            type: 'uint256',
-          },
-          {
-            name: 'didChange',
-            type: 'bool',
-          },
-        ],
-        name: '',
-        type: 'tuple',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'checkManagerUsdLimitsAndUpdateData',
     inputs: [
       {
-        name: '_asset',
+        name: '_manager',
         type: 'address',
       },
       {
-        name: '_wantedAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_shouldCheckTrialFunds',
-        type: 'bool',
-      },
-    ],
-    name: 'getAvailableTxAmount',
-    outputs: [
-      {
-        name: '',
+        name: '_txUsdValue',
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_wantedAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_shouldCheckTrialFunds',
-        type: 'bool',
-      },
-      {
-        components: [
-          {
-            name: 'owner',
-            type: 'address',
-          },
-          {
-            name: 'wallet',
-            type: 'address',
-          },
-          {
-            name: 'walletConfig',
-            type: 'address',
-          },
-          {
-            name: 'addyRegistry',
-            type: 'address',
-          },
-          {
-            name: 'agentFactory',
-            type: 'address',
-          },
-          {
-            name: 'legoRegistry',
-            type: 'address',
-          },
-          {
-            name: 'priceSheets',
-            type: 'address',
-          },
-          {
-            name: 'oracleRegistry',
-            type: 'address',
-          },
-          {
-            name: 'trialFundsAsset',
-            type: 'address',
-          },
-          {
-            name: 'trialFundsInitialAmount',
-            type: 'uint256',
-          },
-        ],
-        name: '_cd',
-        type: 'tuple',
-      },
-    ],
-    name: 'getAvailableTxAmount',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_vaultToken',
-        type: 'address',
-      },
-      {
-        name: '_vaultTokenAmountReceived',
-        type: 'uint256',
-      },
-      {
-        name: '_assetAmountDeposited',
-        type: 'uint256',
-      },
-      {
-        name: '_legoRegistry',
-        type: 'address',
-      },
-    ],
-    name: 'updateYieldTrackingOnDeposit',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_vaultToken',
-        type: 'address',
-      },
-      {
-        name: '_vaultTokenAmountBurned',
-        type: 'uint256',
-      },
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_assetAmountReceived',
-        type: 'uint256',
-      },
-      {
-        name: '_legoRegistry',
-        type: 'address',
-      },
-    ],
-    name: 'updateYieldTrackingOnWithdrawal',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_tokenIn',
-        type: 'address',
-      },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-      {
-        name: '_tokenOutAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_legoRegistry',
-        type: 'address',
-      },
-    ],
-    name: 'updateYieldTrackingOnSwap',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_legoRegistry',
-        type: 'address',
-      },
-    ],
-    name: 'updateYieldTrackingOnEntry',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_legoRegistry',
-        type: 'address',
-      },
-    ],
-    name: 'updateYieldTrackingOnExit',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_newWallet',
-        type: 'address',
-      },
-    ],
-    name: 'startMigrationOut',
     outputs: [
       {
         name: '',
         type: 'bool',
       },
     ],
-    stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
-    inputs: [
-      {
-        name: '_newWallet',
-        type: 'address',
-      },
-      {
-        name: '_assetsToMigrate',
-        type: 'address[]',
-      },
-    ],
-    name: 'startMigrationOut',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
     stateMutability: 'nonpayable',
     type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_newWallet',
-        type: 'address',
-      },
-      {
-        name: '_assetsToMigrate',
-        type: 'address[]',
-      },
-      {
-        name: '_whitelistToMigrate',
-        type: 'address[]',
-      },
-    ],
-    name: 'startMigrationOut',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_whitelistToMigrate',
-        type: 'address[]',
-      },
-      {
-        name: '_assetsMigrated',
-        type: 'address[]',
-      },
-      {
-        name: '_vaultTokensMigrated',
-        type: 'address[]',
-      },
-    ],
-    name: 'finishMigrationIn',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agent',
-        type: 'address',
-      },
-    ],
-    name: 'addOrModifyAgent',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agent',
-        type: 'address',
-      },
-      {
-        name: '_allowedAssets',
-        type: 'address[]',
-      },
-    ],
-    name: 'addOrModifyAgent',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agent',
-        type: 'address',
-      },
-      {
-        name: '_allowedAssets',
-        type: 'address[]',
-      },
-      {
-        name: '_allowedLegoIds',
-        type: 'uint256[]',
-      },
-    ],
-    name: 'addOrModifyAgent',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agent',
-        type: 'address',
-      },
-      {
-        name: '_allowedAssets',
-        type: 'address[]',
-      },
-      {
-        name: '_allowedLegoIds',
-        type: 'uint256[]',
-      },
-      {
-        components: [
-          {
-            name: 'isSet',
-            type: 'bool',
-          },
-          {
-            name: 'canDeposit',
-            type: 'bool',
-          },
-          {
-            name: 'canWithdraw',
-            type: 'bool',
-          },
-          {
-            name: 'canRebalance',
-            type: 'bool',
-          },
-          {
-            name: 'canTransfer',
-            type: 'bool',
-          },
-          {
-            name: 'canSwap',
-            type: 'bool',
-          },
-          {
-            name: 'canConvert',
-            type: 'bool',
-          },
-          {
-            name: 'canAddLiq',
-            type: 'bool',
-          },
-          {
-            name: 'canRemoveLiq',
-            type: 'bool',
-          },
-          {
-            name: 'canClaimRewards',
-            type: 'bool',
-          },
-          {
-            name: 'canBorrow',
-            type: 'bool',
-          },
-          {
-            name: 'canRepay',
-            type: 'bool',
-          },
-        ],
-        name: '_allowedActions',
-        type: 'tuple',
-      },
-    ],
-    name: 'addOrModifyAgent',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agent',
-        type: 'address',
-      },
-    ],
-    name: 'disableAgent',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agent',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-    ],
-    name: 'addLegoIdForAgent',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agent',
-        type: 'address',
-      },
-      {
-        name: '_asset',
-        type: 'address',
-      },
-    ],
-    name: 'addAssetForAgent',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agent',
-        type: 'address',
-      },
-    ],
-    name: 'modifyAllowedActions',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agent',
-        type: 'address',
-      },
-      {
-        components: [
-          {
-            name: 'isSet',
-            type: 'bool',
-          },
-          {
-            name: 'canDeposit',
-            type: 'bool',
-          },
-          {
-            name: 'canWithdraw',
-            type: 'bool',
-          },
-          {
-            name: 'canRebalance',
-            type: 'bool',
-          },
-          {
-            name: 'canTransfer',
-            type: 'bool',
-          },
-          {
-            name: 'canSwap',
-            type: 'bool',
-          },
-          {
-            name: 'canConvert',
-            type: 'bool',
-          },
-          {
-            name: 'canAddLiq',
-            type: 'bool',
-          },
-          {
-            name: 'canRemoveLiq',
-            type: 'bool',
-          },
-          {
-            name: 'canClaimRewards',
-            type: 'bool',
-          },
-          {
-            name: 'canBorrow',
-            type: 'bool',
-          },
-          {
-            name: 'canRepay',
-            type: 'bool',
-          },
-        ],
-        name: '_allowedActions',
-        type: 'tuple',
-      },
-    ],
-    name: 'modifyAllowedActions',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
+    name: 'checkRecipientLimitsAndUpdateData',
     inputs: [
       {
         name: '_recipient',
         type: 'address',
       },
-    ],
-    name: 'canTransferToRecipient',
-    outputs: [
       {
-        name: '',
-        type: 'bool',
+        name: '_txUsdValue',
+        type: 'uint256',
       },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_wallet',
-        type: 'address',
-      },
-    ],
-    name: 'doesWalletHaveSameOwner',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_canTransfer',
-        type: 'bool',
-      },
-    ],
-    name: 'setCanTransferToAltOwnerWallets',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_addr',
-        type: 'address',
-      },
-    ],
-    name: 'addWhitelistAddr',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_addr',
-        type: 'address',
-      },
-    ],
-    name: 'confirmWhitelistAddr',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_addr',
-        type: 'address',
-      },
-    ],
-    name: 'cancelPendingWhitelistAddr',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_addr',
-        type: 'address',
-      },
-    ],
-    name: 'removeWhitelistAddr',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
       {
         name: '_asset',
         type: 'address',
@@ -1627,289 +765,58 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    name: 'setReserveAsset',
     outputs: [
       {
         name: '',
         type: 'bool',
       },
     ],
-    stateMutability: 'nonpayable',
-    type: 'function',
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'validateCheque',
     inputs: [
       {
-        components: [
-          {
-            name: 'asset',
-            type: 'address',
-          },
-          {
-            name: 'amount',
-            type: 'uint256',
-          },
-        ],
-        name: '_assets',
-        type: 'tuple[]',
+        name: '_recipient',
+        type: 'address',
       },
-    ],
-    name: 'setManyReserveAssets',
-    outputs: [
       {
-        name: '',
-        type: 'bool',
+        name: '_asset',
+        type: 'address',
       },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'getProceedsAddr',
-    outputs: [
       {
-        name: '',
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_txUsdValue',
+        type: 'uint256',
+      },
+      {
+        name: '_signer',
         type: 'address',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'addPendingWhitelistAddr',
     inputs: [
       {
         name: '_addr',
         type: 'address',
       },
-    ],
-    name: 'setAmbassadorForwarder',
-    outputs: [
       {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_canWalletBeAmbassador',
-        type: 'bool',
-      },
-    ],
-    name: 'setCanWalletBeAmbassador',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-    ],
-    name: 'recoverFunds',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'wallet',
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'didSetWallet',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'protocolSub',
-    outputs: [
-      {
-        components: [
-          {
-            name: 'installBlock',
-            type: 'uint256',
-          },
-          {
-            name: 'paidThroughBlock',
-            type: 'uint256',
-          },
-        ],
-        name: '',
+        name: '_pending',
         type: 'tuple',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    name: 'reserveAssets',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    name: 'agentSettings',
-    outputs: [
-      {
-        components: [
-          {
-            name: 'isActive',
-            type: 'bool',
-          },
-          {
-            name: 'installBlock',
-            type: 'uint256',
-          },
-          {
-            name: 'paidThroughBlock',
-            type: 'uint256',
-          },
-          {
-            name: 'allowedAssets',
-            type: 'address[]',
-          },
-          {
-            name: 'allowedLegoIds',
-            type: 'uint256[]',
-          },
-          {
-            components: [
-              {
-                name: 'isSet',
-                type: 'bool',
-              },
-              {
-                name: 'canDeposit',
-                type: 'bool',
-              },
-              {
-                name: 'canWithdraw',
-                type: 'bool',
-              },
-              {
-                name: 'canRebalance',
-                type: 'bool',
-              },
-              {
-                name: 'canTransfer',
-                type: 'bool',
-              },
-              {
-                name: 'canSwap',
-                type: 'bool',
-              },
-              {
-                name: 'canConvert',
-                type: 'bool',
-              },
-              {
-                name: 'canAddLiq',
-                type: 'bool',
-              },
-              {
-                name: 'canRemoveLiq',
-                type: 'bool',
-              },
-              {
-                name: 'canClaimRewards',
-                type: 'bool',
-              },
-              {
-                name: 'canBorrow',
-                type: 'bool',
-              },
-              {
-                name: 'canRepay',
-                type: 'bool',
-              },
-            ],
-            name: 'allowedActions',
-            type: 'tuple',
-          },
-        ],
-        name: '',
-        type: 'tuple',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    name: 'isRecipientAllowed',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    name: 'pendingWhitelist',
-    outputs: [
-      {
         components: [
           {
             name: 'initiatedBlock',
@@ -1919,451 +826,3736 @@ export const abi = [
             name: 'confirmBlock',
             type: 'uint256',
           },
+          {
+            name: 'currentOwner',
+            type: 'address',
+          },
         ],
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'cancelPendingWhitelistAddr',
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmWhitelistAddr',
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'addWhitelistAddrViaMigrator',
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'removeWhitelistAddr',
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'addManager',
+    inputs: [
+      {
+        name: '_manager',
+        type: 'address',
+      },
+      {
+        name: '_config',
+        type: 'tuple',
+        components: [
+          {
+            name: 'startBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'expiryBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'limits',
+            type: 'tuple',
+            components: [
+              {
+                name: 'maxUsdValuePerTx',
+                type: 'uint256',
+              },
+              {
+                name: 'maxUsdValuePerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxUsdValueLifetime',
+                type: 'uint256',
+              },
+              {
+                name: 'maxNumTxsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'txCooldownBlocks',
+                type: 'uint256',
+              },
+              {
+                name: 'failOnZeroPrice',
+                type: 'bool',
+              },
+            ],
+          },
+          {
+            name: 'legoPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canManageYield',
+                type: 'bool',
+              },
+              {
+                name: 'canBuyAndSell',
+                type: 'bool',
+              },
+              {
+                name: 'canManageDebt',
+                type: 'bool',
+              },
+              {
+                name: 'canManageLiq',
+                type: 'bool',
+              },
+              {
+                name: 'canClaimRewards',
+                type: 'bool',
+              },
+              {
+                name: 'allowedLegos',
+                type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'whitelistPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canAddPending',
+                type: 'bool',
+              },
+              {
+                name: 'canConfirm',
+                type: 'bool',
+              },
+              {
+                name: 'canCancel',
+                type: 'bool',
+              },
+              {
+                name: 'canRemove',
+                type: 'bool',
+              },
+            ],
+          },
+          {
+            name: 'transferPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canTransfer',
+                type: 'bool',
+              },
+              {
+                name: 'canCreateCheque',
+                type: 'bool',
+              },
+              {
+                name: 'canAddPendingPayee',
+                type: 'bool',
+              },
+              {
+                name: 'allowedPayees',
+                type: 'address[]',
+              },
+            ],
+          },
+          {
+            name: 'allowedAssets',
+            type: 'address[]',
+          },
+          {
+            name: 'canClaimLoot',
+            type: 'bool',
+          },
+        ],
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'updateManager',
+    inputs: [
+      {
+        name: '_manager',
+        type: 'address',
+      },
+      {
+        name: '_config',
+        type: 'tuple',
+        components: [
+          {
+            name: 'startBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'expiryBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'limits',
+            type: 'tuple',
+            components: [
+              {
+                name: 'maxUsdValuePerTx',
+                type: 'uint256',
+              },
+              {
+                name: 'maxUsdValuePerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxUsdValueLifetime',
+                type: 'uint256',
+              },
+              {
+                name: 'maxNumTxsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'txCooldownBlocks',
+                type: 'uint256',
+              },
+              {
+                name: 'failOnZeroPrice',
+                type: 'bool',
+              },
+            ],
+          },
+          {
+            name: 'legoPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canManageYield',
+                type: 'bool',
+              },
+              {
+                name: 'canBuyAndSell',
+                type: 'bool',
+              },
+              {
+                name: 'canManageDebt',
+                type: 'bool',
+              },
+              {
+                name: 'canManageLiq',
+                type: 'bool',
+              },
+              {
+                name: 'canClaimRewards',
+                type: 'bool',
+              },
+              {
+                name: 'allowedLegos',
+                type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'whitelistPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canAddPending',
+                type: 'bool',
+              },
+              {
+                name: 'canConfirm',
+                type: 'bool',
+              },
+              {
+                name: 'canCancel',
+                type: 'bool',
+              },
+              {
+                name: 'canRemove',
+                type: 'bool',
+              },
+            ],
+          },
+          {
+            name: 'transferPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canTransfer',
+                type: 'bool',
+              },
+              {
+                name: 'canCreateCheque',
+                type: 'bool',
+              },
+              {
+                name: 'canAddPendingPayee',
+                type: 'bool',
+              },
+              {
+                name: 'allowedPayees',
+                type: 'address[]',
+              },
+            ],
+          },
+          {
+            name: 'allowedAssets',
+            type: 'address[]',
+          },
+          {
+            name: 'canClaimLoot',
+            type: 'bool',
+          },
+        ],
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'removeManager',
+    inputs: [
+      {
+        name: '_manager',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setGlobalManagerSettings',
+    inputs: [
+      {
+        name: '_config',
+        type: 'tuple',
+        components: [
+          {
+            name: 'managerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'startDelay',
+            type: 'uint256',
+          },
+          {
+            name: 'activationLength',
+            type: 'uint256',
+          },
+          {
+            name: 'canOwnerManage',
+            type: 'bool',
+          },
+          {
+            name: 'limits',
+            type: 'tuple',
+            components: [
+              {
+                name: 'maxUsdValuePerTx',
+                type: 'uint256',
+              },
+              {
+                name: 'maxUsdValuePerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxUsdValueLifetime',
+                type: 'uint256',
+              },
+              {
+                name: 'maxNumTxsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'txCooldownBlocks',
+                type: 'uint256',
+              },
+              {
+                name: 'failOnZeroPrice',
+                type: 'bool',
+              },
+            ],
+          },
+          {
+            name: 'legoPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canManageYield',
+                type: 'bool',
+              },
+              {
+                name: 'canBuyAndSell',
+                type: 'bool',
+              },
+              {
+                name: 'canManageDebt',
+                type: 'bool',
+              },
+              {
+                name: 'canManageLiq',
+                type: 'bool',
+              },
+              {
+                name: 'canClaimRewards',
+                type: 'bool',
+              },
+              {
+                name: 'allowedLegos',
+                type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'whitelistPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canAddPending',
+                type: 'bool',
+              },
+              {
+                name: 'canConfirm',
+                type: 'bool',
+              },
+              {
+                name: 'canCancel',
+                type: 'bool',
+              },
+              {
+                name: 'canRemove',
+                type: 'bool',
+              },
+            ],
+          },
+          {
+            name: 'transferPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canTransfer',
+                type: 'bool',
+              },
+              {
+                name: 'canCreateCheque',
+                type: 'bool',
+              },
+              {
+                name: 'canAddPendingPayee',
+                type: 'bool',
+              },
+              {
+                name: 'allowedPayees',
+                type: 'address[]',
+              },
+            ],
+          },
+          {
+            name: 'allowedAssets',
+            type: 'address[]',
+          },
+        ],
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'addPayee',
+    inputs: [
+      {
+        name: '_payee',
+        type: 'address',
+      },
+      {
+        name: '_config',
+        type: 'tuple',
+        components: [
+          {
+            name: 'startBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'expiryBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'canPull',
+            type: 'bool',
+          },
+          {
+            name: 'periodLength',
+            type: 'uint256',
+          },
+          {
+            name: 'maxNumTxsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'txCooldownBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'failOnZeroPrice',
+            type: 'bool',
+          },
+          {
+            name: 'primaryAsset',
+            type: 'address',
+          },
+          {
+            name: 'onlyPrimaryAsset',
+            type: 'bool',
+          },
+          {
+            name: 'unitLimits',
+            type: 'tuple',
+            components: [
+              {
+                name: 'perTxCap',
+                type: 'uint256',
+              },
+              {
+                name: 'perPeriodCap',
+                type: 'uint256',
+              },
+              {
+                name: 'lifetimeCap',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'usdLimits',
+            type: 'tuple',
+            components: [
+              {
+                name: 'perTxCap',
+                type: 'uint256',
+              },
+              {
+                name: 'perPeriodCap',
+                type: 'uint256',
+              },
+              {
+                name: 'lifetimeCap',
+                type: 'uint256',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'updatePayee',
+    inputs: [
+      {
+        name: '_payee',
+        type: 'address',
+      },
+      {
+        name: '_config',
+        type: 'tuple',
+        components: [
+          {
+            name: 'startBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'expiryBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'canPull',
+            type: 'bool',
+          },
+          {
+            name: 'periodLength',
+            type: 'uint256',
+          },
+          {
+            name: 'maxNumTxsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'txCooldownBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'failOnZeroPrice',
+            type: 'bool',
+          },
+          {
+            name: 'primaryAsset',
+            type: 'address',
+          },
+          {
+            name: 'onlyPrimaryAsset',
+            type: 'bool',
+          },
+          {
+            name: 'unitLimits',
+            type: 'tuple',
+            components: [
+              {
+                name: 'perTxCap',
+                type: 'uint256',
+              },
+              {
+                name: 'perPeriodCap',
+                type: 'uint256',
+              },
+              {
+                name: 'lifetimeCap',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'usdLimits',
+            type: 'tuple',
+            components: [
+              {
+                name: 'perTxCap',
+                type: 'uint256',
+              },
+              {
+                name: 'perPeriodCap',
+                type: 'uint256',
+              },
+              {
+                name: 'lifetimeCap',
+                type: 'uint256',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'removePayee',
+    inputs: [
+      {
+        name: '_payee',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setGlobalPayeeSettings',
+    inputs: [
+      {
+        name: '_config',
+        type: 'tuple',
+        components: [
+          {
+            name: 'defaultPeriodLength',
+            type: 'uint256',
+          },
+          {
+            name: 'startDelay',
+            type: 'uint256',
+          },
+          {
+            name: 'activationLength',
+            type: 'uint256',
+          },
+          {
+            name: 'maxNumTxsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'txCooldownBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'failOnZeroPrice',
+            type: 'bool',
+          },
+          {
+            name: 'usdLimits',
+            type: 'tuple',
+            components: [
+              {
+                name: 'perTxCap',
+                type: 'uint256',
+              },
+              {
+                name: 'perPeriodCap',
+                type: 'uint256',
+              },
+              {
+                name: 'lifetimeCap',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'canPayOwner',
+            type: 'bool',
+          },
+          {
+            name: 'canPull',
+            type: 'bool',
+          },
+        ],
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'addPendingPayee',
+    inputs: [
+      {
+        name: '_payee',
+        type: 'address',
+      },
+      {
+        name: '_pending',
+        type: 'tuple',
+        components: [
+          {
+            name: 'settings',
+            type: 'tuple',
+            components: [
+              {
+                name: 'startBlock',
+                type: 'uint256',
+              },
+              {
+                name: 'expiryBlock',
+                type: 'uint256',
+              },
+              {
+                name: 'canPull',
+                type: 'bool',
+              },
+              {
+                name: 'periodLength',
+                type: 'uint256',
+              },
+              {
+                name: 'maxNumTxsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'txCooldownBlocks',
+                type: 'uint256',
+              },
+              {
+                name: 'failOnZeroPrice',
+                type: 'bool',
+              },
+              {
+                name: 'primaryAsset',
+                type: 'address',
+              },
+              {
+                name: 'onlyPrimaryAsset',
+                type: 'bool',
+              },
+              {
+                name: 'unitLimits',
+                type: 'tuple',
+                components: [
+                  {
+                    name: 'perTxCap',
+                    type: 'uint256',
+                  },
+                  {
+                    name: 'perPeriodCap',
+                    type: 'uint256',
+                  },
+                  {
+                    name: 'lifetimeCap',
+                    type: 'uint256',
+                  },
+                ],
+              },
+              {
+                name: 'usdLimits',
+                type: 'tuple',
+                components: [
+                  {
+                    name: 'perTxCap',
+                    type: 'uint256',
+                  },
+                  {
+                    name: 'perPeriodCap',
+                    type: 'uint256',
+                  },
+                  {
+                    name: 'lifetimeCap',
+                    type: 'uint256',
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            name: 'initiatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'confirmBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'currentOwner',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmPendingPayee',
+    inputs: [
+      {
+        name: '_payee',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'cancelPendingPayee',
+    inputs: [
+      {
+        name: '_payee',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'createCheque',
+    inputs: [
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_cheque',
+        type: 'tuple',
+        components: [
+          {
+            name: 'recipient',
+            type: 'address',
+          },
+          {
+            name: 'asset',
+            type: 'address',
+          },
+          {
+            name: 'amount',
+            type: 'uint256',
+          },
+          {
+            name: 'creationBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'unlockBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'expiryBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'usdValueOnCreation',
+            type: 'uint256',
+          },
+          {
+            name: 'canManagerPay',
+            type: 'bool',
+          },
+          {
+            name: 'canBePulled',
+            type: 'bool',
+          },
+          {
+            name: 'creator',
+            type: 'address',
+          },
+          {
+            name: 'active',
+            type: 'bool',
+          },
+        ],
+      },
+      {
+        name: '_chequeData',
+        type: 'tuple',
+        components: [
+          {
+            name: 'numChequesPaidInPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'totalUsdValuePaidInPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'totalNumChequesPaid',
+            type: 'uint256',
+          },
+          {
+            name: 'totalUsdValuePaid',
+            type: 'uint256',
+          },
+          {
+            name: 'lastChequePaidBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'numChequesCreatedInPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'totalUsdValueCreatedInPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'totalNumChequesCreated',
+            type: 'uint256',
+          },
+          {
+            name: 'totalUsdValueCreated',
+            type: 'uint256',
+          },
+          {
+            name: 'lastChequeCreatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'periodStartBlock',
+            type: 'uint256',
+          },
+        ],
+      },
+      {
+        name: '_isExistingCheque',
+        type: 'bool',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'cancelCheque',
+    inputs: [
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setChequeSettings',
+    inputs: [
+      {
+        name: '_config',
+        type: 'tuple',
+        components: [
+          {
+            name: 'maxNumActiveCheques',
+            type: 'uint256',
+          },
+          {
+            name: 'maxChequeUsdValue',
+            type: 'uint256',
+          },
+          {
+            name: 'instantUsdThreshold',
+            type: 'uint256',
+          },
+          {
+            name: 'perPeriodPaidUsdCap',
+            type: 'uint256',
+          },
+          {
+            name: 'maxNumChequesPaidPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'payCooldownBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'perPeriodCreatedUsdCap',
+            type: 'uint256',
+          },
+          {
+            name: 'maxNumChequesCreatedPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'createCooldownBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'periodLength',
+            type: 'uint256',
+          },
+          {
+            name: 'expensiveDelayBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'defaultExpiryBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'allowedAssets',
+            type: 'address[]',
+          },
+          {
+            name: 'canManagersCreateCheques',
+            type: 'bool',
+          },
+          {
+            name: 'canManagerPay',
+            type: 'bool',
+          },
+          {
+            name: 'canBePulled',
+            type: 'bool',
+          },
+        ],
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'updateAssetData',
+    inputs: [
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_shouldCheckYield',
+        type: 'bool',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'updateAllAssetData',
+    inputs: [
+      {
+        name: '_shouldCheckYield',
+        type: 'bool',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'removeTrialFunds',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getTrialFundsInfo',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'migrateFunds',
+    inputs: [
+      {
+        name: '_toWallet',
+        type: 'address',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'preparePayment',
+    inputs: [
+      {
+        name: '_targetAsset',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'preparePayment',
+    inputs: [
+      {
+        name: '_targetAsset',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_vaultAmount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'deregisterAsset',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'recoverNft',
+    inputs: [
+      {
+        name: '_collection',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setFrozen',
+    inputs: [
+      {
+        name: '_isFrozen',
+        type: 'bool',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setEjectionMode',
+    inputs: [
+      {
+        name: '_shouldEject',
+        type: 'bool',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setLegoAccessForAction',
+    inputs: [
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_action',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setKernel',
+    inputs: [
+      {
+        name: '_kernel',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setSentinel',
+    inputs: [
+      {
+        name: '_sentinel',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setHighCommand',
+    inputs: [
+      {
+        name: '_highCommand',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setPaymaster',
+    inputs: [
+      {
+        name: '_paymaster',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setChequeBook',
+    inputs: [
+      {
+        name: '_chequeBook',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setMigrator',
+    inputs: [
+      {
+        name: '_migrator',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getActionDataBundle',
+    inputs: [
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_signer',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
         name: '',
         type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'hatchery',
+            type: 'address',
+          },
+          {
+            name: 'lootDistributor',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+          {
+            name: 'billing',
+            type: 'address',
+          },
+          {
+            name: 'wallet',
+            type: 'address',
+          },
+          {
+            name: 'walletConfig',
+            type: 'address',
+          },
+          {
+            name: 'walletOwner',
+            type: 'address',
+          },
+          {
+            name: 'inEjectMode',
+            type: 'bool',
+          },
+          {
+            name: 'isFrozen',
+            type: 'bool',
+          },
+          {
+            name: 'lastTotalUsdValue',
+            type: 'uint256',
+          },
+          {
+            name: 'signer',
+            type: 'address',
+          },
+          {
+            name: 'isManager',
+            type: 'bool',
+          },
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'legoAddr',
+            type: 'address',
+          },
+          {
+            name: 'eth',
+            type: 'address',
+          },
+          {
+            name: 'weth',
+            type: 'address',
+          },
+        ],
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
-    inputs: [],
-    name: 'canTransferToAltOwnerWallets',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
     stateMutability: 'view',
     type: 'function',
-  },
-  {
+    name: 'wallet',
     inputs: [],
-    name: 'canWalletBeAmbassador',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'ambassadorForwarder',
     outputs: [
       {
         name: '',
         type: 'address',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'kernel',
     inputs: [],
-    name: 'myAmbassador',
     outputs: [
       {
         name: '',
         type: 'address',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'sentinel',
     inputs: [],
-    name: 'didMigrateIn',
     outputs: [
       {
         name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'didMigrateOut',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: 'arg0',
         type: 'address',
       },
     ],
-    name: 'isVaultToken',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'highCommand',
+    inputs: [],
     outputs: [
       {
         name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: 'arg0',
         type: 'address',
       },
     ],
-    name: 'vaultTokenAmounts',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'paymaster',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'chequeBook',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'migrator',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'trialFundsAsset',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'trialFundsAmount',
+    inputs: [],
     outputs: [
       {
         name: '',
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'managerSettings',
     inputs: [
       {
         name: 'arg0',
         type: 'address',
       },
     ],
-    name: 'depositedAmounts',
     outputs: [
       {
         name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'startBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'expiryBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'limits',
+            type: 'tuple',
+            components: [
+              {
+                name: 'maxUsdValuePerTx',
+                type: 'uint256',
+              },
+              {
+                name: 'maxUsdValuePerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxUsdValueLifetime',
+                type: 'uint256',
+              },
+              {
+                name: 'maxNumTxsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'txCooldownBlocks',
+                type: 'uint256',
+              },
+              {
+                name: 'failOnZeroPrice',
+                type: 'bool',
+              },
+            ],
+          },
+          {
+            name: 'legoPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canManageYield',
+                type: 'bool',
+              },
+              {
+                name: 'canBuyAndSell',
+                type: 'bool',
+              },
+              {
+                name: 'canManageDebt',
+                type: 'bool',
+              },
+              {
+                name: 'canManageLiq',
+                type: 'bool',
+              },
+              {
+                name: 'canClaimRewards',
+                type: 'bool',
+              },
+              {
+                name: 'allowedLegos',
+                type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'whitelistPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canAddPending',
+                type: 'bool',
+              },
+              {
+                name: 'canConfirm',
+                type: 'bool',
+              },
+              {
+                name: 'canCancel',
+                type: 'bool',
+              },
+              {
+                name: 'canRemove',
+                type: 'bool',
+              },
+            ],
+          },
+          {
+            name: 'transferPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canTransfer',
+                type: 'bool',
+              },
+              {
+                name: 'canCreateCheque',
+                type: 'bool',
+              },
+              {
+                name: 'canAddPendingPayee',
+                type: 'bool',
+              },
+              {
+                name: 'allowedPayees',
+                type: 'address[]',
+              },
+            ],
+          },
+          {
+            name: 'allowedAssets',
+            type: 'address[]',
+          },
+          {
+            name: 'canClaimLoot',
+            type: 'bool',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'managerPeriodData',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'numTxsInPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'totalUsdValueInPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'totalNumTxs',
+            type: 'uint256',
+          },
+          {
+            name: 'totalUsdValue',
+            type: 'uint256',
+          },
+          {
+            name: 'lastTxBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'periodStartBlock',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'managers',
+    inputs: [
+      {
+        name: 'arg0',
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'ADDY_REGISTRY',
     outputs: [
       {
         name: '',
         type: 'address',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'indexOfManager',
     inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'numManagers',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'payeeSettings',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'startBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'expiryBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'canPull',
+            type: 'bool',
+          },
+          {
+            name: 'periodLength',
+            type: 'uint256',
+          },
+          {
+            name: 'maxNumTxsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'txCooldownBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'failOnZeroPrice',
+            type: 'bool',
+          },
+          {
+            name: 'primaryAsset',
+            type: 'address',
+          },
+          {
+            name: 'onlyPrimaryAsset',
+            type: 'bool',
+          },
+          {
+            name: 'unitLimits',
+            type: 'tuple',
+            components: [
+              {
+                name: 'perTxCap',
+                type: 'uint256',
+              },
+              {
+                name: 'perPeriodCap',
+                type: 'uint256',
+              },
+              {
+                name: 'lifetimeCap',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'usdLimits',
+            type: 'tuple',
+            components: [
+              {
+                name: 'perTxCap',
+                type: 'uint256',
+              },
+              {
+                name: 'perPeriodCap',
+                type: 'uint256',
+              },
+              {
+                name: 'lifetimeCap',
+                type: 'uint256',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'payeePeriodData',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'numTxsInPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'totalUnitsInPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'totalUsdValueInPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'totalNumTxs',
+            type: 'uint256',
+          },
+          {
+            name: 'totalUnits',
+            type: 'uint256',
+          },
+          {
+            name: 'totalUsdValue',
+            type: 'uint256',
+          },
+          {
+            name: 'lastTxBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'periodStartBlock',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'payees',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'indexOfPayee',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'numPayees',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingPayees',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'settings',
+            type: 'tuple',
+            components: [
+              {
+                name: 'startBlock',
+                type: 'uint256',
+              },
+              {
+                name: 'expiryBlock',
+                type: 'uint256',
+              },
+              {
+                name: 'canPull',
+                type: 'bool',
+              },
+              {
+                name: 'periodLength',
+                type: 'uint256',
+              },
+              {
+                name: 'maxNumTxsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'txCooldownBlocks',
+                type: 'uint256',
+              },
+              {
+                name: 'failOnZeroPrice',
+                type: 'bool',
+              },
+              {
+                name: 'primaryAsset',
+                type: 'address',
+              },
+              {
+                name: 'onlyPrimaryAsset',
+                type: 'bool',
+              },
+              {
+                name: 'unitLimits',
+                type: 'tuple',
+                components: [
+                  {
+                    name: 'perTxCap',
+                    type: 'uint256',
+                  },
+                  {
+                    name: 'perPeriodCap',
+                    type: 'uint256',
+                  },
+                  {
+                    name: 'lifetimeCap',
+                    type: 'uint256',
+                  },
+                ],
+              },
+              {
+                name: 'usdLimits',
+                type: 'tuple',
+                components: [
+                  {
+                    name: 'perTxCap',
+                    type: 'uint256',
+                  },
+                  {
+                    name: 'perPeriodCap',
+                    type: 'uint256',
+                  },
+                  {
+                    name: 'lifetimeCap',
+                    type: 'uint256',
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            name: 'initiatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'confirmBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'currentOwner',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'whitelistAddr',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'indexOfWhitelist',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'numWhitelisted',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingWhitelist',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'initiatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'confirmBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'currentOwner',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'cheques',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'recipient',
+            type: 'address',
+          },
+          {
+            name: 'asset',
+            type: 'address',
+          },
+          {
+            name: 'amount',
+            type: 'uint256',
+          },
+          {
+            name: 'creationBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'unlockBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'expiryBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'usdValueOnCreation',
+            type: 'uint256',
+          },
+          {
+            name: 'canManagerPay',
+            type: 'bool',
+          },
+          {
+            name: 'canBePulled',
+            type: 'bool',
+          },
+          {
+            name: 'creator',
+            type: 'address',
+          },
+          {
+            name: 'active',
+            type: 'bool',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'chequeSettings',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'maxNumActiveCheques',
+            type: 'uint256',
+          },
+          {
+            name: 'maxChequeUsdValue',
+            type: 'uint256',
+          },
+          {
+            name: 'instantUsdThreshold',
+            type: 'uint256',
+          },
+          {
+            name: 'perPeriodPaidUsdCap',
+            type: 'uint256',
+          },
+          {
+            name: 'maxNumChequesPaidPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'payCooldownBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'perPeriodCreatedUsdCap',
+            type: 'uint256',
+          },
+          {
+            name: 'maxNumChequesCreatedPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'createCooldownBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'periodLength',
+            type: 'uint256',
+          },
+          {
+            name: 'expensiveDelayBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'defaultExpiryBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'allowedAssets',
+            type: 'address[]',
+          },
+          {
+            name: 'canManagersCreateCheques',
+            type: 'bool',
+          },
+          {
+            name: 'canManagerPay',
+            type: 'bool',
+          },
+          {
+            name: 'canBePulled',
+            type: 'bool',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'chequePeriodData',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'numChequesPaidInPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'totalUsdValuePaidInPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'totalNumChequesPaid',
+            type: 'uint256',
+          },
+          {
+            name: 'totalUsdValuePaid',
+            type: 'uint256',
+          },
+          {
+            name: 'lastChequePaidBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'numChequesCreatedInPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'totalUsdValueCreatedInPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'totalNumChequesCreated',
+            type: 'uint256',
+          },
+          {
+            name: 'totalUsdValueCreated',
+            type: 'uint256',
+          },
+          {
+            name: 'lastChequeCreatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'periodStartBlock',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'numActiveCheques',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'globalManagerSettings',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'managerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'startDelay',
+            type: 'uint256',
+          },
+          {
+            name: 'activationLength',
+            type: 'uint256',
+          },
+          {
+            name: 'canOwnerManage',
+            type: 'bool',
+          },
+          {
+            name: 'limits',
+            type: 'tuple',
+            components: [
+              {
+                name: 'maxUsdValuePerTx',
+                type: 'uint256',
+              },
+              {
+                name: 'maxUsdValuePerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxUsdValueLifetime',
+                type: 'uint256',
+              },
+              {
+                name: 'maxNumTxsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'txCooldownBlocks',
+                type: 'uint256',
+              },
+              {
+                name: 'failOnZeroPrice',
+                type: 'bool',
+              },
+            ],
+          },
+          {
+            name: 'legoPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canManageYield',
+                type: 'bool',
+              },
+              {
+                name: 'canBuyAndSell',
+                type: 'bool',
+              },
+              {
+                name: 'canManageDebt',
+                type: 'bool',
+              },
+              {
+                name: 'canManageLiq',
+                type: 'bool',
+              },
+              {
+                name: 'canClaimRewards',
+                type: 'bool',
+              },
+              {
+                name: 'allowedLegos',
+                type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'whitelistPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canAddPending',
+                type: 'bool',
+              },
+              {
+                name: 'canConfirm',
+                type: 'bool',
+              },
+              {
+                name: 'canCancel',
+                type: 'bool',
+              },
+              {
+                name: 'canRemove',
+                type: 'bool',
+              },
+            ],
+          },
+          {
+            name: 'transferPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canTransfer',
+                type: 'bool',
+              },
+              {
+                name: 'canCreateCheque',
+                type: 'bool',
+              },
+              {
+                name: 'canAddPendingPayee',
+                type: 'bool',
+              },
+              {
+                name: 'allowedPayees',
+                type: 'address[]',
+              },
+            ],
+          },
+          {
+            name: 'allowedAssets',
+            type: 'address[]',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'globalPayeeSettings',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'defaultPeriodLength',
+            type: 'uint256',
+          },
+          {
+            name: 'startDelay',
+            type: 'uint256',
+          },
+          {
+            name: 'activationLength',
+            type: 'uint256',
+          },
+          {
+            name: 'maxNumTxsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'txCooldownBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'failOnZeroPrice',
+            type: 'bool',
+          },
+          {
+            name: 'usdLimits',
+            type: 'tuple',
+            components: [
+              {
+                name: 'perTxCap',
+                type: 'uint256',
+              },
+              {
+                name: 'perPeriodCap',
+                type: 'uint256',
+              },
+              {
+                name: 'lifetimeCap',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'canPayOwner',
+            type: 'bool',
+          },
+          {
+            name: 'canPull',
+            type: 'bool',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'timeLock',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'isFrozen',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'inEjectMode',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'groupId',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'startingAgent',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'didSetWallet',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'UNDY_HQ',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'WETH',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'ETH',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'MIN_TIMELOCK',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'MAX_TIMELOCK',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+    inputs: [
+      {
+        name: '_undyHq',
+        type: 'address',
+      },
       {
         name: '_owner',
         type: 'address',
       },
       {
-        name: '_initialAgent',
-        type: 'address',
-      },
-      {
-        name: '_ambassador',
-        type: 'address',
-      },
-      {
-        name: '_addyRegistry',
-        type: 'address',
-      },
-      {
-        name: '_minOwnerChangeDelay',
+        name: '_groupId',
         type: 'uint256',
       },
       {
-        name: '_maxOwnerChangeDelay',
+        name: '_trialFundsAsset',
+        type: 'address',
+      },
+      {
+        name: '_trialFundsAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_globalManagerSettings',
+        type: 'tuple',
+        components: [
+          {
+            name: 'managerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'startDelay',
+            type: 'uint256',
+          },
+          {
+            name: 'activationLength',
+            type: 'uint256',
+          },
+          {
+            name: 'canOwnerManage',
+            type: 'bool',
+          },
+          {
+            name: 'limits',
+            type: 'tuple',
+            components: [
+              {
+                name: 'maxUsdValuePerTx',
+                type: 'uint256',
+              },
+              {
+                name: 'maxUsdValuePerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxUsdValueLifetime',
+                type: 'uint256',
+              },
+              {
+                name: 'maxNumTxsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'txCooldownBlocks',
+                type: 'uint256',
+              },
+              {
+                name: 'failOnZeroPrice',
+                type: 'bool',
+              },
+            ],
+          },
+          {
+            name: 'legoPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canManageYield',
+                type: 'bool',
+              },
+              {
+                name: 'canBuyAndSell',
+                type: 'bool',
+              },
+              {
+                name: 'canManageDebt',
+                type: 'bool',
+              },
+              {
+                name: 'canManageLiq',
+                type: 'bool',
+              },
+              {
+                name: 'canClaimRewards',
+                type: 'bool',
+              },
+              {
+                name: 'allowedLegos',
+                type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'whitelistPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canAddPending',
+                type: 'bool',
+              },
+              {
+                name: 'canConfirm',
+                type: 'bool',
+              },
+              {
+                name: 'canCancel',
+                type: 'bool',
+              },
+              {
+                name: 'canRemove',
+                type: 'bool',
+              },
+            ],
+          },
+          {
+            name: 'transferPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canTransfer',
+                type: 'bool',
+              },
+              {
+                name: 'canCreateCheque',
+                type: 'bool',
+              },
+              {
+                name: 'canAddPendingPayee',
+                type: 'bool',
+              },
+              {
+                name: 'allowedPayees',
+                type: 'address[]',
+              },
+            ],
+          },
+          {
+            name: 'allowedAssets',
+            type: 'address[]',
+          },
+        ],
+      },
+      {
+        name: '_globalPayeeSettings',
+        type: 'tuple',
+        components: [
+          {
+            name: 'defaultPeriodLength',
+            type: 'uint256',
+          },
+          {
+            name: 'startDelay',
+            type: 'uint256',
+          },
+          {
+            name: 'activationLength',
+            type: 'uint256',
+          },
+          {
+            name: 'maxNumTxsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'txCooldownBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'failOnZeroPrice',
+            type: 'bool',
+          },
+          {
+            name: 'usdLimits',
+            type: 'tuple',
+            components: [
+              {
+                name: 'perTxCap',
+                type: 'uint256',
+              },
+              {
+                name: 'perPeriodCap',
+                type: 'uint256',
+              },
+              {
+                name: 'lifetimeCap',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'canPayOwner',
+            type: 'bool',
+          },
+          {
+            name: 'canPull',
+            type: 'bool',
+          },
+        ],
+      },
+      {
+        name: '_chequeSettings',
+        type: 'tuple',
+        components: [
+          {
+            name: 'maxNumActiveCheques',
+            type: 'uint256',
+          },
+          {
+            name: 'maxChequeUsdValue',
+            type: 'uint256',
+          },
+          {
+            name: 'instantUsdThreshold',
+            type: 'uint256',
+          },
+          {
+            name: 'perPeriodPaidUsdCap',
+            type: 'uint256',
+          },
+          {
+            name: 'maxNumChequesPaidPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'payCooldownBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'perPeriodCreatedUsdCap',
+            type: 'uint256',
+          },
+          {
+            name: 'maxNumChequesCreatedPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'createCooldownBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'periodLength',
+            type: 'uint256',
+          },
+          {
+            name: 'expensiveDelayBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'defaultExpiryBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'allowedAssets',
+            type: 'address[]',
+          },
+          {
+            name: 'canManagersCreateCheques',
+            type: 'bool',
+          },
+          {
+            name: 'canManagerPay',
+            type: 'bool',
+          },
+          {
+            name: 'canBePulled',
+            type: 'bool',
+          },
+        ],
+      },
+      {
+        name: '_startingAgent',
+        type: 'address',
+      },
+      {
+        name: '_starterAgentSettings',
+        type: 'tuple',
+        components: [
+          {
+            name: 'startBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'expiryBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'limits',
+            type: 'tuple',
+            components: [
+              {
+                name: 'maxUsdValuePerTx',
+                type: 'uint256',
+              },
+              {
+                name: 'maxUsdValuePerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxUsdValueLifetime',
+                type: 'uint256',
+              },
+              {
+                name: 'maxNumTxsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'txCooldownBlocks',
+                type: 'uint256',
+              },
+              {
+                name: 'failOnZeroPrice',
+                type: 'bool',
+              },
+            ],
+          },
+          {
+            name: 'legoPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canManageYield',
+                type: 'bool',
+              },
+              {
+                name: 'canBuyAndSell',
+                type: 'bool',
+              },
+              {
+                name: 'canManageDebt',
+                type: 'bool',
+              },
+              {
+                name: 'canManageLiq',
+                type: 'bool',
+              },
+              {
+                name: 'canClaimRewards',
+                type: 'bool',
+              },
+              {
+                name: 'allowedLegos',
+                type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'whitelistPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canAddPending',
+                type: 'bool',
+              },
+              {
+                name: 'canConfirm',
+                type: 'bool',
+              },
+              {
+                name: 'canCancel',
+                type: 'bool',
+              },
+              {
+                name: 'canRemove',
+                type: 'bool',
+              },
+            ],
+          },
+          {
+            name: 'transferPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canTransfer',
+                type: 'bool',
+              },
+              {
+                name: 'canCreateCheque',
+                type: 'bool',
+              },
+              {
+                name: 'canAddPendingPayee',
+                type: 'bool',
+              },
+              {
+                name: 'allowedPayees',
+                type: 'address[]',
+              },
+            ],
+          },
+          {
+            name: 'allowedAssets',
+            type: 'address[]',
+          },
+          {
+            name: 'canClaimLoot',
+            type: 'bool',
+          },
+        ],
+      },
+      {
+        name: '_kernel',
+        type: 'address',
+      },
+      {
+        name: '_sentinel',
+        type: 'address',
+      },
+      {
+        name: '_highCommand',
+        type: 'address',
+      },
+      {
+        name: '_paymaster',
+        type: 'address',
+      },
+      {
+        name: '_chequeBook',
+        type: 'address',
+      },
+      {
+        name: '_migrator',
+        type: 'address',
+      },
+      {
+        name: '_wethAddr',
+        type: 'address',
+      },
+      {
+        name: '_ethAddr',
+        type: 'address',
+      },
+      {
+        name: '_minTimeLock',
+        type: 'uint256',
+      },
+      {
+        name: '_maxTimeLock',
         type: 'uint256',
       },
     ],
     outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'constructor',
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x61293F1bF484d20dcc841175b4E4A0F46c26658c'
+export const deployAddress: Address | undefined = '0x0E7064202c4F906Adc4D9F6D3C92470b62F624F1'
 
 export type Contract = {
   calls: {
     hasPendingOwnerChange: () => Promise<boolean>
     owner: () => Promise<`0x${string}`>
+    ownershipTimeLock: () => Promise<bigint>
     pendingOwner: () => Promise<{ newOwner: `0x${string}`; initiatedBlock: bigint; confirmBlock: bigint }>
-    ownershipChangeDelay: () => Promise<bigint>
-    MIN_OWNER_CHANGE_DELAY: () => Promise<bigint>
-    MAX_OWNER_CHANGE_DELAY: () => Promise<bigint>
-    _ADDY_REGISTRY: () => Promise<`0x${string}`>
+    MIN_OWNERSHIP_TIMELOCK: () => Promise<bigint>
+    MAX_OWNERSHIP_TIMELOCK: () => Promise<bigint>
     apiVersion: () => Promise<string>
-    isAgentActive: (agent: `0x${string}`) => Promise<boolean>
-    canAgentAccess: (
-      agent: `0x${string}`,
+    checkSignerPermissionsAndGetBundle: (
+      signer: `0x${string}`,
       action: bigint,
-      assets: `0x${string}`[],
-      legoIds: bigint[],
-    ) => Promise<boolean>
-    getAgentSubscriptionStatus: (
-      agent: `0x${string}`,
+      assets?: `0x${string}`[],
+      legoIds?: bigint[],
+      transferRecipient?: `0x${string}`,
     ) => Promise<{
-      recipient: `0x${string}`
-      asset: `0x${string}`
-      amount: bigint
-      usdValue: bigint
-      paidThroughBlock: bigint
-      didChange: boolean
+      ledger: `0x${string}`
+      missionControl: `0x${string}`
+      legoBook: `0x${string}`
+      hatchery: `0x${string}`
+      lootDistributor: `0x${string}`
+      appraiser: `0x${string}`
+      billing: `0x${string}`
+      wallet: `0x${string}`
+      walletConfig: `0x${string}`
+      walletOwner: `0x${string}`
+      inEjectMode: boolean
+      isFrozen: boolean
+      lastTotalUsdValue: bigint
+      signer: `0x${string}`
+      isManager: boolean
+      legoId: bigint
+      legoAddr: `0x${string}`
+      eth: `0x${string}`
+      weth: `0x${string}`
     }>
-    getProtocolSubscriptionStatus: () => Promise<{
-      recipient: `0x${string}`
-      asset: `0x${string}`
-      amount: bigint
-      usdValue: bigint
-      paidThroughBlock: bigint
-      didChange: boolean
+    getTrialFundsInfo: () => Promise<[`0x${string}`, bigint]>
+    getActionDataBundle: (
+      legoId: bigint,
+      signer: `0x${string}`,
+    ) => Promise<{
+      ledger: `0x${string}`
+      missionControl: `0x${string}`
+      legoBook: `0x${string}`
+      hatchery: `0x${string}`
+      lootDistributor: `0x${string}`
+      appraiser: `0x${string}`
+      billing: `0x${string}`
+      wallet: `0x${string}`
+      walletConfig: `0x${string}`
+      walletOwner: `0x${string}`
+      inEjectMode: boolean
+      isFrozen: boolean
+      lastTotalUsdValue: bigint
+      signer: `0x${string}`
+      isManager: boolean
+      legoId: bigint
+      legoAddr: `0x${string}`
+      eth: `0x${string}`
+      weth: `0x${string}`
     }>
-    canMakeSubscriptionPayments: (agent: `0x${string}`) => Promise<[boolean, boolean]>
-    getAvailableTxAmount: (
-      asset: `0x${string}`,
-      wantedAmount: bigint,
-      shouldCheckTrialFunds: boolean,
-      cd?: {
-        owner: `0x${string}`
-        wallet: `0x${string}`
-        walletConfig: `0x${string}`
-        addyRegistry: `0x${string}`
-        agentFactory: `0x${string}`
-        legoRegistry: `0x${string}`
-        priceSheets: `0x${string}`
-        oracleRegistry: `0x${string}`
-        trialFundsAsset: `0x${string}`
-        trialFundsInitialAmount: bigint
-      },
-    ) => Promise<bigint>
-    canTransferToRecipient: (recipient: `0x${string}`) => Promise<boolean>
-    doesWalletHaveSameOwner: (wallet: `0x${string}`) => Promise<boolean>
-    getProceedsAddr: () => Promise<`0x${string}`>
     wallet: () => Promise<`0x${string}`>
-    didSetWallet: () => Promise<boolean>
-    protocolSub: () => Promise<{ installBlock: bigint; paidThroughBlock: bigint }>
-    reserveAssets: (arg0: `0x${string}`) => Promise<bigint>
-    agentSettings: (
+    kernel: () => Promise<`0x${string}`>
+    sentinel: () => Promise<`0x${string}`>
+    highCommand: () => Promise<`0x${string}`>
+    paymaster: () => Promise<`0x${string}`>
+    chequeBook: () => Promise<`0x${string}`>
+    migrator: () => Promise<`0x${string}`>
+    trialFundsAsset: () => Promise<`0x${string}`>
+    trialFundsAmount: () => Promise<bigint>
+    managerSettings: (
       arg0: `0x${string}`,
     ) => Promise<{
-      isActive: boolean
-      installBlock: bigint
-      paidThroughBlock: bigint
-      allowedAssets: `0x${string}`[]
-      allowedLegoIds: bigint[]
-      allowedActions: {
-        isSet: boolean
-        canDeposit: boolean
-        canWithdraw: boolean
-        canRebalance: boolean
-        canTransfer: boolean
-        canSwap: boolean
-        canConvert: boolean
-        canAddLiq: boolean
-        canRemoveLiq: boolean
-        canClaimRewards: boolean
-        canBorrow: boolean
-        canRepay: boolean
+      startBlock: bigint
+      expiryBlock: bigint
+      limits: {
+        maxUsdValuePerTx: bigint
+        maxUsdValuePerPeriod: bigint
+        maxUsdValueLifetime: bigint
+        maxNumTxsPerPeriod: bigint
+        txCooldownBlocks: bigint
+        failOnZeroPrice: boolean
       }
+      legoPerms: {
+        canManageYield: boolean
+        canBuyAndSell: boolean
+        canManageDebt: boolean
+        canManageLiq: boolean
+        canClaimRewards: boolean
+        allowedLegos: bigint[]
+      }
+      whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean }
+      transferPerms: {
+        canTransfer: boolean
+        canCreateCheque: boolean
+        canAddPendingPayee: boolean
+        allowedPayees: `0x${string}`[]
+      }
+      allowedAssets: `0x${string}`[]
+      canClaimLoot: boolean
     }>
-    isRecipientAllowed: (arg0: `0x${string}`) => Promise<boolean>
-    pendingWhitelist: (arg0: `0x${string}`) => Promise<{ initiatedBlock: bigint; confirmBlock: bigint }>
-    canTransferToAltOwnerWallets: () => Promise<boolean>
-    canWalletBeAmbassador: () => Promise<boolean>
-    ambassadorForwarder: () => Promise<`0x${string}`>
-    myAmbassador: () => Promise<`0x${string}`>
-    didMigrateIn: () => Promise<boolean>
-    didMigrateOut: () => Promise<boolean>
-    isVaultToken: (arg0: `0x${string}`) => Promise<boolean>
-    vaultTokenAmounts: (arg0: `0x${string}`) => Promise<bigint>
-    depositedAmounts: (arg0: `0x${string}`) => Promise<bigint>
-    ADDY_REGISTRY: () => Promise<`0x${string}`>
+    managerPeriodData: (
+      arg0: `0x${string}`,
+    ) => Promise<{
+      numTxsInPeriod: bigint
+      totalUsdValueInPeriod: bigint
+      totalNumTxs: bigint
+      totalUsdValue: bigint
+      lastTxBlock: bigint
+      periodStartBlock: bigint
+    }>
+    managers: (arg0: bigint) => Promise<`0x${string}`>
+    indexOfManager: (arg0: `0x${string}`) => Promise<bigint>
+    numManagers: () => Promise<bigint>
+    payeeSettings: (
+      arg0: `0x${string}`,
+    ) => Promise<{
+      startBlock: bigint
+      expiryBlock: bigint
+      canPull: boolean
+      periodLength: bigint
+      maxNumTxsPerPeriod: bigint
+      txCooldownBlocks: bigint
+      failOnZeroPrice: boolean
+      primaryAsset: `0x${string}`
+      onlyPrimaryAsset: boolean
+      unitLimits: { perTxCap: bigint; perPeriodCap: bigint; lifetimeCap: bigint }
+      usdLimits: { perTxCap: bigint; perPeriodCap: bigint; lifetimeCap: bigint }
+    }>
+    payeePeriodData: (
+      arg0: `0x${string}`,
+    ) => Promise<{
+      numTxsInPeriod: bigint
+      totalUnitsInPeriod: bigint
+      totalUsdValueInPeriod: bigint
+      totalNumTxs: bigint
+      totalUnits: bigint
+      totalUsdValue: bigint
+      lastTxBlock: bigint
+      periodStartBlock: bigint
+    }>
+    payees: (arg0: bigint) => Promise<`0x${string}`>
+    indexOfPayee: (arg0: `0x${string}`) => Promise<bigint>
+    numPayees: () => Promise<bigint>
+    pendingPayees: (
+      arg0: `0x${string}`,
+    ) => Promise<{
+      settings: {
+        startBlock: bigint
+        expiryBlock: bigint
+        canPull: boolean
+        periodLength: bigint
+        maxNumTxsPerPeriod: bigint
+        txCooldownBlocks: bigint
+        failOnZeroPrice: boolean
+        primaryAsset: `0x${string}`
+        onlyPrimaryAsset: boolean
+        unitLimits: { perTxCap: bigint; perPeriodCap: bigint; lifetimeCap: bigint }
+        usdLimits: { perTxCap: bigint; perPeriodCap: bigint; lifetimeCap: bigint }
+      }
+      initiatedBlock: bigint
+      confirmBlock: bigint
+      currentOwner: `0x${string}`
+    }>
+    whitelistAddr: (arg0: bigint) => Promise<`0x${string}`>
+    indexOfWhitelist: (arg0: `0x${string}`) => Promise<bigint>
+    numWhitelisted: () => Promise<bigint>
+    pendingWhitelist: (
+      arg0: `0x${string}`,
+    ) => Promise<{ initiatedBlock: bigint; confirmBlock: bigint; currentOwner: `0x${string}` }>
+    cheques: (
+      arg0: `0x${string}`,
+    ) => Promise<{
+      recipient: `0x${string}`
+      asset: `0x${string}`
+      amount: bigint
+      creationBlock: bigint
+      unlockBlock: bigint
+      expiryBlock: bigint
+      usdValueOnCreation: bigint
+      canManagerPay: boolean
+      canBePulled: boolean
+      creator: `0x${string}`
+      active: boolean
+    }>
+    chequeSettings: () => Promise<{
+      maxNumActiveCheques: bigint
+      maxChequeUsdValue: bigint
+      instantUsdThreshold: bigint
+      perPeriodPaidUsdCap: bigint
+      maxNumChequesPaidPerPeriod: bigint
+      payCooldownBlocks: bigint
+      perPeriodCreatedUsdCap: bigint
+      maxNumChequesCreatedPerPeriod: bigint
+      createCooldownBlocks: bigint
+      periodLength: bigint
+      expensiveDelayBlocks: bigint
+      defaultExpiryBlocks: bigint
+      allowedAssets: `0x${string}`[]
+      canManagersCreateCheques: boolean
+      canManagerPay: boolean
+      canBePulled: boolean
+    }>
+    chequePeriodData: () => Promise<{
+      numChequesPaidInPeriod: bigint
+      totalUsdValuePaidInPeriod: bigint
+      totalNumChequesPaid: bigint
+      totalUsdValuePaid: bigint
+      lastChequePaidBlock: bigint
+      numChequesCreatedInPeriod: bigint
+      totalUsdValueCreatedInPeriod: bigint
+      totalNumChequesCreated: bigint
+      totalUsdValueCreated: bigint
+      lastChequeCreatedBlock: bigint
+      periodStartBlock: bigint
+    }>
+    numActiveCheques: () => Promise<bigint>
+    globalManagerSettings: () => Promise<{
+      managerPeriod: bigint
+      startDelay: bigint
+      activationLength: bigint
+      canOwnerManage: boolean
+      limits: {
+        maxUsdValuePerTx: bigint
+        maxUsdValuePerPeriod: bigint
+        maxUsdValueLifetime: bigint
+        maxNumTxsPerPeriod: bigint
+        txCooldownBlocks: bigint
+        failOnZeroPrice: boolean
+      }
+      legoPerms: {
+        canManageYield: boolean
+        canBuyAndSell: boolean
+        canManageDebt: boolean
+        canManageLiq: boolean
+        canClaimRewards: boolean
+        allowedLegos: bigint[]
+      }
+      whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean }
+      transferPerms: {
+        canTransfer: boolean
+        canCreateCheque: boolean
+        canAddPendingPayee: boolean
+        allowedPayees: `0x${string}`[]
+      }
+      allowedAssets: `0x${string}`[]
+    }>
+    globalPayeeSettings: () => Promise<{
+      defaultPeriodLength: bigint
+      startDelay: bigint
+      activationLength: bigint
+      maxNumTxsPerPeriod: bigint
+      txCooldownBlocks: bigint
+      failOnZeroPrice: boolean
+      usdLimits: { perTxCap: bigint; perPeriodCap: bigint; lifetimeCap: bigint }
+      canPayOwner: boolean
+      canPull: boolean
+    }>
+    timeLock: () => Promise<bigint>
+    isFrozen: () => Promise<boolean>
+    inEjectMode: () => Promise<boolean>
+    groupId: () => Promise<bigint>
+    startingAgent: () => Promise<`0x${string}`>
+    didSetWallet: () => Promise<boolean>
+    UNDY_HQ: () => Promise<`0x${string}`>
+    WETH: () => Promise<`0x${string}`>
+    ETH: () => Promise<`0x${string}`>
+    MIN_TIMELOCK: () => Promise<bigint>
+    MAX_TIMELOCK: () => Promise<bigint>
   }
   mutations: {
     changeOwnership: (newOwner: `0x${string}`) => Promise<void>
     confirmOwnershipChange: () => Promise<void>
     cancelOwnershipChange: () => Promise<void>
-    setOwnershipChangeDelay: (numBlocks: bigint) => Promise<void>
+    setOwnershipTimeLock: (numBlocks: bigint) => Promise<void>
     setWallet: (wallet: `0x${string}`) => Promise<boolean>
-    handleSubscriptionsAndPermissions: (
-      agent: `0x${string}`,
-      action: bigint,
-      assets: `0x${string}`[],
-      legoIds: bigint[],
-      cd: {
-        owner: `0x${string}`
-        wallet: `0x${string}`
-        walletConfig: `0x${string}`
-        addyRegistry: `0x${string}`
-        agentFactory: `0x${string}`
-        legoRegistry: `0x${string}`
-        priceSheets: `0x${string}`
-        oracleRegistry: `0x${string}`
-        trialFundsAsset: `0x${string}`
-        trialFundsInitialAmount: bigint
-      },
-    ) => Promise<
-      [
-        {
-          recipient: `0x${string}`
-          asset: `0x${string}`
-          amount: bigint
-          usdValue: bigint
-          paidThroughBlock: bigint
-          didChange: boolean
-        },
-        {
-          recipient: `0x${string}`
-          asset: `0x${string}`
-          amount: bigint
-          usdValue: bigint
-          paidThroughBlock: bigint
-          didChange: boolean
-        },
-      ]
-    >
-    updateYieldTrackingOnDeposit: (
+    checkManagerUsdLimitsAndUpdateData: (manager: `0x${string}`, txUsdValue: bigint) => Promise<boolean>
+    checkRecipientLimitsAndUpdateData: (
+      recipient: `0x${string}`,
+      txUsdValue: bigint,
       asset: `0x${string}`,
-      vaultToken: `0x${string}`,
-      vaultTokenAmountReceived: bigint,
-      assetAmountDeposited: bigint,
-      legoRegistry: `0x${string}`,
-    ) => Promise<void>
-    updateYieldTrackingOnWithdrawal: (
-      vaultToken: `0x${string}`,
-      vaultTokenAmountBurned: bigint,
+      amount: bigint,
+    ) => Promise<boolean>
+    validateCheque: (
+      recipient: `0x${string}`,
       asset: `0x${string}`,
-      assetAmountReceived: bigint,
-      legoRegistry: `0x${string}`,
-    ) => Promise<bigint>
-    updateYieldTrackingOnSwap: (
-      tokenIn: `0x${string}`,
-      tokenOut: `0x${string}`,
-      tokenOutAmount: bigint,
-      legoRegistry: `0x${string}`,
+      amount: bigint,
+      txUsdValue: bigint,
+      signer: `0x${string}`,
+    ) => Promise<boolean>
+    addPendingWhitelistAddr: (
+      addr: `0x${string}`,
+      pending: { initiatedBlock: bigint; confirmBlock: bigint; currentOwner: `0x${string}` },
     ) => Promise<void>
-    updateYieldTrackingOnEntry: (asset: `0x${string}`, amount: bigint, legoRegistry: `0x${string}`) => Promise<void>
-    updateYieldTrackingOnExit: (asset: `0x${string}`, legoRegistry: `0x${string}`) => Promise<void>
-    startMigrationOut: (
-      newWallet: `0x${string}`,
-      assetsToMigrate?: `0x${string}`[],
-      whitelistToMigrate?: `0x${string}`[],
-    ) => Promise<boolean>
-    finishMigrationIn: (
-      whitelistToMigrate: `0x${string}`[],
-      assetsMigrated: `0x${string}`[],
-      vaultTokensMigrated: `0x${string}`[],
-    ) => Promise<boolean>
-    addOrModifyAgent: (
-      agent: `0x${string}`,
-      allowedAssets?: `0x${string}`[],
-      allowedLegoIds?: bigint[],
-      allowedActions?: {
-        isSet: boolean
-        canDeposit: boolean
-        canWithdraw: boolean
-        canRebalance: boolean
-        canTransfer: boolean
-        canSwap: boolean
-        canConvert: boolean
-        canAddLiq: boolean
-        canRemoveLiq: boolean
-        canClaimRewards: boolean
-        canBorrow: boolean
-        canRepay: boolean
-      },
-    ) => Promise<boolean>
-    disableAgent: (agent: `0x${string}`) => Promise<boolean>
-    addLegoIdForAgent: (agent: `0x${string}`, legoId: bigint) => Promise<boolean>
-    addAssetForAgent: (agent: `0x${string}`, asset: `0x${string}`) => Promise<boolean>
-    modifyAllowedActions: (
-      agent: `0x${string}`,
-      allowedActions?: {
-        isSet: boolean
-        canDeposit: boolean
-        canWithdraw: boolean
-        canRebalance: boolean
-        canTransfer: boolean
-        canSwap: boolean
-        canConvert: boolean
-        canAddLiq: boolean
-        canRemoveLiq: boolean
-        canClaimRewards: boolean
-        canBorrow: boolean
-        canRepay: boolean
-      },
-    ) => Promise<boolean>
-    setCanTransferToAltOwnerWallets: (canTransfer: boolean) => Promise<boolean>
-    addWhitelistAddr: (addr: `0x${string}`) => Promise<void>
-    confirmWhitelistAddr: (addr: `0x${string}`) => Promise<void>
     cancelPendingWhitelistAddr: (addr: `0x${string}`) => Promise<void>
+    confirmWhitelistAddr: (addr: `0x${string}`) => Promise<void>
+    addWhitelistAddrViaMigrator: (addr: `0x${string}`) => Promise<void>
     removeWhitelistAddr: (addr: `0x${string}`) => Promise<void>
-    setReserveAsset: (asset: `0x${string}`, amount: bigint) => Promise<boolean>
-    setManyReserveAssets: (assets: { asset: `0x${string}`; amount: bigint }[]) => Promise<boolean>
-    setAmbassadorForwarder: (addr: `0x${string}`) => Promise<boolean>
-    setCanWalletBeAmbassador: (canWalletBeAmbassador: boolean) => Promise<boolean>
-    recoverFunds: (asset: `0x${string}`) => Promise<boolean>
+    addManager: (
+      manager: `0x${string}`,
+      config: {
+        startBlock: bigint
+        expiryBlock: bigint
+        limits: {
+          maxUsdValuePerTx: bigint
+          maxUsdValuePerPeriod: bigint
+          maxUsdValueLifetime: bigint
+          maxNumTxsPerPeriod: bigint
+          txCooldownBlocks: bigint
+          failOnZeroPrice: boolean
+        }
+        legoPerms: {
+          canManageYield: boolean
+          canBuyAndSell: boolean
+          canManageDebt: boolean
+          canManageLiq: boolean
+          canClaimRewards: boolean
+          allowedLegos: bigint[]
+        }
+        whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean }
+        transferPerms: {
+          canTransfer: boolean
+          canCreateCheque: boolean
+          canAddPendingPayee: boolean
+          allowedPayees: `0x${string}`[]
+        }
+        allowedAssets: `0x${string}`[]
+        canClaimLoot: boolean
+      },
+    ) => Promise<void>
+    updateManager: (
+      manager: `0x${string}`,
+      config: {
+        startBlock: bigint
+        expiryBlock: bigint
+        limits: {
+          maxUsdValuePerTx: bigint
+          maxUsdValuePerPeriod: bigint
+          maxUsdValueLifetime: bigint
+          maxNumTxsPerPeriod: bigint
+          txCooldownBlocks: bigint
+          failOnZeroPrice: boolean
+        }
+        legoPerms: {
+          canManageYield: boolean
+          canBuyAndSell: boolean
+          canManageDebt: boolean
+          canManageLiq: boolean
+          canClaimRewards: boolean
+          allowedLegos: bigint[]
+        }
+        whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean }
+        transferPerms: {
+          canTransfer: boolean
+          canCreateCheque: boolean
+          canAddPendingPayee: boolean
+          allowedPayees: `0x${string}`[]
+        }
+        allowedAssets: `0x${string}`[]
+        canClaimLoot: boolean
+      },
+    ) => Promise<void>
+    removeManager: (manager: `0x${string}`) => Promise<void>
+    setGlobalManagerSettings: (config: {
+      managerPeriod: bigint
+      startDelay: bigint
+      activationLength: bigint
+      canOwnerManage: boolean
+      limits: {
+        maxUsdValuePerTx: bigint
+        maxUsdValuePerPeriod: bigint
+        maxUsdValueLifetime: bigint
+        maxNumTxsPerPeriod: bigint
+        txCooldownBlocks: bigint
+        failOnZeroPrice: boolean
+      }
+      legoPerms: {
+        canManageYield: boolean
+        canBuyAndSell: boolean
+        canManageDebt: boolean
+        canManageLiq: boolean
+        canClaimRewards: boolean
+        allowedLegos: bigint[]
+      }
+      whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean }
+      transferPerms: {
+        canTransfer: boolean
+        canCreateCheque: boolean
+        canAddPendingPayee: boolean
+        allowedPayees: `0x${string}`[]
+      }
+      allowedAssets: `0x${string}`[]
+    }) => Promise<void>
+    addPayee: (
+      payee: `0x${string}`,
+      config: {
+        startBlock: bigint
+        expiryBlock: bigint
+        canPull: boolean
+        periodLength: bigint
+        maxNumTxsPerPeriod: bigint
+        txCooldownBlocks: bigint
+        failOnZeroPrice: boolean
+        primaryAsset: `0x${string}`
+        onlyPrimaryAsset: boolean
+        unitLimits: { perTxCap: bigint; perPeriodCap: bigint; lifetimeCap: bigint }
+        usdLimits: { perTxCap: bigint; perPeriodCap: bigint; lifetimeCap: bigint }
+      },
+    ) => Promise<void>
+    updatePayee: (
+      payee: `0x${string}`,
+      config: {
+        startBlock: bigint
+        expiryBlock: bigint
+        canPull: boolean
+        periodLength: bigint
+        maxNumTxsPerPeriod: bigint
+        txCooldownBlocks: bigint
+        failOnZeroPrice: boolean
+        primaryAsset: `0x${string}`
+        onlyPrimaryAsset: boolean
+        unitLimits: { perTxCap: bigint; perPeriodCap: bigint; lifetimeCap: bigint }
+        usdLimits: { perTxCap: bigint; perPeriodCap: bigint; lifetimeCap: bigint }
+      },
+    ) => Promise<void>
+    removePayee: (payee: `0x${string}`) => Promise<void>
+    setGlobalPayeeSettings: (config: {
+      defaultPeriodLength: bigint
+      startDelay: bigint
+      activationLength: bigint
+      maxNumTxsPerPeriod: bigint
+      txCooldownBlocks: bigint
+      failOnZeroPrice: boolean
+      usdLimits: { perTxCap: bigint; perPeriodCap: bigint; lifetimeCap: bigint }
+      canPayOwner: boolean
+      canPull: boolean
+    }) => Promise<void>
+    addPendingPayee: (
+      payee: `0x${string}`,
+      pending: {
+        settings: {
+          startBlock: bigint
+          expiryBlock: bigint
+          canPull: boolean
+          periodLength: bigint
+          maxNumTxsPerPeriod: bigint
+          txCooldownBlocks: bigint
+          failOnZeroPrice: boolean
+          primaryAsset: `0x${string}`
+          onlyPrimaryAsset: boolean
+          unitLimits: { perTxCap: bigint; perPeriodCap: bigint; lifetimeCap: bigint }
+          usdLimits: { perTxCap: bigint; perPeriodCap: bigint; lifetimeCap: bigint }
+        }
+        initiatedBlock: bigint
+        confirmBlock: bigint
+        currentOwner: `0x${string}`
+      },
+    ) => Promise<void>
+    confirmPendingPayee: (payee: `0x${string}`) => Promise<void>
+    cancelPendingPayee: (payee: `0x${string}`) => Promise<void>
+    createCheque: (
+      recipient: `0x${string}`,
+      cheque: {
+        recipient: `0x${string}`
+        asset: `0x${string}`
+        amount: bigint
+        creationBlock: bigint
+        unlockBlock: bigint
+        expiryBlock: bigint
+        usdValueOnCreation: bigint
+        canManagerPay: boolean
+        canBePulled: boolean
+        creator: `0x${string}`
+        active: boolean
+      },
+      chequeData: {
+        numChequesPaidInPeriod: bigint
+        totalUsdValuePaidInPeriod: bigint
+        totalNumChequesPaid: bigint
+        totalUsdValuePaid: bigint
+        lastChequePaidBlock: bigint
+        numChequesCreatedInPeriod: bigint
+        totalUsdValueCreatedInPeriod: bigint
+        totalNumChequesCreated: bigint
+        totalUsdValueCreated: bigint
+        lastChequeCreatedBlock: bigint
+        periodStartBlock: bigint
+      },
+      isExistingCheque: boolean,
+    ) => Promise<void>
+    cancelCheque: (recipient: `0x${string}`) => Promise<void>
+    setChequeSettings: (config: {
+      maxNumActiveCheques: bigint
+      maxChequeUsdValue: bigint
+      instantUsdThreshold: bigint
+      perPeriodPaidUsdCap: bigint
+      maxNumChequesPaidPerPeriod: bigint
+      payCooldownBlocks: bigint
+      perPeriodCreatedUsdCap: bigint
+      maxNumChequesCreatedPerPeriod: bigint
+      createCooldownBlocks: bigint
+      periodLength: bigint
+      expensiveDelayBlocks: bigint
+      defaultExpiryBlocks: bigint
+      allowedAssets: `0x${string}`[]
+      canManagersCreateCheques: boolean
+      canManagerPay: boolean
+      canBePulled: boolean
+    }) => Promise<void>
+    updateAssetData: (legoId: bigint, asset: `0x${string}`, shouldCheckYield: boolean) => Promise<bigint>
+    updateAllAssetData: (shouldCheckYield: boolean) => Promise<bigint>
+    removeTrialFunds: () => Promise<bigint>
+    migrateFunds: (toWallet: `0x${string}`, asset: `0x${string}`) => Promise<bigint>
+    preparePayment: (
+      targetAsset: `0x${string}`,
+      legoId: bigint,
+      vaultToken: `0x${string}`,
+      vaultAmount?: bigint,
+    ) => Promise<[bigint, bigint]>
+    deregisterAsset: (asset: `0x${string}`) => Promise<boolean>
+    recoverNft: (collection: `0x${string}`, nftTokenId: bigint, recipient: `0x${string}`) => Promise<void>
+    setFrozen: (isFrozen: boolean) => Promise<void>
+    setEjectionMode: (shouldEject: boolean) => Promise<void>
+    setLegoAccessForAction: (legoId: bigint, action: bigint) => Promise<boolean>
+    setKernel: (kernel: `0x${string}`) => Promise<void>
+    setSentinel: (sentinel: `0x${string}`) => Promise<void>
+    setHighCommand: (highCommand: `0x${string}`) => Promise<void>
+    setPaymaster: (paymaster: `0x${string}`) => Promise<void>
+    setChequeBook: (chequeBook: `0x${string}`) => Promise<void>
+    setMigrator: (migrator: `0x${string}`) => Promise<void>
   }
   events: {
-    AgentAdded: (agent: `0x${string}`, allowedAssets: bigint, allowedLegoIds: bigint) => Promise<void>
-    AgentModified: (agent: `0x${string}`, allowedAssets: bigint, allowedLegoIds: bigint) => Promise<void>
-    AgentDisabled: (agent: `0x${string}`, prevAllowedAssets: bigint, prevAllowedLegoIds: bigint) => Promise<void>
-    LegoIdAddedToAgent: (agent: `0x${string}`, legoId: bigint) => Promise<void>
-    AssetAddedToAgent: (agent: `0x${string}`, asset: `0x${string}`) => Promise<void>
-    AllowedActionsModified: (
-      agent: `0x${string}`,
-      canDeposit: boolean,
-      canWithdraw: boolean,
-      canRebalance: boolean,
-      canTransfer: boolean,
-      canSwap: boolean,
-      canConvert: boolean,
-      canAddLiq: boolean,
-      canRemoveLiq: boolean,
-      canClaimRewards: boolean,
-      canBorrow: boolean,
-      canRepay: boolean,
-    ) => Promise<void>
-    CanTransferToAltOwnerWalletsSet: (canTransfer: boolean) => Promise<void>
-    WhitelistAddrPending: (addr: `0x${string}`, confirmBlock: bigint) => Promise<void>
-    WhitelistAddrConfirmed: (addr: `0x${string}`, initiatedBlock: bigint, confirmBlock: bigint) => Promise<void>
-    WhitelistAddrCancelled: (
-      addr: `0x${string}`,
-      initiatedBlock: bigint,
-      confirmBlock: bigint,
-      cancelledBy: `0x${string}`,
-    ) => Promise<void>
-    WhitelistAddrRemoved: (addr: `0x${string}`) => Promise<void>
-    WhitelistAddrSetViaMigration: (addr: `0x${string}`) => Promise<void>
-    ReserveAssetSet: (asset: `0x${string}`, amount: bigint) => Promise<void>
-    CanWalletBeAmbassadorSet: (canWalletBeAmbassador: boolean) => Promise<void>
-    AmbassadorForwarderSet: (addr: `0x${string}`) => Promise<void>
-    FundsRecovered: (asset: `0x${string}`, recipient: `0x${string}`, balance: bigint) => Promise<void>
-    UserWalletStartMigration: (
-      newWallet: `0x${string}`,
-      numAssetsToMigrate: bigint,
-      numWhitelistToMigrate: bigint,
-    ) => Promise<void>
-    UserWalletFinishMigration: (
-      oldWallet: `0x${string}`,
-      numWhitelistMigrated: bigint,
-      numVaultTokensMigrated: bigint,
-      numAssetsMigrated: bigint,
-    ) => Promise<void>
+    EjectionModeSet: (inEjectMode: boolean) => Promise<void>
+    FrozenSet: (isFrozen: boolean, caller: `0x${string}`) => Promise<void>
+    NftRecovered: (collection: `0x${string}`, nftTokenId: bigint, recipient: `0x${string}`) => Promise<void>
     OwnershipChangeInitiated: (prevOwner: `0x${string}`, newOwner: `0x${string}`, confirmBlock: bigint) => Promise<void>
     OwnershipChangeConfirmed: (
       prevOwner: `0x${string}`,
@@ -2377,7 +4569,7 @@ export type Contract = {
       initiatedBlock: bigint,
       confirmBlock: bigint,
     ) => Promise<void>
-    OwnershipChangeDelaySet: (delayBlocks: bigint) => Promise<void>
+    OwnershipTimeLockSet: (numBlocks: bigint) => Promise<void>
   }
 }
 
@@ -2444,54 +4636,69 @@ export const call: CallType = {
   hasPendingOwnerChange: (...args: ExtractArgs<Contract['calls']['hasPendingOwnerChange']>) =>
     getRequest('hasPendingOwnerChange', args),
   owner: (...args: ExtractArgs<Contract['calls']['owner']>) => getRequest('owner', args),
+  ownershipTimeLock: (...args: ExtractArgs<Contract['calls']['ownershipTimeLock']>) =>
+    getRequest('ownershipTimeLock', args),
   pendingOwner: (...args: ExtractArgs<Contract['calls']['pendingOwner']>) => getRequest('pendingOwner', args),
-  ownershipChangeDelay: (...args: ExtractArgs<Contract['calls']['ownershipChangeDelay']>) =>
-    getRequest('ownershipChangeDelay', args),
-  MIN_OWNER_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_OWNER_CHANGE_DELAY']>) =>
-    getRequest('MIN_OWNER_CHANGE_DELAY', args),
-  MAX_OWNER_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_OWNER_CHANGE_DELAY']>) =>
-    getRequest('MAX_OWNER_CHANGE_DELAY', args),
-  _ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['_ADDY_REGISTRY']>) => getRequest('_ADDY_REGISTRY', args),
+  MIN_OWNERSHIP_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MIN_OWNERSHIP_TIMELOCK']>) =>
+    getRequest('MIN_OWNERSHIP_TIMELOCK', args),
+  MAX_OWNERSHIP_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MAX_OWNERSHIP_TIMELOCK']>) =>
+    getRequest('MAX_OWNERSHIP_TIMELOCK', args),
   apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) => getRequest('apiVersion', args),
-  isAgentActive: (...args: ExtractArgs<Contract['calls']['isAgentActive']>) => getRequest('isAgentActive', args),
-  canAgentAccess: (...args: ExtractArgs<Contract['calls']['canAgentAccess']>) => getRequest('canAgentAccess', args),
-  getAgentSubscriptionStatus: (...args: ExtractArgs<Contract['calls']['getAgentSubscriptionStatus']>) =>
-    getRequest('getAgentSubscriptionStatus', args),
-  getProtocolSubscriptionStatus: (...args: ExtractArgs<Contract['calls']['getProtocolSubscriptionStatus']>) =>
-    getRequest('getProtocolSubscriptionStatus', args),
-  canMakeSubscriptionPayments: (...args: ExtractArgs<Contract['calls']['canMakeSubscriptionPayments']>) =>
-    getRequest('canMakeSubscriptionPayments', args),
-  getAvailableTxAmount: (...args: ExtractArgs<Contract['calls']['getAvailableTxAmount']>) =>
-    getRequest('getAvailableTxAmount', args),
-  canTransferToRecipient: (...args: ExtractArgs<Contract['calls']['canTransferToRecipient']>) =>
-    getRequest('canTransferToRecipient', args),
-  doesWalletHaveSameOwner: (...args: ExtractArgs<Contract['calls']['doesWalletHaveSameOwner']>) =>
-    getRequest('doesWalletHaveSameOwner', args),
-  getProceedsAddr: (...args: ExtractArgs<Contract['calls']['getProceedsAddr']>) => getRequest('getProceedsAddr', args),
+  checkSignerPermissionsAndGetBundle: (...args: ExtractArgs<Contract['calls']['checkSignerPermissionsAndGetBundle']>) =>
+    getRequest('checkSignerPermissionsAndGetBundle', args),
+  getTrialFundsInfo: (...args: ExtractArgs<Contract['calls']['getTrialFundsInfo']>) =>
+    getRequest('getTrialFundsInfo', args),
+  getActionDataBundle: (...args: ExtractArgs<Contract['calls']['getActionDataBundle']>) =>
+    getRequest('getActionDataBundle', args),
   wallet: (...args: ExtractArgs<Contract['calls']['wallet']>) => getRequest('wallet', args),
-  didSetWallet: (...args: ExtractArgs<Contract['calls']['didSetWallet']>) => getRequest('didSetWallet', args),
-  protocolSub: (...args: ExtractArgs<Contract['calls']['protocolSub']>) => getRequest('protocolSub', args),
-  reserveAssets: (...args: ExtractArgs<Contract['calls']['reserveAssets']>) => getRequest('reserveAssets', args),
-  agentSettings: (...args: ExtractArgs<Contract['calls']['agentSettings']>) => getRequest('agentSettings', args),
-  isRecipientAllowed: (...args: ExtractArgs<Contract['calls']['isRecipientAllowed']>) =>
-    getRequest('isRecipientAllowed', args),
+  kernel: (...args: ExtractArgs<Contract['calls']['kernel']>) => getRequest('kernel', args),
+  sentinel: (...args: ExtractArgs<Contract['calls']['sentinel']>) => getRequest('sentinel', args),
+  highCommand: (...args: ExtractArgs<Contract['calls']['highCommand']>) => getRequest('highCommand', args),
+  paymaster: (...args: ExtractArgs<Contract['calls']['paymaster']>) => getRequest('paymaster', args),
+  chequeBook: (...args: ExtractArgs<Contract['calls']['chequeBook']>) => getRequest('chequeBook', args),
+  migrator: (...args: ExtractArgs<Contract['calls']['migrator']>) => getRequest('migrator', args),
+  trialFundsAsset: (...args: ExtractArgs<Contract['calls']['trialFundsAsset']>) => getRequest('trialFundsAsset', args),
+  trialFundsAmount: (...args: ExtractArgs<Contract['calls']['trialFundsAmount']>) =>
+    getRequest('trialFundsAmount', args),
+  managerSettings: (...args: ExtractArgs<Contract['calls']['managerSettings']>) => getRequest('managerSettings', args),
+  managerPeriodData: (...args: ExtractArgs<Contract['calls']['managerPeriodData']>) =>
+    getRequest('managerPeriodData', args),
+  managers: (...args: ExtractArgs<Contract['calls']['managers']>) => getRequest('managers', args),
+  indexOfManager: (...args: ExtractArgs<Contract['calls']['indexOfManager']>) => getRequest('indexOfManager', args),
+  numManagers: (...args: ExtractArgs<Contract['calls']['numManagers']>) => getRequest('numManagers', args),
+  payeeSettings: (...args: ExtractArgs<Contract['calls']['payeeSettings']>) => getRequest('payeeSettings', args),
+  payeePeriodData: (...args: ExtractArgs<Contract['calls']['payeePeriodData']>) => getRequest('payeePeriodData', args),
+  payees: (...args: ExtractArgs<Contract['calls']['payees']>) => getRequest('payees', args),
+  indexOfPayee: (...args: ExtractArgs<Contract['calls']['indexOfPayee']>) => getRequest('indexOfPayee', args),
+  numPayees: (...args: ExtractArgs<Contract['calls']['numPayees']>) => getRequest('numPayees', args),
+  pendingPayees: (...args: ExtractArgs<Contract['calls']['pendingPayees']>) => getRequest('pendingPayees', args),
+  whitelistAddr: (...args: ExtractArgs<Contract['calls']['whitelistAddr']>) => getRequest('whitelistAddr', args),
+  indexOfWhitelist: (...args: ExtractArgs<Contract['calls']['indexOfWhitelist']>) =>
+    getRequest('indexOfWhitelist', args),
+  numWhitelisted: (...args: ExtractArgs<Contract['calls']['numWhitelisted']>) => getRequest('numWhitelisted', args),
   pendingWhitelist: (...args: ExtractArgs<Contract['calls']['pendingWhitelist']>) =>
     getRequest('pendingWhitelist', args),
-  canTransferToAltOwnerWallets: (...args: ExtractArgs<Contract['calls']['canTransferToAltOwnerWallets']>) =>
-    getRequest('canTransferToAltOwnerWallets', args),
-  canWalletBeAmbassador: (...args: ExtractArgs<Contract['calls']['canWalletBeAmbassador']>) =>
-    getRequest('canWalletBeAmbassador', args),
-  ambassadorForwarder: (...args: ExtractArgs<Contract['calls']['ambassadorForwarder']>) =>
-    getRequest('ambassadorForwarder', args),
-  myAmbassador: (...args: ExtractArgs<Contract['calls']['myAmbassador']>) => getRequest('myAmbassador', args),
-  didMigrateIn: (...args: ExtractArgs<Contract['calls']['didMigrateIn']>) => getRequest('didMigrateIn', args),
-  didMigrateOut: (...args: ExtractArgs<Contract['calls']['didMigrateOut']>) => getRequest('didMigrateOut', args),
-  isVaultToken: (...args: ExtractArgs<Contract['calls']['isVaultToken']>) => getRequest('isVaultToken', args),
-  vaultTokenAmounts: (...args: ExtractArgs<Contract['calls']['vaultTokenAmounts']>) =>
-    getRequest('vaultTokenAmounts', args),
-  depositedAmounts: (...args: ExtractArgs<Contract['calls']['depositedAmounts']>) =>
-    getRequest('depositedAmounts', args),
-  ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => getRequest('ADDY_REGISTRY', args),
+  cheques: (...args: ExtractArgs<Contract['calls']['cheques']>) => getRequest('cheques', args),
+  chequeSettings: (...args: ExtractArgs<Contract['calls']['chequeSettings']>) => getRequest('chequeSettings', args),
+  chequePeriodData: (...args: ExtractArgs<Contract['calls']['chequePeriodData']>) =>
+    getRequest('chequePeriodData', args),
+  numActiveCheques: (...args: ExtractArgs<Contract['calls']['numActiveCheques']>) =>
+    getRequest('numActiveCheques', args),
+  globalManagerSettings: (...args: ExtractArgs<Contract['calls']['globalManagerSettings']>) =>
+    getRequest('globalManagerSettings', args),
+  globalPayeeSettings: (...args: ExtractArgs<Contract['calls']['globalPayeeSettings']>) =>
+    getRequest('globalPayeeSettings', args),
+  timeLock: (...args: ExtractArgs<Contract['calls']['timeLock']>) => getRequest('timeLock', args),
+  isFrozen: (...args: ExtractArgs<Contract['calls']['isFrozen']>) => getRequest('isFrozen', args),
+  inEjectMode: (...args: ExtractArgs<Contract['calls']['inEjectMode']>) => getRequest('inEjectMode', args),
+  groupId: (...args: ExtractArgs<Contract['calls']['groupId']>) => getRequest('groupId', args),
+  startingAgent: (...args: ExtractArgs<Contract['calls']['startingAgent']>) => getRequest('startingAgent', args),
+  didSetWallet: (...args: ExtractArgs<Contract['calls']['didSetWallet']>) => getRequest('didSetWallet', args),
+  UNDY_HQ: (...args: ExtractArgs<Contract['calls']['UNDY_HQ']>) => getRequest('UNDY_HQ', args),
+  WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) => getRequest('WETH', args),
+  ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => getRequest('ETH', args),
+  MIN_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MIN_TIMELOCK']>) => getRequest('MIN_TIMELOCK', args),
+  MAX_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MAX_TIMELOCK']>) => getRequest('MAX_TIMELOCK', args),
 }
 
 export type Mutations = keyof Contract['mutations']
@@ -2517,31 +4724,46 @@ export const mutation: {
   changeOwnership: getMutation('changeOwnership'),
   confirmOwnershipChange: getMutation('confirmOwnershipChange'),
   cancelOwnershipChange: getMutation('cancelOwnershipChange'),
-  setOwnershipChangeDelay: getMutation('setOwnershipChangeDelay'),
+  setOwnershipTimeLock: getMutation('setOwnershipTimeLock'),
   setWallet: getMutation('setWallet'),
-  handleSubscriptionsAndPermissions: getMutation('handleSubscriptionsAndPermissions'),
-  updateYieldTrackingOnDeposit: getMutation('updateYieldTrackingOnDeposit'),
-  updateYieldTrackingOnWithdrawal: getMutation('updateYieldTrackingOnWithdrawal'),
-  updateYieldTrackingOnSwap: getMutation('updateYieldTrackingOnSwap'),
-  updateYieldTrackingOnEntry: getMutation('updateYieldTrackingOnEntry'),
-  updateYieldTrackingOnExit: getMutation('updateYieldTrackingOnExit'),
-  startMigrationOut: getMutation('startMigrationOut'),
-  finishMigrationIn: getMutation('finishMigrationIn'),
-  addOrModifyAgent: getMutation('addOrModifyAgent'),
-  disableAgent: getMutation('disableAgent'),
-  addLegoIdForAgent: getMutation('addLegoIdForAgent'),
-  addAssetForAgent: getMutation('addAssetForAgent'),
-  modifyAllowedActions: getMutation('modifyAllowedActions'),
-  setCanTransferToAltOwnerWallets: getMutation('setCanTransferToAltOwnerWallets'),
-  addWhitelistAddr: getMutation('addWhitelistAddr'),
-  confirmWhitelistAddr: getMutation('confirmWhitelistAddr'),
+  checkManagerUsdLimitsAndUpdateData: getMutation('checkManagerUsdLimitsAndUpdateData'),
+  checkRecipientLimitsAndUpdateData: getMutation('checkRecipientLimitsAndUpdateData'),
+  validateCheque: getMutation('validateCheque'),
+  addPendingWhitelistAddr: getMutation('addPendingWhitelistAddr'),
   cancelPendingWhitelistAddr: getMutation('cancelPendingWhitelistAddr'),
+  confirmWhitelistAddr: getMutation('confirmWhitelistAddr'),
+  addWhitelistAddrViaMigrator: getMutation('addWhitelistAddrViaMigrator'),
   removeWhitelistAddr: getMutation('removeWhitelistAddr'),
-  setReserveAsset: getMutation('setReserveAsset'),
-  setManyReserveAssets: getMutation('setManyReserveAssets'),
-  setAmbassadorForwarder: getMutation('setAmbassadorForwarder'),
-  setCanWalletBeAmbassador: getMutation('setCanWalletBeAmbassador'),
-  recoverFunds: getMutation('recoverFunds'),
+  addManager: getMutation('addManager'),
+  updateManager: getMutation('updateManager'),
+  removeManager: getMutation('removeManager'),
+  setGlobalManagerSettings: getMutation('setGlobalManagerSettings'),
+  addPayee: getMutation('addPayee'),
+  updatePayee: getMutation('updatePayee'),
+  removePayee: getMutation('removePayee'),
+  setGlobalPayeeSettings: getMutation('setGlobalPayeeSettings'),
+  addPendingPayee: getMutation('addPendingPayee'),
+  confirmPendingPayee: getMutation('confirmPendingPayee'),
+  cancelPendingPayee: getMutation('cancelPendingPayee'),
+  createCheque: getMutation('createCheque'),
+  cancelCheque: getMutation('cancelCheque'),
+  setChequeSettings: getMutation('setChequeSettings'),
+  updateAssetData: getMutation('updateAssetData'),
+  updateAllAssetData: getMutation('updateAllAssetData'),
+  removeTrialFunds: getMutation('removeTrialFunds'),
+  migrateFunds: getMutation('migrateFunds'),
+  preparePayment: getMutation('preparePayment'),
+  deregisterAsset: getMutation('deregisterAsset'),
+  recoverNft: getMutation('recoverNft'),
+  setFrozen: getMutation('setFrozen'),
+  setEjectionMode: getMutation('setEjectionMode'),
+  setLegoAccessForAction: getMutation('setLegoAccessForAction'),
+  setKernel: getMutation('setKernel'),
+  setSentinel: getMutation('setSentinel'),
+  setHighCommand: getMutation('setHighCommand'),
+  setPaymaster: getMutation('setPaymaster'),
+  setChequeBook: getMutation('setChequeBook'),
+  setMigrator: getMutation('setMigrator'),
 }
 
 export type SDK = {
@@ -2551,118 +4773,142 @@ export type SDK = {
     ...args: ExtractArgs<Contract['calls']['hasPendingOwnerChange']>
   ) => Promise<CallReturn<'hasPendingOwnerChange'>>
   owner: (...args: ExtractArgs<Contract['calls']['owner']>) => Promise<CallReturn<'owner'>>
+  ownershipTimeLock: (
+    ...args: ExtractArgs<Contract['calls']['ownershipTimeLock']>
+  ) => Promise<CallReturn<'ownershipTimeLock'>>
   pendingOwner: (...args: ExtractArgs<Contract['calls']['pendingOwner']>) => Promise<CallReturn<'pendingOwner'>>
-  ownershipChangeDelay: (
-    ...args: ExtractArgs<Contract['calls']['ownershipChangeDelay']>
-  ) => Promise<CallReturn<'ownershipChangeDelay'>>
-  MIN_OWNER_CHANGE_DELAY: (
-    ...args: ExtractArgs<Contract['calls']['MIN_OWNER_CHANGE_DELAY']>
-  ) => Promise<CallReturn<'MIN_OWNER_CHANGE_DELAY'>>
-  MAX_OWNER_CHANGE_DELAY: (
-    ...args: ExtractArgs<Contract['calls']['MAX_OWNER_CHANGE_DELAY']>
-  ) => Promise<CallReturn<'MAX_OWNER_CHANGE_DELAY'>>
-  _ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['_ADDY_REGISTRY']>) => Promise<CallReturn<'_ADDY_REGISTRY'>>
+  MIN_OWNERSHIP_TIMELOCK: (
+    ...args: ExtractArgs<Contract['calls']['MIN_OWNERSHIP_TIMELOCK']>
+  ) => Promise<CallReturn<'MIN_OWNERSHIP_TIMELOCK'>>
+  MAX_OWNERSHIP_TIMELOCK: (
+    ...args: ExtractArgs<Contract['calls']['MAX_OWNERSHIP_TIMELOCK']>
+  ) => Promise<CallReturn<'MAX_OWNERSHIP_TIMELOCK'>>
   apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) => Promise<CallReturn<'apiVersion'>>
-  isAgentActive: (...args: ExtractArgs<Contract['calls']['isAgentActive']>) => Promise<CallReturn<'isAgentActive'>>
-  canAgentAccess: (...args: ExtractArgs<Contract['calls']['canAgentAccess']>) => Promise<CallReturn<'canAgentAccess'>>
-  getAgentSubscriptionStatus: (
-    ...args: ExtractArgs<Contract['calls']['getAgentSubscriptionStatus']>
-  ) => Promise<CallReturn<'getAgentSubscriptionStatus'>>
-  getProtocolSubscriptionStatus: (
-    ...args: ExtractArgs<Contract['calls']['getProtocolSubscriptionStatus']>
-  ) => Promise<CallReturn<'getProtocolSubscriptionStatus'>>
-  canMakeSubscriptionPayments: (
-    ...args: ExtractArgs<Contract['calls']['canMakeSubscriptionPayments']>
-  ) => Promise<CallReturn<'canMakeSubscriptionPayments'>>
-  getAvailableTxAmount: (
-    ...args: ExtractArgs<Contract['calls']['getAvailableTxAmount']>
-  ) => Promise<CallReturn<'getAvailableTxAmount'>>
-  canTransferToRecipient: (
-    ...args: ExtractArgs<Contract['calls']['canTransferToRecipient']>
-  ) => Promise<CallReturn<'canTransferToRecipient'>>
-  doesWalletHaveSameOwner: (
-    ...args: ExtractArgs<Contract['calls']['doesWalletHaveSameOwner']>
-  ) => Promise<CallReturn<'doesWalletHaveSameOwner'>>
-  getProceedsAddr: (
-    ...args: ExtractArgs<Contract['calls']['getProceedsAddr']>
-  ) => Promise<CallReturn<'getProceedsAddr'>>
+  checkSignerPermissionsAndGetBundle: (
+    ...args: ExtractArgs<Contract['calls']['checkSignerPermissionsAndGetBundle']>
+  ) => Promise<CallReturn<'checkSignerPermissionsAndGetBundle'>>
+  getTrialFundsInfo: (
+    ...args: ExtractArgs<Contract['calls']['getTrialFundsInfo']>
+  ) => Promise<CallReturn<'getTrialFundsInfo'>>
+  getActionDataBundle: (
+    ...args: ExtractArgs<Contract['calls']['getActionDataBundle']>
+  ) => Promise<CallReturn<'getActionDataBundle'>>
   wallet: (...args: ExtractArgs<Contract['calls']['wallet']>) => Promise<CallReturn<'wallet'>>
-  didSetWallet: (...args: ExtractArgs<Contract['calls']['didSetWallet']>) => Promise<CallReturn<'didSetWallet'>>
-  protocolSub: (...args: ExtractArgs<Contract['calls']['protocolSub']>) => Promise<CallReturn<'protocolSub'>>
-  reserveAssets: (...args: ExtractArgs<Contract['calls']['reserveAssets']>) => Promise<CallReturn<'reserveAssets'>>
-  agentSettings: (...args: ExtractArgs<Contract['calls']['agentSettings']>) => Promise<CallReturn<'agentSettings'>>
-  isRecipientAllowed: (
-    ...args: ExtractArgs<Contract['calls']['isRecipientAllowed']>
-  ) => Promise<CallReturn<'isRecipientAllowed'>>
+  kernel: (...args: ExtractArgs<Contract['calls']['kernel']>) => Promise<CallReturn<'kernel'>>
+  sentinel: (...args: ExtractArgs<Contract['calls']['sentinel']>) => Promise<CallReturn<'sentinel'>>
+  highCommand: (...args: ExtractArgs<Contract['calls']['highCommand']>) => Promise<CallReturn<'highCommand'>>
+  paymaster: (...args: ExtractArgs<Contract['calls']['paymaster']>) => Promise<CallReturn<'paymaster'>>
+  chequeBook: (...args: ExtractArgs<Contract['calls']['chequeBook']>) => Promise<CallReturn<'chequeBook'>>
+  migrator: (...args: ExtractArgs<Contract['calls']['migrator']>) => Promise<CallReturn<'migrator'>>
+  trialFundsAsset: (
+    ...args: ExtractArgs<Contract['calls']['trialFundsAsset']>
+  ) => Promise<CallReturn<'trialFundsAsset'>>
+  trialFundsAmount: (
+    ...args: ExtractArgs<Contract['calls']['trialFundsAmount']>
+  ) => Promise<CallReturn<'trialFundsAmount'>>
+  managerSettings: (
+    ...args: ExtractArgs<Contract['calls']['managerSettings']>
+  ) => Promise<CallReturn<'managerSettings'>>
+  managerPeriodData: (
+    ...args: ExtractArgs<Contract['calls']['managerPeriodData']>
+  ) => Promise<CallReturn<'managerPeriodData'>>
+  managers: (...args: ExtractArgs<Contract['calls']['managers']>) => Promise<CallReturn<'managers'>>
+  indexOfManager: (...args: ExtractArgs<Contract['calls']['indexOfManager']>) => Promise<CallReturn<'indexOfManager'>>
+  numManagers: (...args: ExtractArgs<Contract['calls']['numManagers']>) => Promise<CallReturn<'numManagers'>>
+  payeeSettings: (...args: ExtractArgs<Contract['calls']['payeeSettings']>) => Promise<CallReturn<'payeeSettings'>>
+  payeePeriodData: (
+    ...args: ExtractArgs<Contract['calls']['payeePeriodData']>
+  ) => Promise<CallReturn<'payeePeriodData'>>
+  payees: (...args: ExtractArgs<Contract['calls']['payees']>) => Promise<CallReturn<'payees'>>
+  indexOfPayee: (...args: ExtractArgs<Contract['calls']['indexOfPayee']>) => Promise<CallReturn<'indexOfPayee'>>
+  numPayees: (...args: ExtractArgs<Contract['calls']['numPayees']>) => Promise<CallReturn<'numPayees'>>
+  pendingPayees: (...args: ExtractArgs<Contract['calls']['pendingPayees']>) => Promise<CallReturn<'pendingPayees'>>
+  whitelistAddr: (...args: ExtractArgs<Contract['calls']['whitelistAddr']>) => Promise<CallReturn<'whitelistAddr'>>
+  indexOfWhitelist: (
+    ...args: ExtractArgs<Contract['calls']['indexOfWhitelist']>
+  ) => Promise<CallReturn<'indexOfWhitelist'>>
+  numWhitelisted: (...args: ExtractArgs<Contract['calls']['numWhitelisted']>) => Promise<CallReturn<'numWhitelisted'>>
   pendingWhitelist: (
     ...args: ExtractArgs<Contract['calls']['pendingWhitelist']>
   ) => Promise<CallReturn<'pendingWhitelist'>>
-  canTransferToAltOwnerWallets: (
-    ...args: ExtractArgs<Contract['calls']['canTransferToAltOwnerWallets']>
-  ) => Promise<CallReturn<'canTransferToAltOwnerWallets'>>
-  canWalletBeAmbassador: (
-    ...args: ExtractArgs<Contract['calls']['canWalletBeAmbassador']>
-  ) => Promise<CallReturn<'canWalletBeAmbassador'>>
-  ambassadorForwarder: (
-    ...args: ExtractArgs<Contract['calls']['ambassadorForwarder']>
-  ) => Promise<CallReturn<'ambassadorForwarder'>>
-  myAmbassador: (...args: ExtractArgs<Contract['calls']['myAmbassador']>) => Promise<CallReturn<'myAmbassador'>>
-  didMigrateIn: (...args: ExtractArgs<Contract['calls']['didMigrateIn']>) => Promise<CallReturn<'didMigrateIn'>>
-  didMigrateOut: (...args: ExtractArgs<Contract['calls']['didMigrateOut']>) => Promise<CallReturn<'didMigrateOut'>>
-  isVaultToken: (...args: ExtractArgs<Contract['calls']['isVaultToken']>) => Promise<CallReturn<'isVaultToken'>>
-  vaultTokenAmounts: (
-    ...args: ExtractArgs<Contract['calls']['vaultTokenAmounts']>
-  ) => Promise<CallReturn<'vaultTokenAmounts'>>
-  depositedAmounts: (
-    ...args: ExtractArgs<Contract['calls']['depositedAmounts']>
-  ) => Promise<CallReturn<'depositedAmounts'>>
-  ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) => Promise<CallReturn<'ADDY_REGISTRY'>>
+  cheques: (...args: ExtractArgs<Contract['calls']['cheques']>) => Promise<CallReturn<'cheques'>>
+  chequeSettings: (...args: ExtractArgs<Contract['calls']['chequeSettings']>) => Promise<CallReturn<'chequeSettings'>>
+  chequePeriodData: (
+    ...args: ExtractArgs<Contract['calls']['chequePeriodData']>
+  ) => Promise<CallReturn<'chequePeriodData'>>
+  numActiveCheques: (
+    ...args: ExtractArgs<Contract['calls']['numActiveCheques']>
+  ) => Promise<CallReturn<'numActiveCheques'>>
+  globalManagerSettings: (
+    ...args: ExtractArgs<Contract['calls']['globalManagerSettings']>
+  ) => Promise<CallReturn<'globalManagerSettings'>>
+  globalPayeeSettings: (
+    ...args: ExtractArgs<Contract['calls']['globalPayeeSettings']>
+  ) => Promise<CallReturn<'globalPayeeSettings'>>
+  timeLock: (...args: ExtractArgs<Contract['calls']['timeLock']>) => Promise<CallReturn<'timeLock'>>
+  isFrozen: (...args: ExtractArgs<Contract['calls']['isFrozen']>) => Promise<CallReturn<'isFrozen'>>
+  inEjectMode: (...args: ExtractArgs<Contract['calls']['inEjectMode']>) => Promise<CallReturn<'inEjectMode'>>
+  groupId: (...args: ExtractArgs<Contract['calls']['groupId']>) => Promise<CallReturn<'groupId'>>
+  startingAgent: (...args: ExtractArgs<Contract['calls']['startingAgent']>) => Promise<CallReturn<'startingAgent'>>
+  didSetWallet: (...args: ExtractArgs<Contract['calls']['didSetWallet']>) => Promise<CallReturn<'didSetWallet'>>
+  UNDY_HQ: (...args: ExtractArgs<Contract['calls']['UNDY_HQ']>) => Promise<CallReturn<'UNDY_HQ'>>
+  WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) => Promise<CallReturn<'WETH'>>
+  ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => Promise<CallReturn<'ETH'>>
+  MIN_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MIN_TIMELOCK']>) => Promise<CallReturn<'MIN_TIMELOCK'>>
+  MAX_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MAX_TIMELOCK']>) => Promise<CallReturn<'MAX_TIMELOCK'>>
   changeOwnership: (...args: ExtractArgs<Contract['mutations']['changeOwnership']>) => Promise<Address>
   confirmOwnershipChange: (...args: ExtractArgs<Contract['mutations']['confirmOwnershipChange']>) => Promise<Address>
   cancelOwnershipChange: (...args: ExtractArgs<Contract['mutations']['cancelOwnershipChange']>) => Promise<Address>
-  setOwnershipChangeDelay: (...args: ExtractArgs<Contract['mutations']['setOwnershipChangeDelay']>) => Promise<Address>
+  setOwnershipTimeLock: (...args: ExtractArgs<Contract['mutations']['setOwnershipTimeLock']>) => Promise<Address>
   setWallet: (...args: ExtractArgs<Contract['mutations']['setWallet']>) => Promise<Address>
-  handleSubscriptionsAndPermissions: (
-    ...args: ExtractArgs<Contract['mutations']['handleSubscriptionsAndPermissions']>
+  checkManagerUsdLimitsAndUpdateData: (
+    ...args: ExtractArgs<Contract['mutations']['checkManagerUsdLimitsAndUpdateData']>
   ) => Promise<Address>
-  updateYieldTrackingOnDeposit: (
-    ...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnDeposit']>
+  checkRecipientLimitsAndUpdateData: (
+    ...args: ExtractArgs<Contract['mutations']['checkRecipientLimitsAndUpdateData']>
   ) => Promise<Address>
-  updateYieldTrackingOnWithdrawal: (
-    ...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnWithdrawal']>
-  ) => Promise<Address>
-  updateYieldTrackingOnSwap: (
-    ...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnSwap']>
-  ) => Promise<Address>
-  updateYieldTrackingOnEntry: (
-    ...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnEntry']>
-  ) => Promise<Address>
-  updateYieldTrackingOnExit: (
-    ...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnExit']>
-  ) => Promise<Address>
-  startMigrationOut: (...args: ExtractArgs<Contract['mutations']['startMigrationOut']>) => Promise<Address>
-  finishMigrationIn: (...args: ExtractArgs<Contract['mutations']['finishMigrationIn']>) => Promise<Address>
-  addOrModifyAgent: (...args: ExtractArgs<Contract['mutations']['addOrModifyAgent']>) => Promise<Address>
-  disableAgent: (...args: ExtractArgs<Contract['mutations']['disableAgent']>) => Promise<Address>
-  addLegoIdForAgent: (...args: ExtractArgs<Contract['mutations']['addLegoIdForAgent']>) => Promise<Address>
-  addAssetForAgent: (...args: ExtractArgs<Contract['mutations']['addAssetForAgent']>) => Promise<Address>
-  modifyAllowedActions: (...args: ExtractArgs<Contract['mutations']['modifyAllowedActions']>) => Promise<Address>
-  setCanTransferToAltOwnerWallets: (
-    ...args: ExtractArgs<Contract['mutations']['setCanTransferToAltOwnerWallets']>
-  ) => Promise<Address>
-  addWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['addWhitelistAddr']>) => Promise<Address>
-  confirmWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['confirmWhitelistAddr']>) => Promise<Address>
+  validateCheque: (...args: ExtractArgs<Contract['mutations']['validateCheque']>) => Promise<Address>
+  addPendingWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['addPendingWhitelistAddr']>) => Promise<Address>
   cancelPendingWhitelistAddr: (
     ...args: ExtractArgs<Contract['mutations']['cancelPendingWhitelistAddr']>
   ) => Promise<Address>
-  removeWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['removeWhitelistAddr']>) => Promise<Address>
-  setReserveAsset: (...args: ExtractArgs<Contract['mutations']['setReserveAsset']>) => Promise<Address>
-  setManyReserveAssets: (...args: ExtractArgs<Contract['mutations']['setManyReserveAssets']>) => Promise<Address>
-  setAmbassadorForwarder: (...args: ExtractArgs<Contract['mutations']['setAmbassadorForwarder']>) => Promise<Address>
-  setCanWalletBeAmbassador: (
-    ...args: ExtractArgs<Contract['mutations']['setCanWalletBeAmbassador']>
+  confirmWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['confirmWhitelistAddr']>) => Promise<Address>
+  addWhitelistAddrViaMigrator: (
+    ...args: ExtractArgs<Contract['mutations']['addWhitelistAddrViaMigrator']>
   ) => Promise<Address>
-  recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
+  removeWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['removeWhitelistAddr']>) => Promise<Address>
+  addManager: (...args: ExtractArgs<Contract['mutations']['addManager']>) => Promise<Address>
+  updateManager: (...args: ExtractArgs<Contract['mutations']['updateManager']>) => Promise<Address>
+  removeManager: (...args: ExtractArgs<Contract['mutations']['removeManager']>) => Promise<Address>
+  setGlobalManagerSettings: (
+    ...args: ExtractArgs<Contract['mutations']['setGlobalManagerSettings']>
+  ) => Promise<Address>
+  addPayee: (...args: ExtractArgs<Contract['mutations']['addPayee']>) => Promise<Address>
+  updatePayee: (...args: ExtractArgs<Contract['mutations']['updatePayee']>) => Promise<Address>
+  removePayee: (...args: ExtractArgs<Contract['mutations']['removePayee']>) => Promise<Address>
+  setGlobalPayeeSettings: (...args: ExtractArgs<Contract['mutations']['setGlobalPayeeSettings']>) => Promise<Address>
+  addPendingPayee: (...args: ExtractArgs<Contract['mutations']['addPendingPayee']>) => Promise<Address>
+  confirmPendingPayee: (...args: ExtractArgs<Contract['mutations']['confirmPendingPayee']>) => Promise<Address>
+  cancelPendingPayee: (...args: ExtractArgs<Contract['mutations']['cancelPendingPayee']>) => Promise<Address>
+  createCheque: (...args: ExtractArgs<Contract['mutations']['createCheque']>) => Promise<Address>
+  cancelCheque: (...args: ExtractArgs<Contract['mutations']['cancelCheque']>) => Promise<Address>
+  setChequeSettings: (...args: ExtractArgs<Contract['mutations']['setChequeSettings']>) => Promise<Address>
+  updateAssetData: (...args: ExtractArgs<Contract['mutations']['updateAssetData']>) => Promise<Address>
+  updateAllAssetData: (...args: ExtractArgs<Contract['mutations']['updateAllAssetData']>) => Promise<Address>
+  removeTrialFunds: (...args: ExtractArgs<Contract['mutations']['removeTrialFunds']>) => Promise<Address>
+  migrateFunds: (...args: ExtractArgs<Contract['mutations']['migrateFunds']>) => Promise<Address>
+  preparePayment: (...args: ExtractArgs<Contract['mutations']['preparePayment']>) => Promise<Address>
+  deregisterAsset: (...args: ExtractArgs<Contract['mutations']['deregisterAsset']>) => Promise<Address>
+  recoverNft: (...args: ExtractArgs<Contract['mutations']['recoverNft']>) => Promise<Address>
+  setFrozen: (...args: ExtractArgs<Contract['mutations']['setFrozen']>) => Promise<Address>
+  setEjectionMode: (...args: ExtractArgs<Contract['mutations']['setEjectionMode']>) => Promise<Address>
+  setLegoAccessForAction: (...args: ExtractArgs<Contract['mutations']['setLegoAccessForAction']>) => Promise<Address>
+  setKernel: (...args: ExtractArgs<Contract['mutations']['setKernel']>) => Promise<Address>
+  setSentinel: (...args: ExtractArgs<Contract['mutations']['setSentinel']>) => Promise<Address>
+  setHighCommand: (...args: ExtractArgs<Contract['mutations']['setHighCommand']>) => Promise<Address>
+  setPaymaster: (...args: ExtractArgs<Contract['mutations']['setPaymaster']>) => Promise<Address>
+  setChequeBook: (...args: ExtractArgs<Contract['mutations']['setChequeBook']>) => Promise<Address>
+  setMigrator: (...args: ExtractArgs<Contract['mutations']['setMigrator']>) => Promise<Address>
 }
 
 export function toSdk(deployAddress: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
@@ -2676,108 +4922,146 @@ export function toSdk(deployAddress: Address, publicClient?: PublicClient, walle
       >,
     owner: (...args: ExtractArgs<Contract['calls']['owner']>) =>
       singleQuery(publicClient!, call.owner(...args).at(deployAddress)) as Promise<CallReturn<'owner'>>,
+    ownershipTimeLock: (...args: ExtractArgs<Contract['calls']['ownershipTimeLock']>) =>
+      singleQuery(publicClient!, call.ownershipTimeLock(...args).at(deployAddress)) as Promise<
+        CallReturn<'ownershipTimeLock'>
+      >,
     pendingOwner: (...args: ExtractArgs<Contract['calls']['pendingOwner']>) =>
       singleQuery(publicClient!, call.pendingOwner(...args).at(deployAddress)) as Promise<CallReturn<'pendingOwner'>>,
-    ownershipChangeDelay: (...args: ExtractArgs<Contract['calls']['ownershipChangeDelay']>) =>
-      singleQuery(publicClient!, call.ownershipChangeDelay(...args).at(deployAddress)) as Promise<
-        CallReturn<'ownershipChangeDelay'>
+    MIN_OWNERSHIP_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MIN_OWNERSHIP_TIMELOCK']>) =>
+      singleQuery(publicClient!, call.MIN_OWNERSHIP_TIMELOCK(...args).at(deployAddress)) as Promise<
+        CallReturn<'MIN_OWNERSHIP_TIMELOCK'>
       >,
-    MIN_OWNER_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_OWNER_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MIN_OWNER_CHANGE_DELAY(...args).at(deployAddress)) as Promise<
-        CallReturn<'MIN_OWNER_CHANGE_DELAY'>
-      >,
-    MAX_OWNER_CHANGE_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_OWNER_CHANGE_DELAY']>) =>
-      singleQuery(publicClient!, call.MAX_OWNER_CHANGE_DELAY(...args).at(deployAddress)) as Promise<
-        CallReturn<'MAX_OWNER_CHANGE_DELAY'>
-      >,
-    _ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['_ADDY_REGISTRY']>) =>
-      singleQuery(publicClient!, call._ADDY_REGISTRY(...args).at(deployAddress)) as Promise<
-        CallReturn<'_ADDY_REGISTRY'>
+    MAX_OWNERSHIP_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MAX_OWNERSHIP_TIMELOCK']>) =>
+      singleQuery(publicClient!, call.MAX_OWNERSHIP_TIMELOCK(...args).at(deployAddress)) as Promise<
+        CallReturn<'MAX_OWNERSHIP_TIMELOCK'>
       >,
     apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) =>
       singleQuery(publicClient!, call.apiVersion(...args).at(deployAddress)) as Promise<CallReturn<'apiVersion'>>,
-    isAgentActive: (...args: ExtractArgs<Contract['calls']['isAgentActive']>) =>
-      singleQuery(publicClient!, call.isAgentActive(...args).at(deployAddress)) as Promise<CallReturn<'isAgentActive'>>,
-    canAgentAccess: (...args: ExtractArgs<Contract['calls']['canAgentAccess']>) =>
-      singleQuery(publicClient!, call.canAgentAccess(...args).at(deployAddress)) as Promise<
-        CallReturn<'canAgentAccess'>
+    checkSignerPermissionsAndGetBundle: (
+      ...args: ExtractArgs<Contract['calls']['checkSignerPermissionsAndGetBundle']>
+    ) =>
+      singleQuery(publicClient!, call.checkSignerPermissionsAndGetBundle(...args).at(deployAddress)) as Promise<
+        CallReturn<'checkSignerPermissionsAndGetBundle'>
       >,
-    getAgentSubscriptionStatus: (...args: ExtractArgs<Contract['calls']['getAgentSubscriptionStatus']>) =>
-      singleQuery(publicClient!, call.getAgentSubscriptionStatus(...args).at(deployAddress)) as Promise<
-        CallReturn<'getAgentSubscriptionStatus'>
+    getTrialFundsInfo: (...args: ExtractArgs<Contract['calls']['getTrialFundsInfo']>) =>
+      singleQuery(publicClient!, call.getTrialFundsInfo(...args).at(deployAddress)) as Promise<
+        CallReturn<'getTrialFundsInfo'>
       >,
-    getProtocolSubscriptionStatus: (...args: ExtractArgs<Contract['calls']['getProtocolSubscriptionStatus']>) =>
-      singleQuery(publicClient!, call.getProtocolSubscriptionStatus(...args).at(deployAddress)) as Promise<
-        CallReturn<'getProtocolSubscriptionStatus'>
-      >,
-    canMakeSubscriptionPayments: (...args: ExtractArgs<Contract['calls']['canMakeSubscriptionPayments']>) =>
-      singleQuery(publicClient!, call.canMakeSubscriptionPayments(...args).at(deployAddress)) as Promise<
-        CallReturn<'canMakeSubscriptionPayments'>
-      >,
-    getAvailableTxAmount: (...args: ExtractArgs<Contract['calls']['getAvailableTxAmount']>) =>
-      singleQuery(publicClient!, call.getAvailableTxAmount(...args).at(deployAddress)) as Promise<
-        CallReturn<'getAvailableTxAmount'>
-      >,
-    canTransferToRecipient: (...args: ExtractArgs<Contract['calls']['canTransferToRecipient']>) =>
-      singleQuery(publicClient!, call.canTransferToRecipient(...args).at(deployAddress)) as Promise<
-        CallReturn<'canTransferToRecipient'>
-      >,
-    doesWalletHaveSameOwner: (...args: ExtractArgs<Contract['calls']['doesWalletHaveSameOwner']>) =>
-      singleQuery(publicClient!, call.doesWalletHaveSameOwner(...args).at(deployAddress)) as Promise<
-        CallReturn<'doesWalletHaveSameOwner'>
-      >,
-    getProceedsAddr: (...args: ExtractArgs<Contract['calls']['getProceedsAddr']>) =>
-      singleQuery(publicClient!, call.getProceedsAddr(...args).at(deployAddress)) as Promise<
-        CallReturn<'getProceedsAddr'>
+    getActionDataBundle: (...args: ExtractArgs<Contract['calls']['getActionDataBundle']>) =>
+      singleQuery(publicClient!, call.getActionDataBundle(...args).at(deployAddress)) as Promise<
+        CallReturn<'getActionDataBundle'>
       >,
     wallet: (...args: ExtractArgs<Contract['calls']['wallet']>) =>
       singleQuery(publicClient!, call.wallet(...args).at(deployAddress)) as Promise<CallReturn<'wallet'>>,
-    didSetWallet: (...args: ExtractArgs<Contract['calls']['didSetWallet']>) =>
-      singleQuery(publicClient!, call.didSetWallet(...args).at(deployAddress)) as Promise<CallReturn<'didSetWallet'>>,
-    protocolSub: (...args: ExtractArgs<Contract['calls']['protocolSub']>) =>
-      singleQuery(publicClient!, call.protocolSub(...args).at(deployAddress)) as Promise<CallReturn<'protocolSub'>>,
-    reserveAssets: (...args: ExtractArgs<Contract['calls']['reserveAssets']>) =>
-      singleQuery(publicClient!, call.reserveAssets(...args).at(deployAddress)) as Promise<CallReturn<'reserveAssets'>>,
-    agentSettings: (...args: ExtractArgs<Contract['calls']['agentSettings']>) =>
-      singleQuery(publicClient!, call.agentSettings(...args).at(deployAddress)) as Promise<CallReturn<'agentSettings'>>,
-    isRecipientAllowed: (...args: ExtractArgs<Contract['calls']['isRecipientAllowed']>) =>
-      singleQuery(publicClient!, call.isRecipientAllowed(...args).at(deployAddress)) as Promise<
-        CallReturn<'isRecipientAllowed'>
+    kernel: (...args: ExtractArgs<Contract['calls']['kernel']>) =>
+      singleQuery(publicClient!, call.kernel(...args).at(deployAddress)) as Promise<CallReturn<'kernel'>>,
+    sentinel: (...args: ExtractArgs<Contract['calls']['sentinel']>) =>
+      singleQuery(publicClient!, call.sentinel(...args).at(deployAddress)) as Promise<CallReturn<'sentinel'>>,
+    highCommand: (...args: ExtractArgs<Contract['calls']['highCommand']>) =>
+      singleQuery(publicClient!, call.highCommand(...args).at(deployAddress)) as Promise<CallReturn<'highCommand'>>,
+    paymaster: (...args: ExtractArgs<Contract['calls']['paymaster']>) =>
+      singleQuery(publicClient!, call.paymaster(...args).at(deployAddress)) as Promise<CallReturn<'paymaster'>>,
+    chequeBook: (...args: ExtractArgs<Contract['calls']['chequeBook']>) =>
+      singleQuery(publicClient!, call.chequeBook(...args).at(deployAddress)) as Promise<CallReturn<'chequeBook'>>,
+    migrator: (...args: ExtractArgs<Contract['calls']['migrator']>) =>
+      singleQuery(publicClient!, call.migrator(...args).at(deployAddress)) as Promise<CallReturn<'migrator'>>,
+    trialFundsAsset: (...args: ExtractArgs<Contract['calls']['trialFundsAsset']>) =>
+      singleQuery(publicClient!, call.trialFundsAsset(...args).at(deployAddress)) as Promise<
+        CallReturn<'trialFundsAsset'>
+      >,
+    trialFundsAmount: (...args: ExtractArgs<Contract['calls']['trialFundsAmount']>) =>
+      singleQuery(publicClient!, call.trialFundsAmount(...args).at(deployAddress)) as Promise<
+        CallReturn<'trialFundsAmount'>
+      >,
+    managerSettings: (...args: ExtractArgs<Contract['calls']['managerSettings']>) =>
+      singleQuery(publicClient!, call.managerSettings(...args).at(deployAddress)) as Promise<
+        CallReturn<'managerSettings'>
+      >,
+    managerPeriodData: (...args: ExtractArgs<Contract['calls']['managerPeriodData']>) =>
+      singleQuery(publicClient!, call.managerPeriodData(...args).at(deployAddress)) as Promise<
+        CallReturn<'managerPeriodData'>
+      >,
+    managers: (...args: ExtractArgs<Contract['calls']['managers']>) =>
+      singleQuery(publicClient!, call.managers(...args).at(deployAddress)) as Promise<CallReturn<'managers'>>,
+    indexOfManager: (...args: ExtractArgs<Contract['calls']['indexOfManager']>) =>
+      singleQuery(publicClient!, call.indexOfManager(...args).at(deployAddress)) as Promise<
+        CallReturn<'indexOfManager'>
+      >,
+    numManagers: (...args: ExtractArgs<Contract['calls']['numManagers']>) =>
+      singleQuery(publicClient!, call.numManagers(...args).at(deployAddress)) as Promise<CallReturn<'numManagers'>>,
+    payeeSettings: (...args: ExtractArgs<Contract['calls']['payeeSettings']>) =>
+      singleQuery(publicClient!, call.payeeSettings(...args).at(deployAddress)) as Promise<CallReturn<'payeeSettings'>>,
+    payeePeriodData: (...args: ExtractArgs<Contract['calls']['payeePeriodData']>) =>
+      singleQuery(publicClient!, call.payeePeriodData(...args).at(deployAddress)) as Promise<
+        CallReturn<'payeePeriodData'>
+      >,
+    payees: (...args: ExtractArgs<Contract['calls']['payees']>) =>
+      singleQuery(publicClient!, call.payees(...args).at(deployAddress)) as Promise<CallReturn<'payees'>>,
+    indexOfPayee: (...args: ExtractArgs<Contract['calls']['indexOfPayee']>) =>
+      singleQuery(publicClient!, call.indexOfPayee(...args).at(deployAddress)) as Promise<CallReturn<'indexOfPayee'>>,
+    numPayees: (...args: ExtractArgs<Contract['calls']['numPayees']>) =>
+      singleQuery(publicClient!, call.numPayees(...args).at(deployAddress)) as Promise<CallReturn<'numPayees'>>,
+    pendingPayees: (...args: ExtractArgs<Contract['calls']['pendingPayees']>) =>
+      singleQuery(publicClient!, call.pendingPayees(...args).at(deployAddress)) as Promise<CallReturn<'pendingPayees'>>,
+    whitelistAddr: (...args: ExtractArgs<Contract['calls']['whitelistAddr']>) =>
+      singleQuery(publicClient!, call.whitelistAddr(...args).at(deployAddress)) as Promise<CallReturn<'whitelistAddr'>>,
+    indexOfWhitelist: (...args: ExtractArgs<Contract['calls']['indexOfWhitelist']>) =>
+      singleQuery(publicClient!, call.indexOfWhitelist(...args).at(deployAddress)) as Promise<
+        CallReturn<'indexOfWhitelist'>
+      >,
+    numWhitelisted: (...args: ExtractArgs<Contract['calls']['numWhitelisted']>) =>
+      singleQuery(publicClient!, call.numWhitelisted(...args).at(deployAddress)) as Promise<
+        CallReturn<'numWhitelisted'>
       >,
     pendingWhitelist: (...args: ExtractArgs<Contract['calls']['pendingWhitelist']>) =>
       singleQuery(publicClient!, call.pendingWhitelist(...args).at(deployAddress)) as Promise<
         CallReturn<'pendingWhitelist'>
       >,
-    canTransferToAltOwnerWallets: (...args: ExtractArgs<Contract['calls']['canTransferToAltOwnerWallets']>) =>
-      singleQuery(publicClient!, call.canTransferToAltOwnerWallets(...args).at(deployAddress)) as Promise<
-        CallReturn<'canTransferToAltOwnerWallets'>
+    cheques: (...args: ExtractArgs<Contract['calls']['cheques']>) =>
+      singleQuery(publicClient!, call.cheques(...args).at(deployAddress)) as Promise<CallReturn<'cheques'>>,
+    chequeSettings: (...args: ExtractArgs<Contract['calls']['chequeSettings']>) =>
+      singleQuery(publicClient!, call.chequeSettings(...args).at(deployAddress)) as Promise<
+        CallReturn<'chequeSettings'>
       >,
-    canWalletBeAmbassador: (...args: ExtractArgs<Contract['calls']['canWalletBeAmbassador']>) =>
-      singleQuery(publicClient!, call.canWalletBeAmbassador(...args).at(deployAddress)) as Promise<
-        CallReturn<'canWalletBeAmbassador'>
+    chequePeriodData: (...args: ExtractArgs<Contract['calls']['chequePeriodData']>) =>
+      singleQuery(publicClient!, call.chequePeriodData(...args).at(deployAddress)) as Promise<
+        CallReturn<'chequePeriodData'>
       >,
-    ambassadorForwarder: (...args: ExtractArgs<Contract['calls']['ambassadorForwarder']>) =>
-      singleQuery(publicClient!, call.ambassadorForwarder(...args).at(deployAddress)) as Promise<
-        CallReturn<'ambassadorForwarder'>
+    numActiveCheques: (...args: ExtractArgs<Contract['calls']['numActiveCheques']>) =>
+      singleQuery(publicClient!, call.numActiveCheques(...args).at(deployAddress)) as Promise<
+        CallReturn<'numActiveCheques'>
       >,
-    myAmbassador: (...args: ExtractArgs<Contract['calls']['myAmbassador']>) =>
-      singleQuery(publicClient!, call.myAmbassador(...args).at(deployAddress)) as Promise<CallReturn<'myAmbassador'>>,
-    didMigrateIn: (...args: ExtractArgs<Contract['calls']['didMigrateIn']>) =>
-      singleQuery(publicClient!, call.didMigrateIn(...args).at(deployAddress)) as Promise<CallReturn<'didMigrateIn'>>,
-    didMigrateOut: (...args: ExtractArgs<Contract['calls']['didMigrateOut']>) =>
-      singleQuery(publicClient!, call.didMigrateOut(...args).at(deployAddress)) as Promise<CallReturn<'didMigrateOut'>>,
-    isVaultToken: (...args: ExtractArgs<Contract['calls']['isVaultToken']>) =>
-      singleQuery(publicClient!, call.isVaultToken(...args).at(deployAddress)) as Promise<CallReturn<'isVaultToken'>>,
-    vaultTokenAmounts: (...args: ExtractArgs<Contract['calls']['vaultTokenAmounts']>) =>
-      singleQuery(publicClient!, call.vaultTokenAmounts(...args).at(deployAddress)) as Promise<
-        CallReturn<'vaultTokenAmounts'>
+    globalManagerSettings: (...args: ExtractArgs<Contract['calls']['globalManagerSettings']>) =>
+      singleQuery(publicClient!, call.globalManagerSettings(...args).at(deployAddress)) as Promise<
+        CallReturn<'globalManagerSettings'>
       >,
-    depositedAmounts: (...args: ExtractArgs<Contract['calls']['depositedAmounts']>) =>
-      singleQuery(publicClient!, call.depositedAmounts(...args).at(deployAddress)) as Promise<
-        CallReturn<'depositedAmounts'>
+    globalPayeeSettings: (...args: ExtractArgs<Contract['calls']['globalPayeeSettings']>) =>
+      singleQuery(publicClient!, call.globalPayeeSettings(...args).at(deployAddress)) as Promise<
+        CallReturn<'globalPayeeSettings'>
       >,
-    ADDY_REGISTRY: (...args: ExtractArgs<Contract['calls']['ADDY_REGISTRY']>) =>
-      singleQuery(publicClient!, call.ADDY_REGISTRY(...args).at(deployAddress)) as Promise<CallReturn<'ADDY_REGISTRY'>>,
+    timeLock: (...args: ExtractArgs<Contract['calls']['timeLock']>) =>
+      singleQuery(publicClient!, call.timeLock(...args).at(deployAddress)) as Promise<CallReturn<'timeLock'>>,
+    isFrozen: (...args: ExtractArgs<Contract['calls']['isFrozen']>) =>
+      singleQuery(publicClient!, call.isFrozen(...args).at(deployAddress)) as Promise<CallReturn<'isFrozen'>>,
+    inEjectMode: (...args: ExtractArgs<Contract['calls']['inEjectMode']>) =>
+      singleQuery(publicClient!, call.inEjectMode(...args).at(deployAddress)) as Promise<CallReturn<'inEjectMode'>>,
+    groupId: (...args: ExtractArgs<Contract['calls']['groupId']>) =>
+      singleQuery(publicClient!, call.groupId(...args).at(deployAddress)) as Promise<CallReturn<'groupId'>>,
+    startingAgent: (...args: ExtractArgs<Contract['calls']['startingAgent']>) =>
+      singleQuery(publicClient!, call.startingAgent(...args).at(deployAddress)) as Promise<CallReturn<'startingAgent'>>,
+    didSetWallet: (...args: ExtractArgs<Contract['calls']['didSetWallet']>) =>
+      singleQuery(publicClient!, call.didSetWallet(...args).at(deployAddress)) as Promise<CallReturn<'didSetWallet'>>,
+    UNDY_HQ: (...args: ExtractArgs<Contract['calls']['UNDY_HQ']>) =>
+      singleQuery(publicClient!, call.UNDY_HQ(...args).at(deployAddress)) as Promise<CallReturn<'UNDY_HQ'>>,
+    WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) =>
+      singleQuery(publicClient!, call.WETH(...args).at(deployAddress)) as Promise<CallReturn<'WETH'>>,
+    ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) =>
+      singleQuery(publicClient!, call.ETH(...args).at(deployAddress)) as Promise<CallReturn<'ETH'>>,
+    MIN_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MIN_TIMELOCK']>) =>
+      singleQuery(publicClient!, call.MIN_TIMELOCK(...args).at(deployAddress)) as Promise<CallReturn<'MIN_TIMELOCK'>>,
+    MAX_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MAX_TIMELOCK']>) =>
+      singleQuery(publicClient!, call.MAX_TIMELOCK(...args).at(deployAddress)) as Promise<CallReturn<'MAX_TIMELOCK'>>,
 
     // Mutations
     changeOwnership: (...args: ExtractArgs<Contract['mutations']['changeOwnership']>) =>
@@ -2786,56 +5070,87 @@ export function toSdk(deployAddress: Address, publicClient?: PublicClient, walle
       mutate(walletClient!, mutation.confirmOwnershipChange, { address: deployAddress })(...args),
     cancelOwnershipChange: (...args: ExtractArgs<Contract['mutations']['cancelOwnershipChange']>) =>
       mutate(walletClient!, mutation.cancelOwnershipChange, { address: deployAddress })(...args),
-    setOwnershipChangeDelay: (...args: ExtractArgs<Contract['mutations']['setOwnershipChangeDelay']>) =>
-      mutate(walletClient!, mutation.setOwnershipChangeDelay, { address: deployAddress })(...args),
+    setOwnershipTimeLock: (...args: ExtractArgs<Contract['mutations']['setOwnershipTimeLock']>) =>
+      mutate(walletClient!, mutation.setOwnershipTimeLock, { address: deployAddress })(...args),
     setWallet: (...args: ExtractArgs<Contract['mutations']['setWallet']>) =>
       mutate(walletClient!, mutation.setWallet, { address: deployAddress })(...args),
-    handleSubscriptionsAndPermissions: (
-      ...args: ExtractArgs<Contract['mutations']['handleSubscriptionsAndPermissions']>
-    ) => mutate(walletClient!, mutation.handleSubscriptionsAndPermissions, { address: deployAddress })(...args),
-    updateYieldTrackingOnDeposit: (...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnDeposit']>) =>
-      mutate(walletClient!, mutation.updateYieldTrackingOnDeposit, { address: deployAddress })(...args),
-    updateYieldTrackingOnWithdrawal: (...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnWithdrawal']>) =>
-      mutate(walletClient!, mutation.updateYieldTrackingOnWithdrawal, { address: deployAddress })(...args),
-    updateYieldTrackingOnSwap: (...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnSwap']>) =>
-      mutate(walletClient!, mutation.updateYieldTrackingOnSwap, { address: deployAddress })(...args),
-    updateYieldTrackingOnEntry: (...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnEntry']>) =>
-      mutate(walletClient!, mutation.updateYieldTrackingOnEntry, { address: deployAddress })(...args),
-    updateYieldTrackingOnExit: (...args: ExtractArgs<Contract['mutations']['updateYieldTrackingOnExit']>) =>
-      mutate(walletClient!, mutation.updateYieldTrackingOnExit, { address: deployAddress })(...args),
-    startMigrationOut: (...args: ExtractArgs<Contract['mutations']['startMigrationOut']>) =>
-      mutate(walletClient!, mutation.startMigrationOut, { address: deployAddress })(...args),
-    finishMigrationIn: (...args: ExtractArgs<Contract['mutations']['finishMigrationIn']>) =>
-      mutate(walletClient!, mutation.finishMigrationIn, { address: deployAddress })(...args),
-    addOrModifyAgent: (...args: ExtractArgs<Contract['mutations']['addOrModifyAgent']>) =>
-      mutate(walletClient!, mutation.addOrModifyAgent, { address: deployAddress })(...args),
-    disableAgent: (...args: ExtractArgs<Contract['mutations']['disableAgent']>) =>
-      mutate(walletClient!, mutation.disableAgent, { address: deployAddress })(...args),
-    addLegoIdForAgent: (...args: ExtractArgs<Contract['mutations']['addLegoIdForAgent']>) =>
-      mutate(walletClient!, mutation.addLegoIdForAgent, { address: deployAddress })(...args),
-    addAssetForAgent: (...args: ExtractArgs<Contract['mutations']['addAssetForAgent']>) =>
-      mutate(walletClient!, mutation.addAssetForAgent, { address: deployAddress })(...args),
-    modifyAllowedActions: (...args: ExtractArgs<Contract['mutations']['modifyAllowedActions']>) =>
-      mutate(walletClient!, mutation.modifyAllowedActions, { address: deployAddress })(...args),
-    setCanTransferToAltOwnerWallets: (...args: ExtractArgs<Contract['mutations']['setCanTransferToAltOwnerWallets']>) =>
-      mutate(walletClient!, mutation.setCanTransferToAltOwnerWallets, { address: deployAddress })(...args),
-    addWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['addWhitelistAddr']>) =>
-      mutate(walletClient!, mutation.addWhitelistAddr, { address: deployAddress })(...args),
-    confirmWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['confirmWhitelistAddr']>) =>
-      mutate(walletClient!, mutation.confirmWhitelistAddr, { address: deployAddress })(...args),
+    checkManagerUsdLimitsAndUpdateData: (
+      ...args: ExtractArgs<Contract['mutations']['checkManagerUsdLimitsAndUpdateData']>
+    ) => mutate(walletClient!, mutation.checkManagerUsdLimitsAndUpdateData, { address: deployAddress })(...args),
+    checkRecipientLimitsAndUpdateData: (
+      ...args: ExtractArgs<Contract['mutations']['checkRecipientLimitsAndUpdateData']>
+    ) => mutate(walletClient!, mutation.checkRecipientLimitsAndUpdateData, { address: deployAddress })(...args),
+    validateCheque: (...args: ExtractArgs<Contract['mutations']['validateCheque']>) =>
+      mutate(walletClient!, mutation.validateCheque, { address: deployAddress })(...args),
+    addPendingWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['addPendingWhitelistAddr']>) =>
+      mutate(walletClient!, mutation.addPendingWhitelistAddr, { address: deployAddress })(...args),
     cancelPendingWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['cancelPendingWhitelistAddr']>) =>
       mutate(walletClient!, mutation.cancelPendingWhitelistAddr, { address: deployAddress })(...args),
+    confirmWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['confirmWhitelistAddr']>) =>
+      mutate(walletClient!, mutation.confirmWhitelistAddr, { address: deployAddress })(...args),
+    addWhitelistAddrViaMigrator: (...args: ExtractArgs<Contract['mutations']['addWhitelistAddrViaMigrator']>) =>
+      mutate(walletClient!, mutation.addWhitelistAddrViaMigrator, { address: deployAddress })(...args),
     removeWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['removeWhitelistAddr']>) =>
       mutate(walletClient!, mutation.removeWhitelistAddr, { address: deployAddress })(...args),
-    setReserveAsset: (...args: ExtractArgs<Contract['mutations']['setReserveAsset']>) =>
-      mutate(walletClient!, mutation.setReserveAsset, { address: deployAddress })(...args),
-    setManyReserveAssets: (...args: ExtractArgs<Contract['mutations']['setManyReserveAssets']>) =>
-      mutate(walletClient!, mutation.setManyReserveAssets, { address: deployAddress })(...args),
-    setAmbassadorForwarder: (...args: ExtractArgs<Contract['mutations']['setAmbassadorForwarder']>) =>
-      mutate(walletClient!, mutation.setAmbassadorForwarder, { address: deployAddress })(...args),
-    setCanWalletBeAmbassador: (...args: ExtractArgs<Contract['mutations']['setCanWalletBeAmbassador']>) =>
-      mutate(walletClient!, mutation.setCanWalletBeAmbassador, { address: deployAddress })(...args),
-    recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) =>
-      mutate(walletClient!, mutation.recoverFunds, { address: deployAddress })(...args),
+    addManager: (...args: ExtractArgs<Contract['mutations']['addManager']>) =>
+      mutate(walletClient!, mutation.addManager, { address: deployAddress })(...args),
+    updateManager: (...args: ExtractArgs<Contract['mutations']['updateManager']>) =>
+      mutate(walletClient!, mutation.updateManager, { address: deployAddress })(...args),
+    removeManager: (...args: ExtractArgs<Contract['mutations']['removeManager']>) =>
+      mutate(walletClient!, mutation.removeManager, { address: deployAddress })(...args),
+    setGlobalManagerSettings: (...args: ExtractArgs<Contract['mutations']['setGlobalManagerSettings']>) =>
+      mutate(walletClient!, mutation.setGlobalManagerSettings, { address: deployAddress })(...args),
+    addPayee: (...args: ExtractArgs<Contract['mutations']['addPayee']>) =>
+      mutate(walletClient!, mutation.addPayee, { address: deployAddress })(...args),
+    updatePayee: (...args: ExtractArgs<Contract['mutations']['updatePayee']>) =>
+      mutate(walletClient!, mutation.updatePayee, { address: deployAddress })(...args),
+    removePayee: (...args: ExtractArgs<Contract['mutations']['removePayee']>) =>
+      mutate(walletClient!, mutation.removePayee, { address: deployAddress })(...args),
+    setGlobalPayeeSettings: (...args: ExtractArgs<Contract['mutations']['setGlobalPayeeSettings']>) =>
+      mutate(walletClient!, mutation.setGlobalPayeeSettings, { address: deployAddress })(...args),
+    addPendingPayee: (...args: ExtractArgs<Contract['mutations']['addPendingPayee']>) =>
+      mutate(walletClient!, mutation.addPendingPayee, { address: deployAddress })(...args),
+    confirmPendingPayee: (...args: ExtractArgs<Contract['mutations']['confirmPendingPayee']>) =>
+      mutate(walletClient!, mutation.confirmPendingPayee, { address: deployAddress })(...args),
+    cancelPendingPayee: (...args: ExtractArgs<Contract['mutations']['cancelPendingPayee']>) =>
+      mutate(walletClient!, mutation.cancelPendingPayee, { address: deployAddress })(...args),
+    createCheque: (...args: ExtractArgs<Contract['mutations']['createCheque']>) =>
+      mutate(walletClient!, mutation.createCheque, { address: deployAddress })(...args),
+    cancelCheque: (...args: ExtractArgs<Contract['mutations']['cancelCheque']>) =>
+      mutate(walletClient!, mutation.cancelCheque, { address: deployAddress })(...args),
+    setChequeSettings: (...args: ExtractArgs<Contract['mutations']['setChequeSettings']>) =>
+      mutate(walletClient!, mutation.setChequeSettings, { address: deployAddress })(...args),
+    updateAssetData: (...args: ExtractArgs<Contract['mutations']['updateAssetData']>) =>
+      mutate(walletClient!, mutation.updateAssetData, { address: deployAddress })(...args),
+    updateAllAssetData: (...args: ExtractArgs<Contract['mutations']['updateAllAssetData']>) =>
+      mutate(walletClient!, mutation.updateAllAssetData, { address: deployAddress })(...args),
+    removeTrialFunds: (...args: ExtractArgs<Contract['mutations']['removeTrialFunds']>) =>
+      mutate(walletClient!, mutation.removeTrialFunds, { address: deployAddress })(...args),
+    migrateFunds: (...args: ExtractArgs<Contract['mutations']['migrateFunds']>) =>
+      mutate(walletClient!, mutation.migrateFunds, { address: deployAddress })(...args),
+    preparePayment: (...args: ExtractArgs<Contract['mutations']['preparePayment']>) =>
+      mutate(walletClient!, mutation.preparePayment, { address: deployAddress })(...args),
+    deregisterAsset: (...args: ExtractArgs<Contract['mutations']['deregisterAsset']>) =>
+      mutate(walletClient!, mutation.deregisterAsset, { address: deployAddress })(...args),
+    recoverNft: (...args: ExtractArgs<Contract['mutations']['recoverNft']>) =>
+      mutate(walletClient!, mutation.recoverNft, { address: deployAddress })(...args),
+    setFrozen: (...args: ExtractArgs<Contract['mutations']['setFrozen']>) =>
+      mutate(walletClient!, mutation.setFrozen, { address: deployAddress })(...args),
+    setEjectionMode: (...args: ExtractArgs<Contract['mutations']['setEjectionMode']>) =>
+      mutate(walletClient!, mutation.setEjectionMode, { address: deployAddress })(...args),
+    setLegoAccessForAction: (...args: ExtractArgs<Contract['mutations']['setLegoAccessForAction']>) =>
+      mutate(walletClient!, mutation.setLegoAccessForAction, { address: deployAddress })(...args),
+    setKernel: (...args: ExtractArgs<Contract['mutations']['setKernel']>) =>
+      mutate(walletClient!, mutation.setKernel, { address: deployAddress })(...args),
+    setSentinel: (...args: ExtractArgs<Contract['mutations']['setSentinel']>) =>
+      mutate(walletClient!, mutation.setSentinel, { address: deployAddress })(...args),
+    setHighCommand: (...args: ExtractArgs<Contract['mutations']['setHighCommand']>) =>
+      mutate(walletClient!, mutation.setHighCommand, { address: deployAddress })(...args),
+    setPaymaster: (...args: ExtractArgs<Contract['mutations']['setPaymaster']>) =>
+      mutate(walletClient!, mutation.setPaymaster, { address: deployAddress })(...args),
+    setChequeBook: (...args: ExtractArgs<Contract['mutations']['setChequeBook']>) =>
+      mutate(walletClient!, mutation.setChequeBook, { address: deployAddress })(...args),
+    setMigrator: (...args: ExtractArgs<Contract['mutations']['setMigrator']>) =>
+      mutate(walletClient!, mutation.setMigrator, { address: deployAddress })(...args),
   }
 }
