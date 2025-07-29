@@ -1,7 +1,6 @@
 import { Address, PublicClient, WalletClient } from 'viem'
 
 import createSdk, { SDK } from './contracts/sdk.js'
-import getLegacyContracts, { LegacyContractsCollection } from './getLegacyContracts.js'
 import { getSwapInstructionsAmountIn, getSwapInstructionsAmountOut } from './getSwapInstructions.js'
 
 export * from './contracts/index.js'
@@ -74,7 +73,6 @@ export type ContractsCollection = {
       includeLegoIds?: bigint[]
     }) => ReturnType<typeof getSwapInstructionsAmountIn>
   }
-  _legacy: LegacyContractsCollection
 }
 
 export default function getContracts(publicClient: PublicClient, walletClient?: WalletClient): ContractsCollection {
@@ -148,9 +146,5 @@ export default function getContracts(publicClient: PublicClient, walletClient?: 
         includeLegoIds?: bigint[]
       }) => getSwapInstructionsAmountIn(publicClient, walletClient!.account!.address!, payload),
     },
-    /**
-     * @deprecated This version is for legacy compatibility.
-     */
-    _legacy: getLegacyContracts(contracts),
   }
 }

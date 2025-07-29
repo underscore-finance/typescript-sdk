@@ -25,7 +25,6 @@ import * as Kernel from './Kernel.js'
 import * as Ledger from './Ledger.js'
 import * as LegoBook from './LegoBook.js'
 import * as LegoTools from './LegoTools.js'
-import * as LegoUniswapV0_2 from './LegoUniswapV0_2.js'
 import * as LootDistributor from './LootDistributor.js'
 import * as Migrator from './Migrator.js'
 import * as MissionControl from './MissionControl.js'
@@ -43,44 +42,6 @@ import * as UniswapV3 from './UniswapV3.js'
 import * as UserWallet from './UserWallet.js'
 import * as UserWalletConfig from './UserWalletConfig.js'
 import * as WalletBackpack from './WalletBackpack.js'
-import * as v0_1_AddyRegistry from './v0_1_AddyRegistry.js'
-import * as v0_1_Agent from './v0_1_Agent.js'
-import * as v0_1_AgentFactory from './v0_1_AgentFactory.js'
-import * as v0_1_UserWallet from './v0_1_UserWallet.js'
-import * as v0_1_UserWalletConfig from './v0_1_UserWalletConfig.js'
-import * as v0_2_AddyRegistry from './v0_2_AddyRegistry.js'
-import * as v0_2_Agent from './v0_2_Agent.js'
-import * as v0_2_AgentFactory from './v0_2_AgentFactory.js'
-import * as v0_2_UserWallet from './v0_2_UserWallet.js'
-import * as v0_2_UserWalletConfig from './v0_2_UserWalletConfig.js'
-import * as v0_3_AddyRegistry from './v0_3_AddyRegistry.js'
-import * as v0_3_Agent from './v0_3_Agent.js'
-import * as v0_3_AgentFactory from './v0_3_AgentFactory.js'
-import * as v0_3_ChainlinkFeeds from './v0_3_ChainlinkFeeds.js'
-import * as v0_3_LegoAaveV3 from './v0_3_LegoAaveV3.js'
-import * as v0_3_LegoAeroClassic from './v0_3_LegoAeroClassic.js'
-import * as v0_3_LegoAeroSlipstream from './v0_3_LegoAeroSlipstream.js'
-import * as v0_3_LegoCommon from './v0_3_LegoCommon.js'
-import * as v0_3_LegoCompoundV3 from './v0_3_LegoCompoundV3.js'
-import * as v0_3_LegoCredit from './v0_3_LegoCredit.js'
-import * as v0_3_LegoCurve from './v0_3_LegoCurve.js'
-import * as v0_3_LegoDex from './v0_3_LegoDex.js'
-import * as v0_3_LegoEuler from './v0_3_LegoEuler.js'
-import * as v0_3_LegoFluid from './v0_3_LegoFluid.js'
-import * as v0_3_LegoHelper from './v0_3_LegoHelper.js'
-import * as v0_3_LegoMoonwell from './v0_3_LegoMoonwell.js'
-import * as v0_3_LegoMorpho from './v0_3_LegoMorpho.js'
-import * as v0_3_LegoRegistry from './v0_3_LegoRegistry.js'
-import * as v0_3_LegoSky from './v0_3_LegoSky.js'
-import * as v0_3_LegoUniswapV3 from './v0_3_LegoUniswapV3.js'
-import * as v0_3_LegoYield from './v0_3_LegoYield.js'
-import * as v0_3_OracleParser from './v0_3_OracleParser.js'
-import * as v0_3_OracleRegistry from './v0_3_OracleRegistry.js'
-import * as v0_3_PriceSheets from './v0_3_PriceSheets.js'
-import * as v0_3_PythFeeds from './v0_3_PythFeeds.js'
-import * as v0_3_StorkFeeds from './v0_3_StorkFeeds.js'
-import * as v0_3_UserWallet from './v0_3_UserWallet.js'
-import * as v0_3_UserWalletConfig from './v0_3_UserWalletConfig.js'
 
 export type SDK = {
   AaveV3: AaveV3.SDK
@@ -103,7 +64,6 @@ export type SDK = {
   Ledger: Ledger.SDK
   LegoBook: LegoBook.SDK
   LegoTools: LegoTools.SDK
-  LegoUniswapV0_2: LegoUniswapV0_2.SDK
   LootDistributor: LootDistributor.SDK
   Migrator: Migrator.SDK
   MissionControl: MissionControl.SDK
@@ -121,46 +81,6 @@ export type SDK = {
   UserWallet: (address: `0x${string}`) => UserWallet.SDK
   UserWalletConfig: (address: `0x${string}`) => UserWalletConfig.SDK
   WalletBackpack: WalletBackpack.SDK
-  v0_1_AddyRegistry: v0_1_AddyRegistry.SDK
-  v0_1_Agent: (address: `0x${string}`) => v0_1_Agent.SDK
-  v0_1_AgentFactory: v0_1_AgentFactory.SDK
-  v0_1_UserWallet: (address: `0x${string}`) => v0_1_UserWallet.SDK
-  v0_1_UserWalletConfig: (address: `0x${string}`) => v0_1_UserWalletConfig.SDK
-  v0_2_AddyRegistry: v0_2_AddyRegistry.SDK
-  v0_2_Agent: (address: `0x${string}`) => v0_2_Agent.SDK
-  v0_2_AgentFactory: v0_2_AgentFactory.SDK
-  v0_2_UserWallet: (address: `0x${string}`) => v0_2_UserWallet.SDK
-  v0_2_UserWalletConfig: (address: `0x${string}`) => v0_2_UserWalletConfig.SDK
-  v0_3_AddyRegistry: v0_3_AddyRegistry.SDK
-  v0_3_Agent: (address: `0x${string}`) => v0_3_Agent.SDK
-  v0_3_AgentFactory: v0_3_AgentFactory.SDK
-  v0_3_ChainlinkFeeds: v0_3_ChainlinkFeeds.SDK
-  v0_3_LegoAaveV3: v0_3_LegoAaveV3.SDK
-  v0_3_LegoAeroClassic: v0_3_LegoAeroClassic.SDK
-  v0_3_LegoAeroSlipstream: v0_3_LegoAeroSlipstream.SDK
-  v0_3_LegoCommon: (address: `0x${string}`) => v0_3_LegoCommon.SDK
-  v0_3_LegoCompoundV3: v0_3_LegoCompoundV3.SDK
-  v0_3_LegoCredit: (address: `0x${string}`) => v0_3_LegoCredit.SDK
-  v0_3_LegoCurve: v0_3_LegoCurve.SDK
-  v0_3_LegoDex: (address: `0x${string}`) => v0_3_LegoDex.SDK
-  v0_3_LegoEuler: v0_3_LegoEuler.SDK
-  v0_3_LegoFluid: v0_3_LegoFluid.SDK
-  v0_3_LegoHelper: v0_3_LegoHelper.SDK
-  v0_3_LegoMoonwell: v0_3_LegoMoonwell.SDK
-  v0_3_LegoMorpho: v0_3_LegoMorpho.SDK
-  v0_3_LegoRegistry: v0_3_LegoRegistry.SDK
-  v0_3_LegoSky: v0_3_LegoSky.SDK
-  v0_3_LegoUniswapV3: v0_3_LegoUniswapV3.SDK
-  v0_3_LegoYield: (address: `0x${string}`) => v0_3_LegoYield.SDK
-  v0_3_OracleParser: (address: `0x${string}`) => v0_3_OracleParser.SDK
-  v0_3_OracleRegistry: v0_3_OracleRegistry.SDK
-  v0_3_PriceSheets: v0_3_PriceSheets.SDK
-  v0_3_PythFeeds: v0_3_PythFeeds.SDK
-  v0_3_StorkFeeds: v0_3_StorkFeeds.SDK
-  v0_3_UserWallet: (address: `0x${string}`) => v0_3_UserWallet.SDK
-  v0_3_UserWalletConfig: (address: `0x${string}`) => v0_3_UserWalletConfig.SDK
-  publicClient?: PublicClient
-  walletClient?: WalletClient
 }
 
 export default function createSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
@@ -185,7 +105,6 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     Ledger: Ledger.toSdk(publicClient, walletClient),
     LegoBook: LegoBook.toSdk(publicClient, walletClient),
     LegoTools: LegoTools.toSdk(publicClient, walletClient),
-    LegoUniswapV0_2: LegoUniswapV0_2.toSdk(publicClient, walletClient),
     LootDistributor: LootDistributor.toSdk(publicClient, walletClient),
     Migrator: Migrator.toSdk(publicClient, walletClient),
     MissionControl: MissionControl.toSdk(publicClient, walletClient),
@@ -203,45 +122,5 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     UserWallet: (address: `0x${string}`) => UserWallet.toSdk(address, publicClient, walletClient),
     UserWalletConfig: (address: `0x${string}`) => UserWalletConfig.toSdk(address, publicClient, walletClient),
     WalletBackpack: WalletBackpack.toSdk(publicClient, walletClient),
-    v0_1_AddyRegistry: v0_1_AddyRegistry.toSdk(publicClient, walletClient),
-    v0_1_Agent: (address: `0x${string}`) => v0_1_Agent.toSdk(address, publicClient, walletClient),
-    v0_1_AgentFactory: v0_1_AgentFactory.toSdk(publicClient, walletClient),
-    v0_1_UserWallet: (address: `0x${string}`) => v0_1_UserWallet.toSdk(address, publicClient, walletClient),
-    v0_1_UserWalletConfig: (address: `0x${string}`) => v0_1_UserWalletConfig.toSdk(address, publicClient, walletClient),
-    v0_2_AddyRegistry: v0_2_AddyRegistry.toSdk(publicClient, walletClient),
-    v0_2_Agent: (address: `0x${string}`) => v0_2_Agent.toSdk(address, publicClient, walletClient),
-    v0_2_AgentFactory: v0_2_AgentFactory.toSdk(publicClient, walletClient),
-    v0_2_UserWallet: (address: `0x${string}`) => v0_2_UserWallet.toSdk(address, publicClient, walletClient),
-    v0_2_UserWalletConfig: (address: `0x${string}`) => v0_2_UserWalletConfig.toSdk(address, publicClient, walletClient),
-    v0_3_AddyRegistry: v0_3_AddyRegistry.toSdk(publicClient, walletClient),
-    v0_3_Agent: (address: `0x${string}`) => v0_3_Agent.toSdk(address, publicClient, walletClient),
-    v0_3_AgentFactory: v0_3_AgentFactory.toSdk(publicClient, walletClient),
-    v0_3_ChainlinkFeeds: v0_3_ChainlinkFeeds.toSdk(publicClient, walletClient),
-    v0_3_LegoAaveV3: v0_3_LegoAaveV3.toSdk(publicClient, walletClient),
-    v0_3_LegoAeroClassic: v0_3_LegoAeroClassic.toSdk(publicClient, walletClient),
-    v0_3_LegoAeroSlipstream: v0_3_LegoAeroSlipstream.toSdk(publicClient, walletClient),
-    v0_3_LegoCommon: (address: `0x${string}`) => v0_3_LegoCommon.toSdk(address, publicClient, walletClient),
-    v0_3_LegoCompoundV3: v0_3_LegoCompoundV3.toSdk(publicClient, walletClient),
-    v0_3_LegoCredit: (address: `0x${string}`) => v0_3_LegoCredit.toSdk(address, publicClient, walletClient),
-    v0_3_LegoCurve: v0_3_LegoCurve.toSdk(publicClient, walletClient),
-    v0_3_LegoDex: (address: `0x${string}`) => v0_3_LegoDex.toSdk(address, publicClient, walletClient),
-    v0_3_LegoEuler: v0_3_LegoEuler.toSdk(publicClient, walletClient),
-    v0_3_LegoFluid: v0_3_LegoFluid.toSdk(publicClient, walletClient),
-    v0_3_LegoHelper: v0_3_LegoHelper.toSdk(publicClient, walletClient),
-    v0_3_LegoMoonwell: v0_3_LegoMoonwell.toSdk(publicClient, walletClient),
-    v0_3_LegoMorpho: v0_3_LegoMorpho.toSdk(publicClient, walletClient),
-    v0_3_LegoRegistry: v0_3_LegoRegistry.toSdk(publicClient, walletClient),
-    v0_3_LegoSky: v0_3_LegoSky.toSdk(publicClient, walletClient),
-    v0_3_LegoUniswapV3: v0_3_LegoUniswapV3.toSdk(publicClient, walletClient),
-    v0_3_LegoYield: (address: `0x${string}`) => v0_3_LegoYield.toSdk(address, publicClient, walletClient),
-    v0_3_OracleParser: (address: `0x${string}`) => v0_3_OracleParser.toSdk(address, publicClient, walletClient),
-    v0_3_OracleRegistry: v0_3_OracleRegistry.toSdk(publicClient, walletClient),
-    v0_3_PriceSheets: v0_3_PriceSheets.toSdk(publicClient, walletClient),
-    v0_3_PythFeeds: v0_3_PythFeeds.toSdk(publicClient, walletClient),
-    v0_3_StorkFeeds: v0_3_StorkFeeds.toSdk(publicClient, walletClient),
-    v0_3_UserWallet: (address: `0x${string}`) => v0_3_UserWallet.toSdk(address, publicClient, walletClient),
-    v0_3_UserWalletConfig: (address: `0x${string}`) => v0_3_UserWalletConfig.toSdk(address, publicClient, walletClient),
-    publicClient,
-    walletClient,
   }
 }
