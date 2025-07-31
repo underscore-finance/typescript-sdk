@@ -8,7 +8,6 @@ type DeepMutable<T> = {
 
 export async function getSwapInstructionsAmountOut(
   publicClient: PublicClient,
-  walletAddress: Address,
   payload: {
     tokenIn: Address
     tokenOut: Address
@@ -20,7 +19,7 @@ export async function getSwapInstructionsAmountOut(
   const { tokenIn, tokenOut, amountIn, slippage, includeLegoIds } = payload
 
   const instructions = await publicClient.simulateContract({
-    address: walletAddress,
+    address: LegoTools.deployAddress!,
     abi: LegoTools.abi,
     functionName: 'getRoutesAndSwapInstructionsAmountOut',
     args: [tokenIn, tokenOut, amountIn, slippage, includeLegoIds ?? []],
@@ -31,7 +30,6 @@ export async function getSwapInstructionsAmountOut(
 
 export async function getSwapInstructionsAmountIn(
   publicClient: PublicClient,
-  walletAddress: Address,
   payload: {
     tokenIn: Address
     tokenOut: Address
@@ -44,7 +42,7 @@ export async function getSwapInstructionsAmountIn(
   const { tokenIn, tokenOut, amountOut, amountInAvailable, slippage, includeLegoIds } = payload
 
   const instructions = await publicClient.simulateContract({
-    address: walletAddress,
+    address: LegoTools.deployAddress!,
     abi: LegoTools.abi,
     functionName: 'getRoutesAndSwapInstructionsAmountIn',
     args: [tokenIn, tokenOut, amountOut, amountInAvailable, slippage, includeLegoIds ?? []],

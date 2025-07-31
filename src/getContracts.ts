@@ -137,7 +137,7 @@ export default function getContracts(publicClient: PublicClient, walletClient?: 
         amountIn: bigint
         slippage: bigint
         includeLegoIds?: bigint[]
-      }) => getSwapInstructionsAmountOut(publicClient, walletClient!.account!.address!, payload),
+      }) => getSwapInstructionsAmountOut(publicClient, payload),
       getSwapInstructionsAmountIn: (payload: {
         tokenIn: Address
         tokenOut: Address
@@ -145,7 +145,7 @@ export default function getContracts(publicClient: PublicClient, walletClient?: 
         amountInAvailable: bigint
         slippage: bigint
         includeLegoIds?: bigint[]
-      }) => getSwapInstructionsAmountIn(publicClient, walletClient!.account!.address!, payload),
+      }) => getSwapInstructionsAmountIn(publicClient, payload),
       SignatureHelper: contracts.SignatureHelper,
     },
   }
