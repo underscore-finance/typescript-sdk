@@ -33,6 +33,7 @@ import * as Morpho from './Morpho.js'
 import * as Paymaster from './Paymaster.js'
 import * as RipeLego from './RipeLego.js'
 import * as Sentinel from './Sentinel.js'
+import * as SignatureHelper from './SignatureHelper.js'
 import * as Switchboard from './Switchboard.js'
 import * as SwitchboardAlpha from './SwitchboardAlpha.js'
 import * as SwitchboardBravo from './SwitchboardBravo.js'
@@ -72,6 +73,7 @@ export type SDK = {
   Paymaster: Paymaster.SDK
   RipeLego: RipeLego.SDK
   Sentinel: Sentinel.SDK
+  SignatureHelper: SignatureHelper.SDK
   Switchboard: Switchboard.SDK
   SwitchboardAlpha: SwitchboardAlpha.SDK
   SwitchboardBravo: SwitchboardBravo.SDK
@@ -113,6 +115,7 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     Paymaster: Paymaster.toSdk(publicClient, walletClient),
     RipeLego: RipeLego.toSdk(publicClient, walletClient),
     Sentinel: Sentinel.toSdk(publicClient, walletClient),
+    SignatureHelper: SignatureHelper.toSdk(publicClient, walletClient),
     Switchboard: Switchboard.toSdk(publicClient, walletClient),
     SwitchboardAlpha: SwitchboardAlpha.toSdk(publicClient, walletClient),
     SwitchboardBravo: SwitchboardBravo.toSdk(publicClient, walletClient),
