@@ -2214,7 +2214,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x2edb54bE8c4F6Cde402CAAe86A809D434b3AFC66'
+export const deployAddress: Address | undefined = '0x3F8aE1C72a2Ca223CAe3f3e3312DBee55C4C6d5F'
 
 export type Contract = {
   calls: {
