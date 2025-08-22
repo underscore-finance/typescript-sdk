@@ -73,6 +73,7 @@ export type ContractsCollection = {
       includeLegoIds?: bigint[]
     }) => ReturnType<typeof getSwapInstructionsAmountIn>
     SignatureHelper: SDK['SignatureHelper']
+    SignatureHelperV1: SDK['SignatureHelperV1']
   }
 }
 
@@ -147,6 +148,7 @@ export default function getContracts(publicClient: PublicClient, walletClient?: 
         includeLegoIds?: bigint[]
       }) => getSwapInstructionsAmountIn(publicClient, payload),
       SignatureHelper: contracts.SignatureHelper,
+      SignatureHelperV1: contracts.SignatureHelperV1,
     },
   }
 }
