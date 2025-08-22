@@ -11,7 +11,61 @@ type Address = `0x${string}`
 
 export const abi = [
   {
-    name: 'TxFeePaid',
+    name: 'TransactionFeePaid',
+    inputs: [
+      {
+        name: 'user',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'asset',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'feeAmount',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'action',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'YieldPerformanceFeePaid',
+    inputs: [
+      {
+        name: 'user',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'asset',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'feeAmount',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'yieldRealized',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'AmbassadorTxFeePaid',
     inputs: [
       {
         name: 'asset',
@@ -197,6 +251,18 @@ export const abi = [
       },
       {
         name: 'amount',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'RipeLockDurationSet',
+    inputs: [
+      {
+        name: 'lockDuration',
         type: 'uint256',
         indexed: false,
       },
@@ -544,6 +610,27 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
+    name: 'getClaimableLootForAsset',
+    inputs: [
+      {
+        name: '_user',
+        type: 'address',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     name: 'getTotalClaimableAssets',
     inputs: [
       {
@@ -669,6 +756,23 @@ export const abi = [
     stateMutability: 'nonpayable',
     type: 'function',
     name: 'claimDepositRewards',
+    inputs: [
+      {
+        name: '_user',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getClaimableDepositRewards',
     inputs: [
       {
         name: '_user',
@@ -999,6 +1103,18 @@ export const abi = [
     ],
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setRipeLockDuration',
+    inputs: [
+      {
+        name: '_ripeLockDuration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [],
+  },
+  {
     stateMutability: 'view',
     type: 'function',
     name: 'lastClaim',
@@ -1135,6 +1251,42 @@ export const abi = [
     ],
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'ripeLockDuration',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'RIPE_TOKEN',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'RIPE_REGISTRY',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'constructor',
     inputs: [
@@ -1142,12 +1294,24 @@ export const abi = [
         name: '_undyHq',
         type: 'address',
       },
+      {
+        name: '_ripeToken',
+        type: 'address',
+      },
+      {
+        name: '_ripeRegistry',
+        type: 'address',
+      },
+      {
+        name: '_ripeLockDuration',
+        type: 'uint256',
+      },
     ],
     outputs: [],
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xEdcA7eD2248928349Fb9c9289B48471BbDDDee87'
+export const deployAddress: Address | undefined = '0xa0A342329D2dDbc1a3b8Fa791223e1eBD61fB30e'
 
 export type Contract = {
   calls: {
@@ -1167,9 +1331,11 @@ export type Contract = {
     getUndyHq: () => Promise<`0x${string}`>
     canMintUndy: () => Promise<boolean>
     isPaused: () => Promise<boolean>
+    getClaimableLootForAsset: (user: `0x${string}`, asset: `0x${string}`) => Promise<bigint>
     getTotalClaimableAssets: (user: `0x${string}`) => Promise<bigint>
     getLatestDepositPoints: (usdValue: bigint, lastUpdate: bigint) => Promise<bigint>
     isValidWalletConfig: (wallet: `0x${string}`, caller: `0x${string}`) => Promise<boolean>
+    getClaimableDepositRewards: (user: `0x${string}`) => Promise<bigint>
     getSwapFee: (
       user: `0x${string}`,
       tokenIn: `0x${string}`,
@@ -1200,6 +1366,9 @@ export type Contract = {
     indexOfClaimableAsset: (arg0: `0x${string}`, arg1: `0x${string}`) => Promise<bigint>
     numClaimableAssets: (arg0: `0x${string}`) => Promise<bigint>
     depositRewards: () => Promise<{ asset: `0x${string}`; amount: bigint }>
+    ripeLockDuration: () => Promise<bigint>
+    RIPE_TOKEN: () => Promise<`0x${string}`>
+    RIPE_REGISTRY: () => Promise<`0x${string}`>
   }
   mutations: {
     pause: (shouldPause: boolean) => Promise<void>
@@ -1228,9 +1397,17 @@ export type Contract = {
     addDepositRewards: (asset: `0x${string}`, amount: bigint) => Promise<void>
     recoverDepositRewards: (recipient: `0x${string}`) => Promise<void>
     claimAllLoot: (user: `0x${string}`) => Promise<boolean>
+    setRipeLockDuration: (ripeLockDuration: bigint) => Promise<void>
   }
   events: {
-    TxFeePaid: (
+    TransactionFeePaid: (user: `0x${string}`, asset: `0x${string}`, feeAmount: bigint, action: bigint) => Promise<void>
+    YieldPerformanceFeePaid: (
+      user: `0x${string}`,
+      asset: `0x${string}`,
+      feeAmount: bigint,
+      yieldRealized: bigint,
+    ) => Promise<void>
+    AmbassadorTxFeePaid: (
       asset: `0x${string}`,
       totalFee: bigint,
       ambassadorFeeRatio: bigint,
@@ -1261,6 +1438,7 @@ export type Contract = {
       remainingRewards: bigint,
     ) => Promise<void>
     DepositRewardsRecovered: (asset: `0x${string}`, recipient: `0x${string}`, amount: bigint) => Promise<void>
+    RipeLockDurationSet: (lockDuration: bigint) => Promise<void>
     DepartmentPauseModified: (isPaused: boolean) => Promise<void>
     DepartmentFundsRecovered: (asset: `0x${string}`, recipient: `0x${string}`, balance: bigint) => Promise<void>
   }
@@ -1330,12 +1508,16 @@ export const call: CallType = {
   getUndyHq: (...args: ExtractArgs<Contract['calls']['getUndyHq']>) => getRequest('getUndyHq', args),
   canMintUndy: (...args: ExtractArgs<Contract['calls']['canMintUndy']>) => getRequest('canMintUndy', args),
   isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) => getRequest('isPaused', args),
+  getClaimableLootForAsset: (...args: ExtractArgs<Contract['calls']['getClaimableLootForAsset']>) =>
+    getRequest('getClaimableLootForAsset', args),
   getTotalClaimableAssets: (...args: ExtractArgs<Contract['calls']['getTotalClaimableAssets']>) =>
     getRequest('getTotalClaimableAssets', args),
   getLatestDepositPoints: (...args: ExtractArgs<Contract['calls']['getLatestDepositPoints']>) =>
     getRequest('getLatestDepositPoints', args),
   isValidWalletConfig: (...args: ExtractArgs<Contract['calls']['isValidWalletConfig']>) =>
     getRequest('isValidWalletConfig', args),
+  getClaimableDepositRewards: (...args: ExtractArgs<Contract['calls']['getClaimableDepositRewards']>) =>
+    getRequest('getClaimableDepositRewards', args),
   getSwapFee: (...args: ExtractArgs<Contract['calls']['getSwapFee']>) => getRequest('getSwapFee', args),
   getRewardsFee: (...args: ExtractArgs<Contract['calls']['getRewardsFee']>) => getRequest('getRewardsFee', args),
   validateCanClaimLoot: (...args: ExtractArgs<Contract['calls']['validateCanClaimLoot']>) =>
@@ -1352,6 +1534,10 @@ export const call: CallType = {
   numClaimableAssets: (...args: ExtractArgs<Contract['calls']['numClaimableAssets']>) =>
     getRequest('numClaimableAssets', args),
   depositRewards: (...args: ExtractArgs<Contract['calls']['depositRewards']>) => getRequest('depositRewards', args),
+  ripeLockDuration: (...args: ExtractArgs<Contract['calls']['ripeLockDuration']>) =>
+    getRequest('ripeLockDuration', args),
+  RIPE_TOKEN: (...args: ExtractArgs<Contract['calls']['RIPE_TOKEN']>) => getRequest('RIPE_TOKEN', args),
+  RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => getRequest('RIPE_REGISTRY', args),
 }
 
 export type Mutations = keyof Contract['mutations']
@@ -1388,6 +1574,7 @@ export const mutation: {
   addDepositRewards: getMutation('addDepositRewards'),
   recoverDepositRewards: getMutation('recoverDepositRewards'),
   claimAllLoot: getMutation('claimAllLoot'),
+  setRipeLockDuration: getMutation('setRipeLockDuration'),
 }
 
 export type SDK = {
@@ -1397,6 +1584,9 @@ export type SDK = {
   getUndyHq: (...args: ExtractArgs<Contract['calls']['getUndyHq']>) => Promise<CallReturn<'getUndyHq'>>
   canMintUndy: (...args: ExtractArgs<Contract['calls']['canMintUndy']>) => Promise<CallReturn<'canMintUndy'>>
   isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) => Promise<CallReturn<'isPaused'>>
+  getClaimableLootForAsset: (
+    ...args: ExtractArgs<Contract['calls']['getClaimableLootForAsset']>
+  ) => Promise<CallReturn<'getClaimableLootForAsset'>>
   getTotalClaimableAssets: (
     ...args: ExtractArgs<Contract['calls']['getTotalClaimableAssets']>
   ) => Promise<CallReturn<'getTotalClaimableAssets'>>
@@ -1406,6 +1596,9 @@ export type SDK = {
   isValidWalletConfig: (
     ...args: ExtractArgs<Contract['calls']['isValidWalletConfig']>
   ) => Promise<CallReturn<'isValidWalletConfig'>>
+  getClaimableDepositRewards: (
+    ...args: ExtractArgs<Contract['calls']['getClaimableDepositRewards']>
+  ) => Promise<CallReturn<'getClaimableDepositRewards'>>
   getSwapFee: (...args: ExtractArgs<Contract['calls']['getSwapFee']>) => Promise<CallReturn<'getSwapFee'>>
   getRewardsFee: (...args: ExtractArgs<Contract['calls']['getRewardsFee']>) => Promise<CallReturn<'getRewardsFee'>>
   validateCanClaimLoot: (
@@ -1429,6 +1622,11 @@ export type SDK = {
     ...args: ExtractArgs<Contract['calls']['numClaimableAssets']>
   ) => Promise<CallReturn<'numClaimableAssets'>>
   depositRewards: (...args: ExtractArgs<Contract['calls']['depositRewards']>) => Promise<CallReturn<'depositRewards'>>
+  ripeLockDuration: (
+    ...args: ExtractArgs<Contract['calls']['ripeLockDuration']>
+  ) => Promise<CallReturn<'ripeLockDuration'>>
+  RIPE_TOKEN: (...args: ExtractArgs<Contract['calls']['RIPE_TOKEN']>) => Promise<CallReturn<'RIPE_TOKEN'>>
+  RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => Promise<CallReturn<'RIPE_REGISTRY'>>
   pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => Promise<Address>
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
   recoverFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverFundsMany']>) => Promise<Address>
@@ -1451,6 +1649,7 @@ export type SDK = {
   addDepositRewards: (...args: ExtractArgs<Contract['mutations']['addDepositRewards']>) => Promise<Address>
   recoverDepositRewards: (...args: ExtractArgs<Contract['mutations']['recoverDepositRewards']>) => Promise<Address>
   claimAllLoot: (...args: ExtractArgs<Contract['mutations']['claimAllLoot']>) => Promise<Address>
+  setRipeLockDuration: (...args: ExtractArgs<Contract['mutations']['setRipeLockDuration']>) => Promise<Address>
 }
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
@@ -1466,6 +1665,10 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.canMintUndy(...args)) as Promise<CallReturn<'canMintUndy'>>,
     isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) =>
       singleQuery(publicClient!, call.isPaused(...args)) as Promise<CallReturn<'isPaused'>>,
+    getClaimableLootForAsset: (...args: ExtractArgs<Contract['calls']['getClaimableLootForAsset']>) =>
+      singleQuery(publicClient!, call.getClaimableLootForAsset(...args)) as Promise<
+        CallReturn<'getClaimableLootForAsset'>
+      >,
     getTotalClaimableAssets: (...args: ExtractArgs<Contract['calls']['getTotalClaimableAssets']>) =>
       singleQuery(publicClient!, call.getTotalClaimableAssets(...args)) as Promise<
         CallReturn<'getTotalClaimableAssets'>
@@ -1474,6 +1677,10 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.getLatestDepositPoints(...args)) as Promise<CallReturn<'getLatestDepositPoints'>>,
     isValidWalletConfig: (...args: ExtractArgs<Contract['calls']['isValidWalletConfig']>) =>
       singleQuery(publicClient!, call.isValidWalletConfig(...args)) as Promise<CallReturn<'isValidWalletConfig'>>,
+    getClaimableDepositRewards: (...args: ExtractArgs<Contract['calls']['getClaimableDepositRewards']>) =>
+      singleQuery(publicClient!, call.getClaimableDepositRewards(...args)) as Promise<
+        CallReturn<'getClaimableDepositRewards'>
+      >,
     getSwapFee: (...args: ExtractArgs<Contract['calls']['getSwapFee']>) =>
       singleQuery(publicClient!, call.getSwapFee(...args)) as Promise<CallReturn<'getSwapFee'>>,
     getRewardsFee: (...args: ExtractArgs<Contract['calls']['getRewardsFee']>) =>
@@ -1496,6 +1703,12 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.numClaimableAssets(...args)) as Promise<CallReturn<'numClaimableAssets'>>,
     depositRewards: (...args: ExtractArgs<Contract['calls']['depositRewards']>) =>
       singleQuery(publicClient!, call.depositRewards(...args)) as Promise<CallReturn<'depositRewards'>>,
+    ripeLockDuration: (...args: ExtractArgs<Contract['calls']['ripeLockDuration']>) =>
+      singleQuery(publicClient!, call.ripeLockDuration(...args)) as Promise<CallReturn<'ripeLockDuration'>>,
+    RIPE_TOKEN: (...args: ExtractArgs<Contract['calls']['RIPE_TOKEN']>) =>
+      singleQuery(publicClient!, call.RIPE_TOKEN(...args)) as Promise<CallReturn<'RIPE_TOKEN'>>,
+    RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) =>
+      singleQuery(publicClient!, call.RIPE_REGISTRY(...args)) as Promise<CallReturn<'RIPE_REGISTRY'>>,
 
     // Mutations
     pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => mutate(walletClient!, mutation.pause)(...args),
@@ -1525,5 +1738,7 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.recoverDepositRewards)(...args),
     claimAllLoot: (...args: ExtractArgs<Contract['mutations']['claimAllLoot']>) =>
       mutate(walletClient!, mutation.claimAllLoot)(...args),
+    setRipeLockDuration: (...args: ExtractArgs<Contract['mutations']['setRipeLockDuration']>) =>
+      mutate(walletClient!, mutation.setRipeLockDuration)(...args),
   }
 }

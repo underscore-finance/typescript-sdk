@@ -34,10 +34,12 @@ import * as Paymaster from './Paymaster.js'
 import * as RipeLego from './RipeLego.js'
 import * as Sentinel from './Sentinel.js'
 import * as SignatureHelper from './SignatureHelper.js'
+import * as SignatureHelperV1 from './SignatureHelperV1.js'
 import * as Switchboard from './Switchboard.js'
 import * as SwitchboardAlpha from './SwitchboardAlpha.js'
 import * as SwitchboardBravo from './SwitchboardBravo.js'
 import * as UndyHq from './UndyHq.js'
+import * as UndyRewardsLego from './UndyRewardsLego.js'
 import * as UniswapV2 from './UniswapV2.js'
 import * as UniswapV3 from './UniswapV3.js'
 import * as UserWallet from './UserWallet.js'
@@ -74,10 +76,12 @@ export type SDK = {
   RipeLego: RipeLego.SDK
   Sentinel: Sentinel.SDK
   SignatureHelper: SignatureHelper.SDK
+  SignatureHelperV1: SignatureHelperV1.SDK
   Switchboard: Switchboard.SDK
   SwitchboardAlpha: SwitchboardAlpha.SDK
   SwitchboardBravo: SwitchboardBravo.SDK
   UndyHq: UndyHq.SDK
+  UndyRewardsLego: UndyRewardsLego.SDK
   UniswapV2: UniswapV2.SDK
   UniswapV3: UniswapV3.SDK
   UserWallet: (address: `0x${string}`) => UserWallet.SDK
@@ -116,10 +120,12 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     RipeLego: RipeLego.toSdk(publicClient, walletClient),
     Sentinel: Sentinel.toSdk(publicClient, walletClient),
     SignatureHelper: SignatureHelper.toSdk(publicClient, walletClient),
+    SignatureHelperV1: SignatureHelperV1.toSdk(publicClient, walletClient),
     Switchboard: Switchboard.toSdk(publicClient, walletClient),
     SwitchboardAlpha: SwitchboardAlpha.toSdk(publicClient, walletClient),
     SwitchboardBravo: SwitchboardBravo.toSdk(publicClient, walletClient),
     UndyHq: UndyHq.toSdk(publicClient, walletClient),
+    UndyRewardsLego: UndyRewardsLego.toSdk(publicClient, walletClient),
     UniswapV2: UniswapV2.toSdk(publicClient, walletClient),
     UniswapV3: UniswapV3.toSdk(publicClient, walletClient),
     UserWallet: (address: `0x${string}`) => UserWallet.toSdk(address, publicClient, walletClient),

@@ -983,6 +983,18 @@ export const abi = [
     type: 'event',
   },
   {
+    name: 'RipeLockDurationSetFromSwitchboard',
+    inputs: [
+      {
+        name: 'ripeLockDuration',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
     name: 'GovChangeTimeLockModified',
     inputs: [
       {
@@ -2150,6 +2162,18 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'setRipeLockDuration',
+    inputs: [
+      {
+        name: '_ripeLockDuration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'executePendingAction',
     inputs: [
       {
@@ -2577,7 +2601,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x2256122FCb6F9789aa356F387435F545c3C52ba5'
+export const deployAddress: Address | undefined = '0x90B138306ab1fb8d23372d104594e8A6BD7848D4'
 
 export type Contract = {
   calls: {
@@ -2728,6 +2752,7 @@ export type Contract = {
     setCanPerformSecurityAction: (signer: `0x${string}`, canPerform: boolean) => Promise<bigint>
     setCreatorWhitelist: (creator: `0x${string}`, isWhitelisted: boolean) => Promise<void>
     setLockedSigner: (signer: `0x${string}`, isLocked: boolean) => Promise<void>
+    setRipeLockDuration: (ripeLockDuration: bigint) => Promise<void>
     executePendingAction: (aid: bigint) => Promise<boolean>
     cancelPendingAction: (aid: bigint) => Promise<boolean>
   }
@@ -2895,6 +2920,7 @@ export type Contract = {
     PayeeConfigSet: (payeePeriod: bigint, payeeActivationLength: bigint) => Promise<void>
     CanPerformSecurityAction: (signer: `0x${string}`, canPerform: boolean) => Promise<void>
     LockedSignerSet: (signer: `0x${string}`, isLocked: boolean, caller: `0x${string}`) => Promise<void>
+    RipeLockDurationSetFromSwitchboard: (ripeLockDuration: bigint) => Promise<void>
     GovChangeTimeLockModified: (prevTimeLock: bigint, newTimeLock: bigint) => Promise<void>
     ExpirationSet: (expiration: bigint) => Promise<void>
     ActionTimeLockSet: (newTimeLock: bigint, prevTimeLock: bigint) => Promise<void>
@@ -3070,6 +3096,7 @@ export const mutation: {
   setCanPerformSecurityAction: getMutation('setCanPerformSecurityAction'),
   setCreatorWhitelist: getMutation('setCreatorWhitelist'),
   setLockedSigner: getMutation('setLockedSigner'),
+  setRipeLockDuration: getMutation('setRipeLockDuration'),
   executePendingAction: getMutation('executePendingAction'),
   cancelPendingAction: getMutation('cancelPendingAction'),
 }
@@ -3178,6 +3205,7 @@ export type SDK = {
   ) => Promise<Address>
   setCreatorWhitelist: (...args: ExtractArgs<Contract['mutations']['setCreatorWhitelist']>) => Promise<Address>
   setLockedSigner: (...args: ExtractArgs<Contract['mutations']['setLockedSigner']>) => Promise<Address>
+  setRipeLockDuration: (...args: ExtractArgs<Contract['mutations']['setRipeLockDuration']>) => Promise<Address>
   executePendingAction: (...args: ExtractArgs<Contract['mutations']['executePendingAction']>) => Promise<Address>
   cancelPendingAction: (...args: ExtractArgs<Contract['mutations']['cancelPendingAction']>) => Promise<Address>
 }
@@ -3311,6 +3339,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.setCreatorWhitelist)(...args),
     setLockedSigner: (...args: ExtractArgs<Contract['mutations']['setLockedSigner']>) =>
       mutate(walletClient!, mutation.setLockedSigner)(...args),
+    setRipeLockDuration: (...args: ExtractArgs<Contract['mutations']['setRipeLockDuration']>) =>
+      mutate(walletClient!, mutation.setRipeLockDuration)(...args),
     executePendingAction: (...args: ExtractArgs<Contract['mutations']['executePendingAction']>) =>
       mutate(walletClient!, mutation.executePendingAction)(...args),
     cancelPendingAction: (...args: ExtractArgs<Contract['mutations']['cancelPendingAction']>) =>

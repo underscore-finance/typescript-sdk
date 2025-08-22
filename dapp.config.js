@@ -29,7 +29,9 @@ export default {
       address: Manifest.contracts.AgentWrapper.address,
       abi: Manifest.contracts.AgentWrapper.abi,
     },
-
+    SignatureHelperV1: {
+      address: '0x7a938DEd840172e89ef3B90039959E51C1dC6893',
+    },
     ERC20: {
       isTemplate: true,
       abi: [

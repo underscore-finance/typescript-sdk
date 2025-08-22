@@ -14,6 +14,11 @@ export const abi = [
     name: 'NonceIncremented',
     inputs: [
       {
+        name: 'userWallet',
+        type: 'address',
+        indexed: false,
+      },
+      {
         name: 'oldNonce',
         type: 'uint256',
         indexed: false,
@@ -4744,14 +4749,24 @@ export const abi = [
     stateMutability: 'nonpayable',
     type: 'function',
     name: 'incrementNonce',
-    inputs: [],
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+    ],
     outputs: [],
   },
   {
     stateMutability: 'view',
     type: 'function',
     name: 'getNonce',
-    inputs: [],
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+    ],
     outputs: [
       {
         name: '',
@@ -4775,7 +4790,12 @@ export const abi = [
     stateMutability: 'view',
     type: 'function',
     name: 'currentNonce',
-    inputs: [],
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
     outputs: [
       {
         name: '',
@@ -4812,7 +4832,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x882336D186774FcFaB4812f1B5C81747C4e37aA3'
+export const deployAddress: Address | undefined = '0xe1d877C9160878F83EB8e996428C44e898BF414B'
 
 export type Contract = {
   calls: {
@@ -4822,9 +4842,9 @@ export type Contract = {
     pendingOwner: () => Promise<{ newOwner: `0x${string}`; initiatedBlock: bigint; confirmBlock: bigint }>
     MIN_OWNERSHIP_TIMELOCK: () => Promise<bigint>
     MAX_OWNERSHIP_TIMELOCK: () => Promise<bigint>
-    getNonce: () => Promise<bigint>
+    getNonce: (userWallet: `0x${string}`) => Promise<bigint>
     groupId: () => Promise<bigint>
-    currentNonce: () => Promise<bigint>
+    currentNonce: (arg0: `0x${string}`) => Promise<bigint>
   }
   mutations: {
     changeOwnership: (newOwner: `0x${string}`) => Promise<void>
@@ -5030,10 +5050,10 @@ export type Contract = {
       }[],
       sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
     ) => Promise<boolean>
-    incrementNonce: () => Promise<void>
+    incrementNonce: (userWallet: `0x${string}`) => Promise<void>
   }
   events: {
-    NonceIncremented: (oldNonce: bigint, newNonce: bigint) => Promise<void>
+    NonceIncremented: (userWallet: `0x${string}`, oldNonce: bigint, newNonce: bigint) => Promise<void>
     OwnershipChangeInitiated: (prevOwner: `0x${string}`, newOwner: `0x${string}`, confirmBlock: bigint) => Promise<void>
     OwnershipChangeConfirmed: (
       prevOwner: `0x${string}`,
