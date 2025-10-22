@@ -11,12 +11,175 @@ type Address = `0x${string}`
 
 export const abi = [
   {
-    name: 'LegoToolsSet',
+    name: 'CanDepositSet',
     inputs: [
       {
-        name: 'addr',
+        name: 'vaultAddr',
         type: 'address',
         indexed: true,
+      },
+      {
+        name: 'canDeposit',
+        type: 'bool',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'CanWithdrawSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'canWithdraw',
+        type: 'bool',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'MaxDepositAmountSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'maxDepositAmount',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'VaultOpsFrozenSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'isFrozen',
+        type: 'bool',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'RedemptionBufferSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'buffer',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'MinYieldWithdrawAmountSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'amount',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PerformanceFeeSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'performanceFee',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'DefaultTargetVaultTokenSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'targetVaultToken',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'ShouldAutoDepositSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'shouldAutoDeposit',
+        type: 'bool',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'ApprovedVaultTokenSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'vaultToken',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'isApproved',
+        type: 'bool',
+        indexed: false,
       },
     ],
     anonymous: false,
@@ -257,233 +420,6 @@ export const abi = [
   {
     name: 'NewAddressCancelled',
     inputs: [
-      {
-        name: 'description',
-        type: 'string',
-        indexed: false,
-      },
-      {
-        name: 'addr',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'initiatedBlock',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'confirmBlock',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'registry',
-        type: 'string',
-        indexed: false,
-      },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
-    name: 'AddressUpdatePending',
-    inputs: [
-      {
-        name: 'regId',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'description',
-        type: 'string',
-        indexed: false,
-      },
-      {
-        name: 'newAddr',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'prevAddr',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'version',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'confirmBlock',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'registry',
-        type: 'string',
-        indexed: false,
-      },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
-    name: 'AddressUpdateConfirmed',
-    inputs: [
-      {
-        name: 'regId',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'description',
-        type: 'string',
-        indexed: false,
-      },
-      {
-        name: 'newAddr',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'prevAddr',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'version',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'registry',
-        type: 'string',
-        indexed: false,
-      },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
-    name: 'AddressUpdateCancelled',
-    inputs: [
-      {
-        name: 'regId',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'description',
-        type: 'string',
-        indexed: false,
-      },
-      {
-        name: 'newAddr',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'prevAddr',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'initiatedBlock',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'confirmBlock',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'registry',
-        type: 'string',
-        indexed: false,
-      },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
-    name: 'AddressDisablePending',
-    inputs: [
-      {
-        name: 'regId',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'description',
-        type: 'string',
-        indexed: false,
-      },
-      {
-        name: 'addr',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'version',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'confirmBlock',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'registry',
-        type: 'string',
-        indexed: false,
-      },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
-    name: 'AddressDisableConfirmed',
-    inputs: [
-      {
-        name: 'regId',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'description',
-        type: 'string',
-        indexed: false,
-      },
-      {
-        name: 'addr',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'version',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'registry',
-        type: 'string',
-        indexed: false,
-      },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
-    name: 'AddressDisableCancelled',
-    inputs: [
-      {
-        name: 'regId',
-        type: 'uint256',
-        indexed: false,
-      },
       {
         name: 'description',
         type: 'string',
@@ -1377,10 +1313,10 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'isLegoAddr',
+    name: 'isEarnVault',
     inputs: [
       {
-        name: '_addr',
+        name: '_vaultAddr',
         type: 'address',
       },
     ],
@@ -1397,7 +1333,7 @@ export const abi = [
     name: 'startAddNewAddressToRegistry',
     inputs: [
       {
-        name: '_addr',
+        name: '_vaultAddr',
         type: 'address',
       },
       {
@@ -1418,8 +1354,398 @@ export const abi = [
     name: 'confirmNewAddressToRegistry',
     inputs: [
       {
-        name: '_addr',
+        name: '_vaultAddr',
         type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmNewAddressToRegistry',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_approvedVaultTokens',
+        type: 'address[]',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmNewAddressToRegistry',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_approvedVaultTokens',
+        type: 'address[]',
+      },
+      {
+        name: '_maxDepositAmount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmNewAddressToRegistry',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_approvedVaultTokens',
+        type: 'address[]',
+      },
+      {
+        name: '_maxDepositAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minYieldWithdrawAmount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmNewAddressToRegistry',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_approvedVaultTokens',
+        type: 'address[]',
+      },
+      {
+        name: '_maxDepositAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minYieldWithdrawAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_performanceFee',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmNewAddressToRegistry',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_approvedVaultTokens',
+        type: 'address[]',
+      },
+      {
+        name: '_maxDepositAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minYieldWithdrawAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_performanceFee',
+        type: 'uint256',
+      },
+      {
+        name: '_defaultTargetVaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmNewAddressToRegistry',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_approvedVaultTokens',
+        type: 'address[]',
+      },
+      {
+        name: '_maxDepositAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minYieldWithdrawAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_performanceFee',
+        type: 'uint256',
+      },
+      {
+        name: '_defaultTargetVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_shouldAutoDeposit',
+        type: 'bool',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmNewAddressToRegistry',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_approvedVaultTokens',
+        type: 'address[]',
+      },
+      {
+        name: '_maxDepositAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minYieldWithdrawAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_performanceFee',
+        type: 'uint256',
+      },
+      {
+        name: '_defaultTargetVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_shouldAutoDeposit',
+        type: 'bool',
+      },
+      {
+        name: '_canDeposit',
+        type: 'bool',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmNewAddressToRegistry',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_approvedVaultTokens',
+        type: 'address[]',
+      },
+      {
+        name: '_maxDepositAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minYieldWithdrawAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_performanceFee',
+        type: 'uint256',
+      },
+      {
+        name: '_defaultTargetVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_shouldAutoDeposit',
+        type: 'bool',
+      },
+      {
+        name: '_canDeposit',
+        type: 'bool',
+      },
+      {
+        name: '_canWithdraw',
+        type: 'bool',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmNewAddressToRegistry',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_approvedVaultTokens',
+        type: 'address[]',
+      },
+      {
+        name: '_maxDepositAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minYieldWithdrawAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_performanceFee',
+        type: 'uint256',
+      },
+      {
+        name: '_defaultTargetVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_shouldAutoDeposit',
+        type: 'bool',
+      },
+      {
+        name: '_canDeposit',
+        type: 'bool',
+      },
+      {
+        name: '_canWithdraw',
+        type: 'bool',
+      },
+      {
+        name: '_isVaultOpsFrozen',
+        type: 'bool',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmNewAddressToRegistry',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_approvedVaultTokens',
+        type: 'address[]',
+      },
+      {
+        name: '_maxDepositAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minYieldWithdrawAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_performanceFee',
+        type: 'uint256',
+      },
+      {
+        name: '_defaultTargetVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_shouldAutoDeposit',
+        type: 'bool',
+      },
+      {
+        name: '_canDeposit',
+        type: 'bool',
+      },
+      {
+        name: '_canWithdraw',
+        type: 'bool',
+      },
+      {
+        name: '_isVaultOpsFrozen',
+        type: 'bool',
+      },
+      {
+        name: '_redemptionBuffer',
+        type: 'uint256',
       },
     ],
     outputs: [
@@ -1435,7 +1761,7 @@ export const abi = [
     name: 'cancelNewAddressToRegistry',
     inputs: [
       {
-        name: '_addr',
+        name: '_vaultAddr',
         type: 'address',
       },
     ],
@@ -1449,14 +1775,126 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'startAddressUpdateToRegistry',
+    name: 'setCanDeposit',
     inputs: [
       {
-        name: '_regId',
-        type: 'uint256',
+        name: '_vaultAddr',
+        type: 'address',
       },
       {
-        name: '_newAddr',
+        name: '_canDeposit',
+        type: 'bool',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setCanWithdraw',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_canWithdraw',
+        type: 'bool',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setMaxDepositAmount',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_maxDepositAmount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setVaultOpsFrozen',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_isFrozen',
+        type: 'bool',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setShouldAutoDeposit',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_shouldAutoDeposit',
+        type: 'bool',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setMinYieldWithdrawAmount',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setApprovedVaultToken',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_isApproved',
+        type: 'bool',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'isValidVaultToken',
+    inputs: [
+      {
+        name: '_vaultToken',
         type: 'address',
       },
     ],
@@ -1470,10 +1908,63 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'confirmAddressUpdateToRegistry',
+    name: 'setDefaultTargetVaultToken',
     inputs: [
       {
-        name: '_regId',
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_targetVaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'isValidDefaultTargetVaultToken',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_targetVaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setPerformanceFee',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_performanceFee',
+        type: 'uint256',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'isValidPerformanceFee',
+    inputs: [
+      {
+        name: '_performanceFee',
         type: 'uint256',
       },
     ],
@@ -1487,10 +1978,26 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'cancelAddressUpdateToRegistry',
+    name: 'setRedemptionBuffer',
     inputs: [
       {
-        name: '_regId',
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_buffer',
+        type: 'uint256',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'isValidRedemptionBuffer',
+    inputs: [
+      {
+        name: '_buffer',
         type: 'uint256',
       },
     ],
@@ -1502,63 +2009,12 @@ export const abi = [
     ],
   },
   {
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
-    name: 'startAddressDisableInRegistry',
+    name: 'canDeposit',
     inputs: [
       {
-        name: '_regId',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'confirmAddressDisableInRegistry',
-    inputs: [
-      {
-        name: '_regId',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'cancelAddressDisableInRegistry',
-    inputs: [
-      {
-        name: '_regId',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'setLegoTools',
-    inputs: [
-      {
-        name: '_addr',
+        name: '_vaultAddr',
         type: 'address',
       },
     ],
@@ -1572,10 +2028,10 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'isValidLegoTools',
+    name: 'canWithdraw',
     inputs: [
       {
-        name: '_addr',
+        name: '_vaultAddr',
         type: 'address',
       },
     ],
@@ -1589,12 +2045,561 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'legoTools',
-    inputs: [],
+    name: 'maxDepositAmount',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'isVaultOpsFrozen',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'redemptionBuffer',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'minYieldWithdrawAmount',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'redemptionConfig',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getPerformanceFee',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDefaultTargetVaultToken',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+    ],
     outputs: [
       {
         name: '',
         type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'shouldAutoDeposit',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'isApprovedVaultTokenByAddr',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'checkVaultApprovals',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getVaultConfig',
+    inputs: [
+      {
+        name: '_regId',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'canDeposit',
+            type: 'bool',
+          },
+          {
+            name: 'canWithdraw',
+            type: 'bool',
+          },
+          {
+            name: 'maxDepositAmount',
+            type: 'uint256',
+          },
+          {
+            name: 'isVaultOpsFrozen',
+            type: 'bool',
+          },
+          {
+            name: 'redemptionBuffer',
+            type: 'uint256',
+          },
+          {
+            name: 'minYieldWithdrawAmount',
+            type: 'uint256',
+          },
+          {
+            name: 'performanceFee',
+            type: 'uint256',
+          },
+          {
+            name: 'shouldAutoDeposit',
+            type: 'bool',
+          },
+          {
+            name: 'defaultTargetVaultToken',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getVaultConfigByAddr',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'canDeposit',
+            type: 'bool',
+          },
+          {
+            name: 'canWithdraw',
+            type: 'bool',
+          },
+          {
+            name: 'maxDepositAmount',
+            type: 'uint256',
+          },
+          {
+            name: 'isVaultOpsFrozen',
+            type: 'bool',
+          },
+          {
+            name: 'redemptionBuffer',
+            type: 'uint256',
+          },
+          {
+            name: 'minYieldWithdrawAmount',
+            type: 'uint256',
+          },
+          {
+            name: 'performanceFee',
+            type: 'uint256',
+          },
+          {
+            name: 'shouldAutoDeposit',
+            type: 'bool',
+          },
+          {
+            name: 'defaultTargetVaultToken',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getVaultActionDataBundle',
+    inputs: [
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_signer',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+          {
+            name: 'vaultRegistry',
+            type: 'address',
+          },
+          {
+            name: 'vaultAsset',
+            type: 'address',
+          },
+          {
+            name: 'signer',
+            type: 'address',
+          },
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'legoAddr',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getVaultActionDataWithFrozenStatus',
+    inputs: [
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_signer',
+        type: 'address',
+      },
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+          {
+            name: 'vaultRegistry',
+            type: 'address',
+          },
+          {
+            name: 'vaultAsset',
+            type: 'address',
+          },
+          {
+            name: 'signer',
+            type: 'address',
+          },
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'legoAddr',
+            type: 'address',
+          },
+        ],
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getLegoDataFromVaultToken',
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getLegoAddrFromVaultToken',
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDepositConfig',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'vaultConfigs',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'canDeposit',
+            type: 'bool',
+          },
+          {
+            name: 'canWithdraw',
+            type: 'bool',
+          },
+          {
+            name: 'maxDepositAmount',
+            type: 'uint256',
+          },
+          {
+            name: 'isVaultOpsFrozen',
+            type: 'bool',
+          },
+          {
+            name: 'redemptionBuffer',
+            type: 'uint256',
+          },
+          {
+            name: 'minYieldWithdrawAmount',
+            type: 'uint256',
+          },
+          {
+            name: 'performanceFee',
+            type: 'uint256',
+          },
+          {
+            name: 'shouldAutoDeposit',
+            type: 'bool',
+          },
+          {
+            name: 'defaultTargetVaultToken',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'isApprovedVaultToken',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+      {
+        name: 'arg1',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
       },
     ],
   },
@@ -1607,7 +2612,7 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_initialGov',
+        name: '_tempGov',
         type: 'address',
       },
       {
@@ -1623,7 +2628,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x9788f0D9D1A6577F685972B066b4Db2D73fEd8e3'
+export const deployAddress: Address | undefined = '0x73388bD7f17CeCA0679604405A5d2C418Db2b702'
 
 export type Contract = {
   calls: {
@@ -1686,9 +2691,100 @@ export type Contract = {
     getUndyHq: () => Promise<`0x${string}`>
     canMintUndy: () => Promise<boolean>
     isPaused: () => Promise<boolean>
-    isLegoAddr: (addr: `0x${string}`) => Promise<boolean>
-    isValidLegoTools: (addr: `0x${string}`) => Promise<boolean>
-    legoTools: () => Promise<`0x${string}`>
+    isEarnVault: (vaultAddr: `0x${string}`) => Promise<boolean>
+    isValidVaultToken: (vaultToken: `0x${string}`) => Promise<boolean>
+    isValidDefaultTargetVaultToken: (vaultAddr: `0x${string}`, targetVaultToken: `0x${string}`) => Promise<boolean>
+    isValidPerformanceFee: (performanceFee: bigint) => Promise<boolean>
+    isValidRedemptionBuffer: (buffer: bigint) => Promise<boolean>
+    canDeposit: (vaultAddr: `0x${string}`) => Promise<boolean>
+    canWithdraw: (vaultAddr: `0x${string}`) => Promise<boolean>
+    maxDepositAmount: (vaultAddr: `0x${string}`) => Promise<bigint>
+    isVaultOpsFrozen: (vaultAddr: `0x${string}`) => Promise<boolean>
+    redemptionBuffer: (vaultAddr: `0x${string}`) => Promise<bigint>
+    minYieldWithdrawAmount: (vaultAddr: `0x${string}`) => Promise<bigint>
+    redemptionConfig: (vaultAddr: `0x${string}`) => Promise<[bigint, bigint]>
+    getPerformanceFee: (vaultAddr: `0x${string}`) => Promise<bigint>
+    getDefaultTargetVaultToken: (vaultAddr: `0x${string}`) => Promise<`0x${string}`>
+    shouldAutoDeposit: (vaultAddr: `0x${string}`) => Promise<boolean>
+    isApprovedVaultTokenByAddr: (vaultAddr: `0x${string}`, vaultToken: `0x${string}`) => Promise<boolean>
+    checkVaultApprovals: (vaultAddr: `0x${string}`, vaultToken: `0x${string}`) => Promise<boolean>
+    getVaultConfig: (
+      regId: bigint,
+    ) => Promise<{
+      canDeposit: boolean
+      canWithdraw: boolean
+      maxDepositAmount: bigint
+      isVaultOpsFrozen: boolean
+      redemptionBuffer: bigint
+      minYieldWithdrawAmount: bigint
+      performanceFee: bigint
+      shouldAutoDeposit: boolean
+      defaultTargetVaultToken: `0x${string}`
+    }>
+    getVaultConfigByAddr: (
+      vaultAddr: `0x${string}`,
+    ) => Promise<{
+      canDeposit: boolean
+      canWithdraw: boolean
+      maxDepositAmount: bigint
+      isVaultOpsFrozen: boolean
+      redemptionBuffer: bigint
+      minYieldWithdrawAmount: bigint
+      performanceFee: bigint
+      shouldAutoDeposit: boolean
+      defaultTargetVaultToken: `0x${string}`
+    }>
+    getVaultActionDataBundle: (
+      legoId: bigint,
+      signer: `0x${string}`,
+    ) => Promise<{
+      ledger: `0x${string}`
+      missionControl: `0x${string}`
+      legoBook: `0x${string}`
+      appraiser: `0x${string}`
+      vaultRegistry: `0x${string}`
+      vaultAsset: `0x${string}`
+      signer: `0x${string}`
+      legoId: bigint
+      legoAddr: `0x${string}`
+    }>
+    getVaultActionDataWithFrozenStatus: (
+      legoId: bigint,
+      signer: `0x${string}`,
+      vaultAddr: `0x${string}`,
+    ) => Promise<
+      [
+        {
+          ledger: `0x${string}`
+          missionControl: `0x${string}`
+          legoBook: `0x${string}`
+          appraiser: `0x${string}`
+          vaultRegistry: `0x${string}`
+          vaultAsset: `0x${string}`
+          signer: `0x${string}`
+          legoId: bigint
+          legoAddr: `0x${string}`
+        },
+        boolean,
+      ]
+    >
+    getLegoDataFromVaultToken: (vaultToken: `0x${string}`) => Promise<[bigint, `0x${string}`]>
+    getLegoAddrFromVaultToken: (vaultToken: `0x${string}`) => Promise<`0x${string}`>
+    getDepositConfig: (vaultAddr: `0x${string}`) => Promise<[boolean, bigint, boolean, `0x${string}`]>
+    vaultConfigs: (
+      arg0: `0x${string}`,
+    ) => Promise<{
+      canDeposit: boolean
+      canWithdraw: boolean
+      maxDepositAmount: bigint
+      isVaultOpsFrozen: boolean
+      redemptionBuffer: bigint
+      minYieldWithdrawAmount: bigint
+      performanceFee: bigint
+      shouldAutoDeposit: boolean
+      defaultTargetVaultToken: `0x${string}`
+    }>
+    isApprovedVaultToken: (arg0: `0x${string}`, arg1: `0x${string}`) => Promise<boolean>
   }
   mutations: {
     startGovernanceChange: (newGov: `0x${string}`) => Promise<void>
@@ -1702,19 +2798,43 @@ export type Contract = {
     pause: (shouldPause: boolean) => Promise<void>
     recoverFunds: (recipient: `0x${string}`, asset: `0x${string}`) => Promise<void>
     recoverFundsMany: (recipient: `0x${string}`, assets: `0x${string}`[]) => Promise<void>
-    startAddNewAddressToRegistry: (addr: `0x${string}`, description: string) => Promise<boolean>
-    confirmNewAddressToRegistry: (addr: `0x${string}`) => Promise<bigint>
-    cancelNewAddressToRegistry: (addr: `0x${string}`) => Promise<boolean>
-    startAddressUpdateToRegistry: (regId: bigint, newAddr: `0x${string}`) => Promise<boolean>
-    confirmAddressUpdateToRegistry: (regId: bigint) => Promise<boolean>
-    cancelAddressUpdateToRegistry: (regId: bigint) => Promise<boolean>
-    startAddressDisableInRegistry: (regId: bigint) => Promise<boolean>
-    confirmAddressDisableInRegistry: (regId: bigint) => Promise<boolean>
-    cancelAddressDisableInRegistry: (regId: bigint) => Promise<boolean>
-    setLegoTools: (addr: `0x${string}`) => Promise<boolean>
+    startAddNewAddressToRegistry: (vaultAddr: `0x${string}`, description: string) => Promise<boolean>
+    confirmNewAddressToRegistry: (
+      vaultAddr: `0x${string}`,
+      approvedVaultTokens?: `0x${string}`[],
+      maxDepositAmount?: bigint,
+      minYieldWithdrawAmount?: bigint,
+      performanceFee?: bigint,
+      defaultTargetVaultToken?: `0x${string}`,
+      shouldAutoDeposit?: boolean,
+      canDeposit?: boolean,
+      canWithdraw?: boolean,
+      isVaultOpsFrozen?: boolean,
+      redemptionBuffer?: bigint,
+    ) => Promise<bigint>
+    cancelNewAddressToRegistry: (vaultAddr: `0x${string}`) => Promise<boolean>
+    setCanDeposit: (vaultAddr: `0x${string}`, canDeposit: boolean) => Promise<void>
+    setCanWithdraw: (vaultAddr: `0x${string}`, canWithdraw: boolean) => Promise<void>
+    setMaxDepositAmount: (vaultAddr: `0x${string}`, maxDepositAmount: bigint) => Promise<void>
+    setVaultOpsFrozen: (vaultAddr: `0x${string}`, isFrozen: boolean) => Promise<void>
+    setShouldAutoDeposit: (vaultAddr: `0x${string}`, shouldAutoDeposit: boolean) => Promise<void>
+    setMinYieldWithdrawAmount: (vaultAddr: `0x${string}`, amount: bigint) => Promise<void>
+    setApprovedVaultToken: (vaultAddr: `0x${string}`, vaultToken: `0x${string}`, isApproved: boolean) => Promise<void>
+    setDefaultTargetVaultToken: (vaultAddr: `0x${string}`, targetVaultToken: `0x${string}`) => Promise<void>
+    setPerformanceFee: (vaultAddr: `0x${string}`, performanceFee: bigint) => Promise<void>
+    setRedemptionBuffer: (vaultAddr: `0x${string}`, buffer: bigint) => Promise<void>
   }
   events: {
-    LegoToolsSet: (addr: `0x${string}`) => Promise<void>
+    CanDepositSet: (vaultAddr: `0x${string}`, canDeposit: boolean) => Promise<void>
+    CanWithdrawSet: (vaultAddr: `0x${string}`, canWithdraw: boolean) => Promise<void>
+    MaxDepositAmountSet: (vaultAddr: `0x${string}`, maxDepositAmount: bigint) => Promise<void>
+    VaultOpsFrozenSet: (vaultAddr: `0x${string}`, isFrozen: boolean) => Promise<void>
+    RedemptionBufferSet: (vaultAddr: `0x${string}`, buffer: bigint) => Promise<void>
+    MinYieldWithdrawAmountSet: (vaultAddr: `0x${string}`, amount: bigint) => Promise<void>
+    PerformanceFeeSet: (vaultAddr: `0x${string}`, performanceFee: bigint) => Promise<void>
+    DefaultTargetVaultTokenSet: (vaultAddr: `0x${string}`, targetVaultToken: `0x${string}`) => Promise<void>
+    ShouldAutoDepositSet: (vaultAddr: `0x${string}`, shouldAutoDeposit: boolean) => Promise<void>
+    ApprovedVaultTokenSet: (vaultAddr: `0x${string}`, vaultToken: `0x${string}`, isApproved: boolean) => Promise<void>
     GovChangeTimeLockModified: (prevTimeLock: bigint, newTimeLock: bigint) => Promise<void>
     RegistryTimeLockModified: (newTimeLock: bigint, prevTimeLock: bigint, registry: string) => Promise<void>
     GovChangeStarted: (prevGov: `0x${string}`, newGov: `0x${string}`, confirmBlock: bigint) => Promise<void>
@@ -1743,61 +2863,12 @@ export type Contract = {
       confirmBlock: bigint,
       registry: string,
     ) => Promise<void>
-    AddressUpdatePending: (
-      regId: bigint,
-      description: string,
-      newAddr: `0x${string}`,
-      prevAddr: `0x${string}`,
-      version: bigint,
-      confirmBlock: bigint,
-      registry: string,
-    ) => Promise<void>
-    AddressUpdateConfirmed: (
-      regId: bigint,
-      description: string,
-      newAddr: `0x${string}`,
-      prevAddr: `0x${string}`,
-      version: bigint,
-      registry: string,
-    ) => Promise<void>
-    AddressUpdateCancelled: (
-      regId: bigint,
-      description: string,
-      newAddr: `0x${string}`,
-      prevAddr: `0x${string}`,
-      initiatedBlock: bigint,
-      confirmBlock: bigint,
-      registry: string,
-    ) => Promise<void>
-    AddressDisablePending: (
-      regId: bigint,
-      description: string,
-      addr: `0x${string}`,
-      version: bigint,
-      confirmBlock: bigint,
-      registry: string,
-    ) => Promise<void>
-    AddressDisableConfirmed: (
-      regId: bigint,
-      description: string,
-      addr: `0x${string}`,
-      version: bigint,
-      registry: string,
-    ) => Promise<void>
-    AddressDisableCancelled: (
-      regId: bigint,
-      description: string,
-      addr: `0x${string}`,
-      initiatedBlock: bigint,
-      confirmBlock: bigint,
-      registry: string,
-    ) => Promise<void>
   }
 }
 
 export type Calls = keyof Contract['calls']
 export type Request<M extends Calls> = {
-  contractName: 'LegoBook'
+  contractName: 'VaultRegistry'
   method: M
   args: ExtractArgs<Contract['calls'][M]>
   address: Address | undefined
@@ -1825,7 +2896,7 @@ function getRequest<M extends Calls>(
   const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
 
   const call = {
-    contractName: 'LegoBook' as const,
+    contractName: 'VaultRegistry' as const,
     method,
     args,
     address,
@@ -1910,16 +2981,59 @@ export const call: CallType = {
   getUndyHq: (...args: ExtractArgs<Contract['calls']['getUndyHq']>) => getRequest('getUndyHq', args),
   canMintUndy: (...args: ExtractArgs<Contract['calls']['canMintUndy']>) => getRequest('canMintUndy', args),
   isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) => getRequest('isPaused', args),
-  isLegoAddr: (...args: ExtractArgs<Contract['calls']['isLegoAddr']>) => getRequest('isLegoAddr', args),
-  isValidLegoTools: (...args: ExtractArgs<Contract['calls']['isValidLegoTools']>) =>
-    getRequest('isValidLegoTools', args),
-  legoTools: (...args: ExtractArgs<Contract['calls']['legoTools']>) => getRequest('legoTools', args),
+  isEarnVault: (...args: ExtractArgs<Contract['calls']['isEarnVault']>) => getRequest('isEarnVault', args),
+  isValidVaultToken: (...args: ExtractArgs<Contract['calls']['isValidVaultToken']>) =>
+    getRequest('isValidVaultToken', args),
+  isValidDefaultTargetVaultToken: (...args: ExtractArgs<Contract['calls']['isValidDefaultTargetVaultToken']>) =>
+    getRequest('isValidDefaultTargetVaultToken', args),
+  isValidPerformanceFee: (...args: ExtractArgs<Contract['calls']['isValidPerformanceFee']>) =>
+    getRequest('isValidPerformanceFee', args),
+  isValidRedemptionBuffer: (...args: ExtractArgs<Contract['calls']['isValidRedemptionBuffer']>) =>
+    getRequest('isValidRedemptionBuffer', args),
+  canDeposit: (...args: ExtractArgs<Contract['calls']['canDeposit']>) => getRequest('canDeposit', args),
+  canWithdraw: (...args: ExtractArgs<Contract['calls']['canWithdraw']>) => getRequest('canWithdraw', args),
+  maxDepositAmount: (...args: ExtractArgs<Contract['calls']['maxDepositAmount']>) =>
+    getRequest('maxDepositAmount', args),
+  isVaultOpsFrozen: (...args: ExtractArgs<Contract['calls']['isVaultOpsFrozen']>) =>
+    getRequest('isVaultOpsFrozen', args),
+  redemptionBuffer: (...args: ExtractArgs<Contract['calls']['redemptionBuffer']>) =>
+    getRequest('redemptionBuffer', args),
+  minYieldWithdrawAmount: (...args: ExtractArgs<Contract['calls']['minYieldWithdrawAmount']>) =>
+    getRequest('minYieldWithdrawAmount', args),
+  redemptionConfig: (...args: ExtractArgs<Contract['calls']['redemptionConfig']>) =>
+    getRequest('redemptionConfig', args),
+  getPerformanceFee: (...args: ExtractArgs<Contract['calls']['getPerformanceFee']>) =>
+    getRequest('getPerformanceFee', args),
+  getDefaultTargetVaultToken: (...args: ExtractArgs<Contract['calls']['getDefaultTargetVaultToken']>) =>
+    getRequest('getDefaultTargetVaultToken', args),
+  shouldAutoDeposit: (...args: ExtractArgs<Contract['calls']['shouldAutoDeposit']>) =>
+    getRequest('shouldAutoDeposit', args),
+  isApprovedVaultTokenByAddr: (...args: ExtractArgs<Contract['calls']['isApprovedVaultTokenByAddr']>) =>
+    getRequest('isApprovedVaultTokenByAddr', args),
+  checkVaultApprovals: (...args: ExtractArgs<Contract['calls']['checkVaultApprovals']>) =>
+    getRequest('checkVaultApprovals', args),
+  getVaultConfig: (...args: ExtractArgs<Contract['calls']['getVaultConfig']>) => getRequest('getVaultConfig', args),
+  getVaultConfigByAddr: (...args: ExtractArgs<Contract['calls']['getVaultConfigByAddr']>) =>
+    getRequest('getVaultConfigByAddr', args),
+  getVaultActionDataBundle: (...args: ExtractArgs<Contract['calls']['getVaultActionDataBundle']>) =>
+    getRequest('getVaultActionDataBundle', args),
+  getVaultActionDataWithFrozenStatus: (...args: ExtractArgs<Contract['calls']['getVaultActionDataWithFrozenStatus']>) =>
+    getRequest('getVaultActionDataWithFrozenStatus', args),
+  getLegoDataFromVaultToken: (...args: ExtractArgs<Contract['calls']['getLegoDataFromVaultToken']>) =>
+    getRequest('getLegoDataFromVaultToken', args),
+  getLegoAddrFromVaultToken: (...args: ExtractArgs<Contract['calls']['getLegoAddrFromVaultToken']>) =>
+    getRequest('getLegoAddrFromVaultToken', args),
+  getDepositConfig: (...args: ExtractArgs<Contract['calls']['getDepositConfig']>) =>
+    getRequest('getDepositConfig', args),
+  vaultConfigs: (...args: ExtractArgs<Contract['calls']['vaultConfigs']>) => getRequest('vaultConfigs', args),
+  isApprovedVaultToken: (...args: ExtractArgs<Contract['calls']['isApprovedVaultToken']>) =>
+    getRequest('isApprovedVaultToken', args),
 }
 
 export type Mutations = keyof Contract['mutations']
 function getMutation<M extends Mutations>(functionName: M) {
   return {
-    contractName: 'LegoBook' as const,
+    contractName: 'VaultRegistry' as const,
     functionName,
     deployAddress,
     argsType: undefined as ExtractArgs<Contract['mutations'][M]> | undefined,
@@ -1929,7 +3043,7 @@ function getMutation<M extends Mutations>(functionName: M) {
 
 export const mutation: {
   [K in Mutations]: {
-    contractName: 'LegoBook'
+    contractName: 'VaultRegistry'
     deployAddress: Address | undefined
     getAbi: () => typeof abi
     functionName: K
@@ -1950,13 +3064,16 @@ export const mutation: {
   startAddNewAddressToRegistry: getMutation('startAddNewAddressToRegistry'),
   confirmNewAddressToRegistry: getMutation('confirmNewAddressToRegistry'),
   cancelNewAddressToRegistry: getMutation('cancelNewAddressToRegistry'),
-  startAddressUpdateToRegistry: getMutation('startAddressUpdateToRegistry'),
-  confirmAddressUpdateToRegistry: getMutation('confirmAddressUpdateToRegistry'),
-  cancelAddressUpdateToRegistry: getMutation('cancelAddressUpdateToRegistry'),
-  startAddressDisableInRegistry: getMutation('startAddressDisableInRegistry'),
-  confirmAddressDisableInRegistry: getMutation('confirmAddressDisableInRegistry'),
-  cancelAddressDisableInRegistry: getMutation('cancelAddressDisableInRegistry'),
-  setLegoTools: getMutation('setLegoTools'),
+  setCanDeposit: getMutation('setCanDeposit'),
+  setCanWithdraw: getMutation('setCanWithdraw'),
+  setMaxDepositAmount: getMutation('setMaxDepositAmount'),
+  setVaultOpsFrozen: getMutation('setVaultOpsFrozen'),
+  setShouldAutoDeposit: getMutation('setShouldAutoDeposit'),
+  setMinYieldWithdrawAmount: getMutation('setMinYieldWithdrawAmount'),
+  setApprovedVaultToken: getMutation('setApprovedVaultToken'),
+  setDefaultTargetVaultToken: getMutation('setDefaultTargetVaultToken'),
+  setPerformanceFee: getMutation('setPerformanceFee'),
+  setRedemptionBuffer: getMutation('setRedemptionBuffer'),
 }
 
 export type SDK = {
@@ -2034,11 +3151,74 @@ export type SDK = {
   getUndyHq: (...args: ExtractArgs<Contract['calls']['getUndyHq']>) => Promise<CallReturn<'getUndyHq'>>
   canMintUndy: (...args: ExtractArgs<Contract['calls']['canMintUndy']>) => Promise<CallReturn<'canMintUndy'>>
   isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) => Promise<CallReturn<'isPaused'>>
-  isLegoAddr: (...args: ExtractArgs<Contract['calls']['isLegoAddr']>) => Promise<CallReturn<'isLegoAddr'>>
-  isValidLegoTools: (
-    ...args: ExtractArgs<Contract['calls']['isValidLegoTools']>
-  ) => Promise<CallReturn<'isValidLegoTools'>>
-  legoTools: (...args: ExtractArgs<Contract['calls']['legoTools']>) => Promise<CallReturn<'legoTools'>>
+  isEarnVault: (...args: ExtractArgs<Contract['calls']['isEarnVault']>) => Promise<CallReturn<'isEarnVault'>>
+  isValidVaultToken: (
+    ...args: ExtractArgs<Contract['calls']['isValidVaultToken']>
+  ) => Promise<CallReturn<'isValidVaultToken'>>
+  isValidDefaultTargetVaultToken: (
+    ...args: ExtractArgs<Contract['calls']['isValidDefaultTargetVaultToken']>
+  ) => Promise<CallReturn<'isValidDefaultTargetVaultToken'>>
+  isValidPerformanceFee: (
+    ...args: ExtractArgs<Contract['calls']['isValidPerformanceFee']>
+  ) => Promise<CallReturn<'isValidPerformanceFee'>>
+  isValidRedemptionBuffer: (
+    ...args: ExtractArgs<Contract['calls']['isValidRedemptionBuffer']>
+  ) => Promise<CallReturn<'isValidRedemptionBuffer'>>
+  canDeposit: (...args: ExtractArgs<Contract['calls']['canDeposit']>) => Promise<CallReturn<'canDeposit'>>
+  canWithdraw: (...args: ExtractArgs<Contract['calls']['canWithdraw']>) => Promise<CallReturn<'canWithdraw'>>
+  maxDepositAmount: (
+    ...args: ExtractArgs<Contract['calls']['maxDepositAmount']>
+  ) => Promise<CallReturn<'maxDepositAmount'>>
+  isVaultOpsFrozen: (
+    ...args: ExtractArgs<Contract['calls']['isVaultOpsFrozen']>
+  ) => Promise<CallReturn<'isVaultOpsFrozen'>>
+  redemptionBuffer: (
+    ...args: ExtractArgs<Contract['calls']['redemptionBuffer']>
+  ) => Promise<CallReturn<'redemptionBuffer'>>
+  minYieldWithdrawAmount: (
+    ...args: ExtractArgs<Contract['calls']['minYieldWithdrawAmount']>
+  ) => Promise<CallReturn<'minYieldWithdrawAmount'>>
+  redemptionConfig: (
+    ...args: ExtractArgs<Contract['calls']['redemptionConfig']>
+  ) => Promise<CallReturn<'redemptionConfig'>>
+  getPerformanceFee: (
+    ...args: ExtractArgs<Contract['calls']['getPerformanceFee']>
+  ) => Promise<CallReturn<'getPerformanceFee'>>
+  getDefaultTargetVaultToken: (
+    ...args: ExtractArgs<Contract['calls']['getDefaultTargetVaultToken']>
+  ) => Promise<CallReturn<'getDefaultTargetVaultToken'>>
+  shouldAutoDeposit: (
+    ...args: ExtractArgs<Contract['calls']['shouldAutoDeposit']>
+  ) => Promise<CallReturn<'shouldAutoDeposit'>>
+  isApprovedVaultTokenByAddr: (
+    ...args: ExtractArgs<Contract['calls']['isApprovedVaultTokenByAddr']>
+  ) => Promise<CallReturn<'isApprovedVaultTokenByAddr'>>
+  checkVaultApprovals: (
+    ...args: ExtractArgs<Contract['calls']['checkVaultApprovals']>
+  ) => Promise<CallReturn<'checkVaultApprovals'>>
+  getVaultConfig: (...args: ExtractArgs<Contract['calls']['getVaultConfig']>) => Promise<CallReturn<'getVaultConfig'>>
+  getVaultConfigByAddr: (
+    ...args: ExtractArgs<Contract['calls']['getVaultConfigByAddr']>
+  ) => Promise<CallReturn<'getVaultConfigByAddr'>>
+  getVaultActionDataBundle: (
+    ...args: ExtractArgs<Contract['calls']['getVaultActionDataBundle']>
+  ) => Promise<CallReturn<'getVaultActionDataBundle'>>
+  getVaultActionDataWithFrozenStatus: (
+    ...args: ExtractArgs<Contract['calls']['getVaultActionDataWithFrozenStatus']>
+  ) => Promise<CallReturn<'getVaultActionDataWithFrozenStatus'>>
+  getLegoDataFromVaultToken: (
+    ...args: ExtractArgs<Contract['calls']['getLegoDataFromVaultToken']>
+  ) => Promise<CallReturn<'getLegoDataFromVaultToken'>>
+  getLegoAddrFromVaultToken: (
+    ...args: ExtractArgs<Contract['calls']['getLegoAddrFromVaultToken']>
+  ) => Promise<CallReturn<'getLegoAddrFromVaultToken'>>
+  getDepositConfig: (
+    ...args: ExtractArgs<Contract['calls']['getDepositConfig']>
+  ) => Promise<CallReturn<'getDepositConfig'>>
+  vaultConfigs: (...args: ExtractArgs<Contract['calls']['vaultConfigs']>) => Promise<CallReturn<'vaultConfigs'>>
+  isApprovedVaultToken: (
+    ...args: ExtractArgs<Contract['calls']['isApprovedVaultToken']>
+  ) => Promise<CallReturn<'isApprovedVaultToken'>>
   startGovernanceChange: (...args: ExtractArgs<Contract['mutations']['startGovernanceChange']>) => Promise<Address>
   confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) => Promise<Address>
   cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) => Promise<Address>
@@ -2061,25 +3241,20 @@ export type SDK = {
   cancelNewAddressToRegistry: (
     ...args: ExtractArgs<Contract['mutations']['cancelNewAddressToRegistry']>
   ) => Promise<Address>
-  startAddressUpdateToRegistry: (
-    ...args: ExtractArgs<Contract['mutations']['startAddressUpdateToRegistry']>
+  setCanDeposit: (...args: ExtractArgs<Contract['mutations']['setCanDeposit']>) => Promise<Address>
+  setCanWithdraw: (...args: ExtractArgs<Contract['mutations']['setCanWithdraw']>) => Promise<Address>
+  setMaxDepositAmount: (...args: ExtractArgs<Contract['mutations']['setMaxDepositAmount']>) => Promise<Address>
+  setVaultOpsFrozen: (...args: ExtractArgs<Contract['mutations']['setVaultOpsFrozen']>) => Promise<Address>
+  setShouldAutoDeposit: (...args: ExtractArgs<Contract['mutations']['setShouldAutoDeposit']>) => Promise<Address>
+  setMinYieldWithdrawAmount: (
+    ...args: ExtractArgs<Contract['mutations']['setMinYieldWithdrawAmount']>
   ) => Promise<Address>
-  confirmAddressUpdateToRegistry: (
-    ...args: ExtractArgs<Contract['mutations']['confirmAddressUpdateToRegistry']>
+  setApprovedVaultToken: (...args: ExtractArgs<Contract['mutations']['setApprovedVaultToken']>) => Promise<Address>
+  setDefaultTargetVaultToken: (
+    ...args: ExtractArgs<Contract['mutations']['setDefaultTargetVaultToken']>
   ) => Promise<Address>
-  cancelAddressUpdateToRegistry: (
-    ...args: ExtractArgs<Contract['mutations']['cancelAddressUpdateToRegistry']>
-  ) => Promise<Address>
-  startAddressDisableInRegistry: (
-    ...args: ExtractArgs<Contract['mutations']['startAddressDisableInRegistry']>
-  ) => Promise<Address>
-  confirmAddressDisableInRegistry: (
-    ...args: ExtractArgs<Contract['mutations']['confirmAddressDisableInRegistry']>
-  ) => Promise<Address>
-  cancelAddressDisableInRegistry: (
-    ...args: ExtractArgs<Contract['mutations']['cancelAddressDisableInRegistry']>
-  ) => Promise<Address>
-  setLegoTools: (...args: ExtractArgs<Contract['mutations']['setLegoTools']>) => Promise<Address>
+  setPerformanceFee: (...args: ExtractArgs<Contract['mutations']['setPerformanceFee']>) => Promise<Address>
+  setRedemptionBuffer: (...args: ExtractArgs<Contract['mutations']['setRedemptionBuffer']>) => Promise<Address>
 }
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
@@ -2165,12 +3340,76 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.canMintUndy(...args)) as Promise<CallReturn<'canMintUndy'>>,
     isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) =>
       singleQuery(publicClient!, call.isPaused(...args)) as Promise<CallReturn<'isPaused'>>,
-    isLegoAddr: (...args: ExtractArgs<Contract['calls']['isLegoAddr']>) =>
-      singleQuery(publicClient!, call.isLegoAddr(...args)) as Promise<CallReturn<'isLegoAddr'>>,
-    isValidLegoTools: (...args: ExtractArgs<Contract['calls']['isValidLegoTools']>) =>
-      singleQuery(publicClient!, call.isValidLegoTools(...args)) as Promise<CallReturn<'isValidLegoTools'>>,
-    legoTools: (...args: ExtractArgs<Contract['calls']['legoTools']>) =>
-      singleQuery(publicClient!, call.legoTools(...args)) as Promise<CallReturn<'legoTools'>>,
+    isEarnVault: (...args: ExtractArgs<Contract['calls']['isEarnVault']>) =>
+      singleQuery(publicClient!, call.isEarnVault(...args)) as Promise<CallReturn<'isEarnVault'>>,
+    isValidVaultToken: (...args: ExtractArgs<Contract['calls']['isValidVaultToken']>) =>
+      singleQuery(publicClient!, call.isValidVaultToken(...args)) as Promise<CallReturn<'isValidVaultToken'>>,
+    isValidDefaultTargetVaultToken: (...args: ExtractArgs<Contract['calls']['isValidDefaultTargetVaultToken']>) =>
+      singleQuery(publicClient!, call.isValidDefaultTargetVaultToken(...args)) as Promise<
+        CallReturn<'isValidDefaultTargetVaultToken'>
+      >,
+    isValidPerformanceFee: (...args: ExtractArgs<Contract['calls']['isValidPerformanceFee']>) =>
+      singleQuery(publicClient!, call.isValidPerformanceFee(...args)) as Promise<CallReturn<'isValidPerformanceFee'>>,
+    isValidRedemptionBuffer: (...args: ExtractArgs<Contract['calls']['isValidRedemptionBuffer']>) =>
+      singleQuery(publicClient!, call.isValidRedemptionBuffer(...args)) as Promise<
+        CallReturn<'isValidRedemptionBuffer'>
+      >,
+    canDeposit: (...args: ExtractArgs<Contract['calls']['canDeposit']>) =>
+      singleQuery(publicClient!, call.canDeposit(...args)) as Promise<CallReturn<'canDeposit'>>,
+    canWithdraw: (...args: ExtractArgs<Contract['calls']['canWithdraw']>) =>
+      singleQuery(publicClient!, call.canWithdraw(...args)) as Promise<CallReturn<'canWithdraw'>>,
+    maxDepositAmount: (...args: ExtractArgs<Contract['calls']['maxDepositAmount']>) =>
+      singleQuery(publicClient!, call.maxDepositAmount(...args)) as Promise<CallReturn<'maxDepositAmount'>>,
+    isVaultOpsFrozen: (...args: ExtractArgs<Contract['calls']['isVaultOpsFrozen']>) =>
+      singleQuery(publicClient!, call.isVaultOpsFrozen(...args)) as Promise<CallReturn<'isVaultOpsFrozen'>>,
+    redemptionBuffer: (...args: ExtractArgs<Contract['calls']['redemptionBuffer']>) =>
+      singleQuery(publicClient!, call.redemptionBuffer(...args)) as Promise<CallReturn<'redemptionBuffer'>>,
+    minYieldWithdrawAmount: (...args: ExtractArgs<Contract['calls']['minYieldWithdrawAmount']>) =>
+      singleQuery(publicClient!, call.minYieldWithdrawAmount(...args)) as Promise<CallReturn<'minYieldWithdrawAmount'>>,
+    redemptionConfig: (...args: ExtractArgs<Contract['calls']['redemptionConfig']>) =>
+      singleQuery(publicClient!, call.redemptionConfig(...args)) as Promise<CallReturn<'redemptionConfig'>>,
+    getPerformanceFee: (...args: ExtractArgs<Contract['calls']['getPerformanceFee']>) =>
+      singleQuery(publicClient!, call.getPerformanceFee(...args)) as Promise<CallReturn<'getPerformanceFee'>>,
+    getDefaultTargetVaultToken: (...args: ExtractArgs<Contract['calls']['getDefaultTargetVaultToken']>) =>
+      singleQuery(publicClient!, call.getDefaultTargetVaultToken(...args)) as Promise<
+        CallReturn<'getDefaultTargetVaultToken'>
+      >,
+    shouldAutoDeposit: (...args: ExtractArgs<Contract['calls']['shouldAutoDeposit']>) =>
+      singleQuery(publicClient!, call.shouldAutoDeposit(...args)) as Promise<CallReturn<'shouldAutoDeposit'>>,
+    isApprovedVaultTokenByAddr: (...args: ExtractArgs<Contract['calls']['isApprovedVaultTokenByAddr']>) =>
+      singleQuery(publicClient!, call.isApprovedVaultTokenByAddr(...args)) as Promise<
+        CallReturn<'isApprovedVaultTokenByAddr'>
+      >,
+    checkVaultApprovals: (...args: ExtractArgs<Contract['calls']['checkVaultApprovals']>) =>
+      singleQuery(publicClient!, call.checkVaultApprovals(...args)) as Promise<CallReturn<'checkVaultApprovals'>>,
+    getVaultConfig: (...args: ExtractArgs<Contract['calls']['getVaultConfig']>) =>
+      singleQuery(publicClient!, call.getVaultConfig(...args)) as Promise<CallReturn<'getVaultConfig'>>,
+    getVaultConfigByAddr: (...args: ExtractArgs<Contract['calls']['getVaultConfigByAddr']>) =>
+      singleQuery(publicClient!, call.getVaultConfigByAddr(...args)) as Promise<CallReturn<'getVaultConfigByAddr'>>,
+    getVaultActionDataBundle: (...args: ExtractArgs<Contract['calls']['getVaultActionDataBundle']>) =>
+      singleQuery(publicClient!, call.getVaultActionDataBundle(...args)) as Promise<
+        CallReturn<'getVaultActionDataBundle'>
+      >,
+    getVaultActionDataWithFrozenStatus: (
+      ...args: ExtractArgs<Contract['calls']['getVaultActionDataWithFrozenStatus']>
+    ) =>
+      singleQuery(publicClient!, call.getVaultActionDataWithFrozenStatus(...args)) as Promise<
+        CallReturn<'getVaultActionDataWithFrozenStatus'>
+      >,
+    getLegoDataFromVaultToken: (...args: ExtractArgs<Contract['calls']['getLegoDataFromVaultToken']>) =>
+      singleQuery(publicClient!, call.getLegoDataFromVaultToken(...args)) as Promise<
+        CallReturn<'getLegoDataFromVaultToken'>
+      >,
+    getLegoAddrFromVaultToken: (...args: ExtractArgs<Contract['calls']['getLegoAddrFromVaultToken']>) =>
+      singleQuery(publicClient!, call.getLegoAddrFromVaultToken(...args)) as Promise<
+        CallReturn<'getLegoAddrFromVaultToken'>
+      >,
+    getDepositConfig: (...args: ExtractArgs<Contract['calls']['getDepositConfig']>) =>
+      singleQuery(publicClient!, call.getDepositConfig(...args)) as Promise<CallReturn<'getDepositConfig'>>,
+    vaultConfigs: (...args: ExtractArgs<Contract['calls']['vaultConfigs']>) =>
+      singleQuery(publicClient!, call.vaultConfigs(...args)) as Promise<CallReturn<'vaultConfigs'>>,
+    isApprovedVaultToken: (...args: ExtractArgs<Contract['calls']['isApprovedVaultToken']>) =>
+      singleQuery(publicClient!, call.isApprovedVaultToken(...args)) as Promise<CallReturn<'isApprovedVaultToken'>>,
 
     // Mutations
     startGovernanceChange: (...args: ExtractArgs<Contract['mutations']['startGovernanceChange']>) =>
@@ -2200,19 +3439,25 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.confirmNewAddressToRegistry)(...args),
     cancelNewAddressToRegistry: (...args: ExtractArgs<Contract['mutations']['cancelNewAddressToRegistry']>) =>
       mutate(walletClient!, mutation.cancelNewAddressToRegistry)(...args),
-    startAddressUpdateToRegistry: (...args: ExtractArgs<Contract['mutations']['startAddressUpdateToRegistry']>) =>
-      mutate(walletClient!, mutation.startAddressUpdateToRegistry)(...args),
-    confirmAddressUpdateToRegistry: (...args: ExtractArgs<Contract['mutations']['confirmAddressUpdateToRegistry']>) =>
-      mutate(walletClient!, mutation.confirmAddressUpdateToRegistry)(...args),
-    cancelAddressUpdateToRegistry: (...args: ExtractArgs<Contract['mutations']['cancelAddressUpdateToRegistry']>) =>
-      mutate(walletClient!, mutation.cancelAddressUpdateToRegistry)(...args),
-    startAddressDisableInRegistry: (...args: ExtractArgs<Contract['mutations']['startAddressDisableInRegistry']>) =>
-      mutate(walletClient!, mutation.startAddressDisableInRegistry)(...args),
-    confirmAddressDisableInRegistry: (...args: ExtractArgs<Contract['mutations']['confirmAddressDisableInRegistry']>) =>
-      mutate(walletClient!, mutation.confirmAddressDisableInRegistry)(...args),
-    cancelAddressDisableInRegistry: (...args: ExtractArgs<Contract['mutations']['cancelAddressDisableInRegistry']>) =>
-      mutate(walletClient!, mutation.cancelAddressDisableInRegistry)(...args),
-    setLegoTools: (...args: ExtractArgs<Contract['mutations']['setLegoTools']>) =>
-      mutate(walletClient!, mutation.setLegoTools)(...args),
+    setCanDeposit: (...args: ExtractArgs<Contract['mutations']['setCanDeposit']>) =>
+      mutate(walletClient!, mutation.setCanDeposit)(...args),
+    setCanWithdraw: (...args: ExtractArgs<Contract['mutations']['setCanWithdraw']>) =>
+      mutate(walletClient!, mutation.setCanWithdraw)(...args),
+    setMaxDepositAmount: (...args: ExtractArgs<Contract['mutations']['setMaxDepositAmount']>) =>
+      mutate(walletClient!, mutation.setMaxDepositAmount)(...args),
+    setVaultOpsFrozen: (...args: ExtractArgs<Contract['mutations']['setVaultOpsFrozen']>) =>
+      mutate(walletClient!, mutation.setVaultOpsFrozen)(...args),
+    setShouldAutoDeposit: (...args: ExtractArgs<Contract['mutations']['setShouldAutoDeposit']>) =>
+      mutate(walletClient!, mutation.setShouldAutoDeposit)(...args),
+    setMinYieldWithdrawAmount: (...args: ExtractArgs<Contract['mutations']['setMinYieldWithdrawAmount']>) =>
+      mutate(walletClient!, mutation.setMinYieldWithdrawAmount)(...args),
+    setApprovedVaultToken: (...args: ExtractArgs<Contract['mutations']['setApprovedVaultToken']>) =>
+      mutate(walletClient!, mutation.setApprovedVaultToken)(...args),
+    setDefaultTargetVaultToken: (...args: ExtractArgs<Contract['mutations']['setDefaultTargetVaultToken']>) =>
+      mutate(walletClient!, mutation.setDefaultTargetVaultToken)(...args),
+    setPerformanceFee: (...args: ExtractArgs<Contract['mutations']['setPerformanceFee']>) =>
+      mutate(walletClient!, mutation.setPerformanceFee)(...args),
+    setRedemptionBuffer: (...args: ExtractArgs<Contract['mutations']['setRedemptionBuffer']>) =>
+      mutate(walletClient!, mutation.setRedemptionBuffer)(...args),
   }
 }

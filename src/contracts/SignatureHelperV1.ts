@@ -11,6 +11,9 @@ type Address = `0x${string}`
 
 export const abi = [
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getTransferFundsHash',
     inputs: [
       {
         name: '_agentWrapper',
@@ -25,7 +28,6 @@ export const abi = [
         type: 'address',
       },
     ],
-    name: 'getTransferFundsHash',
     outputs: [
       {
         name: '',
@@ -40,10 +42,11 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getTransferFundsHash',
     inputs: [
       {
         name: '_agentWrapper',
@@ -62,7 +65,6 @@ export const abi = [
         type: 'address',
       },
     ],
-    name: 'getTransferFundsHash',
     outputs: [
       {
         name: '',
@@ -77,10 +79,11 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getTransferFundsHash',
     inputs: [
       {
         name: '_agentWrapper',
@@ -103,7 +106,6 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    name: 'getTransferFundsHash',
     outputs: [
       {
         name: '',
@@ -118,10 +120,11 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getTransferFundsHash',
     inputs: [
       {
         name: '_agentWrapper',
@@ -148,7 +151,6 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    name: 'getTransferFundsHash',
     outputs: [
       {
         name: '',
@@ -163,10 +165,11 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getTransferFundsHash',
     inputs: [
       {
         name: '_agentWrapper',
@@ -197,7 +200,6 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    name: 'getTransferFundsHash',
     outputs: [
       {
         name: '',
@@ -212,10 +214,11 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDepositForYieldHash',
     inputs: [
       {
         name: '_agentWrapper',
@@ -234,7 +237,6 @@ export const abi = [
         type: 'address',
       },
     ],
-    name: 'getDepositForYieldHash',
     outputs: [
       {
         name: '',
@@ -249,51 +251,11 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_vaultAddr',
-        type: 'address',
-      },
-    ],
+    stateMutability: 'view',
+    type: 'function',
     name: 'getDepositForYieldHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         name: '_agentWrapper',
@@ -315,12 +277,7 @@ export const abi = [
         name: '_vaultAddr',
         type: 'address',
       },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
     ],
-    name: 'getDepositForYieldHash',
     outputs: [
       {
         name: '',
@@ -335,10 +292,11 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDepositForYieldHash',
     inputs: [
       {
         name: '_agentWrapper',
@@ -364,12 +322,7 @@ export const abi = [
         name: '_amount',
         type: 'uint256',
       },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
     ],
-    name: 'getDepositForYieldHash',
     outputs: [
       {
         name: '',
@@ -384,10 +337,11 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDepositForYieldHash',
     inputs: [
       {
         name: '_agentWrapper',
@@ -417,12 +371,7 @@ export const abi = [
         name: '_extraData',
         type: 'bytes32',
       },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
     ],
-    name: 'getDepositForYieldHash',
     outputs: [
       {
         name: '',
@@ -437,10 +386,11 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDepositForYieldHash',
     inputs: [
       {
         name: '_agentWrapper',
@@ -474,30 +424,26 @@ export const abi = [
         name: '_nonce',
         type: 'uint256',
       },
+    ],
+    outputs: [
       {
-        name: '_expiration',
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
         type: 'uint256',
       },
     ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     name: 'getDepositForYieldHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         name: '_agentWrapper',
@@ -512,179 +458,11 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_vaultToken',
-        type: 'address',
-      },
-    ],
-    name: 'getWithdrawFromYieldHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
+        name: '_asset',
         type: 'address',
       },
       {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_vaultToken',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'getWithdrawFromYieldHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_vaultToken',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-    ],
-    name: 'getWithdrawFromYieldHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_vaultToken',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-    ],
-    name: 'getWithdrawFromYieldHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_vaultToken',
+        name: '_vaultAddr',
         type: 'address',
       },
       {
@@ -704,7 +482,6 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    name: 'getWithdrawFromYieldHash',
     outputs: [
       {
         name: '',
@@ -719,10 +496,236 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getWithdrawFromYieldHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getWithdrawFromYieldHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getWithdrawFromYieldHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getWithdrawFromYieldHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getWithdrawFromYieldHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+      {
+        name: '_expiration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRebalanceYieldPositionHash',
     inputs: [
       {
         name: '_agentWrapper',
@@ -745,7 +748,6 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    name: 'getRebalanceYieldPositionHash',
     outputs: [
       {
         name: '',
@@ -760,55 +762,11 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_fromLegoId',
-        type: 'uint256',
-      },
-      {
-        name: '_fromVaultToken',
-        type: 'address',
-      },
-      {
-        name: '_toLegoId',
-        type: 'uint256',
-      },
-      {
-        name: '_toVaultAddr',
-        type: 'address',
-      },
-    ],
+    stateMutability: 'view',
+    type: 'function',
     name: 'getRebalanceYieldPositionHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         name: '_agentWrapper',
@@ -834,12 +792,7 @@ export const abi = [
         name: '_toVaultAddr',
         type: 'address',
       },
-      {
-        name: '_fromVaultAmount',
-        type: 'uint256',
-      },
     ],
-    name: 'getRebalanceYieldPositionHash',
     outputs: [
       {
         name: '',
@@ -854,10 +807,11 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRebalanceYieldPositionHash',
     inputs: [
       {
         name: '_agentWrapper',
@@ -887,12 +841,7 @@ export const abi = [
         name: '_fromVaultAmount',
         type: 'uint256',
       },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
     ],
-    name: 'getRebalanceYieldPositionHash',
     outputs: [
       {
         name: '',
@@ -907,10 +856,11 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRebalanceYieldPositionHash',
     inputs: [
       {
         name: '_agentWrapper',
@@ -944,12 +894,7 @@ export const abi = [
         name: '_extraData',
         type: 'bytes32',
       },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
     ],
-    name: 'getRebalanceYieldPositionHash',
     outputs: [
       {
         name: '',
@@ -964,10 +909,11 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRebalanceYieldPositionHash',
     inputs: [
       {
         name: '_agentWrapper',
@@ -1005,12 +951,7 @@ export const abi = [
         name: '_nonce',
         type: 'uint256',
       },
-      {
-        name: '_expiration',
-        type: 'uint256',
-      },
     ],
-    name: 'getRebalanceYieldPositionHash',
     outputs: [
       {
         name: '',
@@ -1025,10 +966,11 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRebalanceYieldPositionHash',
     inputs: [
       {
         name: '_agentWrapper',
@@ -1039,6 +981,69 @@ export const abi = [
         type: 'address',
       },
       {
+        name: '_fromLegoId',
+        type: 'uint256',
+      },
+      {
+        name: '_fromVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_toLegoId',
+        type: 'uint256',
+      },
+      {
+        name: '_toVaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_fromVaultAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+      {
+        name: '_expiration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getSwapTokensHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_swapInstructions',
+        type: 'tuple[]',
         components: [
           {
             name: 'legoId',
@@ -1061,11 +1066,8 @@ export const abi = [
             type: 'address[]',
           },
         ],
-        name: '_swapInstructions',
-        type: 'tuple[]',
       },
     ],
-    name: 'getSwapTokensHash',
     outputs: [
       {
         name: '',
@@ -1080,10 +1082,11 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getSwapTokensHash',
     inputs: [
       {
         name: '_agentWrapper',
@@ -1094,6 +1097,8 @@ export const abi = [
         type: 'address',
       },
       {
+        name: '_swapInstructions',
+        type: 'tuple[]',
         components: [
           {
             name: 'legoId',
@@ -1116,15 +1121,12 @@ export const abi = [
             type: 'address[]',
           },
         ],
-        name: '_swapInstructions',
-        type: 'tuple[]',
       },
       {
         name: '_nonce',
         type: 'uint256',
       },
     ],
-    name: 'getSwapTokensHash',
     outputs: [
       {
         name: '',
@@ -1139,10 +1141,11 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getSwapTokensHash',
     inputs: [
       {
         name: '_agentWrapper',
@@ -1153,6 +1156,8 @@ export const abi = [
         type: 'address',
       },
       {
+        name: '_swapInstructions',
+        type: 'tuple[]',
         components: [
           {
             name: 'legoId',
@@ -1175,4120 +1180,4120 @@ export const abi = [
             type: 'address[]',
           },
         ],
-        name: '_swapInstructions',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+      {
+        name: '_expiration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getMintOrRedeemAssetHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getMintOrRedeemAssetHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getMintOrRedeemAssetHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getMintOrRedeemAssetHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getMintOrRedeemAssetHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getMintOrRedeemAssetHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+      {
+        name: '_expiration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getConfirmMintOrRedeemAssetHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getConfirmMintOrRedeemAssetHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getConfirmMintOrRedeemAssetHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getConfirmMintOrRedeemAssetHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+      {
+        name: '_expiration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddCollateralHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddCollateralHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddCollateralHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddCollateralHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddCollateralHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+      {
+        name: '_expiration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveCollateralHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveCollateralHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveCollateralHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveCollateralHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveCollateralHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+      {
+        name: '_expiration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getBorrowHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_borrowAsset',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getBorrowHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_borrowAsset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getBorrowHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_borrowAsset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getBorrowHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_borrowAsset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getBorrowHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_borrowAsset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+      {
+        name: '_expiration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRepayDebtHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_paymentAsset',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRepayDebtHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_paymentAsset',
+        type: 'address',
+      },
+      {
+        name: '_paymentAmount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRepayDebtHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_paymentAsset',
+        type: 'address',
+      },
+      {
+        name: '_paymentAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRepayDebtHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_paymentAsset',
+        type: 'address',
+      },
+      {
+        name: '_paymentAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRepayDebtHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_paymentAsset',
+        type: 'address',
+      },
+      {
+        name: '_paymentAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+      {
+        name: '_expiration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getClaimRewardsHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getClaimRewardsHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_rewardToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getClaimRewardsHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_rewardToken',
+        type: 'address',
+      },
+      {
+        name: '_rewardAmount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getClaimRewardsHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_rewardToken',
+        type: 'address',
+      },
+      {
+        name: '_rewardAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getClaimRewardsHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_rewardToken',
+        type: 'address',
+      },
+      {
+        name: '_rewardAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getClaimRewardsHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_rewardToken',
+        type: 'address',
+      },
+      {
+        name: '_rewardAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+      {
+        name: '_expiration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getConvertWethToEthHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getConvertWethToEthHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getConvertWethToEthHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getConvertWethToEthHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+      {
+        name: '_expiration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getConvertEthToWethHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getConvertEthToWethHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getConvertEthToWethHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getConvertEthToWethHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+      {
+        name: '_expiration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minLpAmount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minLpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minLpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minLpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+      {
+        name: '_expiration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveLiquidityHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_lpToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveLiquidityHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_lpToken',
+        type: 'address',
+      },
+      {
+        name: '_lpAmount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveLiquidityHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_lpToken',
+        type: 'address',
+      },
+      {
+        name: '_lpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveLiquidityHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_lpToken',
+        type: 'address',
+      },
+      {
+        name: '_lpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveLiquidityHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_lpToken',
+        type: 'address',
+      },
+      {
+        name: '_lpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveLiquidityHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_lpToken',
+        type: 'address',
+      },
+      {
+        name: '_lpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveLiquidityHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_lpToken',
+        type: 'address',
+      },
+      {
+        name: '_lpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+      {
+        name: '_expiration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityConcentratedHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityConcentratedHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityConcentratedHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityConcentratedHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_tickLower',
+        type: 'int24',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityConcentratedHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_tickLower',
+        type: 'int24',
+      },
+      {
+        name: '_tickUpper',
+        type: 'int24',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityConcentratedHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_tickLower',
+        type: 'int24',
+      },
+      {
+        name: '_tickUpper',
+        type: 'int24',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityConcentratedHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_tickLower',
+        type: 'int24',
+      },
+      {
+        name: '_tickUpper',
+        type: 'int24',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityConcentratedHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_tickLower',
+        type: 'int24',
+      },
+      {
+        name: '_tickUpper',
+        type: 'int24',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityConcentratedHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_tickLower',
+        type: 'int24',
+      },
+      {
+        name: '_tickUpper',
+        type: 'int24',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAddLiquidityConcentratedHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_tickLower',
+        type: 'int24',
+      },
+      {
+        name: '_tickUpper',
+        type: 'int24',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+      {
+        name: '_expiration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveLiquidityConcentratedHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveLiquidityConcentratedHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_liqToRemove',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveLiquidityConcentratedHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_liqToRemove',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveLiquidityConcentratedHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_liqToRemove',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveLiquidityConcentratedHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_liqToRemove',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveLiquidityConcentratedHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_liqToRemove',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRemoveLiquidityConcentratedHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_liqToRemove',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+      {
+        name: '_expiration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getBatchActionsHash',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_instructions',
         type: 'tuple[]',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-      {
-        name: '_expiration',
-        type: 'uint256',
-      },
-    ],
-    name: 'getSwapTokensHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_tokenIn',
-        type: 'address',
-      },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-    ],
-    name: 'getMintOrRedeemAssetHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_tokenIn',
-        type: 'address',
-      },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-      {
-        name: '_amountIn',
-        type: 'uint256',
-      },
-    ],
-    name: 'getMintOrRedeemAssetHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_tokenIn',
-        type: 'address',
-      },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-      {
-        name: '_amountIn',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountOut',
-        type: 'uint256',
-      },
-    ],
-    name: 'getMintOrRedeemAssetHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_tokenIn',
-        type: 'address',
-      },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-      {
-        name: '_amountIn',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountOut',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-    ],
-    name: 'getMintOrRedeemAssetHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_tokenIn',
-        type: 'address',
-      },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-      {
-        name: '_amountIn',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountOut',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-    ],
-    name: 'getMintOrRedeemAssetHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_tokenIn',
-        type: 'address',
-      },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-      {
-        name: '_amountIn',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountOut',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-      {
-        name: '_expiration',
-        type: 'uint256',
-      },
-    ],
-    name: 'getMintOrRedeemAssetHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_tokenIn',
-        type: 'address',
-      },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-    ],
-    name: 'getConfirmMintOrRedeemAssetHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_tokenIn',
-        type: 'address',
-      },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-    ],
-    name: 'getConfirmMintOrRedeemAssetHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_tokenIn',
-        type: 'address',
-      },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-    ],
-    name: 'getConfirmMintOrRedeemAssetHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_tokenIn',
-        type: 'address',
-      },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-      {
-        name: '_expiration',
-        type: 'uint256',
-      },
-    ],
-    name: 'getConfirmMintOrRedeemAssetHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_asset',
-        type: 'address',
-      },
-    ],
-    name: 'getAddCollateralHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'getAddCollateralHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-    ],
-    name: 'getAddCollateralHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-    ],
-    name: 'getAddCollateralHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-      {
-        name: '_expiration',
-        type: 'uint256',
-      },
-    ],
-    name: 'getAddCollateralHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_asset',
-        type: 'address',
-      },
-    ],
-    name: 'getRemoveCollateralHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'getRemoveCollateralHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-    ],
-    name: 'getRemoveCollateralHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-    ],
-    name: 'getRemoveCollateralHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-      {
-        name: '_expiration',
-        type: 'uint256',
-      },
-    ],
-    name: 'getRemoveCollateralHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_borrowAsset',
-        type: 'address',
-      },
-    ],
-    name: 'getBorrowHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_borrowAsset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'getBorrowHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_borrowAsset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-    ],
-    name: 'getBorrowHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_borrowAsset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-    ],
-    name: 'getBorrowHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_borrowAsset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-      {
-        name: '_expiration',
-        type: 'uint256',
-      },
-    ],
-    name: 'getBorrowHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_paymentAsset',
-        type: 'address',
-      },
-    ],
-    name: 'getRepayDebtHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_paymentAsset',
-        type: 'address',
-      },
-      {
-        name: '_paymentAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'getRepayDebtHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_paymentAsset',
-        type: 'address',
-      },
-      {
-        name: '_paymentAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-    ],
-    name: 'getRepayDebtHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_paymentAsset',
-        type: 'address',
-      },
-      {
-        name: '_paymentAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-    ],
-    name: 'getRepayDebtHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_paymentAsset',
-        type: 'address',
-      },
-      {
-        name: '_paymentAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-      {
-        name: '_expiration',
-        type: 'uint256',
-      },
-    ],
-    name: 'getRepayDebtHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-    ],
-    name: 'getClaimRewardsHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_rewardToken',
-        type: 'address',
-      },
-    ],
-    name: 'getClaimRewardsHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_rewardToken',
-        type: 'address',
-      },
-      {
-        name: '_rewardAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'getClaimRewardsHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_rewardToken',
-        type: 'address',
-      },
-      {
-        name: '_rewardAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-    ],
-    name: 'getClaimRewardsHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_rewardToken',
-        type: 'address',
-      },
-      {
-        name: '_rewardAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-    ],
-    name: 'getClaimRewardsHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_rewardToken',
-        type: 'address',
-      },
-      {
-        name: '_rewardAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-      {
-        name: '_expiration',
-        type: 'uint256',
-      },
-    ],
-    name: 'getClaimRewardsHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-    ],
-    name: 'getConvertWethToEthHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'getConvertWethToEthHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-    ],
-    name: 'getConvertWethToEthHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-      {
-        name: '_expiration',
-        type: 'uint256',
-      },
-    ],
-    name: 'getConvertWethToEthHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-    ],
-    name: 'getConvertEthToWethHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'getConvertEthToWethHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-    ],
-    name: 'getConvertEthToWethHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-      {
-        name: '_expiration',
-        type: 'uint256',
-      },
-    ],
-    name: 'getConvertEthToWethHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-    ],
-    name: 'getAddLiquidityHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-    ],
-    name: 'getAddLiquidityHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-    ],
-    name: 'getAddLiquidityHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-    ],
-    name: 'getAddLiquidityHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-    ],
-    name: 'getAddLiquidityHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minLpAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'getAddLiquidityHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minLpAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-    ],
-    name: 'getAddLiquidityHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minLpAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-    ],
-    name: 'getAddLiquidityHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minLpAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-      {
-        name: '_expiration',
-        type: 'uint256',
-      },
-    ],
-    name: 'getAddLiquidityHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_lpToken',
-        type: 'address',
-      },
-    ],
-    name: 'getRemoveLiquidityHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_lpToken',
-        type: 'address',
-      },
-      {
-        name: '_lpAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'getRemoveLiquidityHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_lpToken',
-        type: 'address',
-      },
-      {
-        name: '_lpAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-    ],
-    name: 'getRemoveLiquidityHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_lpToken',
-        type: 'address',
-      },
-      {
-        name: '_lpAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-    ],
-    name: 'getRemoveLiquidityHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_lpToken',
-        type: 'address',
-      },
-      {
-        name: '_lpAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-    ],
-    name: 'getRemoveLiquidityHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_lpToken',
-        type: 'address',
-      },
-      {
-        name: '_lpAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-    ],
-    name: 'getRemoveLiquidityHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_lpToken',
-        type: 'address',
-      },
-      {
-        name: '_lpAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-      {
-        name: '_expiration',
-        type: 'uint256',
-      },
-    ],
-    name: 'getRemoveLiquidityHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_nftAddr',
-        type: 'address',
-      },
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-    ],
-    name: 'getAddLiquidityConcentratedHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_nftAddr',
-        type: 'address',
-      },
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-    ],
-    name: 'getAddLiquidityConcentratedHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_nftAddr',
-        type: 'address',
-      },
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-    ],
-    name: 'getAddLiquidityConcentratedHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_nftAddr',
-        type: 'address',
-      },
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_tickLower',
-        type: 'int24',
-      },
-    ],
-    name: 'getAddLiquidityConcentratedHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_nftAddr',
-        type: 'address',
-      },
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_tickLower',
-        type: 'int24',
-      },
-      {
-        name: '_tickUpper',
-        type: 'int24',
-      },
-    ],
-    name: 'getAddLiquidityConcentratedHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_nftAddr',
-        type: 'address',
-      },
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_tickLower',
-        type: 'int24',
-      },
-      {
-        name: '_tickUpper',
-        type: 'int24',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-    ],
-    name: 'getAddLiquidityConcentratedHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_nftAddr',
-        type: 'address',
-      },
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_tickLower',
-        type: 'int24',
-      },
-      {
-        name: '_tickUpper',
-        type: 'int24',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-    ],
-    name: 'getAddLiquidityConcentratedHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_nftAddr',
-        type: 'address',
-      },
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_tickLower',
-        type: 'int24',
-      },
-      {
-        name: '_tickUpper',
-        type: 'int24',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-    ],
-    name: 'getAddLiquidityConcentratedHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_nftAddr',
-        type: 'address',
-      },
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_tickLower',
-        type: 'int24',
-      },
-      {
-        name: '_tickUpper',
-        type: 'int24',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-    ],
-    name: 'getAddLiquidityConcentratedHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_nftAddr',
-        type: 'address',
-      },
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_tickLower',
-        type: 'int24',
-      },
-      {
-        name: '_tickUpper',
-        type: 'int24',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-      {
-        name: '_expiration',
-        type: 'uint256',
-      },
-    ],
-    name: 'getAddLiquidityConcentratedHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_nftAddr',
-        type: 'address',
-      },
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-    ],
-    name: 'getRemoveLiquidityConcentratedHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_nftAddr',
-        type: 'address',
-      },
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_liqToRemove',
-        type: 'uint256',
-      },
-    ],
-    name: 'getRemoveLiquidityConcentratedHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_nftAddr',
-        type: 'address',
-      },
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_liqToRemove',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-    ],
-    name: 'getRemoveLiquidityConcentratedHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_nftAddr',
-        type: 'address',
-      },
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_liqToRemove',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-    ],
-    name: 'getRemoveLiquidityConcentratedHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_nftAddr',
-        type: 'address',
-      },
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_liqToRemove',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-    ],
-    name: 'getRemoveLiquidityConcentratedHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_nftAddr',
-        type: 'address',
-      },
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_liqToRemove',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-    ],
-    name: 'getRemoveLiquidityConcentratedHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_nftAddr',
-        type: 'address',
-      },
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_liqToRemove',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_nonce',
-        type: 'uint256',
-      },
-      {
-        name: '_expiration',
-        type: 'uint256',
-      },
-    ],
-    name: 'getRemoveLiquidityConcentratedHash',
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        name: '_agentWrapper',
-        type: 'address',
-      },
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
         components: [
           {
             name: 'usePrevAmountOut',
@@ -5347,6 +5352,8 @@ export const abi = [
             type: 'bytes32',
           },
           {
+            name: 'swapInstructions',
+            type: 'tuple[]',
             components: [
               {
                 name: 'legoId',
@@ -5369,15 +5376,10 @@ export const abi = [
                 type: 'address[]',
               },
             ],
-            name: 'swapInstructions',
-            type: 'tuple[]',
           },
         ],
-        name: '_instructions',
-        type: 'tuple[]',
       },
     ],
-    name: 'getBatchActionsHash',
     outputs: [
       {
         name: '',
@@ -5392,10 +5394,11 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getBatchActionsHash',
     inputs: [
       {
         name: '_agentWrapper',
@@ -5406,6 +5409,8 @@ export const abi = [
         type: 'address',
       },
       {
+        name: '_instructions',
+        type: 'tuple[]',
         components: [
           {
             name: 'usePrevAmountOut',
@@ -5464,6 +5469,8 @@ export const abi = [
             type: 'bytes32',
           },
           {
+            name: 'swapInstructions',
+            type: 'tuple[]',
             components: [
               {
                 name: 'legoId',
@@ -5486,19 +5493,14 @@ export const abi = [
                 type: 'address[]',
               },
             ],
-            name: 'swapInstructions',
-            type: 'tuple[]',
           },
         ],
-        name: '_instructions',
-        type: 'tuple[]',
       },
       {
         name: '_nonce',
         type: 'uint256',
       },
     ],
-    name: 'getBatchActionsHash',
     outputs: [
       {
         name: '',
@@ -5513,10 +5515,11 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getBatchActionsHash',
     inputs: [
       {
         name: '_agentWrapper',
@@ -5527,6 +5530,8 @@ export const abi = [
         type: 'address',
       },
       {
+        name: '_instructions',
+        type: 'tuple[]',
         components: [
           {
             name: 'usePrevAmountOut',
@@ -5585,6 +5590,8 @@ export const abi = [
             type: 'bytes32',
           },
           {
+            name: 'swapInstructions',
+            type: 'tuple[]',
             components: [
               {
                 name: 'legoId',
@@ -5607,12 +5614,8 @@ export const abi = [
                 type: 'address[]',
               },
             ],
-            name: 'swapInstructions',
-            type: 'tuple[]',
           },
         ],
-        name: '_instructions',
-        type: 'tuple[]',
       },
       {
         name: '_nonce',
@@ -5623,7 +5626,6 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    name: 'getBatchActionsHash',
     outputs: [
       {
         name: '',
@@ -5638,8 +5640,6 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
   },
 ] as const
 

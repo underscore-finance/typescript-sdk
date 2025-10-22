@@ -276,6 +276,10 @@ export const abi = [
             name: 'billing',
             type: 'address',
           },
+          {
+            name: 'vaultRegistry',
+            type: 'address',
+          },
         ],
       },
     ],
@@ -2461,27 +2465,6 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'getPricePerShare',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_decimals',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
     name: 'UNIV3_FACTORY',
     inputs: [],
     outputs: [
@@ -2556,7 +2539,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x804EC0b82525DE4EA25Bc777a652e8A5c0A97249'
+export const deployAddress: Address | undefined = '0x13A344549480717e447CaE6EF80047D58292e9f1'
 
 export type Contract = {
   calls: {
@@ -2572,6 +2555,7 @@ export type Contract = {
       appraiser: `0x${string}`
       walletBackpack: `0x${string}`
       billing: `0x${string}`
+      vaultRegistry: `0x${string}`
     }>
     getUndyHq: () => Promise<`0x${string}`>
     legoId: () => Promise<bigint>
@@ -2609,7 +2593,6 @@ export type Contract = {
     getPrice: (asset: `0x${string}`, decimals: bigint) => Promise<bigint>
     getPriceUnsafe: (pool: `0x${string}`, targetToken: `0x${string}`, appraiser?: `0x${string}`) => Promise<bigint>
     getAccessForLego: (user: `0x${string}`, action: bigint) => Promise<[`0x${string}`, string, bigint]>
-    getPricePerShare: (asset: `0x${string}`, decimals: bigint) => Promise<bigint>
     UNIV3_FACTORY: () => Promise<`0x${string}`>
     UNIV3_NFT_MANAGER: () => Promise<`0x${string}`>
     UNIV3_QUOTER: () => Promise<`0x${string}`>
@@ -2965,8 +2948,6 @@ export const call: CallType = {
   getPriceUnsafe: (...args: ExtractArgs<Contract['calls']['getPriceUnsafe']>) => getRequest('getPriceUnsafe', args),
   getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
     getRequest('getAccessForLego', args),
-  getPricePerShare: (...args: ExtractArgs<Contract['calls']['getPricePerShare']>) =>
-    getRequest('getPricePerShare', args),
   UNIV3_FACTORY: (...args: ExtractArgs<Contract['calls']['UNIV3_FACTORY']>) => getRequest('UNIV3_FACTORY', args),
   UNIV3_NFT_MANAGER: (...args: ExtractArgs<Contract['calls']['UNIV3_NFT_MANAGER']>) =>
     getRequest('UNIV3_NFT_MANAGER', args),
@@ -3054,9 +3035,6 @@ export type SDK = {
   getAccessForLego: (
     ...args: ExtractArgs<Contract['calls']['getAccessForLego']>
   ) => Promise<CallReturn<'getAccessForLego'>>
-  getPricePerShare: (
-    ...args: ExtractArgs<Contract['calls']['getPricePerShare']>
-  ) => Promise<CallReturn<'getPricePerShare'>>
   UNIV3_FACTORY: (...args: ExtractArgs<Contract['calls']['UNIV3_FACTORY']>) => Promise<CallReturn<'UNIV3_FACTORY'>>
   UNIV3_NFT_MANAGER: (
     ...args: ExtractArgs<Contract['calls']['UNIV3_NFT_MANAGER']>
@@ -3135,8 +3113,6 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.getPriceUnsafe(...args)) as Promise<CallReturn<'getPriceUnsafe'>>,
     getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
       singleQuery(publicClient!, call.getAccessForLego(...args)) as Promise<CallReturn<'getAccessForLego'>>,
-    getPricePerShare: (...args: ExtractArgs<Contract['calls']['getPricePerShare']>) =>
-      singleQuery(publicClient!, call.getPricePerShare(...args)) as Promise<CallReturn<'getPricePerShare'>>,
     UNIV3_FACTORY: (...args: ExtractArgs<Contract['calls']['UNIV3_FACTORY']>) =>
       singleQuery(publicClient!, call.UNIV3_FACTORY(...args)) as Promise<CallReturn<'UNIV3_FACTORY'>>,
     UNIV3_NFT_MANAGER: (...args: ExtractArgs<Contract['calls']['UNIV3_NFT_MANAGER']>) =>

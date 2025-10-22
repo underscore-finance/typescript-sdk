@@ -276,6 +276,10 @@ export const abi = [
             name: 'billing',
             type: 'address',
           },
+          {
+            name: 'vaultRegistry',
+            type: 'address',
+          },
         ],
       },
     ],
@@ -2461,27 +2465,6 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'getPricePerShare',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_decimals',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
     name: 'AERO_SLIPSTREAM_FACTORY',
     inputs: [],
     outputs: [
@@ -2556,7 +2539,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x680D5701F6f328C01eF0dad2B1E6eAD224a51D36'
+export const deployAddress: Address | undefined = '0x48479cCf8f5f0a9A68cB5D4A1144432F078cf1eF'
 
 export type Contract = {
   calls: {
@@ -2572,6 +2555,7 @@ export type Contract = {
       appraiser: `0x${string}`
       walletBackpack: `0x${string}`
       billing: `0x${string}`
+      vaultRegistry: `0x${string}`
     }>
     getUndyHq: () => Promise<`0x${string}`>
     legoId: () => Promise<bigint>
@@ -2609,7 +2593,6 @@ export type Contract = {
     getPrice: (asset: `0x${string}`, decimals: bigint) => Promise<bigint>
     getPriceUnsafe: (pool: `0x${string}`, targetToken: `0x${string}`, appraiser?: `0x${string}`) => Promise<bigint>
     getAccessForLego: (user: `0x${string}`, action: bigint) => Promise<[`0x${string}`, string, bigint]>
-    getPricePerShare: (asset: `0x${string}`, decimals: bigint) => Promise<bigint>
     AERO_SLIPSTREAM_FACTORY: () => Promise<`0x${string}`>
     AERO_SLIPSTREAM_NFT_MANAGER: () => Promise<`0x${string}`>
     AERO_SLIPSTREAM_QUOTER: () => Promise<`0x${string}`>
@@ -2969,8 +2952,6 @@ export const call: CallType = {
   getPriceUnsafe: (...args: ExtractArgs<Contract['calls']['getPriceUnsafe']>) => getRequest('getPriceUnsafe', args),
   getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
     getRequest('getAccessForLego', args),
-  getPricePerShare: (...args: ExtractArgs<Contract['calls']['getPricePerShare']>) =>
-    getRequest('getPricePerShare', args),
   AERO_SLIPSTREAM_FACTORY: (...args: ExtractArgs<Contract['calls']['AERO_SLIPSTREAM_FACTORY']>) =>
     getRequest('AERO_SLIPSTREAM_FACTORY', args),
   AERO_SLIPSTREAM_NFT_MANAGER: (...args: ExtractArgs<Contract['calls']['AERO_SLIPSTREAM_NFT_MANAGER']>) =>
@@ -3060,9 +3041,6 @@ export type SDK = {
   getAccessForLego: (
     ...args: ExtractArgs<Contract['calls']['getAccessForLego']>
   ) => Promise<CallReturn<'getAccessForLego'>>
-  getPricePerShare: (
-    ...args: ExtractArgs<Contract['calls']['getPricePerShare']>
-  ) => Promise<CallReturn<'getPricePerShare'>>
   AERO_SLIPSTREAM_FACTORY: (
     ...args: ExtractArgs<Contract['calls']['AERO_SLIPSTREAM_FACTORY']>
   ) => Promise<CallReturn<'AERO_SLIPSTREAM_FACTORY'>>
@@ -3145,8 +3123,6 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.getPriceUnsafe(...args)) as Promise<CallReturn<'getPriceUnsafe'>>,
     getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
       singleQuery(publicClient!, call.getAccessForLego(...args)) as Promise<CallReturn<'getAccessForLego'>>,
-    getPricePerShare: (...args: ExtractArgs<Contract['calls']['getPricePerShare']>) =>
-      singleQuery(publicClient!, call.getPricePerShare(...args)) as Promise<CallReturn<'getPricePerShare'>>,
     AERO_SLIPSTREAM_FACTORY: (...args: ExtractArgs<Contract['calls']['AERO_SLIPSTREAM_FACTORY']>) =>
       singleQuery(publicClient!, call.AERO_SLIPSTREAM_FACTORY(...args)) as Promise<
         CallReturn<'AERO_SLIPSTREAM_FACTORY'>

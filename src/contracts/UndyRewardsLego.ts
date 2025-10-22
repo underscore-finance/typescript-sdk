@@ -1885,12 +1885,16 @@ export const abi = [
         name: '_undyHq',
         type: 'address',
       },
+      {
+        name: '_ripeToken',
+        type: 'address',
+      },
     ],
     outputs: [],
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xB99D44C321356B24E36542B1BbEE9C549BCc9607'
+export const deployAddress: Address | undefined = '0x9cd3090F083f326E5e29b224F1798622A2a073e7'
 
 export type Contract = {
   calls: {

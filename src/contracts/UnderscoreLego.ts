@@ -11,7 +11,7 @@ type Address = `0x${string}`
 
 export const abi = [
   {
-    name: 'MoonwellDeposit',
+    name: 'UnderscoreEarnVaultDeposit',
     inputs: [
       {
         name: 'sender',
@@ -53,7 +53,7 @@ export const abi = [
     type: 'event',
   },
   {
-    name: 'MoonwellWithdrawal',
+    name: 'UnderscoreEarnVaultWithdrawal',
     inputs: [
       {
         name: 'sender',
@@ -778,10 +778,6 @@ export const abi = [
         type: 'bool',
       },
     ],
-  },
-  {
-    stateMutability: 'payable',
-    type: 'fallback',
   },
   {
     stateMutability: 'view',
@@ -2911,30 +2907,6 @@ export const abi = [
     ],
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'MOONWELL_COMPTROLLER',
-    inputs: [],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'WETH',
-    inputs: [],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'constructor',
     inputs: [
@@ -2943,11 +2915,7 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_moonwellComptroller',
-        type: 'address',
-      },
-      {
-        name: '_weth',
+        name: '_ripeToken',
         type: 'address',
       },
     ],
@@ -2955,7 +2923,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xE791DBe3754DB614BA5db098bC103E5542EEf752'
+export const deployAddress: Address | undefined = '0x2f04f1148D2F63272E303dDb4659139DA92DEccA'
 
 export type Contract = {
   calls: {
@@ -3044,8 +3012,6 @@ export type Contract = {
     canRegisterVaultToken: (asset: `0x${string}`, vaultToken: `0x${string}`) => Promise<boolean>
     hasClaimableRewards: (user: `0x${string}`) => Promise<boolean>
     getAccessForLego: (user: `0x${string}`, action: bigint) => Promise<[`0x${string}`, string, bigint]>
-    MOONWELL_COMPTROLLER: () => Promise<`0x${string}`>
-    WETH: () => Promise<`0x${string}`>
   }
   mutations: {
     pause: (shouldPause: boolean) => Promise<void>
@@ -3261,7 +3227,7 @@ export type Contract = {
     ) => Promise<[bigint, bigint, bigint, boolean, bigint]>
   }
   events: {
-    MoonwellDeposit: (
+    UnderscoreEarnVaultDeposit: (
       sender: `0x${string}`,
       asset: `0x${string}`,
       vaultToken: `0x${string}`,
@@ -3270,7 +3236,7 @@ export type Contract = {
       vaultTokenAmountReceived: bigint,
       recipient: `0x${string}`,
     ) => Promise<void>
-    MoonwellWithdrawal: (
+    UnderscoreEarnVaultWithdrawal: (
       sender: `0x${string}`,
       asset: `0x${string}`,
       vaultToken: `0x${string}`,
@@ -3295,7 +3261,7 @@ export type Contract = {
 
 export type Calls = keyof Contract['calls']
 export type Request<M extends Calls> = {
-  contractName: 'Moonwell'
+  contractName: 'UnderscoreLego'
   method: M
   args: ExtractArgs<Contract['calls'][M]>
   address: Address | undefined
@@ -3323,7 +3289,7 @@ function getRequest<M extends Calls>(
   const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
 
   const call = {
-    contractName: 'Moonwell' as const,
+    contractName: 'UnderscoreLego' as const,
     method,
     args,
     address,
@@ -3417,15 +3383,12 @@ export const call: CallType = {
     getRequest('hasClaimableRewards', args),
   getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
     getRequest('getAccessForLego', args),
-  MOONWELL_COMPTROLLER: (...args: ExtractArgs<Contract['calls']['MOONWELL_COMPTROLLER']>) =>
-    getRequest('MOONWELL_COMPTROLLER', args),
-  WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) => getRequest('WETH', args),
 }
 
 export type Mutations = keyof Contract['mutations']
 function getMutation<M extends Mutations>(functionName: M) {
   return {
-    contractName: 'Moonwell' as const,
+    contractName: 'UnderscoreLego' as const,
     functionName,
     deployAddress,
     argsType: undefined as ExtractArgs<Contract['mutations'][M]> | undefined,
@@ -3435,7 +3398,7 @@ function getMutation<M extends Mutations>(functionName: M) {
 
 export const mutation: {
   [K in Mutations]: {
-    contractName: 'Moonwell'
+    contractName: 'UnderscoreLego'
     deployAddress: Address | undefined
     getAbi: () => typeof abi
     functionName: K
@@ -3555,10 +3518,6 @@ export type SDK = {
   getAccessForLego: (
     ...args: ExtractArgs<Contract['calls']['getAccessForLego']>
   ) => Promise<CallReturn<'getAccessForLego'>>
-  MOONWELL_COMPTROLLER: (
-    ...args: ExtractArgs<Contract['calls']['MOONWELL_COMPTROLLER']>
-  ) => Promise<CallReturn<'MOONWELL_COMPTROLLER'>>
-  WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) => Promise<CallReturn<'WETH'>>
   pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => Promise<Address>
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
   recoverFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverFundsMany']>) => Promise<Address>
@@ -3691,10 +3650,6 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.hasClaimableRewards(...args)) as Promise<CallReturn<'hasClaimableRewards'>>,
     getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
       singleQuery(publicClient!, call.getAccessForLego(...args)) as Promise<CallReturn<'getAccessForLego'>>,
-    MOONWELL_COMPTROLLER: (...args: ExtractArgs<Contract['calls']['MOONWELL_COMPTROLLER']>) =>
-      singleQuery(publicClient!, call.MOONWELL_COMPTROLLER(...args)) as Promise<CallReturn<'MOONWELL_COMPTROLLER'>>,
-    WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) =>
-      singleQuery(publicClient!, call.WETH(...args)) as Promise<CallReturn<'WETH'>>,
 
     // Mutations
     pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => mutate(walletClient!, mutation.pause)(...args),

@@ -249,6 +249,10 @@ export const abi = [
             name: 'billing',
             type: 'address',
           },
+          {
+            name: 'vaultRegistry',
+            type: 'address',
+          },
         ],
       },
     ],
@@ -1168,27 +1172,6 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'getPricePerShare',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_decimals',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
     name: 'CURVE_META_REGISTRY',
     inputs: [],
     outputs: [
@@ -1253,7 +1236,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x01A8Fa2Dbd240f197C820DE22e279150edE5BCF4'
+export const deployAddress: Address | undefined = '0xbFaAFEa6BC07ed8338F5D399A3B96e5d438bfeFD'
 
 export type Contract = {
   calls: {
@@ -1269,6 +1252,7 @@ export type Contract = {
       appraiser: `0x${string}`
       walletBackpack: `0x${string}`
       billing: `0x${string}`
+      vaultRegistry: `0x${string}`
     }>
     getUndyHq: () => Promise<`0x${string}`>
     legoId: () => Promise<bigint>
@@ -1322,7 +1306,6 @@ export type Contract = {
     getPrice: (asset: `0x${string}`, decimals: bigint) => Promise<bigint>
     getPriceUnsafe: (pool: `0x${string}`, targetToken: `0x${string}`, oracleRegistry?: `0x${string}`) => Promise<bigint>
     getAccessForLego: (user: `0x${string}`, action: bigint) => Promise<[`0x${string}`, string, bigint]>
-    getPricePerShare: (asset: `0x${string}`, decimals: bigint) => Promise<bigint>
     CURVE_META_REGISTRY: () => Promise<`0x${string}`>
     CURVE_REGISTRIES: () => Promise<{
       StableSwapNg: `0x${string}`
@@ -1514,8 +1497,6 @@ export const call: CallType = {
   getPriceUnsafe: (...args: ExtractArgs<Contract['calls']['getPriceUnsafe']>) => getRequest('getPriceUnsafe', args),
   getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
     getRequest('getAccessForLego', args),
-  getPricePerShare: (...args: ExtractArgs<Contract['calls']['getPricePerShare']>) =>
-    getRequest('getPricePerShare', args),
   CURVE_META_REGISTRY: (...args: ExtractArgs<Contract['calls']['CURVE_META_REGISTRY']>) =>
     getRequest('CURVE_META_REGISTRY', args),
   CURVE_REGISTRIES: (...args: ExtractArgs<Contract['calls']['CURVE_REGISTRIES']>) =>
@@ -1594,9 +1575,6 @@ export type SDK = {
   getAccessForLego: (
     ...args: ExtractArgs<Contract['calls']['getAccessForLego']>
   ) => Promise<CallReturn<'getAccessForLego'>>
-  getPricePerShare: (
-    ...args: ExtractArgs<Contract['calls']['getPricePerShare']>
-  ) => Promise<CallReturn<'getPricePerShare'>>
   CURVE_META_REGISTRY: (
     ...args: ExtractArgs<Contract['calls']['CURVE_META_REGISTRY']>
   ) => Promise<CallReturn<'CURVE_META_REGISTRY'>>
@@ -1658,8 +1636,6 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.getPriceUnsafe(...args)) as Promise<CallReturn<'getPriceUnsafe'>>,
     getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
       singleQuery(publicClient!, call.getAccessForLego(...args)) as Promise<CallReturn<'getAccessForLego'>>,
-    getPricePerShare: (...args: ExtractArgs<Contract['calls']['getPricePerShare']>) =>
-      singleQuery(publicClient!, call.getPricePerShare(...args)) as Promise<CallReturn<'getPricePerShare'>>,
     CURVE_META_REGISTRY: (...args: ExtractArgs<Contract['calls']['CURVE_META_REGISTRY']>) =>
       singleQuery(publicClient!, call.CURVE_META_REGISTRY(...args)) as Promise<CallReturn<'CURVE_META_REGISTRY'>>,
     CURVE_REGISTRIES: (...args: ExtractArgs<Contract['calls']['CURVE_REGISTRIES']>) =>

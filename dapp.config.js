@@ -2,7 +2,8 @@ import { createRequire } from 'module'
 
 const require = createRequire(import.meta.url)
 const Manifest = require('../underscore-protocol/migration_history/base-mainnet/v1/current-manifest.json')
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const { '40Acres': FortyAcres, Yo, Tokemak, ...rest } = Manifest.contracts
 export default {
   name: 'Underscore Finance',
   description: 'Underscore Finance',
@@ -13,7 +14,8 @@ export default {
   isModule: true,
   isSdk: true,
   contracts: {
-    ...Manifest.contracts,
+    ...rest,
+    FortyAcres,
     UserWallet: {
       isTemplate: true,
       address: Manifest.contracts.UserWallet.address,
@@ -30,6 +32,7 @@ export default {
       abi: Manifest.contracts.AgentWrapper.abi,
     },
     SignatureHelperV1: {
+      ...Manifest.contracts.SignatureHelper,
       address: '0x7a938DEd840172e89ef3B90039959E51C1dC6893',
     },
     ERC20: {

@@ -98,6 +98,10 @@ export const abi = [
             name: 'billing',
             type: 'address',
           },
+          {
+            name: 'vaultRegistry',
+            type: 'address',
+          },
         ],
       },
     ],
@@ -1191,7 +1195,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x50B32Df18452986f35Cb5B3d59B2Ea6C101ab2ad'
+export const deployAddress: Address | undefined = '0x212652d44EA7A1642c4F8c9De6F7F3a62ff639E5'
 
 export type Contract = {
   calls: {
@@ -1207,6 +1211,7 @@ export type Contract = {
       appraiser: `0x${string}`
       walletBackpack: `0x${string}`
       billing: `0x${string}`
+      vaultRegistry: `0x${string}`
     }>
     getUndyHq: () => Promise<`0x${string}`>
     canMintUndy: () => Promise<boolean>

@@ -29,7 +29,7 @@ export const abi = [
         indexed: false,
       },
       {
-        name: 'vaultId',
+        name: 'vaultIdOrLock',
         type: 'uint256',
         indexed: false,
       },
@@ -299,6 +299,33 @@ export const abi = [
     type: 'event',
   },
   {
+    name: 'SnapShotPriceConfigSet',
+    inputs: [
+      {
+        name: 'minSnapshotDelay',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'maxNumSnapshots',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'maxUpsideDeviation',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'staleTime',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
     name: 'AssetOpportunityAdded',
     inputs: [
       {
@@ -310,6 +337,45 @@ export const abi = [
         name: 'vaultAddr',
         type: 'address',
         indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'AssetOpportunityRemoved',
+    inputs: [
+      {
+        name: 'asset',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PricePerShareSnapShotAdded',
+    inputs: [
+      {
+        name: 'vaultToken',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'totalSupply',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'pricePerShare',
+        type: 'uint256',
+        indexed: false,
       },
     ],
     anonymous: false,
@@ -367,6 +433,10 @@ export const abi = [
           },
           {
             name: 'billing',
+            type: 'address',
+          },
+          {
+            name: 'vaultRegistry',
             type: 'address',
           },
         ],
@@ -511,12 +581,148 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'isPaused',
-    inputs: [],
+    name: 'getWeightedPricePerShare',
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getLatestSnapshot',
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_pricePerShare',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'totalSupply',
+            type: 'uint256',
+          },
+          {
+            name: 'pricePerShare',
+            type: 'uint256',
+          },
+          {
+            name: 'lastUpdate',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setSnapShotPriceConfig',
+    inputs: [
+      {
+        name: '_config',
+        type: 'tuple',
+        components: [
+          {
+            name: 'minSnapshotDelay',
+            type: 'uint256',
+          },
+          {
+            name: 'maxNumSnapshots',
+            type: 'uint256',
+          },
+          {
+            name: 'maxUpsideDeviation',
+            type: 'uint256',
+          },
+          {
+            name: 'staleTime',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'isValidPriceConfig',
+    inputs: [
+      {
+        name: '_config',
+        type: 'tuple',
+        components: [
+          {
+            name: 'minSnapshotDelay',
+            type: 'uint256',
+          },
+          {
+            name: 'maxNumSnapshots',
+            type: 'uint256',
+          },
+          {
+            name: 'maxUpsideDeviation',
+            type: 'uint256',
+          },
+          {
+            name: 'staleTime',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
     outputs: [
       {
         name: '',
         type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'vaultToAsset',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'underlyingAsset',
+            type: 'address',
+          },
+          {
+            name: 'decimals',
+            type: 'uint256',
+          },
+          {
+            name: 'lastAveragePricePerShare',
+            type: 'uint256',
+          },
+        ],
       },
     ],
   },
@@ -582,23 +788,6 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'vaultToAsset',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
     name: 'assets',
     inputs: [
       {
@@ -645,6 +834,124 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
+    name: 'snapShotData',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'lastSnapShot',
+            type: 'tuple',
+            components: [
+              {
+                name: 'totalSupply',
+                type: 'uint256',
+              },
+              {
+                name: 'pricePerShare',
+                type: 'uint256',
+              },
+              {
+                name: 'lastUpdate',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'nextIndex',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'snapShots',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+      {
+        name: 'arg1',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'totalSupply',
+            type: 'uint256',
+          },
+          {
+            name: 'pricePerShare',
+            type: 'uint256',
+          },
+          {
+            name: 'lastUpdate',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'snapShotPriceConfig',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'minSnapshotDelay',
+            type: 'uint256',
+          },
+          {
+            name: 'maxNumSnapshots',
+            type: 'uint256',
+          },
+          {
+            name: 'maxUpsideDeviation',
+            type: 'uint256',
+          },
+          {
+            name: 'staleTime',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'isPaused',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     name: 'hasCapability',
     inputs: [
       {
@@ -674,35 +981,6 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'getAccessForLego',
-    inputs: [
-      {
-        name: '_user',
-        type: 'address',
-      },
-      {
-        name: '_action',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-      {
-        name: '',
-        type: 'string',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
     name: 'isYieldLego',
     inputs: [],
     outputs: [
@@ -725,588 +1003,37 @@ export const abi = [
     ],
   },
   {
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
-    name: 'addCollateral',
+    name: 'getUnderlyingAsset',
     inputs: [
       {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
+        name: '_vaultToken',
         type: 'address',
       },
     ],
     outputs: [
       {
         name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
+        type: 'address',
       },
     ],
   },
   {
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
-    name: 'addCollateral',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'removeCollateral',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'removeCollateral',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'borrow',
-    inputs: [
-      {
-        name: '_borrowAsset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'borrow',
-    inputs: [
-      {
-        name: '_borrowAsset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'repayDebt',
-    inputs: [
-      {
-        name: '_paymentAsset',
-        type: 'address',
-      },
-      {
-        name: '_paymentAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'repayDebt',
-    inputs: [
-      {
-        name: '_paymentAsset',
-        type: 'address',
-      },
-      {
-        name: '_paymentAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'claimRewards',
-    inputs: [
-      {
-        name: '_user',
-        type: 'address',
-      },
-      {
-        name: '_rewardToken',
-        type: 'address',
-      },
-      {
-        name: '_rewardAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'claimRewards',
-    inputs: [
-      {
-        name: '_user',
-        type: 'address',
-      },
-      {
-        name: '_rewardToken',
-        type: 'address',
-      },
-      {
-        name: '_rewardAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'depositForYield',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_vaultAddr',
-        type: 'address',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'address',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'depositForYield',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_vaultAddr',
-        type: 'address',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'address',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'withdrawFromYield',
+    name: 'getUnderlyingBalances',
     inputs: [
       {
         name: '_vaultToken',
         type: 'address',
       },
       {
-        name: '_amount',
+        name: '_vaultTokenBalance',
         type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
       },
     ],
     outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'address',
-      },
       {
         name: '',
         type: 'uint256',
@@ -1318,47 +1045,17 @@ export const abi = [
     ],
   },
   {
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
-    name: 'withdrawFromYield',
+    name: 'getUnderlyingAmount',
     inputs: [
       {
         name: '_vaultToken',
         type: 'address',
       },
       {
-        name: '_amount',
+        name: '_vaultTokenAmount',
         type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
       },
     ],
     outputs: [
@@ -1366,6 +1063,44 @@ export const abi = [
         name: '',
         type: 'uint256',
       },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getUnderlyingAmountSafe',
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_vaultTokenBalance',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getUnderlyingData',
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_vaultTokenAmount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
       {
         name: '',
         type: 'address',
@@ -1383,12 +1118,154 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
+    name: 'getUnderlyingData',
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_vaultTokenAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_appraiser',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getUsdValueOfVaultToken',
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_vaultTokenAmount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getUsdValueOfVaultToken',
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_vaultTokenAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_appraiser',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     name: 'isRebasing',
     inputs: [],
     outputs: [
       {
         name: '',
         type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getPricePerShare',
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getPricePerShare',
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_decimals',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getVaultTokenAmount',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_assetAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
       },
     ],
   },
@@ -1433,194 +1310,6 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'isVaultToken',
-    inputs: [
-      {
-        name: '_vaultToken',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getUnderlyingAsset',
-    inputs: [
-      {
-        name: '_vaultToken',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getUnderlyingAmount',
-    inputs: [
-      {
-        name: '_vaultToken',
-        type: 'address',
-      },
-      {
-        name: '_vaultTokenAmount',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getVaultTokenAmount',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_assetAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_vaultToken',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getUsdValueOfVaultToken',
-    inputs: [
-      {
-        name: '_vaultToken',
-        type: 'address',
-      },
-      {
-        name: '_vaultTokenAmount',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getUsdValueOfVaultToken',
-    inputs: [
-      {
-        name: '_vaultToken',
-        type: 'address',
-      },
-      {
-        name: '_vaultTokenAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_appraiser',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getUnderlyingData',
-    inputs: [
-      {
-        name: '_vaultToken',
-        type: 'address',
-      },
-      {
-        name: '_vaultTokenAmount',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getUnderlyingData',
-    inputs: [
-      {
-        name: '_vaultToken',
-        type: 'address',
-      },
-      {
-        name: '_vaultTokenAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_appraiser',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
     name: 'totalAssets',
     inputs: [
       {
@@ -1655,28 +1344,63 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'getPricePerShare',
+    name: 'canRegisterVaultToken',
     inputs: [
       {
         name: '_asset',
         type: 'address',
       },
       {
-        name: '_decimals',
-        type: 'uint256',
+        name: '_vaultToken',
+        type: 'address',
       },
     ],
     outputs: [
       {
         name: '',
-        type: 'uint256',
+        type: 'bool',
       },
     ],
   },
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addAssetOpportunity',
+    name: 'registerVaultTokenLocally',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'underlyingAsset',
+            type: 'address',
+          },
+          {
+            name: 'decimals',
+            type: 'uint256',
+          },
+          {
+            name: 'lastAveragePricePerShare',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'deregisterVaultTokenLocally',
     inputs: [
       {
         name: '_asset',
@@ -1692,144 +1416,37 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeAssetOpportunity',
+    name: 'addPriceSnapshot',
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'depositForYield',
     inputs: [
       {
         name: '_asset',
         type: 'address',
       },
       {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
         name: '_vaultAddr',
         type: 'address',
       },
-    ],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'swapTokens',
-    inputs: [
-      {
-        name: '_amountIn',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountOut',
-        type: 'uint256',
-      },
-      {
-        name: '_tokenPath',
-        type: 'address[]',
-      },
-      {
-        name: '_poolPath',
-        type: 'address[]',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'swapTokens',
-    inputs: [
-      {
-        name: '_amountIn',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountOut',
-        type: 'uint256',
-      },
-      {
-        name: '_tokenPath',
-        type: 'address[]',
-      },
-      {
-        name: '_poolPath',
-        type: 'address[]',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'mintOrRedeemAsset',
-    inputs: [
-      {
-        name: '_tokenIn',
-        type: 'address',
-      },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-      {
-        name: '_tokenInAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountOut',
-        type: 'uint256',
-      },
       {
         name: '_extraData',
         type: 'bytes32',
@@ -1846,112 +1463,8 @@ export const abi = [
       },
       {
         name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'bool',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'mintOrRedeemAsset',
-    inputs: [
-      {
-        name: '_tokenIn',
         type: 'address',
       },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-      {
-        name: '_tokenInAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountOut',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'bool',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'confirmMintOrRedeemAsset',
-    inputs: [
-      {
-        name: '_tokenIn',
-        type: 'address',
-      },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    outputs: [
       {
         name: '',
         type: 'uint256',
@@ -1965,14 +1478,18 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'confirmMintOrRedeemAsset',
+    name: 'depositForYield',
     inputs: [
       {
-        name: '_tokenIn',
+        name: '_asset',
         type: 'address',
       },
       {
-        name: '_tokenOut',
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_vaultAddr',
         type: 'address',
       },
       {
@@ -2013,6 +1530,14 @@ export const abi = [
       },
       {
         name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
         type: 'uint256',
       },
     ],
@@ -2020,38 +1545,14 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidity',
+    name: 'withdrawFromYield',
     inputs: [
       {
-        name: '_pool',
+        name: '_vaultToken',
         type: 'address',
       },
       {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minLpAmount',
+        name: '_amount',
         type: 'uint256',
       },
       {
@@ -2066,15 +1567,11 @@ export const abi = [
     outputs: [
       {
         name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
         type: 'address',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
       },
       {
         name: '',
@@ -2089,38 +1586,14 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidity',
+    name: 'withdrawFromYield',
     inputs: [
       {
-        name: '_pool',
+        name: '_vaultToken',
         type: 'address',
       },
       {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minLpAmount',
+        name: '_amount',
         type: 'uint256',
       },
       {
@@ -2157,15 +1630,11 @@ export const abi = [
     outputs: [
       {
         name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
         type: 'address',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
       },
       {
         name: '',
@@ -2180,34 +1649,14 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeLiquidity',
+    name: 'addCollateral',
     inputs: [
       {
-        name: '_pool',
+        name: '_asset',
         type: 'address',
       },
       {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_lpToken',
-        type: 'address',
-      },
-      {
-        name: '_lpAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
+        name: '_amount',
         type: 'uint256',
       },
       {
@@ -2228,47 +1677,19 @@ export const abi = [
         name: '',
         type: 'uint256',
       },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
     ],
   },
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeLiquidity',
+    name: 'addCollateral',
     inputs: [
       {
-        name: '_pool',
+        name: '_asset',
         type: 'address',
       },
       {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_lpToken',
-        type: 'address',
-      },
-      {
-        name: '_lpAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
+        name: '_amount',
         type: 'uint256',
       },
       {
@@ -2311,59 +1732,19 @@ export const abi = [
         name: '',
         type: 'uint256',
       },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
     ],
   },
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidityConcentrated',
+    name: 'removeCollateral',
     inputs: [
       {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
+        name: '_asset',
         type: 'address',
       },
       {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_tickLower',
-        type: 'int24',
-      },
-      {
-        name: '_tickUpper',
-        type: 'int24',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
+        name: '_amount',
         type: 'uint256',
       },
       {
@@ -2384,63 +1765,19 @@ export const abi = [
         name: '',
         type: 'uint256',
       },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
     ],
   },
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidityConcentrated',
+    name: 'removeCollateral',
     inputs: [
       {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
+        name: '_asset',
         type: 'address',
       },
       {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_tickLower',
-        type: 'int24',
-      },
-      {
-        name: '_tickUpper',
-        type: 'int24',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
+        name: '_amount',
         type: 'uint256',
       },
       {
@@ -2483,51 +1820,19 @@ export const abi = [
         name: '',
         type: 'uint256',
       },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
     ],
   },
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeLiquidityConcentrated',
+    name: 'borrow',
     inputs: [
       {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
+        name: '_borrowAsset',
         type: 'address',
       },
       {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_liqToRemove',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
+        name: '_amount',
         type: 'uint256',
       },
       {
@@ -2548,51 +1853,19 @@ export const abi = [
         name: '',
         type: 'uint256',
       },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'bool',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
     ],
   },
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeLiquidityConcentrated',
+    name: 'borrow',
     inputs: [
       {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
+        name: '_borrowAsset',
         type: 'address',
       },
       {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_liqToRemove',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
+        name: '_amount',
         type: 'uint256',
       },
       {
@@ -2635,13 +1908,177 @@ export const abi = [
         name: '',
         type: 'uint256',
       },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'repayDebt',
+    inputs: [
+      {
+        name: '_paymentAsset',
+        type: 'address',
+      },
+      {
+        name: '_paymentAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
       {
         name: '',
         type: 'uint256',
       },
       {
         name: '',
-        type: 'bool',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'repayDebt',
+    inputs: [
+      {
+        name: '_paymentAsset',
+        type: 'address',
+      },
+      {
+        name: '_paymentAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'claimRewards',
+    inputs: [
+      {
+        name: '_user',
+        type: 'address',
+      },
+      {
+        name: '_rewardToken',
+        type: 'address',
+      },
+      {
+        name: '_rewardAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'claimRewards',
+    inputs: [
+      {
+        name: '_user',
+        type: 'address',
+      },
+      {
+        name: '_rewardToken',
+        type: 'address',
+      },
+      {
+        name: '_rewardAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
       },
       {
         name: '',
@@ -2652,18 +2089,987 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'getPrice',
+    name: 'hasClaimableRewards',
     inputs: [
       {
-        name: '_asset',
+        name: '_user',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAccessForLego',
+    inputs: [
+      {
+        name: '_user',
         type: 'address',
       },
       {
-        name: '_decimals',
+        name: '_action',
         type: 'uint256',
       },
     ],
     outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'string',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'swapTokens',
+    inputs: [
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenPath',
+        type: 'address[]',
+      },
+      {
+        name: '_poolPath',
+        type: 'address[]',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'swapTokens',
+    inputs: [
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenPath',
+        type: 'address[]',
+      },
+      {
+        name: '_poolPath',
+        type: 'address[]',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'mintOrRedeemAsset',
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_tokenInAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'mintOrRedeemAsset',
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_tokenInAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmMintOrRedeemAsset',
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmMintOrRedeemAsset',
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'addLiquidity',
+    inputs: [
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minLpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'addLiquidity',
+    inputs: [
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minLpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'removeLiquidity',
+    inputs: [
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_lpToken',
+        type: 'address',
+      },
+      {
+        name: '_lpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'removeLiquidity',
+    inputs: [
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_lpToken',
+        type: 'address',
+      },
+      {
+        name: '_lpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'addLiquidityConcentrated',
+    inputs: [
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_tickLower',
+        type: 'int24',
+      },
+      {
+        name: '_tickUpper',
+        type: 'int24',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'addLiquidityConcentrated',
+    inputs: [
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_tickLower',
+        type: 'int24',
+      },
+      {
+        name: '_tickUpper',
+        type: 'int24',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'removeLiquidityConcentrated',
+    inputs: [
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_liqToRemove',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'removeLiquidityConcentrated',
+    inputs: [
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_liqToRemove',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
       {
         name: '',
         type: 'uint256',
@@ -2735,7 +3141,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xC402449F5Dd3781d08cb357D9709505fDa8F3696'
+export const deployAddress: Address | undefined = '0xAFb801435960932B563Ab1047b8eb0d9C77FFb9B'
 
 export type Contract = {
   calls: {
@@ -2751,6 +3157,7 @@ export type Contract = {
       appraiser: `0x${string}`
       walletBackpack: `0x${string}`
       billing: `0x${string}`
+      vaultRegistry: `0x${string}`
     }>
     getUndyHq: () => Promise<`0x${string}`>
     isLegoAsset: (asset: `0x${string}`) => Promise<boolean>
@@ -2758,40 +3165,71 @@ export type Contract = {
     getAssets: () => Promise<`0x${string}`[]>
     isAssetOpportunity: (asset: `0x${string}`, vaultAddr: `0x${string}`) => Promise<boolean>
     getNumLegoAssets: () => Promise<bigint>
-    isPaused: () => Promise<boolean>
+    getWeightedPricePerShare: (vaultToken: `0x${string}`) => Promise<bigint>
+    getLatestSnapshot: (
+      vaultToken: `0x${string}`,
+      pricePerShare: bigint,
+    ) => Promise<{ totalSupply: bigint; pricePerShare: bigint; lastUpdate: bigint }>
+    isValidPriceConfig: (config: {
+      minSnapshotDelay: bigint
+      maxNumSnapshots: bigint
+      maxUpsideDeviation: bigint
+      staleTime: bigint
+    }) => Promise<boolean>
+    vaultToAsset: (
+      arg0: `0x${string}`,
+    ) => Promise<{ underlyingAsset: `0x${string}`; decimals: bigint; lastAveragePricePerShare: bigint }>
     assetOpportunities: (arg0: `0x${string}`, arg1: bigint) => Promise<`0x${string}`>
     indexOfAssetOpportunity: (arg0: `0x${string}`, arg1: `0x${string}`) => Promise<bigint>
     numAssetOpportunities: (arg0: `0x${string}`) => Promise<bigint>
-    vaultToAsset: (arg0: `0x${string}`) => Promise<`0x${string}`>
     assets: (arg0: bigint) => Promise<`0x${string}`>
     indexOfAsset: (arg0: `0x${string}`) => Promise<bigint>
     numAssets: () => Promise<bigint>
+    snapShotData: (
+      arg0: `0x${string}`,
+    ) => Promise<{
+      lastSnapShot: { totalSupply: bigint; pricePerShare: bigint; lastUpdate: bigint }
+      nextIndex: bigint
+    }>
+    snapShots: (
+      arg0: `0x${string}`,
+      arg1: bigint,
+    ) => Promise<{ totalSupply: bigint; pricePerShare: bigint; lastUpdate: bigint }>
+    snapShotPriceConfig: () => Promise<{
+      minSnapshotDelay: bigint
+      maxNumSnapshots: bigint
+      maxUpsideDeviation: bigint
+      staleTime: bigint
+    }>
+    isPaused: () => Promise<boolean>
     hasCapability: (action: bigint) => Promise<boolean>
     getRegistries: () => Promise<`0x${string}`[]>
-    getAccessForLego: (user: `0x${string}`, action: bigint) => Promise<[`0x${string}`, string, bigint]>
     isYieldLego: () => Promise<boolean>
     isDexLego: () => Promise<boolean>
-    isRebasing: () => Promise<boolean>
-    isEligibleVaultForTrialFunds: (vaultToken: `0x${string}`, underlyingAsset: `0x${string}`) => Promise<boolean>
-    isEligibleForYieldBonus: (asset: `0x${string}`) => Promise<boolean>
-    isVaultToken: (vaultToken: `0x${string}`) => Promise<boolean>
     getUnderlyingAsset: (vaultToken: `0x${string}`) => Promise<`0x${string}`>
+    getUnderlyingBalances: (vaultToken: `0x${string}`, vaultTokenBalance: bigint) => Promise<[bigint, bigint]>
     getUnderlyingAmount: (vaultToken: `0x${string}`, vaultTokenAmount: bigint) => Promise<bigint>
-    getVaultTokenAmount: (asset: `0x${string}`, assetAmount: bigint, vaultToken: `0x${string}`) => Promise<bigint>
-    getUsdValueOfVaultToken: (
-      vaultToken: `0x${string}`,
-      vaultTokenAmount: bigint,
-      appraiser?: `0x${string}`,
-    ) => Promise<bigint>
+    getUnderlyingAmountSafe: (vaultToken: `0x${string}`, vaultTokenBalance: bigint) => Promise<bigint>
     getUnderlyingData: (
       vaultToken: `0x${string}`,
       vaultTokenAmount: bigint,
       appraiser?: `0x${string}`,
     ) => Promise<[`0x${string}`, bigint, bigint]>
+    getUsdValueOfVaultToken: (
+      vaultToken: `0x${string}`,
+      vaultTokenAmount: bigint,
+      appraiser?: `0x${string}`,
+    ) => Promise<bigint>
+    isRebasing: () => Promise<boolean>
+    getPricePerShare: (vaultToken: `0x${string}`, decimals?: bigint) => Promise<bigint>
+    getVaultTokenAmount: (asset: `0x${string}`, assetAmount: bigint, vaultToken: `0x${string}`) => Promise<bigint>
+    isEligibleVaultForTrialFunds: (vaultToken: `0x${string}`, underlyingAsset: `0x${string}`) => Promise<boolean>
+    isEligibleForYieldBonus: (asset: `0x${string}`) => Promise<boolean>
     totalAssets: (vaultToken: `0x${string}`) => Promise<bigint>
     totalBorrows: (vaultToken: `0x${string}`) => Promise<bigint>
-    getPricePerShare: (asset: `0x${string}`, decimals: bigint) => Promise<bigint>
-    getPrice: (asset: `0x${string}`, decimals: bigint) => Promise<bigint>
+    canRegisterVaultToken: (asset: `0x${string}`, vaultToken: `0x${string}`) => Promise<boolean>
+    hasClaimableRewards: (user: `0x${string}`) => Promise<boolean>
+    getAccessForLego: (user: `0x${string}`, action: bigint) => Promise<[`0x${string}`, string, bigint]>
     RIPE_REGISTRY: () => Promise<`0x${string}`>
     RIPE_GREEN_TOKEN: () => Promise<`0x${string}`>
     RIPE_SAVINGS_GREEN: () => Promise<`0x${string}`>
@@ -2801,6 +3239,43 @@ export type Contract = {
     pause: (shouldPause: boolean) => Promise<void>
     recoverFunds: (recipient: `0x${string}`, asset: `0x${string}`) => Promise<void>
     recoverFundsMany: (recipient: `0x${string}`, assets: `0x${string}`[]) => Promise<void>
+    setSnapShotPriceConfig: (config: {
+      minSnapshotDelay: bigint
+      maxNumSnapshots: bigint
+      maxUpsideDeviation: bigint
+      staleTime: bigint
+    }) => Promise<void>
+    registerVaultTokenLocally: (
+      asset: `0x${string}`,
+      vaultAddr: `0x${string}`,
+    ) => Promise<{ underlyingAsset: `0x${string}`; decimals: bigint; lastAveragePricePerShare: bigint }>
+    deregisterVaultTokenLocally: (asset: `0x${string}`, vaultAddr: `0x${string}`) => Promise<void>
+    addPriceSnapshot: (vaultToken: `0x${string}`) => Promise<boolean>
+    depositForYield: (
+      asset: `0x${string}`,
+      amount: bigint,
+      vaultAddr: `0x${string}`,
+      extraData: `0x${string}`,
+      recipient: `0x${string}`,
+      miniAddys?: {
+        ledger: `0x${string}`
+        missionControl: `0x${string}`
+        legoBook: `0x${string}`
+        appraiser: `0x${string}`
+      },
+    ) => Promise<[bigint, `0x${string}`, bigint, bigint]>
+    withdrawFromYield: (
+      vaultToken: `0x${string}`,
+      amount: bigint,
+      extraData: `0x${string}`,
+      recipient: `0x${string}`,
+      miniAddys?: {
+        ledger: `0x${string}`
+        missionControl: `0x${string}`
+        legoBook: `0x${string}`
+        appraiser: `0x${string}`
+      },
+    ) => Promise<[bigint, `0x${string}`, bigint, bigint]>
     addCollateral: (
       asset: `0x${string}`,
       amount: bigint,
@@ -2861,33 +3336,6 @@ export type Contract = {
         appraiser: `0x${string}`
       },
     ) => Promise<[bigint, bigint]>
-    depositForYield: (
-      asset: `0x${string}`,
-      amount: bigint,
-      vaultAddr: `0x${string}`,
-      extraData: `0x${string}`,
-      recipient: `0x${string}`,
-      miniAddys?: {
-        ledger: `0x${string}`
-        missionControl: `0x${string}`
-        legoBook: `0x${string}`
-        appraiser: `0x${string}`
-      },
-    ) => Promise<[bigint, `0x${string}`, bigint, bigint]>
-    withdrawFromYield: (
-      vaultToken: `0x${string}`,
-      amount: bigint,
-      extraData: `0x${string}`,
-      recipient: `0x${string}`,
-      miniAddys?: {
-        ledger: `0x${string}`
-        missionControl: `0x${string}`
-        legoBook: `0x${string}`
-        appraiser: `0x${string}`
-      },
-    ) => Promise<[bigint, `0x${string}`, bigint, bigint]>
-    addAssetOpportunity: (asset: `0x${string}`, vaultAddr: `0x${string}`) => Promise<void>
-    removeAssetOpportunity: (asset: `0x${string}`, vaultAddr: `0x${string}`) => Promise<void>
     swapTokens: (
       amountIn: bigint,
       minAmountOut: bigint,
@@ -3005,7 +3453,7 @@ export type Contract = {
       sender: `0x${string}`,
       asset: `0x${string}`,
       assetAmountDeposited: bigint,
-      vaultId: bigint,
+      vaultIdOrLock: bigint,
       usdValue: bigint,
       recipient: `0x${string}`,
     ) => Promise<void>
@@ -3058,7 +3506,15 @@ export type Contract = {
     ) => Promise<void>
     LegoPauseModified: (isPaused: boolean) => Promise<void>
     LegoFundsRecovered: (asset: `0x${string}`, recipient: `0x${string}`, balance: bigint) => Promise<void>
+    SnapShotPriceConfigSet: (
+      minSnapshotDelay: bigint,
+      maxNumSnapshots: bigint,
+      maxUpsideDeviation: bigint,
+      staleTime: bigint,
+    ) => Promise<void>
     AssetOpportunityAdded: (asset: `0x${string}`, vaultAddr: `0x${string}`) => Promise<void>
+    AssetOpportunityRemoved: (asset: `0x${string}`, vaultAddr: `0x${string}`) => Promise<void>
+    PricePerShareSnapShotAdded: (vaultToken: `0x${string}`, totalSupply: bigint, pricePerShare: bigint) => Promise<void>
   }
 }
 
@@ -3132,44 +3588,60 @@ export const call: CallType = {
     getRequest('isAssetOpportunity', args),
   getNumLegoAssets: (...args: ExtractArgs<Contract['calls']['getNumLegoAssets']>) =>
     getRequest('getNumLegoAssets', args),
-  isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) => getRequest('isPaused', args),
+  getWeightedPricePerShare: (...args: ExtractArgs<Contract['calls']['getWeightedPricePerShare']>) =>
+    getRequest('getWeightedPricePerShare', args),
+  getLatestSnapshot: (...args: ExtractArgs<Contract['calls']['getLatestSnapshot']>) =>
+    getRequest('getLatestSnapshot', args),
+  isValidPriceConfig: (...args: ExtractArgs<Contract['calls']['isValidPriceConfig']>) =>
+    getRequest('isValidPriceConfig', args),
+  vaultToAsset: (...args: ExtractArgs<Contract['calls']['vaultToAsset']>) => getRequest('vaultToAsset', args),
   assetOpportunities: (...args: ExtractArgs<Contract['calls']['assetOpportunities']>) =>
     getRequest('assetOpportunities', args),
   indexOfAssetOpportunity: (...args: ExtractArgs<Contract['calls']['indexOfAssetOpportunity']>) =>
     getRequest('indexOfAssetOpportunity', args),
   numAssetOpportunities: (...args: ExtractArgs<Contract['calls']['numAssetOpportunities']>) =>
     getRequest('numAssetOpportunities', args),
-  vaultToAsset: (...args: ExtractArgs<Contract['calls']['vaultToAsset']>) => getRequest('vaultToAsset', args),
   assets: (...args: ExtractArgs<Contract['calls']['assets']>) => getRequest('assets', args),
   indexOfAsset: (...args: ExtractArgs<Contract['calls']['indexOfAsset']>) => getRequest('indexOfAsset', args),
   numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) => getRequest('numAssets', args),
+  snapShotData: (...args: ExtractArgs<Contract['calls']['snapShotData']>) => getRequest('snapShotData', args),
+  snapShots: (...args: ExtractArgs<Contract['calls']['snapShots']>) => getRequest('snapShots', args),
+  snapShotPriceConfig: (...args: ExtractArgs<Contract['calls']['snapShotPriceConfig']>) =>
+    getRequest('snapShotPriceConfig', args),
+  isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) => getRequest('isPaused', args),
   hasCapability: (...args: ExtractArgs<Contract['calls']['hasCapability']>) => getRequest('hasCapability', args),
   getRegistries: (...args: ExtractArgs<Contract['calls']['getRegistries']>) => getRequest('getRegistries', args),
-  getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
-    getRequest('getAccessForLego', args),
   isYieldLego: (...args: ExtractArgs<Contract['calls']['isYieldLego']>) => getRequest('isYieldLego', args),
   isDexLego: (...args: ExtractArgs<Contract['calls']['isDexLego']>) => getRequest('isDexLego', args),
+  getUnderlyingAsset: (...args: ExtractArgs<Contract['calls']['getUnderlyingAsset']>) =>
+    getRequest('getUnderlyingAsset', args),
+  getUnderlyingBalances: (...args: ExtractArgs<Contract['calls']['getUnderlyingBalances']>) =>
+    getRequest('getUnderlyingBalances', args),
+  getUnderlyingAmount: (...args: ExtractArgs<Contract['calls']['getUnderlyingAmount']>) =>
+    getRequest('getUnderlyingAmount', args),
+  getUnderlyingAmountSafe: (...args: ExtractArgs<Contract['calls']['getUnderlyingAmountSafe']>) =>
+    getRequest('getUnderlyingAmountSafe', args),
+  getUnderlyingData: (...args: ExtractArgs<Contract['calls']['getUnderlyingData']>) =>
+    getRequest('getUnderlyingData', args),
+  getUsdValueOfVaultToken: (...args: ExtractArgs<Contract['calls']['getUsdValueOfVaultToken']>) =>
+    getRequest('getUsdValueOfVaultToken', args),
   isRebasing: (...args: ExtractArgs<Contract['calls']['isRebasing']>) => getRequest('isRebasing', args),
+  getPricePerShare: (...args: ExtractArgs<Contract['calls']['getPricePerShare']>) =>
+    getRequest('getPricePerShare', args),
+  getVaultTokenAmount: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>) =>
+    getRequest('getVaultTokenAmount', args),
   isEligibleVaultForTrialFunds: (...args: ExtractArgs<Contract['calls']['isEligibleVaultForTrialFunds']>) =>
     getRequest('isEligibleVaultForTrialFunds', args),
   isEligibleForYieldBonus: (...args: ExtractArgs<Contract['calls']['isEligibleForYieldBonus']>) =>
     getRequest('isEligibleForYieldBonus', args),
-  isVaultToken: (...args: ExtractArgs<Contract['calls']['isVaultToken']>) => getRequest('isVaultToken', args),
-  getUnderlyingAsset: (...args: ExtractArgs<Contract['calls']['getUnderlyingAsset']>) =>
-    getRequest('getUnderlyingAsset', args),
-  getUnderlyingAmount: (...args: ExtractArgs<Contract['calls']['getUnderlyingAmount']>) =>
-    getRequest('getUnderlyingAmount', args),
-  getVaultTokenAmount: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>) =>
-    getRequest('getVaultTokenAmount', args),
-  getUsdValueOfVaultToken: (...args: ExtractArgs<Contract['calls']['getUsdValueOfVaultToken']>) =>
-    getRequest('getUsdValueOfVaultToken', args),
-  getUnderlyingData: (...args: ExtractArgs<Contract['calls']['getUnderlyingData']>) =>
-    getRequest('getUnderlyingData', args),
   totalAssets: (...args: ExtractArgs<Contract['calls']['totalAssets']>) => getRequest('totalAssets', args),
   totalBorrows: (...args: ExtractArgs<Contract['calls']['totalBorrows']>) => getRequest('totalBorrows', args),
-  getPricePerShare: (...args: ExtractArgs<Contract['calls']['getPricePerShare']>) =>
-    getRequest('getPricePerShare', args),
-  getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => getRequest('getPrice', args),
+  canRegisterVaultToken: (...args: ExtractArgs<Contract['calls']['canRegisterVaultToken']>) =>
+    getRequest('canRegisterVaultToken', args),
+  hasClaimableRewards: (...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>) =>
+    getRequest('hasClaimableRewards', args),
+  getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
+    getRequest('getAccessForLego', args),
   RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => getRequest('RIPE_REGISTRY', args),
   RIPE_GREEN_TOKEN: (...args: ExtractArgs<Contract['calls']['RIPE_GREEN_TOKEN']>) =>
     getRequest('RIPE_GREEN_TOKEN', args),
@@ -3201,15 +3673,17 @@ export const mutation: {
   pause: getMutation('pause'),
   recoverFunds: getMutation('recoverFunds'),
   recoverFundsMany: getMutation('recoverFundsMany'),
+  setSnapShotPriceConfig: getMutation('setSnapShotPriceConfig'),
+  registerVaultTokenLocally: getMutation('registerVaultTokenLocally'),
+  deregisterVaultTokenLocally: getMutation('deregisterVaultTokenLocally'),
+  addPriceSnapshot: getMutation('addPriceSnapshot'),
+  depositForYield: getMutation('depositForYield'),
+  withdrawFromYield: getMutation('withdrawFromYield'),
   addCollateral: getMutation('addCollateral'),
   removeCollateral: getMutation('removeCollateral'),
   borrow: getMutation('borrow'),
   repayDebt: getMutation('repayDebt'),
   claimRewards: getMutation('claimRewards'),
-  depositForYield: getMutation('depositForYield'),
-  withdrawFromYield: getMutation('withdrawFromYield'),
-  addAssetOpportunity: getMutation('addAssetOpportunity'),
-  removeAssetOpportunity: getMutation('removeAssetOpportunity'),
   swapTokens: getMutation('swapTokens'),
   mintOrRedeemAsset: getMutation('mintOrRedeemAsset'),
   confirmMintOrRedeemAsset: getMutation('confirmMintOrRedeemAsset'),
@@ -3235,7 +3709,16 @@ export type SDK = {
   getNumLegoAssets: (
     ...args: ExtractArgs<Contract['calls']['getNumLegoAssets']>
   ) => Promise<CallReturn<'getNumLegoAssets'>>
-  isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) => Promise<CallReturn<'isPaused'>>
+  getWeightedPricePerShare: (
+    ...args: ExtractArgs<Contract['calls']['getWeightedPricePerShare']>
+  ) => Promise<CallReturn<'getWeightedPricePerShare'>>
+  getLatestSnapshot: (
+    ...args: ExtractArgs<Contract['calls']['getLatestSnapshot']>
+  ) => Promise<CallReturn<'getLatestSnapshot'>>
+  isValidPriceConfig: (
+    ...args: ExtractArgs<Contract['calls']['isValidPriceConfig']>
+  ) => Promise<CallReturn<'isValidPriceConfig'>>
+  vaultToAsset: (...args: ExtractArgs<Contract['calls']['vaultToAsset']>) => Promise<CallReturn<'vaultToAsset'>>
   assetOpportunities: (
     ...args: ExtractArgs<Contract['calls']['assetOpportunities']>
   ) => Promise<CallReturn<'assetOpportunities'>>
@@ -3245,46 +3728,61 @@ export type SDK = {
   numAssetOpportunities: (
     ...args: ExtractArgs<Contract['calls']['numAssetOpportunities']>
   ) => Promise<CallReturn<'numAssetOpportunities'>>
-  vaultToAsset: (...args: ExtractArgs<Contract['calls']['vaultToAsset']>) => Promise<CallReturn<'vaultToAsset'>>
   assets: (...args: ExtractArgs<Contract['calls']['assets']>) => Promise<CallReturn<'assets'>>
   indexOfAsset: (...args: ExtractArgs<Contract['calls']['indexOfAsset']>) => Promise<CallReturn<'indexOfAsset'>>
   numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) => Promise<CallReturn<'numAssets'>>
+  snapShotData: (...args: ExtractArgs<Contract['calls']['snapShotData']>) => Promise<CallReturn<'snapShotData'>>
+  snapShots: (...args: ExtractArgs<Contract['calls']['snapShots']>) => Promise<CallReturn<'snapShots'>>
+  snapShotPriceConfig: (
+    ...args: ExtractArgs<Contract['calls']['snapShotPriceConfig']>
+  ) => Promise<CallReturn<'snapShotPriceConfig'>>
+  isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) => Promise<CallReturn<'isPaused'>>
   hasCapability: (...args: ExtractArgs<Contract['calls']['hasCapability']>) => Promise<CallReturn<'hasCapability'>>
   getRegistries: (...args: ExtractArgs<Contract['calls']['getRegistries']>) => Promise<CallReturn<'getRegistries'>>
-  getAccessForLego: (
-    ...args: ExtractArgs<Contract['calls']['getAccessForLego']>
-  ) => Promise<CallReturn<'getAccessForLego'>>
   isYieldLego: (...args: ExtractArgs<Contract['calls']['isYieldLego']>) => Promise<CallReturn<'isYieldLego'>>
   isDexLego: (...args: ExtractArgs<Contract['calls']['isDexLego']>) => Promise<CallReturn<'isDexLego'>>
+  getUnderlyingAsset: (
+    ...args: ExtractArgs<Contract['calls']['getUnderlyingAsset']>
+  ) => Promise<CallReturn<'getUnderlyingAsset'>>
+  getUnderlyingBalances: (
+    ...args: ExtractArgs<Contract['calls']['getUnderlyingBalances']>
+  ) => Promise<CallReturn<'getUnderlyingBalances'>>
+  getUnderlyingAmount: (
+    ...args: ExtractArgs<Contract['calls']['getUnderlyingAmount']>
+  ) => Promise<CallReturn<'getUnderlyingAmount'>>
+  getUnderlyingAmountSafe: (
+    ...args: ExtractArgs<Contract['calls']['getUnderlyingAmountSafe']>
+  ) => Promise<CallReturn<'getUnderlyingAmountSafe'>>
+  getUnderlyingData: (
+    ...args: ExtractArgs<Contract['calls']['getUnderlyingData']>
+  ) => Promise<CallReturn<'getUnderlyingData'>>
+  getUsdValueOfVaultToken: (
+    ...args: ExtractArgs<Contract['calls']['getUsdValueOfVaultToken']>
+  ) => Promise<CallReturn<'getUsdValueOfVaultToken'>>
   isRebasing: (...args: ExtractArgs<Contract['calls']['isRebasing']>) => Promise<CallReturn<'isRebasing'>>
+  getPricePerShare: (
+    ...args: ExtractArgs<Contract['calls']['getPricePerShare']>
+  ) => Promise<CallReturn<'getPricePerShare'>>
+  getVaultTokenAmount: (
+    ...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>
+  ) => Promise<CallReturn<'getVaultTokenAmount'>>
   isEligibleVaultForTrialFunds: (
     ...args: ExtractArgs<Contract['calls']['isEligibleVaultForTrialFunds']>
   ) => Promise<CallReturn<'isEligibleVaultForTrialFunds'>>
   isEligibleForYieldBonus: (
     ...args: ExtractArgs<Contract['calls']['isEligibleForYieldBonus']>
   ) => Promise<CallReturn<'isEligibleForYieldBonus'>>
-  isVaultToken: (...args: ExtractArgs<Contract['calls']['isVaultToken']>) => Promise<CallReturn<'isVaultToken'>>
-  getUnderlyingAsset: (
-    ...args: ExtractArgs<Contract['calls']['getUnderlyingAsset']>
-  ) => Promise<CallReturn<'getUnderlyingAsset'>>
-  getUnderlyingAmount: (
-    ...args: ExtractArgs<Contract['calls']['getUnderlyingAmount']>
-  ) => Promise<CallReturn<'getUnderlyingAmount'>>
-  getVaultTokenAmount: (
-    ...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>
-  ) => Promise<CallReturn<'getVaultTokenAmount'>>
-  getUsdValueOfVaultToken: (
-    ...args: ExtractArgs<Contract['calls']['getUsdValueOfVaultToken']>
-  ) => Promise<CallReturn<'getUsdValueOfVaultToken'>>
-  getUnderlyingData: (
-    ...args: ExtractArgs<Contract['calls']['getUnderlyingData']>
-  ) => Promise<CallReturn<'getUnderlyingData'>>
   totalAssets: (...args: ExtractArgs<Contract['calls']['totalAssets']>) => Promise<CallReturn<'totalAssets'>>
   totalBorrows: (...args: ExtractArgs<Contract['calls']['totalBorrows']>) => Promise<CallReturn<'totalBorrows'>>
-  getPricePerShare: (
-    ...args: ExtractArgs<Contract['calls']['getPricePerShare']>
-  ) => Promise<CallReturn<'getPricePerShare'>>
-  getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => Promise<CallReturn<'getPrice'>>
+  canRegisterVaultToken: (
+    ...args: ExtractArgs<Contract['calls']['canRegisterVaultToken']>
+  ) => Promise<CallReturn<'canRegisterVaultToken'>>
+  hasClaimableRewards: (
+    ...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>
+  ) => Promise<CallReturn<'hasClaimableRewards'>>
+  getAccessForLego: (
+    ...args: ExtractArgs<Contract['calls']['getAccessForLego']>
+  ) => Promise<CallReturn<'getAccessForLego'>>
   RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => Promise<CallReturn<'RIPE_REGISTRY'>>
   RIPE_GREEN_TOKEN: (
     ...args: ExtractArgs<Contract['calls']['RIPE_GREEN_TOKEN']>
@@ -3296,15 +3794,21 @@ export type SDK = {
   pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => Promise<Address>
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
   recoverFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverFundsMany']>) => Promise<Address>
+  setSnapShotPriceConfig: (...args: ExtractArgs<Contract['mutations']['setSnapShotPriceConfig']>) => Promise<Address>
+  registerVaultTokenLocally: (
+    ...args: ExtractArgs<Contract['mutations']['registerVaultTokenLocally']>
+  ) => Promise<Address>
+  deregisterVaultTokenLocally: (
+    ...args: ExtractArgs<Contract['mutations']['deregisterVaultTokenLocally']>
+  ) => Promise<Address>
+  addPriceSnapshot: (...args: ExtractArgs<Contract['mutations']['addPriceSnapshot']>) => Promise<Address>
+  depositForYield: (...args: ExtractArgs<Contract['mutations']['depositForYield']>) => Promise<Address>
+  withdrawFromYield: (...args: ExtractArgs<Contract['mutations']['withdrawFromYield']>) => Promise<Address>
   addCollateral: (...args: ExtractArgs<Contract['mutations']['addCollateral']>) => Promise<Address>
   removeCollateral: (...args: ExtractArgs<Contract['mutations']['removeCollateral']>) => Promise<Address>
   borrow: (...args: ExtractArgs<Contract['mutations']['borrow']>) => Promise<Address>
   repayDebt: (...args: ExtractArgs<Contract['mutations']['repayDebt']>) => Promise<Address>
   claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) => Promise<Address>
-  depositForYield: (...args: ExtractArgs<Contract['mutations']['depositForYield']>) => Promise<Address>
-  withdrawFromYield: (...args: ExtractArgs<Contract['mutations']['withdrawFromYield']>) => Promise<Address>
-  addAssetOpportunity: (...args: ExtractArgs<Contract['mutations']['addAssetOpportunity']>) => Promise<Address>
-  removeAssetOpportunity: (...args: ExtractArgs<Contract['mutations']['removeAssetOpportunity']>) => Promise<Address>
   swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) => Promise<Address>
   mintOrRedeemAsset: (...args: ExtractArgs<Contract['mutations']['mintOrRedeemAsset']>) => Promise<Address>
   confirmMintOrRedeemAsset: (
@@ -3339,8 +3843,16 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.isAssetOpportunity(...args)) as Promise<CallReturn<'isAssetOpportunity'>>,
     getNumLegoAssets: (...args: ExtractArgs<Contract['calls']['getNumLegoAssets']>) =>
       singleQuery(publicClient!, call.getNumLegoAssets(...args)) as Promise<CallReturn<'getNumLegoAssets'>>,
-    isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) =>
-      singleQuery(publicClient!, call.isPaused(...args)) as Promise<CallReturn<'isPaused'>>,
+    getWeightedPricePerShare: (...args: ExtractArgs<Contract['calls']['getWeightedPricePerShare']>) =>
+      singleQuery(publicClient!, call.getWeightedPricePerShare(...args)) as Promise<
+        CallReturn<'getWeightedPricePerShare'>
+      >,
+    getLatestSnapshot: (...args: ExtractArgs<Contract['calls']['getLatestSnapshot']>) =>
+      singleQuery(publicClient!, call.getLatestSnapshot(...args)) as Promise<CallReturn<'getLatestSnapshot'>>,
+    isValidPriceConfig: (...args: ExtractArgs<Contract['calls']['isValidPriceConfig']>) =>
+      singleQuery(publicClient!, call.isValidPriceConfig(...args)) as Promise<CallReturn<'isValidPriceConfig'>>,
+    vaultToAsset: (...args: ExtractArgs<Contract['calls']['vaultToAsset']>) =>
+      singleQuery(publicClient!, call.vaultToAsset(...args)) as Promise<CallReturn<'vaultToAsset'>>,
     assetOpportunities: (...args: ExtractArgs<Contract['calls']['assetOpportunities']>) =>
       singleQuery(publicClient!, call.assetOpportunities(...args)) as Promise<CallReturn<'assetOpportunities'>>,
     indexOfAssetOpportunity: (...args: ExtractArgs<Contract['calls']['indexOfAssetOpportunity']>) =>
@@ -3349,26 +3861,50 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       >,
     numAssetOpportunities: (...args: ExtractArgs<Contract['calls']['numAssetOpportunities']>) =>
       singleQuery(publicClient!, call.numAssetOpportunities(...args)) as Promise<CallReturn<'numAssetOpportunities'>>,
-    vaultToAsset: (...args: ExtractArgs<Contract['calls']['vaultToAsset']>) =>
-      singleQuery(publicClient!, call.vaultToAsset(...args)) as Promise<CallReturn<'vaultToAsset'>>,
     assets: (...args: ExtractArgs<Contract['calls']['assets']>) =>
       singleQuery(publicClient!, call.assets(...args)) as Promise<CallReturn<'assets'>>,
     indexOfAsset: (...args: ExtractArgs<Contract['calls']['indexOfAsset']>) =>
       singleQuery(publicClient!, call.indexOfAsset(...args)) as Promise<CallReturn<'indexOfAsset'>>,
     numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) =>
       singleQuery(publicClient!, call.numAssets(...args)) as Promise<CallReturn<'numAssets'>>,
+    snapShotData: (...args: ExtractArgs<Contract['calls']['snapShotData']>) =>
+      singleQuery(publicClient!, call.snapShotData(...args)) as Promise<CallReturn<'snapShotData'>>,
+    snapShots: (...args: ExtractArgs<Contract['calls']['snapShots']>) =>
+      singleQuery(publicClient!, call.snapShots(...args)) as Promise<CallReturn<'snapShots'>>,
+    snapShotPriceConfig: (...args: ExtractArgs<Contract['calls']['snapShotPriceConfig']>) =>
+      singleQuery(publicClient!, call.snapShotPriceConfig(...args)) as Promise<CallReturn<'snapShotPriceConfig'>>,
+    isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) =>
+      singleQuery(publicClient!, call.isPaused(...args)) as Promise<CallReturn<'isPaused'>>,
     hasCapability: (...args: ExtractArgs<Contract['calls']['hasCapability']>) =>
       singleQuery(publicClient!, call.hasCapability(...args)) as Promise<CallReturn<'hasCapability'>>,
     getRegistries: (...args: ExtractArgs<Contract['calls']['getRegistries']>) =>
       singleQuery(publicClient!, call.getRegistries(...args)) as Promise<CallReturn<'getRegistries'>>,
-    getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
-      singleQuery(publicClient!, call.getAccessForLego(...args)) as Promise<CallReturn<'getAccessForLego'>>,
     isYieldLego: (...args: ExtractArgs<Contract['calls']['isYieldLego']>) =>
       singleQuery(publicClient!, call.isYieldLego(...args)) as Promise<CallReturn<'isYieldLego'>>,
     isDexLego: (...args: ExtractArgs<Contract['calls']['isDexLego']>) =>
       singleQuery(publicClient!, call.isDexLego(...args)) as Promise<CallReturn<'isDexLego'>>,
+    getUnderlyingAsset: (...args: ExtractArgs<Contract['calls']['getUnderlyingAsset']>) =>
+      singleQuery(publicClient!, call.getUnderlyingAsset(...args)) as Promise<CallReturn<'getUnderlyingAsset'>>,
+    getUnderlyingBalances: (...args: ExtractArgs<Contract['calls']['getUnderlyingBalances']>) =>
+      singleQuery(publicClient!, call.getUnderlyingBalances(...args)) as Promise<CallReturn<'getUnderlyingBalances'>>,
+    getUnderlyingAmount: (...args: ExtractArgs<Contract['calls']['getUnderlyingAmount']>) =>
+      singleQuery(publicClient!, call.getUnderlyingAmount(...args)) as Promise<CallReturn<'getUnderlyingAmount'>>,
+    getUnderlyingAmountSafe: (...args: ExtractArgs<Contract['calls']['getUnderlyingAmountSafe']>) =>
+      singleQuery(publicClient!, call.getUnderlyingAmountSafe(...args)) as Promise<
+        CallReturn<'getUnderlyingAmountSafe'>
+      >,
+    getUnderlyingData: (...args: ExtractArgs<Contract['calls']['getUnderlyingData']>) =>
+      singleQuery(publicClient!, call.getUnderlyingData(...args)) as Promise<CallReturn<'getUnderlyingData'>>,
+    getUsdValueOfVaultToken: (...args: ExtractArgs<Contract['calls']['getUsdValueOfVaultToken']>) =>
+      singleQuery(publicClient!, call.getUsdValueOfVaultToken(...args)) as Promise<
+        CallReturn<'getUsdValueOfVaultToken'>
+      >,
     isRebasing: (...args: ExtractArgs<Contract['calls']['isRebasing']>) =>
       singleQuery(publicClient!, call.isRebasing(...args)) as Promise<CallReturn<'isRebasing'>>,
+    getPricePerShare: (...args: ExtractArgs<Contract['calls']['getPricePerShare']>) =>
+      singleQuery(publicClient!, call.getPricePerShare(...args)) as Promise<CallReturn<'getPricePerShare'>>,
+    getVaultTokenAmount: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>) =>
+      singleQuery(publicClient!, call.getVaultTokenAmount(...args)) as Promise<CallReturn<'getVaultTokenAmount'>>,
     isEligibleVaultForTrialFunds: (...args: ExtractArgs<Contract['calls']['isEligibleVaultForTrialFunds']>) =>
       singleQuery(publicClient!, call.isEligibleVaultForTrialFunds(...args)) as Promise<
         CallReturn<'isEligibleVaultForTrialFunds'>
@@ -3377,28 +3913,16 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.isEligibleForYieldBonus(...args)) as Promise<
         CallReturn<'isEligibleForYieldBonus'>
       >,
-    isVaultToken: (...args: ExtractArgs<Contract['calls']['isVaultToken']>) =>
-      singleQuery(publicClient!, call.isVaultToken(...args)) as Promise<CallReturn<'isVaultToken'>>,
-    getUnderlyingAsset: (...args: ExtractArgs<Contract['calls']['getUnderlyingAsset']>) =>
-      singleQuery(publicClient!, call.getUnderlyingAsset(...args)) as Promise<CallReturn<'getUnderlyingAsset'>>,
-    getUnderlyingAmount: (...args: ExtractArgs<Contract['calls']['getUnderlyingAmount']>) =>
-      singleQuery(publicClient!, call.getUnderlyingAmount(...args)) as Promise<CallReturn<'getUnderlyingAmount'>>,
-    getVaultTokenAmount: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>) =>
-      singleQuery(publicClient!, call.getVaultTokenAmount(...args)) as Promise<CallReturn<'getVaultTokenAmount'>>,
-    getUsdValueOfVaultToken: (...args: ExtractArgs<Contract['calls']['getUsdValueOfVaultToken']>) =>
-      singleQuery(publicClient!, call.getUsdValueOfVaultToken(...args)) as Promise<
-        CallReturn<'getUsdValueOfVaultToken'>
-      >,
-    getUnderlyingData: (...args: ExtractArgs<Contract['calls']['getUnderlyingData']>) =>
-      singleQuery(publicClient!, call.getUnderlyingData(...args)) as Promise<CallReturn<'getUnderlyingData'>>,
     totalAssets: (...args: ExtractArgs<Contract['calls']['totalAssets']>) =>
       singleQuery(publicClient!, call.totalAssets(...args)) as Promise<CallReturn<'totalAssets'>>,
     totalBorrows: (...args: ExtractArgs<Contract['calls']['totalBorrows']>) =>
       singleQuery(publicClient!, call.totalBorrows(...args)) as Promise<CallReturn<'totalBorrows'>>,
-    getPricePerShare: (...args: ExtractArgs<Contract['calls']['getPricePerShare']>) =>
-      singleQuery(publicClient!, call.getPricePerShare(...args)) as Promise<CallReturn<'getPricePerShare'>>,
-    getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) =>
-      singleQuery(publicClient!, call.getPrice(...args)) as Promise<CallReturn<'getPrice'>>,
+    canRegisterVaultToken: (...args: ExtractArgs<Contract['calls']['canRegisterVaultToken']>) =>
+      singleQuery(publicClient!, call.canRegisterVaultToken(...args)) as Promise<CallReturn<'canRegisterVaultToken'>>,
+    hasClaimableRewards: (...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>) =>
+      singleQuery(publicClient!, call.hasClaimableRewards(...args)) as Promise<CallReturn<'hasClaimableRewards'>>,
+    getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
+      singleQuery(publicClient!, call.getAccessForLego(...args)) as Promise<CallReturn<'getAccessForLego'>>,
     RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) =>
       singleQuery(publicClient!, call.RIPE_REGISTRY(...args)) as Promise<CallReturn<'RIPE_REGISTRY'>>,
     RIPE_GREEN_TOKEN: (...args: ExtractArgs<Contract['calls']['RIPE_GREEN_TOKEN']>) =>
@@ -3414,6 +3938,18 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.recoverFunds)(...args),
     recoverFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverFundsMany']>) =>
       mutate(walletClient!, mutation.recoverFundsMany)(...args),
+    setSnapShotPriceConfig: (...args: ExtractArgs<Contract['mutations']['setSnapShotPriceConfig']>) =>
+      mutate(walletClient!, mutation.setSnapShotPriceConfig)(...args),
+    registerVaultTokenLocally: (...args: ExtractArgs<Contract['mutations']['registerVaultTokenLocally']>) =>
+      mutate(walletClient!, mutation.registerVaultTokenLocally)(...args),
+    deregisterVaultTokenLocally: (...args: ExtractArgs<Contract['mutations']['deregisterVaultTokenLocally']>) =>
+      mutate(walletClient!, mutation.deregisterVaultTokenLocally)(...args),
+    addPriceSnapshot: (...args: ExtractArgs<Contract['mutations']['addPriceSnapshot']>) =>
+      mutate(walletClient!, mutation.addPriceSnapshot)(...args),
+    depositForYield: (...args: ExtractArgs<Contract['mutations']['depositForYield']>) =>
+      mutate(walletClient!, mutation.depositForYield)(...args),
+    withdrawFromYield: (...args: ExtractArgs<Contract['mutations']['withdrawFromYield']>) =>
+      mutate(walletClient!, mutation.withdrawFromYield)(...args),
     addCollateral: (...args: ExtractArgs<Contract['mutations']['addCollateral']>) =>
       mutate(walletClient!, mutation.addCollateral)(...args),
     removeCollateral: (...args: ExtractArgs<Contract['mutations']['removeCollateral']>) =>
@@ -3423,14 +3959,6 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.repayDebt)(...args),
     claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) =>
       mutate(walletClient!, mutation.claimRewards)(...args),
-    depositForYield: (...args: ExtractArgs<Contract['mutations']['depositForYield']>) =>
-      mutate(walletClient!, mutation.depositForYield)(...args),
-    withdrawFromYield: (...args: ExtractArgs<Contract['mutations']['withdrawFromYield']>) =>
-      mutate(walletClient!, mutation.withdrawFromYield)(...args),
-    addAssetOpportunity: (...args: ExtractArgs<Contract['mutations']['addAssetOpportunity']>) =>
-      mutate(walletClient!, mutation.addAssetOpportunity)(...args),
-    removeAssetOpportunity: (...args: ExtractArgs<Contract['mutations']['removeAssetOpportunity']>) =>
-      mutate(walletClient!, mutation.removeAssetOpportunity)(...args),
     swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) =>
       mutate(walletClient!, mutation.swapTokens)(...args),
     mintOrRedeemAsset: (...args: ExtractArgs<Contract['mutations']['mintOrRedeemAsset']>) =>
