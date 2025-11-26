@@ -266,6 +266,14 @@ export const abi = [
             ],
           },
           {
+            name: 'isExistingPayee',
+            type: 'bool',
+          },
+          {
+            name: 'isExistingCheque',
+            type: 'bool',
+          },
+          {
             name: 'timeLock',
             type: 'uint256',
           },
@@ -354,7 +362,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xcb91C738E301bDf8Ee5354f0Ef2692B41145D217'
+export const deployAddress: Address | undefined = '0xAdED981a6Dfc6C3e3E4DbBa54362375FDcF7B389'
 
 export type Contract = {
   calls: {
@@ -368,6 +376,8 @@ export type Contract = {
       wallet: `0x${string}`
       isWhitelisted: boolean
       pendingWhitelist: { initiatedBlock: bigint; confirmBlock: bigint; currentOwner: `0x${string}` }
+      isExistingPayee: boolean
+      isExistingCheque: boolean
       timeLock: bigint
       walletConfig: `0x${string}`
       isManager: boolean

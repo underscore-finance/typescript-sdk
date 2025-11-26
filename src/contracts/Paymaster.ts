@@ -1668,6 +1668,10 @@ export const abi = [
             type: 'bool',
           },
           {
+            name: 'isExistingCheque',
+            type: 'bool',
+          },
+          {
             name: 'payeeSettings',
             type: 'tuple',
             components: [
@@ -1995,7 +1999,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x5aDc5a2b5018426243C98Aa52E4696F614274946'
+export const deployAddress: Address | undefined = '0x80bf71E098Dc328D87456c34675C2B4C10a1AFCb'
 
 export type Contract = {
   calls: {
@@ -2048,6 +2052,7 @@ export type Contract = {
       wallet: `0x${string}`
       isRegisteredPayee: boolean
       isWhitelisted: boolean
+      isExistingCheque: boolean
       payeeSettings: {
         startBlock: bigint
         expiryBlock: bigint

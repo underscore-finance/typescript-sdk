@@ -44,43 +44,6 @@ export const abi = [
         indexed: false,
       },
       {
-        name: 'trialFundsAsset',
-        type: 'address',
-        indexed: false,
-      },
-      {
-        name: 'trialFundsAmount',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'groupId',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
-    name: 'AgentCreated',
-    inputs: [
-      {
-        name: 'agent',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'owner',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'creator',
-        type: 'address',
-        indexed: true,
-      },
-      {
         name: 'groupId',
         type: 'uint256',
         indexed: false,
@@ -175,6 +138,10 @@ export const abi = [
           },
           {
             name: 'billing',
+            type: 'address',
+          },
+          {
+            name: 'vaultRegistry',
             type: 'address',
           },
         ],
@@ -325,35 +292,6 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_shouldUseTrialFunds',
-        type: 'bool',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'createUserWallet',
-    inputs: [
-      {
-        name: '_owner',
-        type: 'address',
-      },
-      {
-        name: '_ambassador',
-        type: 'address',
-      },
-      {
-        name: '_shouldUseTrialFunds',
-        type: 'bool',
-      },
-      {
         name: '_groupId',
         type: 'uint256',
       },
@@ -362,111 +300,6 @@ export const abi = [
       {
         name: '',
         type: 'address',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'createAgent',
-    inputs: [],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'createAgent',
-    inputs: [
-      {
-        name: '_owner',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'createAgent',
-    inputs: [
-      {
-        name: '_owner',
-        type: 'address',
-      },
-      {
-        name: '_groupId',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'clawBackTrialFunds',
-    inputs: [
-      {
-        name: '_user',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'canClawbackTrialFunds',
-    inputs: [
-      {
-        name: '_user',
-        type: 'address',
-      },
-      {
-        name: '_caller',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'doesWalletStillHaveTrialFunds',
-    inputs: [
-      {
-        name: '_user',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
       },
     ],
   },
@@ -504,49 +337,6 @@ export const abi = [
       {
         name: '',
         type: 'bool',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getAssetUsdValueConfig',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'tuple',
-        components: [
-          {
-            name: 'legoId',
-            type: 'uint256',
-          },
-          {
-            name: 'legoAddr',
-            type: 'address',
-          },
-          {
-            name: 'decimals',
-            type: 'uint256',
-          },
-          {
-            name: 'staleBlocks',
-            type: 'uint256',
-          },
-          {
-            name: 'isYieldAsset',
-            type: 'bool',
-          },
-          {
-            name: 'underlyingAsset',
-            type: 'address',
-          },
-        ],
       },
     ],
   },
@@ -595,7 +385,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xCCE416b5050F628C85A57a817F168C1a7Af8D4d2'
+export const deployAddress: Address | undefined = '0x95B85a88200b33C64f9935750C2Ea62fB54141E7'
 
 export type Contract = {
   calls: {
@@ -611,12 +401,11 @@ export type Contract = {
       appraiser: `0x${string}`
       walletBackpack: `0x${string}`
       billing: `0x${string}`
+      vaultRegistry: `0x${string}`
     }>
     getUndyHq: () => Promise<`0x${string}`>
     canMintUndy: () => Promise<boolean>
     isPaused: () => Promise<boolean>
-    canClawbackTrialFunds: (user: `0x${string}`, caller: `0x${string}`) => Promise<boolean>
-    doesWalletStillHaveTrialFunds: (user: `0x${string}`) => Promise<boolean>
     doesWalletStillHaveTrialFundsWithAddys: (
       user: `0x${string}`,
       walletConfig: `0x${string}`,
@@ -625,16 +414,6 @@ export type Contract = {
       appraiser: `0x${string}`,
       ledger: `0x${string}`,
     ) => Promise<boolean>
-    getAssetUsdValueConfig: (
-      asset: `0x${string}`,
-    ) => Promise<{
-      legoId: bigint
-      legoAddr: `0x${string}`
-      decimals: bigint
-      staleBlocks: bigint
-      isYieldAsset: boolean
-      underlyingAsset: `0x${string}`
-    }>
     WETH: () => Promise<`0x${string}`>
     ETH: () => Promise<`0x${string}`>
   }
@@ -642,14 +421,7 @@ export type Contract = {
     pause: (shouldPause: boolean) => Promise<void>
     recoverFunds: (recipient: `0x${string}`, asset: `0x${string}`) => Promise<void>
     recoverFundsMany: (recipient: `0x${string}`, assets: `0x${string}`[]) => Promise<void>
-    createUserWallet: (
-      owner?: `0x${string}`,
-      ambassador?: `0x${string}`,
-      shouldUseTrialFunds?: boolean,
-      groupId?: bigint,
-    ) => Promise<`0x${string}`>
-    createAgent: (owner?: `0x${string}`, groupId?: bigint) => Promise<`0x${string}`>
-    clawBackTrialFunds: (user: `0x${string}`) => Promise<bigint>
+    createUserWallet: (owner?: `0x${string}`, ambassador?: `0x${string}`, groupId?: bigint) => Promise<`0x${string}`>
   }
   events: {
     UserWalletCreated: (
@@ -659,11 +431,8 @@ export type Contract = {
       agent: `0x${string}`,
       ambassador: `0x${string}`,
       creator: `0x${string}`,
-      trialFundsAsset: `0x${string}`,
-      trialFundsAmount: bigint,
       groupId: bigint,
     ) => Promise<void>
-    AgentCreated: (agent: `0x${string}`, owner: `0x${string}`, creator: `0x${string}`, groupId: bigint) => Promise<void>
     DepartmentPauseModified: (isPaused: boolean) => Promise<void>
     DepartmentFundsRecovered: (asset: `0x${string}`, recipient: `0x${string}`, balance: bigint) => Promise<void>
   }
@@ -733,15 +502,9 @@ export const call: CallType = {
   getUndyHq: (...args: ExtractArgs<Contract['calls']['getUndyHq']>) => getRequest('getUndyHq', args),
   canMintUndy: (...args: ExtractArgs<Contract['calls']['canMintUndy']>) => getRequest('canMintUndy', args),
   isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) => getRequest('isPaused', args),
-  canClawbackTrialFunds: (...args: ExtractArgs<Contract['calls']['canClawbackTrialFunds']>) =>
-    getRequest('canClawbackTrialFunds', args),
-  doesWalletStillHaveTrialFunds: (...args: ExtractArgs<Contract['calls']['doesWalletStillHaveTrialFunds']>) =>
-    getRequest('doesWalletStillHaveTrialFunds', args),
   doesWalletStillHaveTrialFundsWithAddys: (
     ...args: ExtractArgs<Contract['calls']['doesWalletStillHaveTrialFundsWithAddys']>
   ) => getRequest('doesWalletStillHaveTrialFundsWithAddys', args),
-  getAssetUsdValueConfig: (...args: ExtractArgs<Contract['calls']['getAssetUsdValueConfig']>) =>
-    getRequest('getAssetUsdValueConfig', args),
   WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) => getRequest('WETH', args),
   ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => getRequest('ETH', args),
 }
@@ -770,8 +533,6 @@ export const mutation: {
   recoverFunds: getMutation('recoverFunds'),
   recoverFundsMany: getMutation('recoverFundsMany'),
   createUserWallet: getMutation('createUserWallet'),
-  createAgent: getMutation('createAgent'),
-  clawBackTrialFunds: getMutation('clawBackTrialFunds'),
 }
 
 export type SDK = {
@@ -781,26 +542,15 @@ export type SDK = {
   getUndyHq: (...args: ExtractArgs<Contract['calls']['getUndyHq']>) => Promise<CallReturn<'getUndyHq'>>
   canMintUndy: (...args: ExtractArgs<Contract['calls']['canMintUndy']>) => Promise<CallReturn<'canMintUndy'>>
   isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) => Promise<CallReturn<'isPaused'>>
-  canClawbackTrialFunds: (
-    ...args: ExtractArgs<Contract['calls']['canClawbackTrialFunds']>
-  ) => Promise<CallReturn<'canClawbackTrialFunds'>>
-  doesWalletStillHaveTrialFunds: (
-    ...args: ExtractArgs<Contract['calls']['doesWalletStillHaveTrialFunds']>
-  ) => Promise<CallReturn<'doesWalletStillHaveTrialFunds'>>
   doesWalletStillHaveTrialFundsWithAddys: (
     ...args: ExtractArgs<Contract['calls']['doesWalletStillHaveTrialFundsWithAddys']>
   ) => Promise<CallReturn<'doesWalletStillHaveTrialFundsWithAddys'>>
-  getAssetUsdValueConfig: (
-    ...args: ExtractArgs<Contract['calls']['getAssetUsdValueConfig']>
-  ) => Promise<CallReturn<'getAssetUsdValueConfig'>>
   WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) => Promise<CallReturn<'WETH'>>
   ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => Promise<CallReturn<'ETH'>>
   pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => Promise<Address>
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
   recoverFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverFundsMany']>) => Promise<Address>
   createUserWallet: (...args: ExtractArgs<Contract['mutations']['createUserWallet']>) => Promise<Address>
-  createAgent: (...args: ExtractArgs<Contract['mutations']['createAgent']>) => Promise<Address>
-  clawBackTrialFunds: (...args: ExtractArgs<Contract['mutations']['clawBackTrialFunds']>) => Promise<Address>
 }
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
@@ -816,20 +566,12 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.canMintUndy(...args)) as Promise<CallReturn<'canMintUndy'>>,
     isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) =>
       singleQuery(publicClient!, call.isPaused(...args)) as Promise<CallReturn<'isPaused'>>,
-    canClawbackTrialFunds: (...args: ExtractArgs<Contract['calls']['canClawbackTrialFunds']>) =>
-      singleQuery(publicClient!, call.canClawbackTrialFunds(...args)) as Promise<CallReturn<'canClawbackTrialFunds'>>,
-    doesWalletStillHaveTrialFunds: (...args: ExtractArgs<Contract['calls']['doesWalletStillHaveTrialFunds']>) =>
-      singleQuery(publicClient!, call.doesWalletStillHaveTrialFunds(...args)) as Promise<
-        CallReturn<'doesWalletStillHaveTrialFunds'>
-      >,
     doesWalletStillHaveTrialFundsWithAddys: (
       ...args: ExtractArgs<Contract['calls']['doesWalletStillHaveTrialFundsWithAddys']>
     ) =>
       singleQuery(publicClient!, call.doesWalletStillHaveTrialFundsWithAddys(...args)) as Promise<
         CallReturn<'doesWalletStillHaveTrialFundsWithAddys'>
       >,
-    getAssetUsdValueConfig: (...args: ExtractArgs<Contract['calls']['getAssetUsdValueConfig']>) =>
-      singleQuery(publicClient!, call.getAssetUsdValueConfig(...args)) as Promise<CallReturn<'getAssetUsdValueConfig'>>,
     WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) =>
       singleQuery(publicClient!, call.WETH(...args)) as Promise<CallReturn<'WETH'>>,
     ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) =>
@@ -843,9 +585,5 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.recoverFundsMany)(...args),
     createUserWallet: (...args: ExtractArgs<Contract['mutations']['createUserWallet']>) =>
       mutate(walletClient!, mutation.createUserWallet)(...args),
-    createAgent: (...args: ExtractArgs<Contract['mutations']['createAgent']>) =>
-      mutate(walletClient!, mutation.createAgent)(...args),
-    clawBackTrialFunds: (...args: ExtractArgs<Contract['mutations']['clawBackTrialFunds']>) =>
-      mutate(walletClient!, mutation.clawBackTrialFunds)(...args),
   }
 }

@@ -189,6 +189,48 @@ export const abi = [
     type: 'event',
   },
   {
+    name: 'UniswapV3FeesCollected',
+    inputs: [
+      {
+        name: 'sender',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'nftTokenId',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'token0',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'token1',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'amount0',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'amount1',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'recipient',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
     name: 'LegoPauseModified',
     inputs: [
       {
@@ -2643,7 +2685,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xda8C08B95B79E450BDE507a33C0BdcF5562691cB'
+export const deployAddress: Address | undefined = '0xEa1f7604E751b54AF321636DBc2dc75C0045e7A5'
 
 export type Contract = {
   calls: {
@@ -2975,6 +3017,15 @@ export type Contract = {
       recipient: `0x${string}`,
     ) => Promise<void>
     UniswapV3NftRecovered: (collection: `0x${string}`, nftTokenId: bigint, recipient: `0x${string}`) => Promise<void>
+    UniswapV3FeesCollected: (
+      sender: `0x${string}`,
+      nftTokenId: bigint,
+      token0: `0x${string}`,
+      token1: `0x${string}`,
+      amount0: bigint,
+      amount1: bigint,
+      recipient: `0x${string}`,
+    ) => Promise<void>
     LegoPauseModified: (isPaused: boolean) => Promise<void>
     LegoFundsRecovered: (asset: `0x${string}`, recipient: `0x${string}`, balance: bigint) => Promise<void>
   }

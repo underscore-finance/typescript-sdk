@@ -984,156 +984,6 @@ export const abi = [
     ],
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getLootDistroConfig',
-    inputs: [
-      {
-        name: '_wallet',
-        type: 'address',
-      },
-      {
-        name: '_asset',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ambassador',
-            type: 'address',
-          },
-          {
-            name: 'ambassadorRevShare',
-            type: 'tuple',
-            components: [
-              {
-                name: 'swapRatio',
-                type: 'uint256',
-              },
-              {
-                name: 'rewardsRatio',
-                type: 'uint256',
-              },
-              {
-                name: 'yieldRatio',
-                type: 'uint256',
-              },
-            ],
-          },
-          {
-            name: 'ambassadorBonusRatio',
-            type: 'uint256',
-          },
-          {
-            name: 'bonusRatio',
-            type: 'uint256',
-          },
-          {
-            name: 'altBonusAsset',
-            type: 'address',
-          },
-          {
-            name: 'underlyingAsset',
-            type: 'address',
-          },
-          {
-            name: 'decimals',
-            type: 'uint256',
-          },
-          {
-            name: 'legoId',
-            type: 'uint256',
-          },
-          {
-            name: 'legoAddr',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getLootDistroConfig',
-    inputs: [
-      {
-        name: '_wallet',
-        type: 'address',
-      },
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_shouldGetLegoInfo',
-        type: 'bool',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ambassador',
-            type: 'address',
-          },
-          {
-            name: 'ambassadorRevShare',
-            type: 'tuple',
-            components: [
-              {
-                name: 'swapRatio',
-                type: 'uint256',
-              },
-              {
-                name: 'rewardsRatio',
-                type: 'uint256',
-              },
-              {
-                name: 'yieldRatio',
-                type: 'uint256',
-              },
-            ],
-          },
-          {
-            name: 'ambassadorBonusRatio',
-            type: 'uint256',
-          },
-          {
-            name: 'bonusRatio',
-            type: 'uint256',
-          },
-          {
-            name: 'altBonusAsset',
-            type: 'address',
-          },
-          {
-            name: 'underlyingAsset',
-            type: 'address',
-          },
-          {
-            name: 'decimals',
-            type: 'uint256',
-          },
-          {
-            name: 'legoId',
-            type: 'uint256',
-          },
-          {
-            name: 'legoAddr',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
     name: 'setRipeRewardsConfig',
@@ -1362,7 +1212,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x2D775AfA205729b8e74F9215611Ed700f564910C'
+export const deployAddress: Address | undefined = '0x23d69D99061acf04c6e86f58692F533E4f039dE8'
 
 export type Contract = {
   calls: {
@@ -1396,21 +1246,6 @@ export type Contract = {
     ) => Promise<bigint>
     getRewardsFee: (user: `0x${string}`, asset: `0x${string}`, missionControl?: `0x${string}`) => Promise<bigint>
     validateCanClaimLoot: (user: `0x${string}`, caller: `0x${string}`) => Promise<boolean>
-    getLootDistroConfig: (
-      wallet: `0x${string}`,
-      asset: `0x${string}`,
-      shouldGetLegoInfo?: boolean,
-    ) => Promise<{
-      ambassador: `0x${string}`
-      ambassadorRevShare: { swapRatio: bigint; rewardsRatio: bigint; yieldRatio: bigint }
-      ambassadorBonusRatio: bigint
-      bonusRatio: bigint
-      altBonusAsset: `0x${string}`
-      underlyingAsset: `0x${string}`
-      decimals: bigint
-      legoId: bigint
-      legoAddr: `0x${string}`
-    }>
     lastClaim: (arg0: `0x${string}`) => Promise<bigint>
     totalClaimableLoot: (arg0: `0x${string}`) => Promise<bigint>
     claimableLoot: (arg0: `0x${string}`, arg1: `0x${string}`) => Promise<bigint>
@@ -1576,8 +1411,6 @@ export const call: CallType = {
   getRewardsFee: (...args: ExtractArgs<Contract['calls']['getRewardsFee']>) => getRequest('getRewardsFee', args),
   validateCanClaimLoot: (...args: ExtractArgs<Contract['calls']['validateCanClaimLoot']>) =>
     getRequest('validateCanClaimLoot', args),
-  getLootDistroConfig: (...args: ExtractArgs<Contract['calls']['getLootDistroConfig']>) =>
-    getRequest('getLootDistroConfig', args),
   lastClaim: (...args: ExtractArgs<Contract['calls']['lastClaim']>) => getRequest('lastClaim', args),
   totalClaimableLoot: (...args: ExtractArgs<Contract['calls']['totalClaimableLoot']>) =>
     getRequest('totalClaimableLoot', args),
@@ -1659,9 +1492,6 @@ export type SDK = {
   validateCanClaimLoot: (
     ...args: ExtractArgs<Contract['calls']['validateCanClaimLoot']>
   ) => Promise<CallReturn<'validateCanClaimLoot'>>
-  getLootDistroConfig: (
-    ...args: ExtractArgs<Contract['calls']['getLootDistroConfig']>
-  ) => Promise<CallReturn<'getLootDistroConfig'>>
   lastClaim: (...args: ExtractArgs<Contract['calls']['lastClaim']>) => Promise<CallReturn<'lastClaim'>>
   totalClaimableLoot: (
     ...args: ExtractArgs<Contract['calls']['totalClaimableLoot']>
@@ -1743,8 +1573,6 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.getRewardsFee(...args)) as Promise<CallReturn<'getRewardsFee'>>,
     validateCanClaimLoot: (...args: ExtractArgs<Contract['calls']['validateCanClaimLoot']>) =>
       singleQuery(publicClient!, call.validateCanClaimLoot(...args)) as Promise<CallReturn<'validateCanClaimLoot'>>,
-    getLootDistroConfig: (...args: ExtractArgs<Contract['calls']['getLootDistroConfig']>) =>
-      singleQuery(publicClient!, call.getLootDistroConfig(...args)) as Promise<CallReturn<'getLootDistroConfig'>>,
     lastClaim: (...args: ExtractArgs<Contract['calls']['lastClaim']>) =>
       singleQuery(publicClient!, call.lastClaim(...args)) as Promise<CallReturn<'lastClaim'>>,
     totalClaimableLoot: (...args: ExtractArgs<Contract['calls']['totalClaimableLoot']>) =>

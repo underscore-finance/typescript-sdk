@@ -175,6 +175,10 @@ export const abi = [
             name: 'periodStartBlock',
             type: 'uint256',
           },
+          {
+            name: 'numSwapsInPeriod',
+            type: 'uint256',
+          },
         ],
       },
       {
@@ -244,8 +248,30 @@ export const abi = [
                 type: 'bool',
               },
               {
+                name: 'onlyApprovedYieldOpps',
+                type: 'bool',
+              },
+              {
                 name: 'allowedLegos',
                 type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'swapPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'mustHaveUsdValue',
+                type: 'bool',
+              },
+              {
+                name: 'maxNumSwapsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxSlippage',
+                type: 'uint256',
               },
             ],
           },
@@ -378,8 +404,30 @@ export const abi = [
                 type: 'bool',
               },
               {
+                name: 'onlyApprovedYieldOpps',
+                type: 'bool',
+              },
+              {
                 name: 'allowedLegos',
                 type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'swapPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'mustHaveUsdValue',
+                type: 'bool',
+              },
+              {
+                name: 'maxNumSwapsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxSlippage',
+                type: 'uint256',
               },
             ],
           },
@@ -486,6 +534,10 @@ export const abi = [
             name: 'periodStartBlock',
             type: 'uint256',
           },
+          {
+            name: 'numSwapsInPeriod',
+            type: 'uint256',
+          },
         ],
       },
       {
@@ -555,8 +607,30 @@ export const abi = [
                 type: 'bool',
               },
               {
+                name: 'onlyApprovedYieldOpps',
+                type: 'bool',
+              },
+              {
                 name: 'allowedLegos',
                 type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'swapPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'mustHaveUsdValue',
+                type: 'bool',
+              },
+              {
+                name: 'maxNumSwapsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxSlippage',
+                type: 'uint256',
               },
             ],
           },
@@ -689,8 +763,30 @@ export const abi = [
                 type: 'bool',
               },
               {
+                name: 'onlyApprovedYieldOpps',
+                type: 'bool',
+              },
+              {
                 name: 'allowedLegos',
                 type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'swapPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'mustHaveUsdValue',
+                type: 'bool',
+              },
+              {
+                name: 'maxNumSwapsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxSlippage',
+                type: 'uint256',
               },
             ],
           },
@@ -801,6 +897,10 @@ export const abi = [
             name: 'periodStartBlock',
             type: 'uint256',
           },
+          {
+            name: 'numSwapsInPeriod',
+            type: 'uint256',
+          },
         ],
       },
       {
@@ -870,8 +970,30 @@ export const abi = [
                 type: 'bool',
               },
               {
+                name: 'onlyApprovedYieldOpps',
+                type: 'bool',
+              },
+              {
                 name: 'allowedLegos',
                 type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'swapPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'mustHaveUsdValue',
+                type: 'bool',
+              },
+              {
+                name: 'maxNumSwapsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxSlippage',
+                type: 'uint256',
               },
             ],
           },
@@ -1004,8 +1126,30 @@ export const abi = [
                 type: 'bool',
               },
               {
+                name: 'onlyApprovedYieldOpps',
+                type: 'bool',
+              },
+              {
                 name: 'allowedLegos',
                 type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'swapPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'mustHaveUsdValue',
+                type: 'bool',
+              },
+              {
+                name: 'maxNumSwapsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxSlippage',
+                type: 'uint256',
               },
             ],
           },
@@ -1120,6 +1264,10 @@ export const abi = [
             name: 'periodStartBlock',
             type: 'uint256',
           },
+          {
+            name: 'numSwapsInPeriod',
+            type: 'uint256',
+          },
         ],
       },
       {
@@ -1189,8 +1337,30 @@ export const abi = [
                 type: 'bool',
               },
               {
+                name: 'onlyApprovedYieldOpps',
+                type: 'bool',
+              },
+              {
                 name: 'allowedLegos',
                 type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'swapPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'mustHaveUsdValue',
+                type: 'bool',
+              },
+              {
+                name: 'maxNumSwapsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxSlippage',
+                type: 'uint256',
               },
             ],
           },
@@ -1323,8 +1493,30 @@ export const abi = [
                 type: 'bool',
               },
               {
+                name: 'onlyApprovedYieldOpps',
+                type: 'bool',
+              },
+              {
                 name: 'allowedLegos',
                 type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'swapPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'mustHaveUsdValue',
+                type: 'bool',
+              },
+              {
+                name: 'maxNumSwapsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxSlippage',
+                type: 'uint256',
               },
             ],
           },
@@ -1405,7 +1597,7 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'checkManagerUsdLimits',
+    name: 'canManagerFinishTx',
     inputs: [
       {
         name: '_user',
@@ -1419,6 +1611,66 @@ export const abi = [
         name: '_txUsdValue',
         type: 'uint256',
       },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_shouldCheckSwap',
+        type: 'bool',
+      },
+      {
+        name: '_specificSwapPerms',
+        type: 'tuple',
+        components: [
+          {
+            name: 'mustHaveUsdValue',
+            type: 'bool',
+          },
+          {
+            name: 'maxNumSwapsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'maxSlippage',
+            type: 'uint256',
+          },
+        ],
+      },
+      {
+        name: '_globalSwapPerms',
+        type: 'tuple',
+        components: [
+          {
+            name: 'mustHaveUsdValue',
+            type: 'bool',
+          },
+          {
+            name: 'maxNumSwapsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'maxSlippage',
+            type: 'uint256',
+          },
+        ],
+      },
+      {
+        name: '_fromAssetUsdValue',
+        type: 'uint256',
+      },
+      {
+        name: '_toAssetUsdValue',
+        type: 'uint256',
+      },
+      {
+        name: '_vaultRegistry',
+        type: 'address',
+      },
     ],
     outputs: [
       {
@@ -1430,7 +1682,7 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'checkManagerUsdLimitsAndUpdateData',
+    name: 'checkManagerLimitsPostTx',
     inputs: [
       {
         name: '_txUsdValue',
@@ -1528,7 +1780,75 @@ export const abi = [
             name: 'periodStartBlock',
             type: 'uint256',
           },
+          {
+            name: 'numSwapsInPeriod',
+            type: 'uint256',
+          },
         ],
+      },
+      {
+        name: '_requiresVaultApproval',
+        type: 'bool',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_shouldCheckSwap',
+        type: 'bool',
+      },
+      {
+        name: '_specificSwapPerms',
+        type: 'tuple',
+        components: [
+          {
+            name: 'mustHaveUsdValue',
+            type: 'bool',
+          },
+          {
+            name: 'maxNumSwapsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'maxSlippage',
+            type: 'uint256',
+          },
+        ],
+      },
+      {
+        name: '_globalSwapPerms',
+        type: 'tuple',
+        components: [
+          {
+            name: 'mustHaveUsdValue',
+            type: 'bool',
+          },
+          {
+            name: 'maxNumSwapsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'maxSlippage',
+            type: 'uint256',
+          },
+        ],
+      },
+      {
+        name: '_fromAssetUsdValue',
+        type: 'uint256',
+      },
+      {
+        name: '_toAssetUsdValue',
+        type: 'uint256',
+      },
+      {
+        name: '_vaultRegistry',
+        type: 'address',
       },
     ],
     outputs: [
@@ -1562,6 +1882,10 @@ export const abi = [
           },
           {
             name: 'periodStartBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'numSwapsInPeriod',
             type: 'uint256',
           },
         ],
@@ -2105,7 +2429,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xA9A71c4eA67f8ff41A4639f71CFc5E79611BBf30'
+export const deployAddress: Address | undefined = '0xCCe9B58b7d377631e58d3Bd95f12a35cF49F667b'
 
 export type Contract = {
   calls: {
@@ -2127,6 +2451,7 @@ export type Contract = {
         totalUsdValue: bigint
         lastTxBlock: bigint
         periodStartBlock: bigint
+        numSwapsInPeriod: bigint
       },
       config: {
         startBlock: bigint
@@ -2145,8 +2470,10 @@ export type Contract = {
           canManageDebt: boolean
           canManageLiq: boolean
           canClaimRewards: boolean
+          onlyApprovedYieldOpps: boolean
           allowedLegos: bigint[]
         }
+        swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint }
         whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean }
         transferPerms: {
           canTransfer: boolean
@@ -2176,8 +2503,10 @@ export type Contract = {
           canManageDebt: boolean
           canManageLiq: boolean
           canClaimRewards: boolean
+          onlyApprovedYieldOpps: boolean
           allowedLegos: bigint[]
         }
+        swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint }
         whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean }
         transferPerms: {
           canTransfer: boolean
@@ -2192,8 +2521,20 @@ export type Contract = {
       legoIds?: bigint[],
       txRecipient?: `0x${string}`,
     ) => Promise<boolean>
-    checkManagerUsdLimits: (user: `0x${string}`, manager: `0x${string}`, txUsdValue: bigint) => Promise<boolean>
-    checkManagerUsdLimitsAndUpdateData: (
+    canManagerFinishTx: (
+      user: `0x${string}`,
+      manager: `0x${string}`,
+      txUsdValue: bigint,
+      underlyingAsset: `0x${string}`,
+      vaultToken: `0x${string}`,
+      shouldCheckSwap: boolean,
+      specificSwapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint },
+      globalSwapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint },
+      fromAssetUsdValue: bigint,
+      toAssetUsdValue: bigint,
+      vaultRegistry: `0x${string}`,
+    ) => Promise<boolean>
+    checkManagerLimitsPostTx: (
       txUsdValue: bigint,
       specificLimits: {
         maxUsdValuePerTx: bigint
@@ -2219,7 +2560,17 @@ export type Contract = {
         totalUsdValue: bigint
         lastTxBlock: bigint
         periodStartBlock: bigint
+        numSwapsInPeriod: bigint
       },
+      requiresVaultApproval: boolean,
+      underlyingAsset: `0x${string}`,
+      vaultToken: `0x${string}`,
+      shouldCheckSwap: boolean,
+      specificSwapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint },
+      globalSwapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint },
+      fromAssetUsdValue: bigint,
+      toAssetUsdValue: bigint,
+      vaultRegistry: `0x${string}`,
     ) => Promise<
       [
         boolean,
@@ -2230,6 +2581,7 @@ export type Contract = {
           totalUsdValue: bigint
           lastTxBlock: bigint
           periodStartBlock: bigint
+          numSwapsInPeriod: bigint
         },
       ]
     >
@@ -2432,10 +2784,10 @@ export const call: CallType = {
     getRequest('canSignerPerformAction', args),
   canSignerPerformActionWithConfig: (...args: ExtractArgs<Contract['calls']['canSignerPerformActionWithConfig']>) =>
     getRequest('canSignerPerformActionWithConfig', args),
-  checkManagerUsdLimits: (...args: ExtractArgs<Contract['calls']['checkManagerUsdLimits']>) =>
-    getRequest('checkManagerUsdLimits', args),
-  checkManagerUsdLimitsAndUpdateData: (...args: ExtractArgs<Contract['calls']['checkManagerUsdLimitsAndUpdateData']>) =>
-    getRequest('checkManagerUsdLimitsAndUpdateData', args),
+  canManagerFinishTx: (...args: ExtractArgs<Contract['calls']['canManagerFinishTx']>) =>
+    getRequest('canManagerFinishTx', args),
+  checkManagerLimitsPostTx: (...args: ExtractArgs<Contract['calls']['checkManagerLimitsPostTx']>) =>
+    getRequest('checkManagerLimitsPostTx', args),
   isValidPayee: (...args: ExtractArgs<Contract['calls']['isValidPayee']>) => getRequest('isValidPayee', args),
   isValidPayeeAndGetData: (...args: ExtractArgs<Contract['calls']['isValidPayeeAndGetData']>) =>
     getRequest('isValidPayeeAndGetData', args),
@@ -2452,12 +2804,12 @@ export type SDK = {
   canSignerPerformActionWithConfig: (
     ...args: ExtractArgs<Contract['calls']['canSignerPerformActionWithConfig']>
   ) => Promise<CallReturn<'canSignerPerformActionWithConfig'>>
-  checkManagerUsdLimits: (
-    ...args: ExtractArgs<Contract['calls']['checkManagerUsdLimits']>
-  ) => Promise<CallReturn<'checkManagerUsdLimits'>>
-  checkManagerUsdLimitsAndUpdateData: (
-    ...args: ExtractArgs<Contract['calls']['checkManagerUsdLimitsAndUpdateData']>
-  ) => Promise<CallReturn<'checkManagerUsdLimitsAndUpdateData'>>
+  canManagerFinishTx: (
+    ...args: ExtractArgs<Contract['calls']['canManagerFinishTx']>
+  ) => Promise<CallReturn<'canManagerFinishTx'>>
+  checkManagerLimitsPostTx: (
+    ...args: ExtractArgs<Contract['calls']['checkManagerLimitsPostTx']>
+  ) => Promise<CallReturn<'checkManagerLimitsPostTx'>>
   isValidPayee: (...args: ExtractArgs<Contract['calls']['isValidPayee']>) => Promise<CallReturn<'isValidPayee'>>
   isValidPayeeAndGetData: (
     ...args: ExtractArgs<Contract['calls']['isValidPayeeAndGetData']>
@@ -2478,13 +2830,11 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.canSignerPerformActionWithConfig(...args)) as Promise<
         CallReturn<'canSignerPerformActionWithConfig'>
       >,
-    checkManagerUsdLimits: (...args: ExtractArgs<Contract['calls']['checkManagerUsdLimits']>) =>
-      singleQuery(publicClient!, call.checkManagerUsdLimits(...args)) as Promise<CallReturn<'checkManagerUsdLimits'>>,
-    checkManagerUsdLimitsAndUpdateData: (
-      ...args: ExtractArgs<Contract['calls']['checkManagerUsdLimitsAndUpdateData']>
-    ) =>
-      singleQuery(publicClient!, call.checkManagerUsdLimitsAndUpdateData(...args)) as Promise<
-        CallReturn<'checkManagerUsdLimitsAndUpdateData'>
+    canManagerFinishTx: (...args: ExtractArgs<Contract['calls']['canManagerFinishTx']>) =>
+      singleQuery(publicClient!, call.canManagerFinishTx(...args)) as Promise<CallReturn<'canManagerFinishTx'>>,
+    checkManagerLimitsPostTx: (...args: ExtractArgs<Contract['calls']['checkManagerLimitsPostTx']>) =>
+      singleQuery(publicClient!, call.checkManagerLimitsPostTx(...args)) as Promise<
+        CallReturn<'checkManagerLimitsPostTx'>
       >,
     isValidPayee: (...args: ExtractArgs<Contract['calls']['isValidPayee']>) =>
       singleQuery(publicClient!, call.isValidPayee(...args)) as Promise<CallReturn<'isValidPayee'>>,

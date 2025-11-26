@@ -279,6 +279,23 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
+    name: 'lastPricePerShare',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     name: 'getUsdValue',
     inputs: [
       {
@@ -387,86 +404,15 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'getPrice',
+    name: 'getUnderlyingUsdValue',
     inputs: [
       {
         name: '_asset',
         type: 'address',
       },
-    ],
-    outputs: [
       {
-        name: '',
+        name: '_amount',
         type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getPrice',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_missionControl',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getPrice',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_missionControl',
-        type: 'address',
-      },
-      {
-        name: '_legoBook',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getPrice',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_missionControl',
-        type: 'address',
-      },
-      {
-        name: '_legoBook',
-        type: 'address',
-      },
-      {
-        name: '_ledger',
-        type: 'address',
       },
     ],
     outputs: [
@@ -635,345 +581,6 @@ export const abi = [
       {
         name: '',
         type: 'bool',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getNormalAssetPrice',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getNormalAssetPrice',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_missionControl',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getNormalAssetPrice',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_missionControl',
-        type: 'address',
-      },
-      {
-        name: '_legoBook',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getNormalAssetPrice',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_missionControl',
-        type: 'address',
-      },
-      {
-        name: '_legoBook',
-        type: 'address',
-      },
-      {
-        name: '_ledger',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'updateAndGetNormalAssetPrice',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'updateAndGetNormalAssetPrice',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_missionControl',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'updateAndGetNormalAssetPrice',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_missionControl',
-        type: 'address',
-      },
-      {
-        name: '_legoBook',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getPricePerShare',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getPricePerShare',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_missionControl',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getPricePerShare',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_missionControl',
-        type: 'address',
-      },
-      {
-        name: '_legoBook',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getPricePerShare',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_missionControl',
-        type: 'address',
-      },
-      {
-        name: '_legoBook',
-        type: 'address',
-      },
-      {
-        name: '_ledger',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getPricePerShareWithConfig',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_legoAddr',
-        type: 'address',
-      },
-      {
-        name: '_staleBlocks',
-        type: 'uint256',
-      },
-      {
-        name: '_decimals',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'updateAndGetPricePerShare',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'updateAndGetPricePerShare',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_missionControl',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'updateAndGetPricePerShare',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_missionControl',
-        type: 'address',
-      },
-      {
-        name: '_legoBook',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
       },
     ],
   },
@@ -997,176 +604,21 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'getProfitCalcConfig',
+    name: 'getAssetAmountFromRipe',
     inputs: [
       {
         name: '_asset',
         type: 'address',
       },
-    ],
-    outputs: [
       {
-        name: '',
-        type: 'tuple',
-        components: [
-          {
-            name: 'legoId',
-            type: 'uint256',
-          },
-          {
-            name: 'legoAddr',
-            type: 'address',
-          },
-          {
-            name: 'decimals',
-            type: 'uint256',
-          },
-          {
-            name: 'staleBlocks',
-            type: 'uint256',
-          },
-          {
-            name: 'isYieldAsset',
-            type: 'bool',
-          },
-          {
-            name: 'isRebasing',
-            type: 'bool',
-          },
-          {
-            name: 'underlyingAsset',
-            type: 'address',
-          },
-          {
-            name: 'maxYieldIncrease',
-            type: 'uint256',
-          },
-          {
-            name: 'performanceFee',
-            type: 'uint256',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getAssetUsdValueConfig',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
+        name: '_usdValue',
+        type: 'uint256',
       },
     ],
     outputs: [
       {
         name: '',
-        type: 'tuple',
-        components: [
-          {
-            name: 'legoId',
-            type: 'uint256',
-          },
-          {
-            name: 'legoAddr',
-            type: 'address',
-          },
-          {
-            name: 'decimals',
-            type: 'uint256',
-          },
-          {
-            name: 'staleBlocks',
-            type: 'uint256',
-          },
-          {
-            name: 'isYieldAsset',
-            type: 'bool',
-          },
-          {
-            name: 'underlyingAsset',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'lastPrice',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'tuple',
-        components: [
-          {
-            name: 'price',
-            type: 'uint256',
-          },
-          {
-            name: 'lastUpdate',
-            type: 'uint256',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'lastPricePerShare',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'tuple',
-        components: [
-          {
-            name: 'pricePerShare',
-            type: 'uint256',
-          },
-          {
-            name: 'lastUpdate',
-            type: 'uint256',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'WETH',
-    inputs: [],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'ETH',
-    inputs: [],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
+        type: 'uint256',
       },
     ],
   },
@@ -1182,20 +634,12 @@ export const abi = [
         name: '_ripeHq',
         type: 'address',
       },
-      {
-        name: '_wethAddr',
-        type: 'address',
-      },
-      {
-        name: '_ethAddr',
-        type: 'address',
-      },
     ],
     outputs: [],
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x212652d44EA7A1642c4F8c9De6F7F3a62ff639E5'
+export const deployAddress: Address | undefined = '0x8C6521e6f2676a7AdC8484444f161c3538e545e2'
 
 export type Contract = {
   calls: {
@@ -1224,6 +668,7 @@ export type Contract = {
       lastBalance: bigint,
       lastPricePerShare: bigint,
     ) => Promise<[bigint, bigint, bigint]>
+    lastPricePerShare: (asset: `0x${string}`) => Promise<bigint>
     getUsdValue: (
       asset: `0x${string}`,
       amount: bigint,
@@ -1231,58 +676,9 @@ export type Contract = {
       legoBook?: `0x${string}`,
       ledger?: `0x${string}`,
     ) => Promise<bigint>
-    getPrice: (
-      asset: `0x${string}`,
-      missionControl?: `0x${string}`,
-      legoBook?: `0x${string}`,
-      ledger?: `0x${string}`,
-    ) => Promise<bigint>
-    getNormalAssetPrice: (
-      asset: `0x${string}`,
-      missionControl?: `0x${string}`,
-      legoBook?: `0x${string}`,
-      ledger?: `0x${string}`,
-    ) => Promise<bigint>
-    getPricePerShare: (
-      asset: `0x${string}`,
-      missionControl?: `0x${string}`,
-      legoBook?: `0x${string}`,
-      ledger?: `0x${string}`,
-    ) => Promise<bigint>
-    getPricePerShareWithConfig: (
-      asset: `0x${string}`,
-      legoAddr: `0x${string}`,
-      staleBlocks: bigint,
-      decimals: bigint,
-    ) => Promise<bigint>
+    getUnderlyingUsdValue: (asset: `0x${string}`, amount: bigint) => Promise<bigint>
     getRipePrice: (asset: `0x${string}`) => Promise<bigint>
-    getProfitCalcConfig: (
-      asset: `0x${string}`,
-    ) => Promise<{
-      legoId: bigint
-      legoAddr: `0x${string}`
-      decimals: bigint
-      staleBlocks: bigint
-      isYieldAsset: boolean
-      isRebasing: boolean
-      underlyingAsset: `0x${string}`
-      maxYieldIncrease: bigint
-      performanceFee: bigint
-    }>
-    getAssetUsdValueConfig: (
-      asset: `0x${string}`,
-    ) => Promise<{
-      legoId: bigint
-      legoAddr: `0x${string}`
-      decimals: bigint
-      staleBlocks: bigint
-      isYieldAsset: boolean
-      underlyingAsset: `0x${string}`
-    }>
-    lastPrice: (arg0: `0x${string}`) => Promise<{ price: bigint; lastUpdate: bigint }>
-    lastPricePerShare: (arg0: `0x${string}`) => Promise<{ pricePerShare: bigint; lastUpdate: bigint }>
-    WETH: () => Promise<`0x${string}`>
-    ETH: () => Promise<`0x${string}`>
+    getAssetAmountFromRipe: (asset: `0x${string}`, usdValue: bigint) => Promise<bigint>
   }
   mutations: {
     pause: (shouldPause: boolean) => Promise<void>
@@ -1308,16 +704,6 @@ export type Contract = {
       missionControl?: `0x${string}`,
       legoBook?: `0x${string}`,
     ) => Promise<[bigint, boolean]>
-    updateAndGetNormalAssetPrice: (
-      asset: `0x${string}`,
-      missionControl?: `0x${string}`,
-      legoBook?: `0x${string}`,
-    ) => Promise<bigint>
-    updateAndGetPricePerShare: (
-      asset: `0x${string}`,
-      missionControl?: `0x${string}`,
-      legoBook?: `0x${string}`,
-    ) => Promise<bigint>
   }
   events: {
     DepartmentPauseModified: (isPaused: boolean) => Promise<void>
@@ -1391,24 +777,14 @@ export const call: CallType = {
   isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) => getRequest('isPaused', args),
   calculateYieldProfitsNoUpdate: (...args: ExtractArgs<Contract['calls']['calculateYieldProfitsNoUpdate']>) =>
     getRequest('calculateYieldProfitsNoUpdate', args),
-  getUsdValue: (...args: ExtractArgs<Contract['calls']['getUsdValue']>) => getRequest('getUsdValue', args),
-  getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => getRequest('getPrice', args),
-  getNormalAssetPrice: (...args: ExtractArgs<Contract['calls']['getNormalAssetPrice']>) =>
-    getRequest('getNormalAssetPrice', args),
-  getPricePerShare: (...args: ExtractArgs<Contract['calls']['getPricePerShare']>) =>
-    getRequest('getPricePerShare', args),
-  getPricePerShareWithConfig: (...args: ExtractArgs<Contract['calls']['getPricePerShareWithConfig']>) =>
-    getRequest('getPricePerShareWithConfig', args),
-  getRipePrice: (...args: ExtractArgs<Contract['calls']['getRipePrice']>) => getRequest('getRipePrice', args),
-  getProfitCalcConfig: (...args: ExtractArgs<Contract['calls']['getProfitCalcConfig']>) =>
-    getRequest('getProfitCalcConfig', args),
-  getAssetUsdValueConfig: (...args: ExtractArgs<Contract['calls']['getAssetUsdValueConfig']>) =>
-    getRequest('getAssetUsdValueConfig', args),
-  lastPrice: (...args: ExtractArgs<Contract['calls']['lastPrice']>) => getRequest('lastPrice', args),
   lastPricePerShare: (...args: ExtractArgs<Contract['calls']['lastPricePerShare']>) =>
     getRequest('lastPricePerShare', args),
-  WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) => getRequest('WETH', args),
-  ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => getRequest('ETH', args),
+  getUsdValue: (...args: ExtractArgs<Contract['calls']['getUsdValue']>) => getRequest('getUsdValue', args),
+  getUnderlyingUsdValue: (...args: ExtractArgs<Contract['calls']['getUnderlyingUsdValue']>) =>
+    getRequest('getUnderlyingUsdValue', args),
+  getRipePrice: (...args: ExtractArgs<Contract['calls']['getRipePrice']>) => getRequest('getRipePrice', args),
+  getAssetAmountFromRipe: (...args: ExtractArgs<Contract['calls']['getAssetAmountFromRipe']>) =>
+    getRequest('getAssetAmountFromRipe', args),
 }
 
 export type Mutations = keyof Contract['mutations']
@@ -1437,8 +813,6 @@ export const mutation: {
   calculateYieldProfits: getMutation('calculateYieldProfits'),
   updatePriceAndGetUsdValue: getMutation('updatePriceAndGetUsdValue'),
   updatePriceAndGetUsdValueAndIsYieldAsset: getMutation('updatePriceAndGetUsdValueAndIsYieldAsset'),
-  updateAndGetNormalAssetPrice: getMutation('updateAndGetNormalAssetPrice'),
-  updateAndGetPricePerShare: getMutation('updateAndGetPricePerShare'),
 }
 
 export type SDK = {
@@ -1451,30 +825,17 @@ export type SDK = {
   calculateYieldProfitsNoUpdate: (
     ...args: ExtractArgs<Contract['calls']['calculateYieldProfitsNoUpdate']>
   ) => Promise<CallReturn<'calculateYieldProfitsNoUpdate'>>
-  getUsdValue: (...args: ExtractArgs<Contract['calls']['getUsdValue']>) => Promise<CallReturn<'getUsdValue'>>
-  getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) => Promise<CallReturn<'getPrice'>>
-  getNormalAssetPrice: (
-    ...args: ExtractArgs<Contract['calls']['getNormalAssetPrice']>
-  ) => Promise<CallReturn<'getNormalAssetPrice'>>
-  getPricePerShare: (
-    ...args: ExtractArgs<Contract['calls']['getPricePerShare']>
-  ) => Promise<CallReturn<'getPricePerShare'>>
-  getPricePerShareWithConfig: (
-    ...args: ExtractArgs<Contract['calls']['getPricePerShareWithConfig']>
-  ) => Promise<CallReturn<'getPricePerShareWithConfig'>>
-  getRipePrice: (...args: ExtractArgs<Contract['calls']['getRipePrice']>) => Promise<CallReturn<'getRipePrice'>>
-  getProfitCalcConfig: (
-    ...args: ExtractArgs<Contract['calls']['getProfitCalcConfig']>
-  ) => Promise<CallReturn<'getProfitCalcConfig'>>
-  getAssetUsdValueConfig: (
-    ...args: ExtractArgs<Contract['calls']['getAssetUsdValueConfig']>
-  ) => Promise<CallReturn<'getAssetUsdValueConfig'>>
-  lastPrice: (...args: ExtractArgs<Contract['calls']['lastPrice']>) => Promise<CallReturn<'lastPrice'>>
   lastPricePerShare: (
     ...args: ExtractArgs<Contract['calls']['lastPricePerShare']>
   ) => Promise<CallReturn<'lastPricePerShare'>>
-  WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) => Promise<CallReturn<'WETH'>>
-  ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => Promise<CallReturn<'ETH'>>
+  getUsdValue: (...args: ExtractArgs<Contract['calls']['getUsdValue']>) => Promise<CallReturn<'getUsdValue'>>
+  getUnderlyingUsdValue: (
+    ...args: ExtractArgs<Contract['calls']['getUnderlyingUsdValue']>
+  ) => Promise<CallReturn<'getUnderlyingUsdValue'>>
+  getRipePrice: (...args: ExtractArgs<Contract['calls']['getRipePrice']>) => Promise<CallReturn<'getRipePrice'>>
+  getAssetAmountFromRipe: (
+    ...args: ExtractArgs<Contract['calls']['getAssetAmountFromRipe']>
+  ) => Promise<CallReturn<'getAssetAmountFromRipe'>>
   pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => Promise<Address>
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
   recoverFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverFundsMany']>) => Promise<Address>
@@ -1484,12 +845,6 @@ export type SDK = {
   ) => Promise<Address>
   updatePriceAndGetUsdValueAndIsYieldAsset: (
     ...args: ExtractArgs<Contract['mutations']['updatePriceAndGetUsdValueAndIsYieldAsset']>
-  ) => Promise<Address>
-  updateAndGetNormalAssetPrice: (
-    ...args: ExtractArgs<Contract['mutations']['updateAndGetNormalAssetPrice']>
-  ) => Promise<Address>
-  updateAndGetPricePerShare: (
-    ...args: ExtractArgs<Contract['mutations']['updateAndGetPricePerShare']>
   ) => Promise<Address>
 }
 
@@ -1510,32 +865,16 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.calculateYieldProfitsNoUpdate(...args)) as Promise<
         CallReturn<'calculateYieldProfitsNoUpdate'>
       >,
-    getUsdValue: (...args: ExtractArgs<Contract['calls']['getUsdValue']>) =>
-      singleQuery(publicClient!, call.getUsdValue(...args)) as Promise<CallReturn<'getUsdValue'>>,
-    getPrice: (...args: ExtractArgs<Contract['calls']['getPrice']>) =>
-      singleQuery(publicClient!, call.getPrice(...args)) as Promise<CallReturn<'getPrice'>>,
-    getNormalAssetPrice: (...args: ExtractArgs<Contract['calls']['getNormalAssetPrice']>) =>
-      singleQuery(publicClient!, call.getNormalAssetPrice(...args)) as Promise<CallReturn<'getNormalAssetPrice'>>,
-    getPricePerShare: (...args: ExtractArgs<Contract['calls']['getPricePerShare']>) =>
-      singleQuery(publicClient!, call.getPricePerShare(...args)) as Promise<CallReturn<'getPricePerShare'>>,
-    getPricePerShareWithConfig: (...args: ExtractArgs<Contract['calls']['getPricePerShareWithConfig']>) =>
-      singleQuery(publicClient!, call.getPricePerShareWithConfig(...args)) as Promise<
-        CallReturn<'getPricePerShareWithConfig'>
-      >,
-    getRipePrice: (...args: ExtractArgs<Contract['calls']['getRipePrice']>) =>
-      singleQuery(publicClient!, call.getRipePrice(...args)) as Promise<CallReturn<'getRipePrice'>>,
-    getProfitCalcConfig: (...args: ExtractArgs<Contract['calls']['getProfitCalcConfig']>) =>
-      singleQuery(publicClient!, call.getProfitCalcConfig(...args)) as Promise<CallReturn<'getProfitCalcConfig'>>,
-    getAssetUsdValueConfig: (...args: ExtractArgs<Contract['calls']['getAssetUsdValueConfig']>) =>
-      singleQuery(publicClient!, call.getAssetUsdValueConfig(...args)) as Promise<CallReturn<'getAssetUsdValueConfig'>>,
-    lastPrice: (...args: ExtractArgs<Contract['calls']['lastPrice']>) =>
-      singleQuery(publicClient!, call.lastPrice(...args)) as Promise<CallReturn<'lastPrice'>>,
     lastPricePerShare: (...args: ExtractArgs<Contract['calls']['lastPricePerShare']>) =>
       singleQuery(publicClient!, call.lastPricePerShare(...args)) as Promise<CallReturn<'lastPricePerShare'>>,
-    WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) =>
-      singleQuery(publicClient!, call.WETH(...args)) as Promise<CallReturn<'WETH'>>,
-    ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) =>
-      singleQuery(publicClient!, call.ETH(...args)) as Promise<CallReturn<'ETH'>>,
+    getUsdValue: (...args: ExtractArgs<Contract['calls']['getUsdValue']>) =>
+      singleQuery(publicClient!, call.getUsdValue(...args)) as Promise<CallReturn<'getUsdValue'>>,
+    getUnderlyingUsdValue: (...args: ExtractArgs<Contract['calls']['getUnderlyingUsdValue']>) =>
+      singleQuery(publicClient!, call.getUnderlyingUsdValue(...args)) as Promise<CallReturn<'getUnderlyingUsdValue'>>,
+    getRipePrice: (...args: ExtractArgs<Contract['calls']['getRipePrice']>) =>
+      singleQuery(publicClient!, call.getRipePrice(...args)) as Promise<CallReturn<'getRipePrice'>>,
+    getAssetAmountFromRipe: (...args: ExtractArgs<Contract['calls']['getAssetAmountFromRipe']>) =>
+      singleQuery(publicClient!, call.getAssetAmountFromRipe(...args)) as Promise<CallReturn<'getAssetAmountFromRipe'>>,
 
     // Mutations
     pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => mutate(walletClient!, mutation.pause)(...args),
@@ -1550,9 +889,5 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
     updatePriceAndGetUsdValueAndIsYieldAsset: (
       ...args: ExtractArgs<Contract['mutations']['updatePriceAndGetUsdValueAndIsYieldAsset']>
     ) => mutate(walletClient!, mutation.updatePriceAndGetUsdValueAndIsYieldAsset)(...args),
-    updateAndGetNormalAssetPrice: (...args: ExtractArgs<Contract['mutations']['updateAndGetNormalAssetPrice']>) =>
-      mutate(walletClient!, mutation.updateAndGetNormalAssetPrice)(...args),
-    updateAndGetPricePerShare: (...args: ExtractArgs<Contract['mutations']['updateAndGetPricePerShare']>) =>
-      mutate(walletClient!, mutation.updateAndGetPricePerShare)(...args),
   }
 }

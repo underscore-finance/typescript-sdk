@@ -11,31 +11,235 @@ type Address = `0x${string}`
 
 export const abi = [
   {
-    name: 'AgentAction',
+    anonymous: false,
     inputs: [
       {
-        name: 'action',
-        type: 'uint8',
         indexed: false,
+        name: 'oldNonce',
+        type: 'uint256',
       },
       {
-        name: 'userWallet',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'sender',
-        type: 'address',
-        indexed: true,
+        indexed: false,
+        name: 'newNonce',
+        type: 'uint256',
       },
     ],
-    anonymous: false,
+    name: 'NonceIncremented',
     type: 'event',
   },
   {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'prevOwner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'newOwner',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+    ],
+    name: 'OwnershipChangeInitiated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'prevOwner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'newOwner',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+    ],
+    name: 'OwnershipChangeConfirmed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'cancelledOwner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'cancelledBy',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'initiatedBlock',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'confirmBlock',
+        type: 'uint256',
+      },
+    ],
+    name: 'OwnershipChangeCancelled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: 'numBlocks',
+        type: 'uint256',
+      },
+    ],
+    name: 'OwnershipTimeLockSet',
+    type: 'event',
+  },
+  {
+    inputs: [
+      {
+        name: '_newOwner',
+        type: 'address',
+      },
+    ],
+    name: 'changeOwnership',
+    outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'transferFunds',
+  },
+  {
+    inputs: [],
+    name: 'confirmOwnershipChange',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'cancelOwnershipChange',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'hasPendingOwnerChange',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_numBlocks',
+        type: 'uint256',
+      },
+    ],
+    name: 'setOwnershipTimeLock',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'owner',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'ownershipTimeLock',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'pendingOwner',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'newOwner',
+            type: 'address',
+          },
+          {
+            name: 'initiatedBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'confirmBlock',
+            type: 'uint256',
+          },
+        ],
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MIN_OWNERSHIP_TIMELOCK',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MAX_OWNERSHIP_TIMELOCK',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -46,6 +250,7 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'transferFunds',
     outputs: [
       {
         name: '',
@@ -56,11 +261,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'transferFunds',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -75,6 +279,7 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'transferFunds',
     outputs: [
       {
         name: '',
@@ -85,11 +290,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'transferFunds',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -108,6 +312,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'transferFunds',
     outputs: [
       {
         name: '',
@@ -118,11 +323,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'transferFunds',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -145,6 +349,7 @@ export const abi = [
         type: 'bool',
       },
     ],
+    name: 'transferFunds',
     outputs: [
       {
         name: '',
@@ -155,11 +360,65 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'depositForYield',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_isCheque',
+        type: 'bool',
+      },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
+    ],
+    name: 'transferFunds',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -174,6 +433,7 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'depositForYield',
     outputs: [
       {
         name: '',
@@ -192,11 +452,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'depositForYield',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -215,6 +474,7 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'depositForYield',
     outputs: [
       {
         name: '',
@@ -233,11 +493,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'depositForYield',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -260,6 +519,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'depositForYield',
     outputs: [
       {
         name: '',
@@ -278,11 +538,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'depositForYield',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -309,6 +568,7 @@ export const abi = [
         type: 'bytes32',
       },
     ],
+    name: 'depositForYield',
     outputs: [
       {
         name: '',
@@ -327,11 +587,77 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'withdrawFromYield',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
+    ],
+    name: 'depositForYield',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -346,6 +672,7 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'withdrawFromYield',
     outputs: [
       {
         name: '',
@@ -364,11 +691,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'withdrawFromYield',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -387,6 +713,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'withdrawFromYield',
     outputs: [
       {
         name: '',
@@ -405,11 +732,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'withdrawFromYield',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -432,6 +758,7 @@ export const abi = [
         type: 'bytes32',
       },
     ],
+    name: 'withdrawFromYield',
     outputs: [
       {
         name: '',
@@ -450,11 +777,73 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'rebalanceYieldPosition',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
+    ],
+    name: 'withdrawFromYield',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -473,6 +862,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'rebalanceYieldPosition',
     outputs: [
       {
         name: '',
@@ -491,11 +881,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'rebalanceYieldPosition',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -518,6 +907,7 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'rebalanceYieldPosition',
     outputs: [
       {
         name: '',
@@ -536,11 +926,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'rebalanceYieldPosition',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -567,6 +956,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'rebalanceYieldPosition',
     outputs: [
       {
         name: '',
@@ -585,11 +975,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'rebalanceYieldPosition',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -620,6 +1009,7 @@ export const abi = [
         type: 'bytes32',
       },
     ],
+    name: 'rebalanceYieldPosition',
     outputs: [
       {
         name: '',
@@ -638,19 +1028,87 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'swapTokens',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
         type: 'address',
       },
       {
-        name: '_swapInstructions',
-        type: 'tuple[]',
+        name: '_fromLegoId',
+        type: 'uint256',
+      },
+      {
+        name: '_fromVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_toLegoId',
+        type: 'uint256',
+      },
+      {
+        name: '_toVaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_fromVaultAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
+    ],
+    name: 'rebalanceYieldPosition',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
         components: [
           {
             name: 'legoId',
@@ -673,8 +1131,11 @@ export const abi = [
             type: 'address[]',
           },
         ],
+        name: '_swapInstructions',
+        type: 'tuple[]',
       },
     ],
+    name: 'swapTokens',
     outputs: [
       {
         name: '',
@@ -697,11 +1158,87 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'mintOrRedeemAsset',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'amountIn',
+            type: 'uint256',
+          },
+          {
+            name: 'minAmountOut',
+            type: 'uint256',
+          },
+          {
+            name: 'tokenPath',
+            type: 'address[]',
+          },
+          {
+            name: 'poolPath',
+            type: 'address[]',
+          },
+        ],
+        name: '_swapInstructions',
+        type: 'tuple[]',
+      },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
+    ],
+    name: 'swapTokens',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -720,6 +1257,7 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'mintOrRedeemAsset',
     outputs: [
       {
         name: '',
@@ -738,11 +1276,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'mintOrRedeemAsset',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -765,6 +1302,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'mintOrRedeemAsset',
     outputs: [
       {
         name: '',
@@ -783,11 +1321,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'mintOrRedeemAsset',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -814,6 +1351,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'mintOrRedeemAsset',
     outputs: [
       {
         name: '',
@@ -832,11 +1370,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'mintOrRedeemAsset',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -867,6 +1404,7 @@ export const abi = [
         type: 'bytes32',
       },
     ],
+    name: 'mintOrRedeemAsset',
     outputs: [
       {
         name: '',
@@ -885,44 +1423,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'confirmMintOrRedeemAsset',
-    inputs: [
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_tokenIn',
-        type: 'address',
-      },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'confirmMintOrRedeemAsset',
     inputs: [
       {
         name: '_userWallet',
@@ -941,109 +1445,78 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
+        name: '_amountIn',
         type: 'uint256',
       },
       {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'addCollateral',
-    inputs: [
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_asset',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'addCollateral',
-    inputs: [
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'addCollateral',
-    inputs: [
-      {
-        name: '_userWallet',
-        type: 'address',
-      },
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
+        name: '_minAmountOut',
         type: 'uint256',
       },
       {
         name: '_extraData',
         type: 'bytes32',
       },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
     ],
+    name: 'mintOrRedeemAsset',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+    ],
+    name: 'confirmMintOrRedeemAsset',
     outputs: [
       {
         name: '',
@@ -1054,11 +1527,102 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeCollateral',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+    ],
+    name: 'confirmMintOrRedeemAsset',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
+    ],
+    name: 'confirmMintOrRedeemAsset',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1073,6 +1637,7 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'addCollateral',
     outputs: [
       {
         name: '',
@@ -1083,11 +1648,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeCollateral',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1106,6 +1670,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'addCollateral',
     outputs: [
       {
         name: '',
@@ -1116,11 +1681,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeCollateral',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1143,6 +1707,7 @@ export const abi = [
         type: 'bytes32',
       },
     ],
+    name: 'addCollateral',
     outputs: [
       {
         name: '',
@@ -1153,11 +1718,219 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'borrow',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
+    ],
+    name: 'addCollateral',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    name: 'removeCollateral',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'removeCollateral',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+    ],
+    name: 'removeCollateral',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
+    ],
+    name: 'removeCollateral',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1172,6 +1945,7 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'borrow',
     outputs: [
       {
         name: '',
@@ -1182,11 +1956,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'borrow',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1205,6 +1978,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'borrow',
     outputs: [
       {
         name: '',
@@ -1215,11 +1989,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'borrow',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1242,6 +2015,7 @@ export const abi = [
         type: 'bytes32',
       },
     ],
+    name: 'borrow',
     outputs: [
       {
         name: '',
@@ -1252,11 +2026,65 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'repayDebt',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_borrowAsset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
+    ],
+    name: 'borrow',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1271,6 +2099,7 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'repayDebt',
     outputs: [
       {
         name: '',
@@ -1281,11 +2110,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'repayDebt',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1304,6 +2132,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'repayDebt',
     outputs: [
       {
         name: '',
@@ -1314,11 +2143,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'repayDebt',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1341,6 +2169,7 @@ export const abi = [
         type: 'bytes32',
       },
     ],
+    name: 'repayDebt',
     outputs: [
       {
         name: '',
@@ -1351,11 +2180,65 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'claimIncentives',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_paymentAsset',
+        type: 'address',
+      },
+      {
+        name: '_paymentAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
+    ],
+    name: 'repayDebt',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1366,6 +2249,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'claimRewards',
     outputs: [
       {
         name: '',
@@ -1376,11 +2260,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'claimIncentives',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1395,6 +2278,7 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'claimRewards',
     outputs: [
       {
         name: '',
@@ -1405,11 +2289,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'claimIncentives',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1428,6 +2311,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'claimRewards',
     outputs: [
       {
         name: '',
@@ -1438,11 +2322,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'claimIncentives',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1461,10 +2344,11 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_proofs',
-        type: 'bytes32[]',
+        name: '_extraData',
+        type: 'bytes32',
       },
     ],
+    name: 'claimRewards',
     outputs: [
       {
         name: '',
@@ -1475,17 +2359,72 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'convertWethToEth',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_rewardToken',
+        type: 'address',
+      },
+      {
+        name: '_rewardAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
+    ],
+    name: 'claimRewards',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
         type: 'address',
       },
     ],
+    name: 'convertWethToEth',
     outputs: [
       {
         name: '',
@@ -1496,11 +2435,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'convertWethToEth',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1511,6 +2449,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'convertWethToEth',
     outputs: [
       {
         name: '',
@@ -1521,17 +2460,60 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'convertEthToWeth',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
+    ],
+    name: 'convertWethToEth',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
         type: 'address',
       },
     ],
+    name: 'convertEthToWeth',
     outputs: [
       {
         name: '',
@@ -1542,11 +2524,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'convertEthToWeth',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1557,6 +2538,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'convertEthToWeth',
     outputs: [
       {
         name: '',
@@ -1567,11 +2549,53 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidity',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
+    ],
+    name: 'convertEthToWeth',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1594,6 +2618,7 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'addLiquidity',
     outputs: [
       {
         name: '',
@@ -1612,11 +2637,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidity',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1643,6 +2667,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'addLiquidity',
     outputs: [
       {
         name: '',
@@ -1661,11 +2686,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidity',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1696,6 +2720,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'addLiquidity',
     outputs: [
       {
         name: '',
@@ -1714,11 +2739,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidity',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1753,6 +2777,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'addLiquidity',
     outputs: [
       {
         name: '',
@@ -1771,11 +2796,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidity',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1814,6 +2838,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'addLiquidity',
     outputs: [
       {
         name: '',
@@ -1832,11 +2857,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidity',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1879,6 +2903,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'addLiquidity',
     outputs: [
       {
         name: '',
@@ -1897,11 +2922,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidity',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1948,6 +2972,7 @@ export const abi = [
         type: 'bytes32',
       },
     ],
+    name: 'addLiquidity',
     outputs: [
       {
         name: '',
@@ -1966,11 +2991,97 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeLiquidity',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minLpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
+    ],
+    name: 'addLiquidity',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -1997,6 +3108,7 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'removeLiquidity',
     outputs: [
       {
         name: '',
@@ -2015,11 +3127,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeLiquidity',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -2050,6 +3161,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'removeLiquidity',
     outputs: [
       {
         name: '',
@@ -2068,11 +3180,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeLiquidity',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -2107,6 +3218,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'removeLiquidity',
     outputs: [
       {
         name: '',
@@ -2125,11 +3237,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeLiquidity',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -2168,6 +3279,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'removeLiquidity',
     outputs: [
       {
         name: '',
@@ -2186,11 +3298,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeLiquidity',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -2233,6 +3344,7 @@ export const abi = [
         type: 'bytes32',
       },
     ],
+    name: 'removeLiquidity',
     outputs: [
       {
         name: '',
@@ -2251,11 +3363,93 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidityConcentrated',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_lpToken',
+        type: 'address',
+      },
+      {
+        name: '_lpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
+    ],
+    name: 'removeLiquidity',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -2286,6 +3480,7 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'addLiquidityConcentrated',
     outputs: [
       {
         name: '',
@@ -2308,11 +3503,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidityConcentrated',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -2347,6 +3541,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'addLiquidityConcentrated',
     outputs: [
       {
         name: '',
@@ -2369,11 +3564,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidityConcentrated',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -2412,6 +3606,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'addLiquidityConcentrated',
     outputs: [
       {
         name: '',
@@ -2434,11 +3629,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidityConcentrated',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -2481,6 +3675,7 @@ export const abi = [
         type: 'int24',
       },
     ],
+    name: 'addLiquidityConcentrated',
     outputs: [
       {
         name: '',
@@ -2503,11 +3698,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidityConcentrated',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -2554,6 +3748,7 @@ export const abi = [
         type: 'int24',
       },
     ],
+    name: 'addLiquidityConcentrated',
     outputs: [
       {
         name: '',
@@ -2576,11 +3771,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidityConcentrated',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -2631,6 +3825,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'addLiquidityConcentrated',
     outputs: [
       {
         name: '',
@@ -2653,11 +3848,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidityConcentrated',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -2712,6 +3906,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'addLiquidityConcentrated',
     outputs: [
       {
         name: '',
@@ -2734,11 +3929,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addLiquidityConcentrated',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -2797,6 +3991,7 @@ export const abi = [
         type: 'bytes32',
       },
     ],
+    name: 'addLiquidityConcentrated',
     outputs: [
       {
         name: '',
@@ -2819,11 +4014,113 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeLiquidityConcentrated',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_tickLower',
+        type: 'int24',
+      },
+      {
+        name: '_tickUpper',
+        type: 'int24',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
+    ],
+    name: 'addLiquidityConcentrated',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -2854,6 +4151,7 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'removeLiquidityConcentrated',
     outputs: [
       {
         name: '',
@@ -2872,11 +4170,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeLiquidityConcentrated',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -2911,6 +4208,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'removeLiquidityConcentrated',
     outputs: [
       {
         name: '',
@@ -2929,11 +4227,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeLiquidityConcentrated',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -2972,6 +4269,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'removeLiquidityConcentrated',
     outputs: [
       {
         name: '',
@@ -2990,11 +4288,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeLiquidityConcentrated',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -3037,6 +4334,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'removeLiquidityConcentrated',
     outputs: [
       {
         name: '',
@@ -3055,11 +4353,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeLiquidityConcentrated',
+  },
+  {
     inputs: [
       {
         name: '_userWallet',
@@ -3106,6 +4403,7 @@ export const abi = [
         type: 'bytes32',
       },
     ],
+    name: 'removeLiquidityConcentrated',
     outputs: [
       {
         name: '',
@@ -3124,140 +4422,422 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'isSender',
     inputs: [
       {
-        name: '_address',
+        name: '_userWallet',
         type: 'address',
       },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_nftAddr',
+        type: 'address',
+      },
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_liqToRemove',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
     ],
+    name: 'removeLiquidityConcentrated',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        components: [
+          {
+            name: 'usePrevAmountOut',
+            type: 'bool',
+          },
+          {
+            name: 'action',
+            type: 'uint8',
+          },
+          {
+            name: 'legoId',
+            type: 'uint16',
+          },
+          {
+            name: 'asset',
+            type: 'address',
+          },
+          {
+            name: 'target',
+            type: 'address',
+          },
+          {
+            name: 'amount',
+            type: 'uint256',
+          },
+          {
+            name: 'asset2',
+            type: 'address',
+          },
+          {
+            name: 'amount2',
+            type: 'uint256',
+          },
+          {
+            name: 'minOut1',
+            type: 'uint256',
+          },
+          {
+            name: 'minOut2',
+            type: 'uint256',
+          },
+          {
+            name: 'tickLower',
+            type: 'int24',
+          },
+          {
+            name: 'tickUpper',
+            type: 'int24',
+          },
+          {
+            name: 'extraData',
+            type: 'bytes32',
+          },
+          {
+            name: 'auxData',
+            type: 'bytes32',
+          },
+          {
+            components: [
+              {
+                name: 'legoId',
+                type: 'uint256',
+              },
+              {
+                name: 'amountIn',
+                type: 'uint256',
+              },
+              {
+                name: 'minAmountOut',
+                type: 'uint256',
+              },
+              {
+                name: 'tokenPath',
+                type: 'address[]',
+              },
+              {
+                name: 'poolPath',
+                type: 'address[]',
+              },
+            ],
+            name: 'swapInstructions',
+            type: 'tuple[]',
+          },
+        ],
+        name: '_instructions',
+        type: 'tuple[]',
+      },
+    ],
+    name: 'performBatchActions',
     outputs: [
       {
         name: '',
         type: 'bool',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addSender',
-    inputs: [
-      {
-        name: '_sender',
-        type: 'address',
-      },
-    ],
-    outputs: [],
   },
   {
+    inputs: [
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        components: [
+          {
+            name: 'usePrevAmountOut',
+            type: 'bool',
+          },
+          {
+            name: 'action',
+            type: 'uint8',
+          },
+          {
+            name: 'legoId',
+            type: 'uint16',
+          },
+          {
+            name: 'asset',
+            type: 'address',
+          },
+          {
+            name: 'target',
+            type: 'address',
+          },
+          {
+            name: 'amount',
+            type: 'uint256',
+          },
+          {
+            name: 'asset2',
+            type: 'address',
+          },
+          {
+            name: 'amount2',
+            type: 'uint256',
+          },
+          {
+            name: 'minOut1',
+            type: 'uint256',
+          },
+          {
+            name: 'minOut2',
+            type: 'uint256',
+          },
+          {
+            name: 'tickLower',
+            type: 'int24',
+          },
+          {
+            name: 'tickUpper',
+            type: 'int24',
+          },
+          {
+            name: 'extraData',
+            type: 'bytes32',
+          },
+          {
+            name: 'auxData',
+            type: 'bytes32',
+          },
+          {
+            components: [
+              {
+                name: 'legoId',
+                type: 'uint256',
+              },
+              {
+                name: 'amountIn',
+                type: 'uint256',
+              },
+              {
+                name: 'minAmountOut',
+                type: 'uint256',
+              },
+              {
+                name: 'tokenPath',
+                type: 'address[]',
+              },
+              {
+                name: 'poolPath',
+                type: 'address[]',
+              },
+            ],
+            name: 'swapInstructions',
+            type: 'tuple[]',
+          },
+        ],
+        name: '_instructions',
+        type: 'tuple[]',
+      },
+      {
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+        name: '_sig',
+        type: 'tuple',
+      },
+    ],
+    name: 'performBatchActions',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'removeSender',
-    inputs: [
-      {
-        name: '_sender',
-        type: 'address',
-      },
-    ],
-    outputs: [],
   },
   {
+    inputs: [],
+    name: 'incrementNonce',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getNonce',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
     stateMutability: 'view',
     type: 'function',
+  },
+  {
+    inputs: [],
     name: 'groupId',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [],
+    name: 'currentNonce',
     outputs: [
       {
         name: '',
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
-    name: 'senders',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'indexOfSender',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'numSenders',
-    inputs: [],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'constructor',
     inputs: [
       {
         name: '_undyHq',
         type: 'address',
       },
       {
+        name: '_owner',
+        type: 'address',
+      },
+      {
         name: '_groupId',
+        type: 'uint256',
+      },
+      {
+        name: '_minTimeLock',
+        type: 'uint256',
+      },
+      {
+        name: '_maxTimeLock',
         type: 'uint256',
       },
     ],
     outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x761fCDFfF8B187901eA11415237632A3F7E0203B'
+export const deployAddress: Address | undefined = '0x9d3F593380875860cC18F5736373ae4B084Ba2F9'
 
 export type Contract = {
   calls: {
-    isSender: (address: `0x${string}`) => Promise<boolean>
+    hasPendingOwnerChange: () => Promise<boolean>
+    owner: () => Promise<`0x${string}`>
+    ownershipTimeLock: () => Promise<bigint>
+    pendingOwner: () => Promise<{ newOwner: `0x${string}`; initiatedBlock: bigint; confirmBlock: bigint }>
+    MIN_OWNERSHIP_TIMELOCK: () => Promise<bigint>
+    MAX_OWNERSHIP_TIMELOCK: () => Promise<bigint>
+    getNonce: () => Promise<bigint>
     groupId: () => Promise<bigint>
-    senders: (arg0: bigint) => Promise<`0x${string}`>
-    indexOfSender: (arg0: `0x${string}`) => Promise<bigint>
-    numSenders: () => Promise<bigint>
+    currentNonce: () => Promise<bigint>
   }
   mutations: {
+    changeOwnership: (newOwner: `0x${string}`) => Promise<void>
+    confirmOwnershipChange: () => Promise<void>
+    cancelOwnershipChange: () => Promise<void>
+    setOwnershipTimeLock: (numBlocks: bigint) => Promise<void>
     transferFunds: (
       userWallet: `0x${string}`,
       recipient: `0x${string}`,
       asset?: `0x${string}`,
       amount?: bigint,
       isCheque?: boolean,
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
     ) => Promise<[bigint, bigint]>
     depositForYield: (
       userWallet: `0x${string}`,
@@ -3266,6 +4846,7 @@ export type Contract = {
       vaultAddr?: `0x${string}`,
       amount?: bigint,
       extraData?: `0x${string}`,
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
     ) => Promise<[bigint, `0x${string}`, bigint, bigint]>
     withdrawFromYield: (
       userWallet: `0x${string}`,
@@ -3273,6 +4854,7 @@ export type Contract = {
       vaultToken: `0x${string}`,
       amount?: bigint,
       extraData?: `0x${string}`,
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
     ) => Promise<[bigint, `0x${string}`, bigint, bigint]>
     rebalanceYieldPosition: (
       userWallet: `0x${string}`,
@@ -3282,6 +4864,7 @@ export type Contract = {
       toVaultAddr?: `0x${string}`,
       fromVaultAmount?: bigint,
       extraData?: `0x${string}`,
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
     ) => Promise<[bigint, `0x${string}`, bigint, bigint]>
     swapTokens: (
       userWallet: `0x${string}`,
@@ -3292,6 +4875,7 @@ export type Contract = {
         tokenPath: `0x${string}`[]
         poolPath: `0x${string}`[]
       }[],
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
     ) => Promise<[`0x${string}`, bigint, `0x${string}`, bigint, bigint]>
     mintOrRedeemAsset: (
       userWallet: `0x${string}`,
@@ -3301,6 +4885,7 @@ export type Contract = {
       amountIn?: bigint,
       minAmountOut?: bigint,
       extraData?: `0x${string}`,
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
     ) => Promise<[bigint, bigint, boolean, bigint]>
     confirmMintOrRedeemAsset: (
       userWallet: `0x${string}`,
@@ -3308,6 +4893,7 @@ export type Contract = {
       tokenIn: `0x${string}`,
       tokenOut: `0x${string}`,
       extraData?: `0x${string}`,
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
     ) => Promise<[bigint, bigint]>
     addCollateral: (
       userWallet: `0x${string}`,
@@ -3315,6 +4901,7 @@ export type Contract = {
       asset: `0x${string}`,
       amount?: bigint,
       extraData?: `0x${string}`,
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
     ) => Promise<[bigint, bigint]>
     removeCollateral: (
       userWallet: `0x${string}`,
@@ -3322,6 +4909,7 @@ export type Contract = {
       asset: `0x${string}`,
       amount?: bigint,
       extraData?: `0x${string}`,
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
     ) => Promise<[bigint, bigint]>
     borrow: (
       userWallet: `0x${string}`,
@@ -3329,6 +4917,7 @@ export type Contract = {
       borrowAsset: `0x${string}`,
       amount?: bigint,
       extraData?: `0x${string}`,
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
     ) => Promise<[bigint, bigint]>
     repayDebt: (
       userWallet: `0x${string}`,
@@ -3336,16 +4925,26 @@ export type Contract = {
       paymentAsset: `0x${string}`,
       paymentAmount?: bigint,
       extraData?: `0x${string}`,
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
     ) => Promise<[bigint, bigint]>
-    claimIncentives: (
+    claimRewards: (
       userWallet: `0x${string}`,
       legoId: bigint,
       rewardToken?: `0x${string}`,
       rewardAmount?: bigint,
-      proofs?: `0x${string}`[],
+      extraData?: `0x${string}`,
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
     ) => Promise<[bigint, bigint]>
-    convertWethToEth: (userWallet: `0x${string}`, amount?: bigint) => Promise<[bigint, bigint]>
-    convertEthToWeth: (userWallet: `0x${string}`, amount?: bigint) => Promise<[bigint, bigint]>
+    convertWethToEth: (
+      userWallet: `0x${string}`,
+      amount?: bigint,
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
+    ) => Promise<[bigint, bigint]>
+    convertEthToWeth: (
+      userWallet: `0x${string}`,
+      amount?: bigint,
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
+    ) => Promise<[bigint, bigint]>
     addLiquidity: (
       userWallet: `0x${string}`,
       legoId: bigint,
@@ -3358,6 +4957,7 @@ export type Contract = {
       minAmountB?: bigint,
       minLpAmount?: bigint,
       extraData?: `0x${string}`,
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
     ) => Promise<[bigint, bigint, bigint, bigint]>
     removeLiquidity: (
       userWallet: `0x${string}`,
@@ -3370,6 +4970,7 @@ export type Contract = {
       minAmountA?: bigint,
       minAmountB?: bigint,
       extraData?: `0x${string}`,
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
     ) => Promise<[bigint, bigint, bigint, bigint]>
     addLiquidityConcentrated: (
       userWallet: `0x${string}`,
@@ -3386,6 +4987,7 @@ export type Contract = {
       minAmountA?: bigint,
       minAmountB?: bigint,
       extraData?: `0x${string}`,
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
     ) => Promise<[bigint, bigint, bigint, bigint, bigint]>
     removeLiquidityConcentrated: (
       userWallet: `0x${string}`,
@@ -3399,18 +5001,59 @@ export type Contract = {
       minAmountA?: bigint,
       minAmountB?: bigint,
       extraData?: `0x${string}`,
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
     ) => Promise<[bigint, bigint, bigint, bigint]>
-    addSender: (sender: `0x${string}`) => Promise<void>
-    removeSender: (sender: `0x${string}`) => Promise<void>
+    performBatchActions: (
+      userWallet: `0x${string}`,
+      instructions: {
+        usePrevAmountOut: boolean
+        action: number
+        legoId: number
+        asset: `0x${string}`
+        target: `0x${string}`
+        amount: bigint
+        asset2: `0x${string}`
+        amount2: bigint
+        minOut1: bigint
+        minOut2: bigint
+        tickLower: unknown
+        tickUpper: unknown
+        extraData: `0x${string}`
+        auxData: `0x${string}`
+        swapInstructions: {
+          legoId: bigint
+          amountIn: bigint
+          minAmountOut: bigint
+          tokenPath: `0x${string}`[]
+          poolPath: `0x${string}`[]
+        }[]
+      }[],
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
+    ) => Promise<boolean>
+    incrementNonce: () => Promise<void>
   }
   events: {
-    AgentAction: (action: number, userWallet: `0x${string}`, sender: `0x${string}`) => Promise<void>
+    NonceIncremented: (oldNonce: bigint, newNonce: bigint) => Promise<void>
+    OwnershipChangeInitiated: (prevOwner: `0x${string}`, newOwner: `0x${string}`, confirmBlock: bigint) => Promise<void>
+    OwnershipChangeConfirmed: (
+      prevOwner: `0x${string}`,
+      newOwner: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+    ) => Promise<void>
+    OwnershipChangeCancelled: (
+      cancelledOwner: `0x${string}`,
+      cancelledBy: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+    ) => Promise<void>
+    OwnershipTimeLockSet: (numBlocks: bigint) => Promise<void>
   }
 }
 
 export type Calls = keyof Contract['calls']
 export type Request<M extends Calls> = {
-  contractName: 'AgentWrapper'
+  contractName: 'AgentWrapperV1'
   method: M
   args: ExtractArgs<Contract['calls'][M]>
   address: Address | undefined
@@ -3438,7 +5081,7 @@ function getRequest<M extends Calls>(
   const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
 
   const call = {
-    contractName: 'AgentWrapper' as const,
+    contractName: 'AgentWrapperV1' as const,
     method,
     args,
     address,
@@ -3468,17 +5111,25 @@ type CallType = {
 }
 
 export const call: CallType = {
-  isSender: (...args: ExtractArgs<Contract['calls']['isSender']>) => getRequest('isSender', args),
+  hasPendingOwnerChange: (...args: ExtractArgs<Contract['calls']['hasPendingOwnerChange']>) =>
+    getRequest('hasPendingOwnerChange', args),
+  owner: (...args: ExtractArgs<Contract['calls']['owner']>) => getRequest('owner', args),
+  ownershipTimeLock: (...args: ExtractArgs<Contract['calls']['ownershipTimeLock']>) =>
+    getRequest('ownershipTimeLock', args),
+  pendingOwner: (...args: ExtractArgs<Contract['calls']['pendingOwner']>) => getRequest('pendingOwner', args),
+  MIN_OWNERSHIP_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MIN_OWNERSHIP_TIMELOCK']>) =>
+    getRequest('MIN_OWNERSHIP_TIMELOCK', args),
+  MAX_OWNERSHIP_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MAX_OWNERSHIP_TIMELOCK']>) =>
+    getRequest('MAX_OWNERSHIP_TIMELOCK', args),
+  getNonce: (...args: ExtractArgs<Contract['calls']['getNonce']>) => getRequest('getNonce', args),
   groupId: (...args: ExtractArgs<Contract['calls']['groupId']>) => getRequest('groupId', args),
-  senders: (...args: ExtractArgs<Contract['calls']['senders']>) => getRequest('senders', args),
-  indexOfSender: (...args: ExtractArgs<Contract['calls']['indexOfSender']>) => getRequest('indexOfSender', args),
-  numSenders: (...args: ExtractArgs<Contract['calls']['numSenders']>) => getRequest('numSenders', args),
+  currentNonce: (...args: ExtractArgs<Contract['calls']['currentNonce']>) => getRequest('currentNonce', args),
 }
 
 export type Mutations = keyof Contract['mutations']
 function getMutation<M extends Mutations>(functionName: M) {
   return {
-    contractName: 'AgentWrapper' as const,
+    contractName: 'AgentWrapperV1' as const,
     functionName,
     deployAddress,
     argsType: undefined as ExtractArgs<Contract['mutations'][M]> | undefined,
@@ -3488,13 +5139,17 @@ function getMutation<M extends Mutations>(functionName: M) {
 
 export const mutation: {
   [K in Mutations]: {
-    contractName: 'AgentWrapper'
+    contractName: 'AgentWrapperV1'
     deployAddress: Address | undefined
     getAbi: () => typeof abi
     functionName: K
     argsType: ExtractArgs<Contract['mutations'][K]> | undefined
   }
 } = {
+  changeOwnership: getMutation('changeOwnership'),
+  confirmOwnershipChange: getMutation('confirmOwnershipChange'),
+  cancelOwnershipChange: getMutation('cancelOwnershipChange'),
+  setOwnershipTimeLock: getMutation('setOwnershipTimeLock'),
   transferFunds: getMutation('transferFunds'),
   depositForYield: getMutation('depositForYield'),
   withdrawFromYield: getMutation('withdrawFromYield'),
@@ -3506,25 +5161,41 @@ export const mutation: {
   removeCollateral: getMutation('removeCollateral'),
   borrow: getMutation('borrow'),
   repayDebt: getMutation('repayDebt'),
-  claimIncentives: getMutation('claimIncentives'),
+  claimRewards: getMutation('claimRewards'),
   convertWethToEth: getMutation('convertWethToEth'),
   convertEthToWeth: getMutation('convertEthToWeth'),
   addLiquidity: getMutation('addLiquidity'),
   removeLiquidity: getMutation('removeLiquidity'),
   addLiquidityConcentrated: getMutation('addLiquidityConcentrated'),
   removeLiquidityConcentrated: getMutation('removeLiquidityConcentrated'),
-  addSender: getMutation('addSender'),
-  removeSender: getMutation('removeSender'),
+  performBatchActions: getMutation('performBatchActions'),
+  incrementNonce: getMutation('incrementNonce'),
 }
 
 export type SDK = {
   deployAddress: Address | undefined
   abi: typeof abi
-  isSender: (...args: ExtractArgs<Contract['calls']['isSender']>) => Promise<CallReturn<'isSender'>>
+  hasPendingOwnerChange: (
+    ...args: ExtractArgs<Contract['calls']['hasPendingOwnerChange']>
+  ) => Promise<CallReturn<'hasPendingOwnerChange'>>
+  owner: (...args: ExtractArgs<Contract['calls']['owner']>) => Promise<CallReturn<'owner'>>
+  ownershipTimeLock: (
+    ...args: ExtractArgs<Contract['calls']['ownershipTimeLock']>
+  ) => Promise<CallReturn<'ownershipTimeLock'>>
+  pendingOwner: (...args: ExtractArgs<Contract['calls']['pendingOwner']>) => Promise<CallReturn<'pendingOwner'>>
+  MIN_OWNERSHIP_TIMELOCK: (
+    ...args: ExtractArgs<Contract['calls']['MIN_OWNERSHIP_TIMELOCK']>
+  ) => Promise<CallReturn<'MIN_OWNERSHIP_TIMELOCK'>>
+  MAX_OWNERSHIP_TIMELOCK: (
+    ...args: ExtractArgs<Contract['calls']['MAX_OWNERSHIP_TIMELOCK']>
+  ) => Promise<CallReturn<'MAX_OWNERSHIP_TIMELOCK'>>
+  getNonce: (...args: ExtractArgs<Contract['calls']['getNonce']>) => Promise<CallReturn<'getNonce'>>
   groupId: (...args: ExtractArgs<Contract['calls']['groupId']>) => Promise<CallReturn<'groupId'>>
-  senders: (...args: ExtractArgs<Contract['calls']['senders']>) => Promise<CallReturn<'senders'>>
-  indexOfSender: (...args: ExtractArgs<Contract['calls']['indexOfSender']>) => Promise<CallReturn<'indexOfSender'>>
-  numSenders: (...args: ExtractArgs<Contract['calls']['numSenders']>) => Promise<CallReturn<'numSenders'>>
+  currentNonce: (...args: ExtractArgs<Contract['calls']['currentNonce']>) => Promise<CallReturn<'currentNonce'>>
+  changeOwnership: (...args: ExtractArgs<Contract['mutations']['changeOwnership']>) => Promise<Address>
+  confirmOwnershipChange: (...args: ExtractArgs<Contract['mutations']['confirmOwnershipChange']>) => Promise<Address>
+  cancelOwnershipChange: (...args: ExtractArgs<Contract['mutations']['cancelOwnershipChange']>) => Promise<Address>
+  setOwnershipTimeLock: (...args: ExtractArgs<Contract['mutations']['setOwnershipTimeLock']>) => Promise<Address>
   transferFunds: (...args: ExtractArgs<Contract['mutations']['transferFunds']>) => Promise<Address>
   depositForYield: (...args: ExtractArgs<Contract['mutations']['depositForYield']>) => Promise<Address>
   withdrawFromYield: (...args: ExtractArgs<Contract['mutations']['withdrawFromYield']>) => Promise<Address>
@@ -3538,7 +5209,7 @@ export type SDK = {
   removeCollateral: (...args: ExtractArgs<Contract['mutations']['removeCollateral']>) => Promise<Address>
   borrow: (...args: ExtractArgs<Contract['mutations']['borrow']>) => Promise<Address>
   repayDebt: (...args: ExtractArgs<Contract['mutations']['repayDebt']>) => Promise<Address>
-  claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) => Promise<Address>
+  claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) => Promise<Address>
   convertWethToEth: (...args: ExtractArgs<Contract['mutations']['convertWethToEth']>) => Promise<Address>
   convertEthToWeth: (...args: ExtractArgs<Contract['mutations']['convertEthToWeth']>) => Promise<Address>
   addLiquidity: (...args: ExtractArgs<Contract['mutations']['addLiquidity']>) => Promise<Address>
@@ -3549,8 +5220,8 @@ export type SDK = {
   removeLiquidityConcentrated: (
     ...args: ExtractArgs<Contract['mutations']['removeLiquidityConcentrated']>
   ) => Promise<Address>
-  addSender: (...args: ExtractArgs<Contract['mutations']['addSender']>) => Promise<Address>
-  removeSender: (...args: ExtractArgs<Contract['mutations']['removeSender']>) => Promise<Address>
+  performBatchActions: (...args: ExtractArgs<Contract['mutations']['performBatchActions']>) => Promise<Address>
+  incrementNonce: (...args: ExtractArgs<Contract['mutations']['incrementNonce']>) => Promise<Address>
 }
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
@@ -3558,18 +5229,34 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
     deployAddress,
     abi,
     // Queries
-    isSender: (...args: ExtractArgs<Contract['calls']['isSender']>) =>
-      singleQuery(publicClient!, call.isSender(...args)) as Promise<CallReturn<'isSender'>>,
+    hasPendingOwnerChange: (...args: ExtractArgs<Contract['calls']['hasPendingOwnerChange']>) =>
+      singleQuery(publicClient!, call.hasPendingOwnerChange(...args)) as Promise<CallReturn<'hasPendingOwnerChange'>>,
+    owner: (...args: ExtractArgs<Contract['calls']['owner']>) =>
+      singleQuery(publicClient!, call.owner(...args)) as Promise<CallReturn<'owner'>>,
+    ownershipTimeLock: (...args: ExtractArgs<Contract['calls']['ownershipTimeLock']>) =>
+      singleQuery(publicClient!, call.ownershipTimeLock(...args)) as Promise<CallReturn<'ownershipTimeLock'>>,
+    pendingOwner: (...args: ExtractArgs<Contract['calls']['pendingOwner']>) =>
+      singleQuery(publicClient!, call.pendingOwner(...args)) as Promise<CallReturn<'pendingOwner'>>,
+    MIN_OWNERSHIP_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MIN_OWNERSHIP_TIMELOCK']>) =>
+      singleQuery(publicClient!, call.MIN_OWNERSHIP_TIMELOCK(...args)) as Promise<CallReturn<'MIN_OWNERSHIP_TIMELOCK'>>,
+    MAX_OWNERSHIP_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MAX_OWNERSHIP_TIMELOCK']>) =>
+      singleQuery(publicClient!, call.MAX_OWNERSHIP_TIMELOCK(...args)) as Promise<CallReturn<'MAX_OWNERSHIP_TIMELOCK'>>,
+    getNonce: (...args: ExtractArgs<Contract['calls']['getNonce']>) =>
+      singleQuery(publicClient!, call.getNonce(...args)) as Promise<CallReturn<'getNonce'>>,
     groupId: (...args: ExtractArgs<Contract['calls']['groupId']>) =>
       singleQuery(publicClient!, call.groupId(...args)) as Promise<CallReturn<'groupId'>>,
-    senders: (...args: ExtractArgs<Contract['calls']['senders']>) =>
-      singleQuery(publicClient!, call.senders(...args)) as Promise<CallReturn<'senders'>>,
-    indexOfSender: (...args: ExtractArgs<Contract['calls']['indexOfSender']>) =>
-      singleQuery(publicClient!, call.indexOfSender(...args)) as Promise<CallReturn<'indexOfSender'>>,
-    numSenders: (...args: ExtractArgs<Contract['calls']['numSenders']>) =>
-      singleQuery(publicClient!, call.numSenders(...args)) as Promise<CallReturn<'numSenders'>>,
+    currentNonce: (...args: ExtractArgs<Contract['calls']['currentNonce']>) =>
+      singleQuery(publicClient!, call.currentNonce(...args)) as Promise<CallReturn<'currentNonce'>>,
 
     // Mutations
+    changeOwnership: (...args: ExtractArgs<Contract['mutations']['changeOwnership']>) =>
+      mutate(walletClient!, mutation.changeOwnership)(...args),
+    confirmOwnershipChange: (...args: ExtractArgs<Contract['mutations']['confirmOwnershipChange']>) =>
+      mutate(walletClient!, mutation.confirmOwnershipChange)(...args),
+    cancelOwnershipChange: (...args: ExtractArgs<Contract['mutations']['cancelOwnershipChange']>) =>
+      mutate(walletClient!, mutation.cancelOwnershipChange)(...args),
+    setOwnershipTimeLock: (...args: ExtractArgs<Contract['mutations']['setOwnershipTimeLock']>) =>
+      mutate(walletClient!, mutation.setOwnershipTimeLock)(...args),
     transferFunds: (...args: ExtractArgs<Contract['mutations']['transferFunds']>) =>
       mutate(walletClient!, mutation.transferFunds)(...args),
     depositForYield: (...args: ExtractArgs<Contract['mutations']['depositForYield']>) =>
@@ -3591,8 +5278,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
     borrow: (...args: ExtractArgs<Contract['mutations']['borrow']>) => mutate(walletClient!, mutation.borrow)(...args),
     repayDebt: (...args: ExtractArgs<Contract['mutations']['repayDebt']>) =>
       mutate(walletClient!, mutation.repayDebt)(...args),
-    claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) =>
-      mutate(walletClient!, mutation.claimIncentives)(...args),
+    claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) =>
+      mutate(walletClient!, mutation.claimRewards)(...args),
     convertWethToEth: (...args: ExtractArgs<Contract['mutations']['convertWethToEth']>) =>
       mutate(walletClient!, mutation.convertWethToEth)(...args),
     convertEthToWeth: (...args: ExtractArgs<Contract['mutations']['convertEthToWeth']>) =>
@@ -3605,9 +5292,9 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.addLiquidityConcentrated)(...args),
     removeLiquidityConcentrated: (...args: ExtractArgs<Contract['mutations']['removeLiquidityConcentrated']>) =>
       mutate(walletClient!, mutation.removeLiquidityConcentrated)(...args),
-    addSender: (...args: ExtractArgs<Contract['mutations']['addSender']>) =>
-      mutate(walletClient!, mutation.addSender)(...args),
-    removeSender: (...args: ExtractArgs<Contract['mutations']['removeSender']>) =>
-      mutate(walletClient!, mutation.removeSender)(...args),
+    performBatchActions: (...args: ExtractArgs<Contract['mutations']['performBatchActions']>) =>
+      mutate(walletClient!, mutation.performBatchActions)(...args),
+    incrementNonce: (...args: ExtractArgs<Contract['mutations']['incrementNonce']>) =>
+      mutate(walletClient!, mutation.incrementNonce)(...args),
   }
 }

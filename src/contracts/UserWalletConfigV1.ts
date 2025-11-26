@@ -11,227 +11,223 @@ type Address = `0x${string}`
 
 export const abi = [
   {
-    name: 'EjectionModeSet',
+    anonymous: false,
     inputs: [
       {
+        indexed: false,
         name: 'inEjectMode',
         type: 'bool',
-        indexed: false,
       },
     ],
-    anonymous: false,
+    name: 'EjectionModeSet',
     type: 'event',
   },
   {
-    name: 'FrozenSet',
+    anonymous: false,
     inputs: [
       {
+        indexed: false,
         name: 'isFrozen',
         type: 'bool',
-        indexed: false,
       },
       {
+        indexed: true,
         name: 'caller',
         type: 'address',
-        indexed: true,
       },
     ],
-    anonymous: false,
+    name: 'FrozenSet',
     type: 'event',
   },
   {
-    name: 'NftRecovered',
+    anonymous: false,
     inputs: [
       {
+        indexed: true,
         name: 'collection',
         type: 'address',
-        indexed: true,
       },
       {
+        indexed: false,
         name: 'nftTokenId',
         type: 'uint256',
-        indexed: false,
       },
       {
+        indexed: true,
         name: 'recipient',
         type: 'address',
-        indexed: true,
       },
     ],
-    anonymous: false,
+    name: 'NftRecovered',
     type: 'event',
   },
   {
-    name: 'OwnershipChangeInitiated',
+    anonymous: false,
     inputs: [
       {
+        indexed: true,
         name: 'prevOwner',
         type: 'address',
-        indexed: true,
       },
       {
+        indexed: true,
         name: 'newOwner',
         type: 'address',
-        indexed: true,
       },
       {
+        indexed: false,
         name: 'confirmBlock',
         type: 'uint256',
-        indexed: false,
       },
     ],
-    anonymous: false,
+    name: 'OwnershipChangeInitiated',
     type: 'event',
   },
   {
-    name: 'OwnershipChangeConfirmed',
+    anonymous: false,
     inputs: [
       {
+        indexed: true,
         name: 'prevOwner',
         type: 'address',
-        indexed: true,
       },
       {
+        indexed: true,
         name: 'newOwner',
         type: 'address',
-        indexed: true,
       },
       {
+        indexed: false,
         name: 'initiatedBlock',
         type: 'uint256',
-        indexed: false,
       },
       {
+        indexed: false,
         name: 'confirmBlock',
         type: 'uint256',
-        indexed: false,
       },
     ],
-    anonymous: false,
+    name: 'OwnershipChangeConfirmed',
     type: 'event',
   },
   {
-    name: 'OwnershipChangeCancelled',
+    anonymous: false,
     inputs: [
       {
+        indexed: true,
         name: 'cancelledOwner',
         type: 'address',
-        indexed: true,
       },
       {
+        indexed: true,
         name: 'cancelledBy',
         type: 'address',
-        indexed: true,
       },
       {
+        indexed: false,
         name: 'initiatedBlock',
         type: 'uint256',
-        indexed: false,
       },
       {
+        indexed: false,
         name: 'confirmBlock',
         type: 'uint256',
-        indexed: false,
       },
     ],
-    anonymous: false,
+    name: 'OwnershipChangeCancelled',
     type: 'event',
   },
   {
-    name: 'OwnershipTimeLockSet',
+    anonymous: false,
     inputs: [
       {
+        indexed: false,
         name: 'numBlocks',
         type: 'uint256',
-        indexed: false,
       },
     ],
-    anonymous: false,
+    name: 'OwnershipTimeLockSet',
     type: 'event',
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'changeOwnership',
     inputs: [
       {
         name: '_newOwner',
         type: 'address',
       },
     ],
+    name: 'changeOwnership',
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
+  },
+  {
+    inputs: [],
     name: 'confirmOwnershipChange',
-    inputs: [],
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'cancelOwnershipChange',
-    inputs: [],
-    outputs: [],
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'hasPendingOwnerChange',
     inputs: [],
+    name: 'cancelOwnershipChange',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'hasPendingOwnerChange',
     outputs: [
       {
         name: '',
         type: 'bool',
       },
     ],
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'setOwnershipTimeLock',
     inputs: [
       {
         name: '_numBlocks',
         type: 'uint256',
       },
     ],
+    name: 'setOwnershipTimeLock',
     outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'owner',
     inputs: [],
+    name: 'owner',
     outputs: [
       {
         name: '',
         type: 'address',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
-    name: 'ownershipTimeLock',
+  },
+  {
     inputs: [],
+    name: 'ownershipTimeLock',
     outputs: [
       {
         name: '',
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
-    name: 'pendingOwner',
+  },
+  {
     inputs: [],
+    name: 'pendingOwner',
     outputs: [
       {
-        name: '',
-        type: 'tuple',
         components: [
           {
             name: 'newOwner',
@@ -246,66 +242,67 @@ export const abi = [
             type: 'uint256',
           },
         ],
+        name: '',
+        type: 'tuple',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
+  },
+  {
+    inputs: [],
     name: 'MIN_OWNERSHIP_TIMELOCK',
-    inputs: [],
     outputs: [
       {
         name: '',
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
-    name: 'MAX_OWNERSHIP_TIMELOCK',
+  },
+  {
     inputs: [],
+    name: 'MAX_OWNERSHIP_TIMELOCK',
     outputs: [
       {
         name: '',
         type: 'uint256',
       },
     ],
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'setWallet',
     inputs: [
       {
         name: '_wallet',
         type: 'address',
       },
     ],
+    name: 'setWallet',
     outputs: [
       {
         name: '',
         type: 'bool',
       },
     ],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    stateMutability: 'pure',
-    type: 'function',
-    name: 'apiVersion',
     inputs: [],
+    name: 'apiVersion',
     outputs: [
       {
         name: '',
         type: 'string',
       },
     ],
+    stateMutability: 'pure',
+    type: 'function',
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'checkSignerPermissionsAndGetBundle',
     inputs: [
       {
         name: '_signer',
@@ -316,10 +313,9 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'checkSignerPermissionsAndGetBundle',
     outputs: [
       {
-        name: '',
-        type: 'tuple',
         components: [
           {
             name: 'ledger',
@@ -347,10 +343,6 @@ export const abi = [
           },
           {
             name: 'billing',
-            type: 'address',
-          },
-          {
-            name: 'vaultRegistry',
             type: 'address',
           },
           {
@@ -402,13 +394,14 @@ export const abi = [
             type: 'address',
           },
         ],
+        name: '',
+        type: 'tuple',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
-    name: 'checkSignerPermissionsAndGetBundle',
+  },
+  {
     inputs: [
       {
         name: '_signer',
@@ -423,10 +416,9 @@ export const abi = [
         type: 'address[]',
       },
     ],
+    name: 'checkSignerPermissionsAndGetBundle',
     outputs: [
       {
-        name: '',
-        type: 'tuple',
         components: [
           {
             name: 'ledger',
@@ -454,10 +446,6 @@ export const abi = [
           },
           {
             name: 'billing',
-            type: 'address',
-          },
-          {
-            name: 'vaultRegistry',
             type: 'address',
           },
           {
@@ -509,13 +497,14 @@ export const abi = [
             type: 'address',
           },
         ],
+        name: '',
+        type: 'tuple',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
-    name: 'checkSignerPermissionsAndGetBundle',
+  },
+  {
     inputs: [
       {
         name: '_signer',
@@ -534,10 +523,9 @@ export const abi = [
         type: 'uint256[]',
       },
     ],
+    name: 'checkSignerPermissionsAndGetBundle',
     outputs: [
       {
-        name: '',
-        type: 'tuple',
         components: [
           {
             name: 'ledger',
@@ -565,10 +553,6 @@ export const abi = [
           },
           {
             name: 'billing',
-            type: 'address',
-          },
-          {
-            name: 'vaultRegistry',
             type: 'address',
           },
           {
@@ -620,13 +604,14 @@ export const abi = [
             type: 'address',
           },
         ],
+        name: '',
+        type: 'tuple',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
-    name: 'checkSignerPermissionsAndGetBundle',
+  },
+  {
     inputs: [
       {
         name: '_signer',
@@ -649,10 +634,9 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'checkSignerPermissionsAndGetBundle',
     outputs: [
       {
-        name: '',
-        type: 'tuple',
         components: [
           {
             name: 'ledger',
@@ -680,10 +664,6 @@ export const abi = [
           },
           {
             name: 'billing',
-            type: 'address',
-          },
-          {
-            name: 'vaultRegistry',
             type: 'address',
           },
           {
@@ -735,13 +715,14 @@ export const abi = [
             type: 'address',
           },
         ],
+        name: '',
+        type: 'tuple',
       },
     ],
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'checkManagerLimitsPostTx',
     inputs: [
       {
         name: '_manager',
@@ -751,42 +732,18 @@ export const abi = [
         name: '_txUsdValue',
         type: 'uint256',
       },
-      {
-        name: '_underlyingAsset',
-        type: 'address',
-      },
-      {
-        name: '_vaultToken',
-        type: 'address',
-      },
-      {
-        name: '_shouldCheckSwap',
-        type: 'bool',
-      },
-      {
-        name: '_fromAssetUsdValue',
-        type: 'uint256',
-      },
-      {
-        name: '_toAssetUsdValue',
-        type: 'uint256',
-      },
-      {
-        name: '_vaultRegistry',
-        type: 'address',
-      },
     ],
+    name: 'checkManagerUsdLimitsAndUpdateData',
     outputs: [
       {
         name: '',
         type: 'bool',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'checkRecipientLimitsAndUpdateData',
+  },
+  {
     inputs: [
       {
         name: '_recipient',
@@ -805,17 +762,17 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'checkRecipientLimitsAndUpdateData',
     outputs: [
       {
         name: '',
         type: 'bool',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'validateCheque',
+  },
+  {
     inputs: [
       {
         name: '_recipient',
@@ -838,25 +795,23 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'validateCheque',
     outputs: [
       {
         name: '',
         type: 'bool',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addPendingWhitelistAddr',
+  },
+  {
     inputs: [
       {
         name: '_addr',
         type: 'address',
       },
       {
-        name: '_pending',
-        type: 'tuple',
         components: [
           {
             name: 'initiatedBlock',
@@ -871,70 +826,208 @@ export const abi = [
             type: 'address',
           },
         ],
+        name: '_pending',
+        type: 'tuple',
       },
     ],
+    name: 'addPendingWhitelistAddr',
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+    ],
     name: 'cancelPendingWhitelistAddr',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_addr',
         type: 'address',
       },
     ],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
     name: 'confirmWhitelistAddr',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_addr',
         type: 'address',
       },
     ],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
     name: 'addWhitelistAddrViaMigrator',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_addr',
         type: 'address',
       },
     ],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
     name: 'removeWhitelistAddr',
-    inputs: [
-      {
-        name: '_addr',
-        type: 'address',
-      },
-    ],
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_manager',
+        type: 'address',
+      },
+      {
+        components: [
+          {
+            name: 'startBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'expiryBlock',
+            type: 'uint256',
+          },
+          {
+            components: [
+              {
+                name: 'maxUsdValuePerTx',
+                type: 'uint256',
+              },
+              {
+                name: 'maxUsdValuePerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxUsdValueLifetime',
+                type: 'uint256',
+              },
+              {
+                name: 'maxNumTxsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'txCooldownBlocks',
+                type: 'uint256',
+              },
+              {
+                name: 'failOnZeroPrice',
+                type: 'bool',
+              },
+            ],
+            name: 'limits',
+            type: 'tuple',
+          },
+          {
+            components: [
+              {
+                name: 'canManageYield',
+                type: 'bool',
+              },
+              {
+                name: 'canBuyAndSell',
+                type: 'bool',
+              },
+              {
+                name: 'canManageDebt',
+                type: 'bool',
+              },
+              {
+                name: 'canManageLiq',
+                type: 'bool',
+              },
+              {
+                name: 'canClaimRewards',
+                type: 'bool',
+              },
+              {
+                name: 'allowedLegos',
+                type: 'uint256[]',
+              },
+            ],
+            name: 'legoPerms',
+            type: 'tuple',
+          },
+          {
+            components: [
+              {
+                name: 'canAddPending',
+                type: 'bool',
+              },
+              {
+                name: 'canConfirm',
+                type: 'bool',
+              },
+              {
+                name: 'canCancel',
+                type: 'bool',
+              },
+              {
+                name: 'canRemove',
+                type: 'bool',
+              },
+            ],
+            name: 'whitelistPerms',
+            type: 'tuple',
+          },
+          {
+            components: [
+              {
+                name: 'canTransfer',
+                type: 'bool',
+              },
+              {
+                name: 'canCreateCheque',
+                type: 'bool',
+              },
+              {
+                name: 'canAddPendingPayee',
+                type: 'bool',
+              },
+              {
+                name: 'allowedPayees',
+                type: 'address[]',
+              },
+            ],
+            name: 'transferPerms',
+            type: 'tuple',
+          },
+          {
+            name: 'allowedAssets',
+            type: 'address[]',
+          },
+          {
+            name: 'canClaimLoot',
+            type: 'bool',
+          },
+        ],
+        name: '_config',
+        type: 'tuple',
+      },
+    ],
     name: 'addManager',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_manager',
         type: 'address',
       },
       {
-        name: '_config',
-        type: 'tuple',
         components: [
           {
             name: 'startBlock',
@@ -945,8 +1038,6 @@ export const abi = [
             type: 'uint256',
           },
           {
-            name: 'limits',
-            type: 'tuple',
             components: [
               {
                 name: 'maxUsdValuePerTx',
@@ -973,10 +1064,10 @@ export const abi = [
                 type: 'bool',
               },
             ],
+            name: 'limits',
+            type: 'tuple',
           },
           {
-            name: 'legoPerms',
-            type: 'tuple',
             components: [
               {
                 name: 'canManageYield',
@@ -999,36 +1090,14 @@ export const abi = [
                 type: 'bool',
               },
               {
-                name: 'onlyApprovedYieldOpps',
-                type: 'bool',
-              },
-              {
                 name: 'allowedLegos',
                 type: 'uint256[]',
               },
             ],
+            name: 'legoPerms',
+            type: 'tuple',
           },
           {
-            name: 'swapPerms',
-            type: 'tuple',
-            components: [
-              {
-                name: 'mustHaveUsdValue',
-                type: 'bool',
-              },
-              {
-                name: 'maxNumSwapsPerPeriod',
-                type: 'uint256',
-              },
-              {
-                name: 'maxSlippage',
-                type: 'uint256',
-              },
-            ],
-          },
-          {
-            name: 'whitelistPerms',
-            type: 'tuple',
             components: [
               {
                 name: 'canAddPending',
@@ -1047,10 +1116,10 @@ export const abi = [
                 type: 'bool',
               },
             ],
+            name: 'whitelistPerms',
+            type: 'tuple',
           },
           {
-            name: 'transferPerms',
-            type: 'tuple',
             components: [
               {
                 name: 'canTransfer',
@@ -1069,6 +1138,8 @@ export const abi = [
                 type: 'address[]',
               },
             ],
+            name: 'transferPerms',
+            type: 'tuple',
           },
           {
             name: 'allowedAssets',
@@ -1079,190 +1150,30 @@ export const abi = [
             type: 'bool',
           },
         ],
+        name: '_config',
+        type: 'tuple',
       },
     ],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
     name: 'updateManager',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_manager',
         type: 'address',
       },
-      {
-        name: '_config',
-        type: 'tuple',
-        components: [
-          {
-            name: 'startBlock',
-            type: 'uint256',
-          },
-          {
-            name: 'expiryBlock',
-            type: 'uint256',
-          },
-          {
-            name: 'limits',
-            type: 'tuple',
-            components: [
-              {
-                name: 'maxUsdValuePerTx',
-                type: 'uint256',
-              },
-              {
-                name: 'maxUsdValuePerPeriod',
-                type: 'uint256',
-              },
-              {
-                name: 'maxUsdValueLifetime',
-                type: 'uint256',
-              },
-              {
-                name: 'maxNumTxsPerPeriod',
-                type: 'uint256',
-              },
-              {
-                name: 'txCooldownBlocks',
-                type: 'uint256',
-              },
-              {
-                name: 'failOnZeroPrice',
-                type: 'bool',
-              },
-            ],
-          },
-          {
-            name: 'legoPerms',
-            type: 'tuple',
-            components: [
-              {
-                name: 'canManageYield',
-                type: 'bool',
-              },
-              {
-                name: 'canBuyAndSell',
-                type: 'bool',
-              },
-              {
-                name: 'canManageDebt',
-                type: 'bool',
-              },
-              {
-                name: 'canManageLiq',
-                type: 'bool',
-              },
-              {
-                name: 'canClaimRewards',
-                type: 'bool',
-              },
-              {
-                name: 'onlyApprovedYieldOpps',
-                type: 'bool',
-              },
-              {
-                name: 'allowedLegos',
-                type: 'uint256[]',
-              },
-            ],
-          },
-          {
-            name: 'swapPerms',
-            type: 'tuple',
-            components: [
-              {
-                name: 'mustHaveUsdValue',
-                type: 'bool',
-              },
-              {
-                name: 'maxNumSwapsPerPeriod',
-                type: 'uint256',
-              },
-              {
-                name: 'maxSlippage',
-                type: 'uint256',
-              },
-            ],
-          },
-          {
-            name: 'whitelistPerms',
-            type: 'tuple',
-            components: [
-              {
-                name: 'canAddPending',
-                type: 'bool',
-              },
-              {
-                name: 'canConfirm',
-                type: 'bool',
-              },
-              {
-                name: 'canCancel',
-                type: 'bool',
-              },
-              {
-                name: 'canRemove',
-                type: 'bool',
-              },
-            ],
-          },
-          {
-            name: 'transferPerms',
-            type: 'tuple',
-            components: [
-              {
-                name: 'canTransfer',
-                type: 'bool',
-              },
-              {
-                name: 'canCreateCheque',
-                type: 'bool',
-              },
-              {
-                name: 'canAddPendingPayee',
-                type: 'bool',
-              },
-              {
-                name: 'allowedPayees',
-                type: 'address[]',
-              },
-            ],
-          },
-          {
-            name: 'allowedAssets',
-            type: 'address[]',
-          },
-          {
-            name: 'canClaimLoot',
-            type: 'bool',
-          },
-        ],
-      },
     ],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
     name: 'removeManager',
-    inputs: [
-      {
-        name: '_manager',
-        type: 'address',
-      },
-    ],
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'setGlobalManagerSettings',
+  },
+  {
     inputs: [
       {
-        name: '_config',
-        type: 'tuple',
         components: [
           {
             name: 'managerPeriod',
@@ -1281,8 +1192,6 @@ export const abi = [
             type: 'bool',
           },
           {
-            name: 'limits',
-            type: 'tuple',
             components: [
               {
                 name: 'maxUsdValuePerTx',
@@ -1309,10 +1218,10 @@ export const abi = [
                 type: 'bool',
               },
             ],
+            name: 'limits',
+            type: 'tuple',
           },
           {
-            name: 'legoPerms',
-            type: 'tuple',
             components: [
               {
                 name: 'canManageYield',
@@ -1335,36 +1244,14 @@ export const abi = [
                 type: 'bool',
               },
               {
-                name: 'onlyApprovedYieldOpps',
-                type: 'bool',
-              },
-              {
                 name: 'allowedLegos',
                 type: 'uint256[]',
               },
             ],
+            name: 'legoPerms',
+            type: 'tuple',
           },
           {
-            name: 'swapPerms',
-            type: 'tuple',
-            components: [
-              {
-                name: 'mustHaveUsdValue',
-                type: 'bool',
-              },
-              {
-                name: 'maxNumSwapsPerPeriod',
-                type: 'uint256',
-              },
-              {
-                name: 'maxSlippage',
-                type: 'uint256',
-              },
-            ],
-          },
-          {
-            name: 'whitelistPerms',
-            type: 'tuple',
             components: [
               {
                 name: 'canAddPending',
@@ -1383,10 +1270,10 @@ export const abi = [
                 type: 'bool',
               },
             ],
+            name: 'whitelistPerms',
+            type: 'tuple',
           },
           {
-            name: 'transferPerms',
-            type: 'tuple',
             components: [
               {
                 name: 'canTransfer',
@@ -1405,28 +1292,120 @@ export const abi = [
                 type: 'address[]',
               },
             ],
+            name: 'transferPerms',
+            type: 'tuple',
           },
           {
             name: 'allowedAssets',
             type: 'address[]',
           },
         ],
+        name: '_config',
+        type: 'tuple',
       },
     ],
+    name: 'setGlobalManagerSettings',
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_payee',
+        type: 'address',
+      },
+      {
+        components: [
+          {
+            name: 'startBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'expiryBlock',
+            type: 'uint256',
+          },
+          {
+            name: 'canPull',
+            type: 'bool',
+          },
+          {
+            name: 'periodLength',
+            type: 'uint256',
+          },
+          {
+            name: 'maxNumTxsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'txCooldownBlocks',
+            type: 'uint256',
+          },
+          {
+            name: 'failOnZeroPrice',
+            type: 'bool',
+          },
+          {
+            name: 'primaryAsset',
+            type: 'address',
+          },
+          {
+            name: 'onlyPrimaryAsset',
+            type: 'bool',
+          },
+          {
+            components: [
+              {
+                name: 'perTxCap',
+                type: 'uint256',
+              },
+              {
+                name: 'perPeriodCap',
+                type: 'uint256',
+              },
+              {
+                name: 'lifetimeCap',
+                type: 'uint256',
+              },
+            ],
+            name: 'unitLimits',
+            type: 'tuple',
+          },
+          {
+            components: [
+              {
+                name: 'perTxCap',
+                type: 'uint256',
+              },
+              {
+                name: 'perPeriodCap',
+                type: 'uint256',
+              },
+              {
+                name: 'lifetimeCap',
+                type: 'uint256',
+              },
+            ],
+            name: 'usdLimits',
+            type: 'tuple',
+          },
+        ],
+        name: '_config',
+        type: 'tuple',
+      },
+    ],
     name: 'addPayee',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_payee',
         type: 'address',
       },
       {
-        name: '_config',
-        type: 'tuple',
         components: [
           {
             name: 'startBlock',
@@ -1465,26 +1444,24 @@ export const abi = [
             type: 'bool',
           },
           {
+            components: [
+              {
+                name: 'perTxCap',
+                type: 'uint256',
+              },
+              {
+                name: 'perPeriodCap',
+                type: 'uint256',
+              },
+              {
+                name: 'lifetimeCap',
+                type: 'uint256',
+              },
+            ],
             name: 'unitLimits',
             type: 'tuple',
-            components: [
-              {
-                name: 'perTxCap',
-                type: 'uint256',
-              },
-              {
-                name: 'perPeriodCap',
-                type: 'uint256',
-              },
-              {
-                name: 'lifetimeCap',
-                type: 'uint256',
-              },
-            ],
           },
           {
-            name: 'usdLimits',
-            type: 'tuple',
             components: [
               {
                 name: 'perTxCap',
@@ -1499,122 +1476,34 @@ export const abi = [
                 type: 'uint256',
               },
             ],
+            name: 'usdLimits',
+            type: 'tuple',
           },
         ],
+        name: '_config',
+        type: 'tuple',
       },
     ],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
     name: 'updatePayee',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_payee',
         type: 'address',
       },
-      {
-        name: '_config',
-        type: 'tuple',
-        components: [
-          {
-            name: 'startBlock',
-            type: 'uint256',
-          },
-          {
-            name: 'expiryBlock',
-            type: 'uint256',
-          },
-          {
-            name: 'canPull',
-            type: 'bool',
-          },
-          {
-            name: 'periodLength',
-            type: 'uint256',
-          },
-          {
-            name: 'maxNumTxsPerPeriod',
-            type: 'uint256',
-          },
-          {
-            name: 'txCooldownBlocks',
-            type: 'uint256',
-          },
-          {
-            name: 'failOnZeroPrice',
-            type: 'bool',
-          },
-          {
-            name: 'primaryAsset',
-            type: 'address',
-          },
-          {
-            name: 'onlyPrimaryAsset',
-            type: 'bool',
-          },
-          {
-            name: 'unitLimits',
-            type: 'tuple',
-            components: [
-              {
-                name: 'perTxCap',
-                type: 'uint256',
-              },
-              {
-                name: 'perPeriodCap',
-                type: 'uint256',
-              },
-              {
-                name: 'lifetimeCap',
-                type: 'uint256',
-              },
-            ],
-          },
-          {
-            name: 'usdLimits',
-            type: 'tuple',
-            components: [
-              {
-                name: 'perTxCap',
-                type: 'uint256',
-              },
-              {
-                name: 'perPeriodCap',
-                type: 'uint256',
-              },
-              {
-                name: 'lifetimeCap',
-                type: 'uint256',
-              },
-            ],
-          },
-        ],
-      },
     ],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
     name: 'removePayee',
-    inputs: [
-      {
-        name: '_payee',
-        type: 'address',
-      },
-    ],
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'setGlobalPayeeSettings',
+  },
+  {
     inputs: [
       {
-        name: '_config',
-        type: 'tuple',
         components: [
           {
             name: 'defaultPeriodLength',
@@ -1641,8 +1530,6 @@ export const abi = [
             type: 'bool',
           },
           {
-            name: 'usdLimits',
-            type: 'tuple',
             components: [
               {
                 name: 'perTxCap',
@@ -1657,6 +1544,8 @@ export const abi = [
                 type: 'uint256',
               },
             ],
+            name: 'usdLimits',
+            type: 'tuple',
           },
           {
             name: 'canPayOwner',
@@ -1667,26 +1556,24 @@ export const abi = [
             type: 'bool',
           },
         ],
+        name: '_config',
+        type: 'tuple',
       },
     ],
+    name: 'setGlobalPayeeSettings',
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'addPendingPayee',
+  },
+  {
     inputs: [
       {
         name: '_payee',
         type: 'address',
       },
       {
-        name: '_pending',
-        type: 'tuple',
         components: [
           {
-            name: 'settings',
-            type: 'tuple',
             components: [
               {
                 name: 'startBlock',
@@ -1725,26 +1612,24 @@ export const abi = [
                 type: 'bool',
               },
               {
+                components: [
+                  {
+                    name: 'perTxCap',
+                    type: 'uint256',
+                  },
+                  {
+                    name: 'perPeriodCap',
+                    type: 'uint256',
+                  },
+                  {
+                    name: 'lifetimeCap',
+                    type: 'uint256',
+                  },
+                ],
                 name: 'unitLimits',
                 type: 'tuple',
-                components: [
-                  {
-                    name: 'perTxCap',
-                    type: 'uint256',
-                  },
-                  {
-                    name: 'perPeriodCap',
-                    type: 'uint256',
-                  },
-                  {
-                    name: 'lifetimeCap',
-                    type: 'uint256',
-                  },
-                ],
               },
               {
-                name: 'usdLimits',
-                type: 'tuple',
                 components: [
                   {
                     name: 'perTxCap',
@@ -1759,8 +1644,12 @@ export const abi = [
                     type: 'uint256',
                   },
                 ],
+                name: 'usdLimits',
+                type: 'tuple',
               },
             ],
+            name: 'settings',
+            type: 'tuple',
           },
           {
             name: 'initiatedBlock',
@@ -1775,46 +1664,46 @@ export const abi = [
             type: 'address',
           },
         ],
+        name: '_pending',
+        type: 'tuple',
       },
     ],
+    name: 'addPendingPayee',
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: '_payee',
+        type: 'address',
+      },
+    ],
     name: 'confirmPendingPayee',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_payee',
         type: 'address',
       },
     ],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
     name: 'cancelPendingPayee',
-    inputs: [
-      {
-        name: '_payee',
-        type: 'address',
-      },
-    ],
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'createCheque',
+  },
+  {
     inputs: [
       {
         name: '_recipient',
         type: 'address',
       },
       {
-        name: '_cheque',
-        type: 'tuple',
         components: [
           {
             name: 'recipient',
@@ -1861,10 +1750,10 @@ export const abi = [
             type: 'bool',
           },
         ],
+        name: '_cheque',
+        type: 'tuple',
       },
       {
-        name: '_chequeData',
-        type: 'tuple',
         components: [
           {
             name: 'numChequesPaidInPeriod',
@@ -1911,34 +1800,34 @@ export const abi = [
             type: 'uint256',
           },
         ],
+        name: '_chequeData',
+        type: 'tuple',
       },
       {
         name: '_isExistingCheque',
         type: 'bool',
       },
     ],
+    name: 'createCheque',
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'cancelCheque',
+  },
+  {
     inputs: [
       {
         name: '_recipient',
         type: 'address',
       },
     ],
+    name: 'cancelCheque',
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'setChequeSettings',
+  },
+  {
     inputs: [
       {
-        name: '_config',
-        type: 'tuple',
         components: [
           {
             name: 'maxNumActiveCheques',
@@ -2005,14 +1894,16 @@ export const abi = [
             type: 'bool',
           },
         ],
+        name: '_config',
+        type: 'tuple',
       },
     ],
+    name: 'setChequeSettings',
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'updateAssetData',
+  },
+  {
     inputs: [
       {
         name: '_legoId',
@@ -2027,34 +1918,62 @@ export const abi = [
         type: 'bool',
       },
     ],
+    name: 'updateAssetData',
     outputs: [
       {
         name: '',
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'updateAllAssetData',
+  },
+  {
     inputs: [
       {
         name: '_shouldCheckYield',
         type: 'bool',
       },
     ],
+    name: 'updateAllAssetData',
     outputs: [
       {
         name: '',
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'migrateFunds',
+  },
+  {
+    inputs: [],
+    name: 'removeTrialFunds',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getTrialFundsInfo',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: '_toWallet',
@@ -2065,17 +1984,17 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'migrateFunds',
     outputs: [
       {
         name: '',
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'preparePayment',
+  },
+  {
     inputs: [
       {
         name: '_targetAsset',
@@ -2090,6 +2009,7 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'preparePayment',
     outputs: [
       {
         name: '',
@@ -2100,11 +2020,10 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'preparePayment',
+  },
+  {
     inputs: [
       {
         name: '_targetAsset',
@@ -2123,6 +2042,7 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'preparePayment',
     outputs: [
       {
         name: '',
@@ -2133,28 +2053,27 @@ export const abi = [
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'deregisterAsset',
+  },
+  {
     inputs: [
       {
         name: '_asset',
         type: 'address',
       },
     ],
+    name: 'deregisterAsset',
     outputs: [
       {
         name: '',
         type: 'bool',
       },
     ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'recoverNft',
+  },
+  {
     inputs: [
       {
         name: '_collection',
@@ -2169,36 +2088,36 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'recoverNft',
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'setFrozen',
+  },
+  {
     inputs: [
       {
         name: '_isFrozen',
         type: 'bool',
       },
     ],
+    name: 'setFrozen',
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'setEjectionMode',
+  },
+  {
     inputs: [
       {
         name: '_shouldEject',
         type: 'bool',
       },
     ],
+    name: 'setEjectionMode',
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'setLegoAccessForAction',
+  },
+  {
     inputs: [
       {
         name: '_legoId',
@@ -2209,106 +2128,89 @@ export const abi = [
         type: 'uint256',
       },
     ],
+    name: 'setLegoAccessForAction',
     outputs: [
       {
         name: '',
         type: 'bool',
       },
     ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'isAgentSender',
-    inputs: [
-      {
-        name: '_addr',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'setKernel',
+  },
+  {
     inputs: [
       {
         name: '_kernel',
         type: 'address',
       },
     ],
+    name: 'setKernel',
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'setSentinel',
+  },
+  {
     inputs: [
       {
         name: '_sentinel',
         type: 'address',
       },
     ],
+    name: 'setSentinel',
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'setHighCommand',
+  },
+  {
     inputs: [
       {
         name: '_highCommand',
         type: 'address',
       },
     ],
+    name: 'setHighCommand',
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'setPaymaster',
+  },
+  {
     inputs: [
       {
         name: '_paymaster',
         type: 'address',
       },
     ],
+    name: 'setPaymaster',
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'setChequeBook',
+  },
+  {
     inputs: [
       {
         name: '_chequeBook',
         type: 'address',
       },
     ],
+    name: 'setChequeBook',
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'setMigrator',
+  },
+  {
     inputs: [
       {
         name: '_migrator',
         type: 'address',
       },
     ],
+    name: 'setMigrator',
     outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getActionDataBundle',
     inputs: [
       {
         name: '_legoId',
@@ -2319,10 +2221,9 @@ export const abi = [
         type: 'address',
       },
     ],
+    name: 'getActionDataBundle',
     outputs: [
       {
-        name: '',
-        type: 'tuple',
         components: [
           {
             name: 'ledger',
@@ -2350,10 +2251,6 @@ export const abi = [
           },
           {
             name: 'billing',
-            type: 'address',
-          },
-          {
-            name: 'vaultRegistry',
             type: 'address',
           },
           {
@@ -2405,107 +2302,131 @@ export const abi = [
             type: 'address',
           },
         ],
+        name: '',
+        type: 'tuple',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
+  },
+  {
+    inputs: [],
     name: 'wallet',
-    inputs: [],
     outputs: [
       {
         name: '',
         type: 'address',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
+  },
+  {
+    inputs: [],
     name: 'kernel',
-    inputs: [],
     outputs: [
       {
         name: '',
         type: 'address',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
+  },
+  {
+    inputs: [],
     name: 'sentinel',
-    inputs: [],
     outputs: [
       {
         name: '',
         type: 'address',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
+  },
+  {
+    inputs: [],
     name: 'highCommand',
-    inputs: [],
     outputs: [
       {
         name: '',
         type: 'address',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
+  },
+  {
+    inputs: [],
     name: 'paymaster',
-    inputs: [],
     outputs: [
       {
         name: '',
         type: 'address',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
+  },
+  {
+    inputs: [],
     name: 'chequeBook',
-    inputs: [],
     outputs: [
       {
         name: '',
         type: 'address',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
+  },
+  {
+    inputs: [],
     name: 'migrator',
-    inputs: [],
     outputs: [
       {
         name: '',
         type: 'address',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
-    name: 'managerSettings',
+  },
+  {
+    inputs: [],
+    name: 'trialFundsAsset',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'trialFundsAmount',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         name: 'arg0',
         type: 'address',
       },
     ],
+    name: 'managerSettings',
     outputs: [
       {
-        name: '',
-        type: 'tuple',
         components: [
           {
             name: 'startBlock',
@@ -2516,8 +2437,6 @@ export const abi = [
             type: 'uint256',
           },
           {
-            name: 'limits',
-            type: 'tuple',
             components: [
               {
                 name: 'maxUsdValuePerTx',
@@ -2544,10 +2463,10 @@ export const abi = [
                 type: 'bool',
               },
             ],
+            name: 'limits',
+            type: 'tuple',
           },
           {
-            name: 'legoPerms',
-            type: 'tuple',
             components: [
               {
                 name: 'canManageYield',
@@ -2570,36 +2489,14 @@ export const abi = [
                 type: 'bool',
               },
               {
-                name: 'onlyApprovedYieldOpps',
-                type: 'bool',
-              },
-              {
                 name: 'allowedLegos',
                 type: 'uint256[]',
               },
             ],
+            name: 'legoPerms',
+            type: 'tuple',
           },
           {
-            name: 'swapPerms',
-            type: 'tuple',
-            components: [
-              {
-                name: 'mustHaveUsdValue',
-                type: 'bool',
-              },
-              {
-                name: 'maxNumSwapsPerPeriod',
-                type: 'uint256',
-              },
-              {
-                name: 'maxSlippage',
-                type: 'uint256',
-              },
-            ],
-          },
-          {
-            name: 'whitelistPerms',
-            type: 'tuple',
             components: [
               {
                 name: 'canAddPending',
@@ -2618,10 +2515,10 @@ export const abi = [
                 type: 'bool',
               },
             ],
+            name: 'whitelistPerms',
+            type: 'tuple',
           },
           {
-            name: 'transferPerms',
-            type: 'tuple',
             components: [
               {
                 name: 'canTransfer',
@@ -2640,6 +2537,8 @@ export const abi = [
                 type: 'address[]',
               },
             ],
+            name: 'transferPerms',
+            type: 'tuple',
           },
           {
             name: 'allowedAssets',
@@ -2650,23 +2549,23 @@ export const abi = [
             type: 'bool',
           },
         ],
+        name: '',
+        type: 'tuple',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
-    name: 'managerPeriodData',
+  },
+  {
     inputs: [
       {
         name: 'arg0',
         type: 'address',
       },
     ],
+    name: 'managerPeriodData',
     outputs: [
       {
-        name: '',
-        type: 'tuple',
         components: [
           {
             name: 'numTxsInPeriod',
@@ -2692,74 +2591,70 @@ export const abi = [
             name: 'periodStartBlock',
             type: 'uint256',
           },
-          {
-            name: 'numSwapsInPeriod',
-            type: 'uint256',
-          },
         ],
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'managers',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'indexOfManager',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'numManagers',
-    inputs: [],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'payeeSettings',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
         name: '',
         type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    name: 'managers',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'indexOfManager',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'numManagers',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'payeeSettings',
+    outputs: [
+      {
         components: [
           {
             name: 'startBlock',
@@ -2798,26 +2693,24 @@ export const abi = [
             type: 'bool',
           },
           {
+            components: [
+              {
+                name: 'perTxCap',
+                type: 'uint256',
+              },
+              {
+                name: 'perPeriodCap',
+                type: 'uint256',
+              },
+              {
+                name: 'lifetimeCap',
+                type: 'uint256',
+              },
+            ],
             name: 'unitLimits',
             type: 'tuple',
-            components: [
-              {
-                name: 'perTxCap',
-                type: 'uint256',
-              },
-              {
-                name: 'perPeriodCap',
-                type: 'uint256',
-              },
-              {
-                name: 'lifetimeCap',
-                type: 'uint256',
-              },
-            ],
           },
           {
-            name: 'usdLimits',
-            type: 'tuple',
             components: [
               {
                 name: 'perTxCap',
@@ -2832,25 +2725,27 @@ export const abi = [
                 type: 'uint256',
               },
             ],
+            name: 'usdLimits',
+            type: 'tuple',
           },
         ],
+        name: '',
+        type: 'tuple',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
-    name: 'payeePeriodData',
+  },
+  {
     inputs: [
       {
         name: 'arg0',
         type: 'address',
       },
     ],
+    name: 'payeePeriodData',
     outputs: [
       {
-        name: '',
-        type: 'tuple',
         components: [
           {
             name: 'numTxsInPeriod',
@@ -2885,73 +2780,71 @@ export const abi = [
             type: 'uint256',
           },
         ],
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'payees',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'indexOfPayee',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'numPayees',
-    inputs: [],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'pendingPayees',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
         name: '',
         type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    name: 'payees',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'indexOfPayee',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'numPayees',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'pendingPayees',
+    outputs: [
+      {
         components: [
           {
-            name: 'settings',
-            type: 'tuple',
             components: [
               {
                 name: 'startBlock',
@@ -2990,26 +2883,24 @@ export const abi = [
                 type: 'bool',
               },
               {
+                components: [
+                  {
+                    name: 'perTxCap',
+                    type: 'uint256',
+                  },
+                  {
+                    name: 'perPeriodCap',
+                    type: 'uint256',
+                  },
+                  {
+                    name: 'lifetimeCap',
+                    type: 'uint256',
+                  },
+                ],
                 name: 'unitLimits',
                 type: 'tuple',
-                components: [
-                  {
-                    name: 'perTxCap',
-                    type: 'uint256',
-                  },
-                  {
-                    name: 'perPeriodCap',
-                    type: 'uint256',
-                  },
-                  {
-                    name: 'lifetimeCap',
-                    type: 'uint256',
-                  },
-                ],
               },
               {
-                name: 'usdLimits',
-                type: 'tuple',
                 components: [
                   {
                     name: 'perTxCap',
@@ -3024,8 +2915,12 @@ export const abi = [
                     type: 'uint256',
                   },
                 ],
+                name: 'usdLimits',
+                type: 'tuple',
               },
             ],
+            name: 'settings',
+            type: 'tuple',
           },
           {
             name: 'initiatedBlock',
@@ -3040,69 +2935,69 @@ export const abi = [
             type: 'address',
           },
         ],
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'whitelistAddr',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'indexOfWhitelist',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'numWhitelisted',
-    inputs: [],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'pendingWhitelist',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
         name: '',
         type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    name: 'whitelistAddr',
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'indexOfWhitelist',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'numWhitelisted',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    name: 'pendingWhitelist',
+    outputs: [
+      {
         components: [
           {
             name: 'initiatedBlock',
@@ -3117,23 +3012,23 @@ export const abi = [
             type: 'address',
           },
         ],
+        name: '',
+        type: 'tuple',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
-    name: 'cheques',
+  },
+  {
     inputs: [
       {
         name: 'arg0',
         type: 'address',
       },
     ],
+    name: 'cheques',
     outputs: [
       {
-        name: '',
-        type: 'tuple',
         components: [
           {
             name: 'recipient',
@@ -3180,18 +3075,18 @@ export const abi = [
             type: 'bool',
           },
         ],
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'chequeSettings',
-    inputs: [],
-    outputs: [
-      {
         name: '',
         type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'chequeSettings',
+    outputs: [
+      {
         components: [
           {
             name: 'maxNumActiveCheques',
@@ -3258,18 +3153,18 @@ export const abi = [
             type: 'bool',
           },
         ],
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'chequePeriodData',
-    inputs: [],
-    outputs: [
-      {
         name: '',
         type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'chequePeriodData',
+    outputs: [
+      {
         components: [
           {
             name: 'numChequesPaidInPeriod',
@@ -3316,30 +3211,30 @@ export const abi = [
             type: 'uint256',
           },
         ],
+        name: '',
+        type: 'tuple',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
-    name: 'numActiveCheques',
+  },
+  {
     inputs: [],
+    name: 'numActiveCheques',
     outputs: [
       {
         name: '',
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
-    name: 'globalManagerSettings',
+  },
+  {
     inputs: [],
+    name: 'globalManagerSettings',
     outputs: [
       {
-        name: '',
-        type: 'tuple',
         components: [
           {
             name: 'managerPeriod',
@@ -3358,8 +3253,6 @@ export const abi = [
             type: 'bool',
           },
           {
-            name: 'limits',
-            type: 'tuple',
             components: [
               {
                 name: 'maxUsdValuePerTx',
@@ -3386,10 +3279,10 @@ export const abi = [
                 type: 'bool',
               },
             ],
+            name: 'limits',
+            type: 'tuple',
           },
           {
-            name: 'legoPerms',
-            type: 'tuple',
             components: [
               {
                 name: 'canManageYield',
@@ -3412,36 +3305,14 @@ export const abi = [
                 type: 'bool',
               },
               {
-                name: 'onlyApprovedYieldOpps',
-                type: 'bool',
-              },
-              {
                 name: 'allowedLegos',
                 type: 'uint256[]',
               },
             ],
+            name: 'legoPerms',
+            type: 'tuple',
           },
           {
-            name: 'swapPerms',
-            type: 'tuple',
-            components: [
-              {
-                name: 'mustHaveUsdValue',
-                type: 'bool',
-              },
-              {
-                name: 'maxNumSwapsPerPeriod',
-                type: 'uint256',
-              },
-              {
-                name: 'maxSlippage',
-                type: 'uint256',
-              },
-            ],
-          },
-          {
-            name: 'whitelistPerms',
-            type: 'tuple',
             components: [
               {
                 name: 'canAddPending',
@@ -3460,10 +3331,10 @@ export const abi = [
                 type: 'bool',
               },
             ],
+            name: 'whitelistPerms',
+            type: 'tuple',
           },
           {
-            name: 'transferPerms',
-            type: 'tuple',
             components: [
               {
                 name: 'canTransfer',
@@ -3482,24 +3353,26 @@ export const abi = [
                 type: 'address[]',
               },
             ],
+            name: 'transferPerms',
+            type: 'tuple',
           },
           {
             name: 'allowedAssets',
             type: 'address[]',
           },
         ],
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'globalPayeeSettings',
-    inputs: [],
-    outputs: [
-      {
         name: '',
         type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'globalPayeeSettings',
+    outputs: [
+      {
         components: [
           {
             name: 'defaultPeriodLength',
@@ -3526,8 +3399,6 @@ export const abi = [
             type: 'bool',
           },
           {
-            name: 'usdLimits',
-            type: 'tuple',
             components: [
               {
                 name: 'perTxCap',
@@ -3542,6 +3413,8 @@ export const abi = [
                 type: 'uint256',
               },
             ],
+            name: 'usdLimits',
+            type: 'tuple',
           },
           {
             name: 'canPayOwner',
@@ -3552,144 +3425,146 @@ export const abi = [
             type: 'bool',
           },
         ],
+        name: '',
+        type: 'tuple',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
+  },
+  {
+    inputs: [],
     name: 'timeLock',
-    inputs: [],
     outputs: [
       {
         name: '',
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
+  },
+  {
+    inputs: [],
     name: 'isFrozen',
-    inputs: [],
     outputs: [
       {
         name: '',
         type: 'bool',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
+  },
+  {
+    inputs: [],
     name: 'inEjectMode',
-    inputs: [],
     outputs: [
       {
         name: '',
         type: 'bool',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
+  },
+  {
+    inputs: [],
     name: 'groupId',
-    inputs: [],
     outputs: [
       {
         name: '',
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
-    name: 'startingAgent',
+  },
+  {
     inputs: [],
+    name: 'startingAgent',
     outputs: [
       {
         name: '',
         type: 'address',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
-    name: 'didSetWallet',
+  },
+  {
     inputs: [],
+    name: 'didSetWallet',
     outputs: [
       {
         name: '',
         type: 'bool',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
+  },
+  {
+    inputs: [],
     name: 'UNDY_HQ',
-    inputs: [],
     outputs: [
       {
         name: '',
         type: 'address',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
+  },
+  {
+    inputs: [],
     name: 'WETH',
-    inputs: [],
     outputs: [
       {
         name: '',
         type: 'address',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
+  },
+  {
+    inputs: [],
     name: 'ETH',
-    inputs: [],
     outputs: [
       {
         name: '',
         type: 'address',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
+  },
+  {
+    inputs: [],
     name: 'MIN_TIMELOCK',
-    inputs: [],
     outputs: [
       {
         name: '',
         type: 'uint256',
       },
     ],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
-    name: 'MAX_TIMELOCK',
+  },
+  {
     inputs: [],
+    name: 'MAX_TIMELOCK',
     outputs: [
       {
         name: '',
         type: 'uint256',
       },
     ],
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'constructor',
     inputs: [
       {
         name: '_undyHq',
@@ -3704,8 +3579,14 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_globalManagerSettings',
-        type: 'tuple',
+        name: '_trialFundsAsset',
+        type: 'address',
+      },
+      {
+        name: '_trialFundsAmount',
+        type: 'uint256',
+      },
+      {
         components: [
           {
             name: 'managerPeriod',
@@ -3724,8 +3605,6 @@ export const abi = [
             type: 'bool',
           },
           {
-            name: 'limits',
-            type: 'tuple',
             components: [
               {
                 name: 'maxUsdValuePerTx',
@@ -3752,10 +3631,10 @@ export const abi = [
                 type: 'bool',
               },
             ],
+            name: 'limits',
+            type: 'tuple',
           },
           {
-            name: 'legoPerms',
-            type: 'tuple',
             components: [
               {
                 name: 'canManageYield',
@@ -3778,36 +3657,14 @@ export const abi = [
                 type: 'bool',
               },
               {
-                name: 'onlyApprovedYieldOpps',
-                type: 'bool',
-              },
-              {
                 name: 'allowedLegos',
                 type: 'uint256[]',
               },
             ],
+            name: 'legoPerms',
+            type: 'tuple',
           },
           {
-            name: 'swapPerms',
-            type: 'tuple',
-            components: [
-              {
-                name: 'mustHaveUsdValue',
-                type: 'bool',
-              },
-              {
-                name: 'maxNumSwapsPerPeriod',
-                type: 'uint256',
-              },
-              {
-                name: 'maxSlippage',
-                type: 'uint256',
-              },
-            ],
-          },
-          {
-            name: 'whitelistPerms',
-            type: 'tuple',
             components: [
               {
                 name: 'canAddPending',
@@ -3826,10 +3683,10 @@ export const abi = [
                 type: 'bool',
               },
             ],
+            name: 'whitelistPerms',
+            type: 'tuple',
           },
           {
-            name: 'transferPerms',
-            type: 'tuple',
             components: [
               {
                 name: 'canTransfer',
@@ -3848,16 +3705,18 @@ export const abi = [
                 type: 'address[]',
               },
             ],
+            name: 'transferPerms',
+            type: 'tuple',
           },
           {
             name: 'allowedAssets',
             type: 'address[]',
           },
         ],
+        name: '_globalManagerSettings',
+        type: 'tuple',
       },
       {
-        name: '_globalPayeeSettings',
-        type: 'tuple',
         components: [
           {
             name: 'defaultPeriodLength',
@@ -3884,8 +3743,6 @@ export const abi = [
             type: 'bool',
           },
           {
-            name: 'usdLimits',
-            type: 'tuple',
             components: [
               {
                 name: 'perTxCap',
@@ -3900,6 +3757,8 @@ export const abi = [
                 type: 'uint256',
               },
             ],
+            name: 'usdLimits',
+            type: 'tuple',
           },
           {
             name: 'canPayOwner',
@@ -3910,10 +3769,10 @@ export const abi = [
             type: 'bool',
           },
         ],
+        name: '_globalPayeeSettings',
+        type: 'tuple',
       },
       {
-        name: '_chequeSettings',
-        type: 'tuple',
         components: [
           {
             name: 'maxNumActiveCheques',
@@ -3980,14 +3839,14 @@ export const abi = [
             type: 'bool',
           },
         ],
+        name: '_chequeSettings',
+        type: 'tuple',
       },
       {
         name: '_startingAgent',
         type: 'address',
       },
       {
-        name: '_starterAgentSettings',
-        type: 'tuple',
         components: [
           {
             name: 'startBlock',
@@ -3998,8 +3857,6 @@ export const abi = [
             type: 'uint256',
           },
           {
-            name: 'limits',
-            type: 'tuple',
             components: [
               {
                 name: 'maxUsdValuePerTx',
@@ -4026,10 +3883,10 @@ export const abi = [
                 type: 'bool',
               },
             ],
+            name: 'limits',
+            type: 'tuple',
           },
           {
-            name: 'legoPerms',
-            type: 'tuple',
             components: [
               {
                 name: 'canManageYield',
@@ -4052,36 +3909,14 @@ export const abi = [
                 type: 'bool',
               },
               {
-                name: 'onlyApprovedYieldOpps',
-                type: 'bool',
-              },
-              {
                 name: 'allowedLegos',
                 type: 'uint256[]',
               },
             ],
+            name: 'legoPerms',
+            type: 'tuple',
           },
           {
-            name: 'swapPerms',
-            type: 'tuple',
-            components: [
-              {
-                name: 'mustHaveUsdValue',
-                type: 'bool',
-              },
-              {
-                name: 'maxNumSwapsPerPeriod',
-                type: 'uint256',
-              },
-              {
-                name: 'maxSlippage',
-                type: 'uint256',
-              },
-            ],
-          },
-          {
-            name: 'whitelistPerms',
-            type: 'tuple',
             components: [
               {
                 name: 'canAddPending',
@@ -4100,10 +3935,10 @@ export const abi = [
                 type: 'bool',
               },
             ],
+            name: 'whitelistPerms',
+            type: 'tuple',
           },
           {
-            name: 'transferPerms',
-            type: 'tuple',
             components: [
               {
                 name: 'canTransfer',
@@ -4122,6 +3957,8 @@ export const abi = [
                 type: 'address[]',
               },
             ],
+            name: 'transferPerms',
+            type: 'tuple',
           },
           {
             name: 'allowedAssets',
@@ -4132,6 +3969,8 @@ export const abi = [
             type: 'bool',
           },
         ],
+        name: '_starterAgentSettings',
+        type: 'tuple',
       },
       {
         name: '_kernel',
@@ -4175,10 +4014,12 @@ export const abi = [
       },
     ],
     outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xbF7bAdf4c71102cA49b3f82D50348256cE6C10Fb'
+export const deployAddress: Address | undefined = '0x0E7064202c4F906Adc4D9F6D3C92470b62F624F1'
 
 export type Contract = {
   calls: {
@@ -4203,7 +4044,6 @@ export type Contract = {
       lootDistributor: `0x${string}`
       appraiser: `0x${string}`
       billing: `0x${string}`
-      vaultRegistry: `0x${string}`
       wallet: `0x${string}`
       walletConfig: `0x${string}`
       walletOwner: `0x${string}`
@@ -4217,7 +4057,7 @@ export type Contract = {
       eth: `0x${string}`
       weth: `0x${string}`
     }>
-    isAgentSender: (addr: `0x${string}`) => Promise<boolean>
+    getTrialFundsInfo: () => Promise<[`0x${string}`, bigint]>
     getActionDataBundle: (
       legoId: bigint,
       signer: `0x${string}`,
@@ -4229,7 +4069,6 @@ export type Contract = {
       lootDistributor: `0x${string}`
       appraiser: `0x${string}`
       billing: `0x${string}`
-      vaultRegistry: `0x${string}`
       wallet: `0x${string}`
       walletConfig: `0x${string}`
       walletOwner: `0x${string}`
@@ -4250,6 +4089,8 @@ export type Contract = {
     paymaster: () => Promise<`0x${string}`>
     chequeBook: () => Promise<`0x${string}`>
     migrator: () => Promise<`0x${string}`>
+    trialFundsAsset: () => Promise<`0x${string}`>
+    trialFundsAmount: () => Promise<bigint>
     managerSettings: (
       arg0: `0x${string}`,
     ) => Promise<{
@@ -4269,10 +4110,8 @@ export type Contract = {
         canManageDebt: boolean
         canManageLiq: boolean
         canClaimRewards: boolean
-        onlyApprovedYieldOpps: boolean
         allowedLegos: bigint[]
       }
-      swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint }
       whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean }
       transferPerms: {
         canTransfer: boolean
@@ -4292,7 +4131,6 @@ export type Contract = {
       totalUsdValue: bigint
       lastTxBlock: bigint
       periodStartBlock: bigint
-      numSwapsInPeriod: bigint
     }>
     managers: (arg0: bigint) => Promise<`0x${string}`>
     indexOfManager: (arg0: `0x${string}`) => Promise<bigint>
@@ -4419,10 +4257,8 @@ export type Contract = {
         canManageDebt: boolean
         canManageLiq: boolean
         canClaimRewards: boolean
-        onlyApprovedYieldOpps: boolean
         allowedLegos: bigint[]
       }
-      swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint }
       whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean }
       transferPerms: {
         canTransfer: boolean
@@ -4461,16 +4297,7 @@ export type Contract = {
     cancelOwnershipChange: () => Promise<void>
     setOwnershipTimeLock: (numBlocks: bigint) => Promise<void>
     setWallet: (wallet: `0x${string}`) => Promise<boolean>
-    checkManagerLimitsPostTx: (
-      manager: `0x${string}`,
-      txUsdValue: bigint,
-      underlyingAsset: `0x${string}`,
-      vaultToken: `0x${string}`,
-      shouldCheckSwap: boolean,
-      fromAssetUsdValue: bigint,
-      toAssetUsdValue: bigint,
-      vaultRegistry: `0x${string}`,
-    ) => Promise<boolean>
+    checkManagerUsdLimitsAndUpdateData: (manager: `0x${string}`, txUsdValue: bigint) => Promise<boolean>
     checkRecipientLimitsAndUpdateData: (
       recipient: `0x${string}`,
       txUsdValue: bigint,
@@ -4511,10 +4338,8 @@ export type Contract = {
           canManageDebt: boolean
           canManageLiq: boolean
           canClaimRewards: boolean
-          onlyApprovedYieldOpps: boolean
           allowedLegos: bigint[]
         }
-        swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint }
         whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean }
         transferPerms: {
           canTransfer: boolean
@@ -4545,10 +4370,8 @@ export type Contract = {
           canManageDebt: boolean
           canManageLiq: boolean
           canClaimRewards: boolean
-          onlyApprovedYieldOpps: boolean
           allowedLegos: bigint[]
         }
-        swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint }
         whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean }
         transferPerms: {
           canTransfer: boolean
@@ -4580,10 +4403,8 @@ export type Contract = {
         canManageDebt: boolean
         canManageLiq: boolean
         canClaimRewards: boolean
-        onlyApprovedYieldOpps: boolean
         allowedLegos: bigint[]
       }
-      swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint }
       whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean }
       transferPerms: {
         canTransfer: boolean
@@ -4711,6 +4532,7 @@ export type Contract = {
     }) => Promise<void>
     updateAssetData: (legoId: bigint, asset: `0x${string}`, shouldCheckYield: boolean) => Promise<bigint>
     updateAllAssetData: (shouldCheckYield: boolean) => Promise<bigint>
+    removeTrialFunds: () => Promise<bigint>
     migrateFunds: (toWallet: `0x${string}`, asset: `0x${string}`) => Promise<bigint>
     preparePayment: (
       targetAsset: `0x${string}`,
@@ -4753,7 +4575,7 @@ export type Contract = {
 
 export type Calls = keyof Contract['calls']
 export type Request<M extends Calls> = {
-  contractName: 'UserWalletConfig'
+  contractName: 'UserWalletConfigV1'
   method: M
   args: ExtractArgs<Contract['calls'][M]>
   address: Address | undefined
@@ -4781,7 +4603,7 @@ function getRequest<M extends Calls>(
   const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
 
   const call = {
-    contractName: 'UserWalletConfig' as const,
+    contractName: 'UserWalletConfigV1' as const,
     method,
     args,
     address,
@@ -4824,7 +4646,8 @@ export const call: CallType = {
   apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) => getRequest('apiVersion', args),
   checkSignerPermissionsAndGetBundle: (...args: ExtractArgs<Contract['calls']['checkSignerPermissionsAndGetBundle']>) =>
     getRequest('checkSignerPermissionsAndGetBundle', args),
-  isAgentSender: (...args: ExtractArgs<Contract['calls']['isAgentSender']>) => getRequest('isAgentSender', args),
+  getTrialFundsInfo: (...args: ExtractArgs<Contract['calls']['getTrialFundsInfo']>) =>
+    getRequest('getTrialFundsInfo', args),
   getActionDataBundle: (...args: ExtractArgs<Contract['calls']['getActionDataBundle']>) =>
     getRequest('getActionDataBundle', args),
   wallet: (...args: ExtractArgs<Contract['calls']['wallet']>) => getRequest('wallet', args),
@@ -4834,6 +4657,9 @@ export const call: CallType = {
   paymaster: (...args: ExtractArgs<Contract['calls']['paymaster']>) => getRequest('paymaster', args),
   chequeBook: (...args: ExtractArgs<Contract['calls']['chequeBook']>) => getRequest('chequeBook', args),
   migrator: (...args: ExtractArgs<Contract['calls']['migrator']>) => getRequest('migrator', args),
+  trialFundsAsset: (...args: ExtractArgs<Contract['calls']['trialFundsAsset']>) => getRequest('trialFundsAsset', args),
+  trialFundsAmount: (...args: ExtractArgs<Contract['calls']['trialFundsAmount']>) =>
+    getRequest('trialFundsAmount', args),
   managerSettings: (...args: ExtractArgs<Contract['calls']['managerSettings']>) => getRequest('managerSettings', args),
   managerPeriodData: (...args: ExtractArgs<Contract['calls']['managerPeriodData']>) =>
     getRequest('managerPeriodData', args),
@@ -4878,7 +4704,7 @@ export const call: CallType = {
 export type Mutations = keyof Contract['mutations']
 function getMutation<M extends Mutations>(functionName: M) {
   return {
-    contractName: 'UserWalletConfig' as const,
+    contractName: 'UserWalletConfigV1' as const,
     functionName,
     deployAddress,
     argsType: undefined as ExtractArgs<Contract['mutations'][M]> | undefined,
@@ -4888,7 +4714,7 @@ function getMutation<M extends Mutations>(functionName: M) {
 
 export const mutation: {
   [K in Mutations]: {
-    contractName: 'UserWalletConfig'
+    contractName: 'UserWalletConfigV1'
     deployAddress: Address | undefined
     getAbi: () => typeof abi
     functionName: K
@@ -4900,7 +4726,7 @@ export const mutation: {
   cancelOwnershipChange: getMutation('cancelOwnershipChange'),
   setOwnershipTimeLock: getMutation('setOwnershipTimeLock'),
   setWallet: getMutation('setWallet'),
-  checkManagerLimitsPostTx: getMutation('checkManagerLimitsPostTx'),
+  checkManagerUsdLimitsAndUpdateData: getMutation('checkManagerUsdLimitsAndUpdateData'),
   checkRecipientLimitsAndUpdateData: getMutation('checkRecipientLimitsAndUpdateData'),
   validateCheque: getMutation('validateCheque'),
   addPendingWhitelistAddr: getMutation('addPendingWhitelistAddr'),
@@ -4924,6 +4750,7 @@ export const mutation: {
   setChequeSettings: getMutation('setChequeSettings'),
   updateAssetData: getMutation('updateAssetData'),
   updateAllAssetData: getMutation('updateAllAssetData'),
+  removeTrialFunds: getMutation('removeTrialFunds'),
   migrateFunds: getMutation('migrateFunds'),
   preparePayment: getMutation('preparePayment'),
   deregisterAsset: getMutation('deregisterAsset'),
@@ -4960,7 +4787,9 @@ export type SDK = {
   checkSignerPermissionsAndGetBundle: (
     ...args: ExtractArgs<Contract['calls']['checkSignerPermissionsAndGetBundle']>
   ) => Promise<CallReturn<'checkSignerPermissionsAndGetBundle'>>
-  isAgentSender: (...args: ExtractArgs<Contract['calls']['isAgentSender']>) => Promise<CallReturn<'isAgentSender'>>
+  getTrialFundsInfo: (
+    ...args: ExtractArgs<Contract['calls']['getTrialFundsInfo']>
+  ) => Promise<CallReturn<'getTrialFundsInfo'>>
   getActionDataBundle: (
     ...args: ExtractArgs<Contract['calls']['getActionDataBundle']>
   ) => Promise<CallReturn<'getActionDataBundle'>>
@@ -4971,6 +4800,12 @@ export type SDK = {
   paymaster: (...args: ExtractArgs<Contract['calls']['paymaster']>) => Promise<CallReturn<'paymaster'>>
   chequeBook: (...args: ExtractArgs<Contract['calls']['chequeBook']>) => Promise<CallReturn<'chequeBook'>>
   migrator: (...args: ExtractArgs<Contract['calls']['migrator']>) => Promise<CallReturn<'migrator'>>
+  trialFundsAsset: (
+    ...args: ExtractArgs<Contract['calls']['trialFundsAsset']>
+  ) => Promise<CallReturn<'trialFundsAsset'>>
+  trialFundsAmount: (
+    ...args: ExtractArgs<Contract['calls']['trialFundsAmount']>
+  ) => Promise<CallReturn<'trialFundsAmount'>>
   managerSettings: (
     ...args: ExtractArgs<Contract['calls']['managerSettings']>
   ) => Promise<CallReturn<'managerSettings'>>
@@ -5026,8 +4861,8 @@ export type SDK = {
   cancelOwnershipChange: (...args: ExtractArgs<Contract['mutations']['cancelOwnershipChange']>) => Promise<Address>
   setOwnershipTimeLock: (...args: ExtractArgs<Contract['mutations']['setOwnershipTimeLock']>) => Promise<Address>
   setWallet: (...args: ExtractArgs<Contract['mutations']['setWallet']>) => Promise<Address>
-  checkManagerLimitsPostTx: (
-    ...args: ExtractArgs<Contract['mutations']['checkManagerLimitsPostTx']>
+  checkManagerUsdLimitsAndUpdateData: (
+    ...args: ExtractArgs<Contract['mutations']['checkManagerUsdLimitsAndUpdateData']>
   ) => Promise<Address>
   checkRecipientLimitsAndUpdateData: (
     ...args: ExtractArgs<Contract['mutations']['checkRecipientLimitsAndUpdateData']>
@@ -5060,6 +4895,7 @@ export type SDK = {
   setChequeSettings: (...args: ExtractArgs<Contract['mutations']['setChequeSettings']>) => Promise<Address>
   updateAssetData: (...args: ExtractArgs<Contract['mutations']['updateAssetData']>) => Promise<Address>
   updateAllAssetData: (...args: ExtractArgs<Contract['mutations']['updateAllAssetData']>) => Promise<Address>
+  removeTrialFunds: (...args: ExtractArgs<Contract['mutations']['removeTrialFunds']>) => Promise<Address>
   migrateFunds: (...args: ExtractArgs<Contract['mutations']['migrateFunds']>) => Promise<Address>
   preparePayment: (...args: ExtractArgs<Contract['mutations']['preparePayment']>) => Promise<Address>
   deregisterAsset: (...args: ExtractArgs<Contract['mutations']['deregisterAsset']>) => Promise<Address>
@@ -5108,8 +4944,10 @@ export function toSdk(deployAddress: Address, publicClient?: PublicClient, walle
       singleQuery(publicClient!, call.checkSignerPermissionsAndGetBundle(...args).at(deployAddress)) as Promise<
         CallReturn<'checkSignerPermissionsAndGetBundle'>
       >,
-    isAgentSender: (...args: ExtractArgs<Contract['calls']['isAgentSender']>) =>
-      singleQuery(publicClient!, call.isAgentSender(...args).at(deployAddress)) as Promise<CallReturn<'isAgentSender'>>,
+    getTrialFundsInfo: (...args: ExtractArgs<Contract['calls']['getTrialFundsInfo']>) =>
+      singleQuery(publicClient!, call.getTrialFundsInfo(...args).at(deployAddress)) as Promise<
+        CallReturn<'getTrialFundsInfo'>
+      >,
     getActionDataBundle: (...args: ExtractArgs<Contract['calls']['getActionDataBundle']>) =>
       singleQuery(publicClient!, call.getActionDataBundle(...args).at(deployAddress)) as Promise<
         CallReturn<'getActionDataBundle'>
@@ -5128,6 +4966,14 @@ export function toSdk(deployAddress: Address, publicClient?: PublicClient, walle
       singleQuery(publicClient!, call.chequeBook(...args).at(deployAddress)) as Promise<CallReturn<'chequeBook'>>,
     migrator: (...args: ExtractArgs<Contract['calls']['migrator']>) =>
       singleQuery(publicClient!, call.migrator(...args).at(deployAddress)) as Promise<CallReturn<'migrator'>>,
+    trialFundsAsset: (...args: ExtractArgs<Contract['calls']['trialFundsAsset']>) =>
+      singleQuery(publicClient!, call.trialFundsAsset(...args).at(deployAddress)) as Promise<
+        CallReturn<'trialFundsAsset'>
+      >,
+    trialFundsAmount: (...args: ExtractArgs<Contract['calls']['trialFundsAmount']>) =>
+      singleQuery(publicClient!, call.trialFundsAmount(...args).at(deployAddress)) as Promise<
+        CallReturn<'trialFundsAmount'>
+      >,
     managerSettings: (...args: ExtractArgs<Contract['calls']['managerSettings']>) =>
       singleQuery(publicClient!, call.managerSettings(...args).at(deployAddress)) as Promise<
         CallReturn<'managerSettings'>
@@ -5228,8 +5074,9 @@ export function toSdk(deployAddress: Address, publicClient?: PublicClient, walle
       mutate(walletClient!, mutation.setOwnershipTimeLock, { address: deployAddress })(...args),
     setWallet: (...args: ExtractArgs<Contract['mutations']['setWallet']>) =>
       mutate(walletClient!, mutation.setWallet, { address: deployAddress })(...args),
-    checkManagerLimitsPostTx: (...args: ExtractArgs<Contract['mutations']['checkManagerLimitsPostTx']>) =>
-      mutate(walletClient!, mutation.checkManagerLimitsPostTx, { address: deployAddress })(...args),
+    checkManagerUsdLimitsAndUpdateData: (
+      ...args: ExtractArgs<Contract['mutations']['checkManagerUsdLimitsAndUpdateData']>
+    ) => mutate(walletClient!, mutation.checkManagerUsdLimitsAndUpdateData, { address: deployAddress })(...args),
     checkRecipientLimitsAndUpdateData: (
       ...args: ExtractArgs<Contract['mutations']['checkRecipientLimitsAndUpdateData']>
     ) => mutate(walletClient!, mutation.checkRecipientLimitsAndUpdateData, { address: deployAddress })(...args),
@@ -5277,6 +5124,8 @@ export function toSdk(deployAddress: Address, publicClient?: PublicClient, walle
       mutate(walletClient!, mutation.updateAssetData, { address: deployAddress })(...args),
     updateAllAssetData: (...args: ExtractArgs<Contract['mutations']['updateAllAssetData']>) =>
       mutate(walletClient!, mutation.updateAllAssetData, { address: deployAddress })(...args),
+    removeTrialFunds: (...args: ExtractArgs<Contract['mutations']['removeTrialFunds']>) =>
+      mutate(walletClient!, mutation.removeTrialFunds, { address: deployAddress })(...args),
     migrateFunds: (...args: ExtractArgs<Contract['mutations']['migrateFunds']>) =>
       mutate(walletClient!, mutation.migrateFunds, { address: deployAddress })(...args),
     preparePayment: (...args: ExtractArgs<Contract['mutations']['preparePayment']>) =>

@@ -1,6 +1,6 @@
 import { Address, PublicClient } from 'viem'
 
-import { LegoTools } from './getContracts.js'
+import { LegoTools } from './contracts/index.js'
 
 type DeepMutable<T> = {
   -readonly [P in keyof T]: T[P] extends object ? DeepMutable<T[P]> : T[P]

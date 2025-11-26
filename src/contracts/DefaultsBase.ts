@@ -29,14 +29,6 @@ export const abi = [
             type: 'address',
           },
           {
-            name: 'trialAsset',
-            type: 'address',
-          },
-          {
-            name: 'trialAmount',
-            type: 'uint256',
-          },
-          {
             name: 'numUserWalletsAllowed',
             type: 'uint256',
           },
@@ -53,12 +45,12 @@ export const abi = [
             type: 'uint256',
           },
           {
-            name: 'defaultStaleBlocks',
-            type: 'uint256',
-          },
-          {
             name: 'depositRewardsAsset',
             type: 'address',
+          },
+          {
+            name: 'lootClaimCoolOffPeriod',
+            type: 'uint256',
           },
           {
             name: 'txFees',
@@ -97,28 +89,30 @@ export const abi = [
             ],
           },
           {
-            name: 'defaultYieldMaxIncrease',
-            type: 'uint256',
-          },
-          {
-            name: 'defaultYieldPerformanceFee',
-            type: 'uint256',
-          },
-          {
-            name: 'defaultYieldAmbassadorBonusRatio',
-            type: 'uint256',
-          },
-          {
-            name: 'defaultYieldBonusRatio',
-            type: 'uint256',
-          },
-          {
-            name: 'defaultYieldAltBonusAsset',
-            type: 'address',
-          },
-          {
-            name: 'lootClaimCoolOffPeriod',
-            type: 'uint256',
+            name: 'yieldConfig',
+            type: 'tuple',
+            components: [
+              {
+                name: 'maxYieldIncrease',
+                type: 'uint256',
+              },
+              {
+                name: 'performanceFee',
+                type: 'uint256',
+              },
+              {
+                name: 'ambassadorBonusRatio',
+                type: 'uint256',
+              },
+              {
+                name: 'bonusRatio',
+                type: 'uint256',
+              },
+              {
+                name: 'bonusAsset',
+                type: 'address',
+              },
+            ],
           },
         ],
       },
@@ -134,18 +128,6 @@ export const abi = [
         name: '',
         type: 'tuple',
         components: [
-          {
-            name: 'agentTemplate',
-            type: 'address',
-          },
-          {
-            name: 'numAgentsAllowed',
-            type: 'uint256',
-          },
-          {
-            name: 'enforceCreatorWhitelist',
-            type: 'bool',
-          },
           {
             name: 'startingAgent',
             type: 'address',
@@ -175,6 +157,22 @@ export const abi = [
           {
             name: 'managerActivationLength',
             type: 'uint256',
+          },
+          {
+            name: 'mustHaveUsdValueOnSwaps',
+            type: 'bool',
+          },
+          {
+            name: 'maxNumSwapsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'maxSlippageOnSwaps',
+            type: 'uint256',
+          },
+          {
+            name: 'onlyApprovedYieldOpps',
+            type: 'bool',
           },
         ],
       },
@@ -249,20 +247,8 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_agentTemplate',
-        type: 'address',
-      },
-      {
         name: '_startingAgent',
         type: 'address',
-      },
-      {
-        name: '_trialAsset',
-        type: 'address',
-      },
-      {
-        name: '_trialAmount',
-        type: 'uint256',
       },
       {
         name: '_rewardsAsset',
@@ -273,38 +259,38 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x33DF7433cAa93277F06561b8A3ceE1Fa324FbDe6'
+export const deployAddress: Address | undefined = '0xC66e387A9215B146eD6434D63034ddbdcd2Fd7DC'
 
 export type Contract = {
   calls: {
     userWalletConfig: () => Promise<{
       walletTemplate: `0x${string}`
       configTemplate: `0x${string}`
-      trialAsset: `0x${string}`
-      trialAmount: bigint
       numUserWalletsAllowed: bigint
       enforceCreatorWhitelist: boolean
       minKeyActionTimeLock: bigint
       maxKeyActionTimeLock: bigint
-      defaultStaleBlocks: bigint
       depositRewardsAsset: `0x${string}`
+      lootClaimCoolOffPeriod: bigint
       txFees: { swapFee: bigint; stableSwapFee: bigint; rewardsFee: bigint }
       ambassadorRevShare: { swapRatio: bigint; rewardsRatio: bigint; yieldRatio: bigint }
-      defaultYieldMaxIncrease: bigint
-      defaultYieldPerformanceFee: bigint
-      defaultYieldAmbassadorBonusRatio: bigint
-      defaultYieldBonusRatio: bigint
-      defaultYieldAltBonusAsset: `0x${string}`
-      lootClaimCoolOffPeriod: bigint
+      yieldConfig: {
+        maxYieldIncrease: bigint
+        performanceFee: bigint
+        ambassadorBonusRatio: bigint
+        bonusRatio: bigint
+        bonusAsset: `0x${string}`
+      }
     }>
-    agentConfig: () => Promise<{
-      agentTemplate: `0x${string}`
-      numAgentsAllowed: bigint
-      enforceCreatorWhitelist: boolean
-      startingAgent: `0x${string}`
-      startingAgentActivationLength: bigint
+    agentConfig: () => Promise<{ startingAgent: `0x${string}`; startingAgentActivationLength: bigint }>
+    managerConfig: () => Promise<{
+      managerPeriod: bigint
+      managerActivationLength: bigint
+      mustHaveUsdValueOnSwaps: boolean
+      maxNumSwapsPerPeriod: bigint
+      maxSlippageOnSwaps: bigint
+      onlyApprovedYieldOpps: boolean
     }>
-    managerConfig: () => Promise<{ managerPeriod: bigint; managerActivationLength: bigint }>
     payeeConfig: () => Promise<{ payeePeriod: bigint; payeeActivationLength: bigint }>
     chequeConfig: () => Promise<{
       maxNumActiveCheques: bigint

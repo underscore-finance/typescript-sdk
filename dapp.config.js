@@ -1,16 +1,14 @@
 import { createRequire } from 'module'
 
 const require = createRequire(import.meta.url)
-const Manifest = require('../underscore-protocol/migration_history/base-mainnet/v1/current-manifest.json')
+const Manifest = require('../underscore-protocol/migration_history/base-mainnet/v1.1/current-manifest.json')
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { '40Acres': FortyAcres, Yo, Tokemak, ...rest } = Manifest.contracts
 export default {
   name: 'Underscore Finance',
   description: 'Underscore Finance',
   targetPath: './src/contracts',
-  // eslint-disable-next-line no-undef
-  etherscanApiKey: process.env.BASESCAN_API_KEY,
-  etherscanApi: 'https://api.basescan.org',
+  chainId: 8453,
   isModule: true,
   isSdk: true,
   contracts: {
@@ -26,10 +24,16 @@ export default {
       address: Manifest.contracts.UserWalletConfig.address,
       abi: Manifest.contracts.UserWalletConfig.abi,
     },
-    Agent: {
+    UserWalletV1: {
       isTemplate: true,
-      address: Manifest.contracts.AgentWrapper.address,
-      abi: Manifest.contracts.AgentWrapper.abi,
+      address: '0x880E453Ec494FB17bffba537BeaB4Cc6CD1B7C12',
+    },
+    UserWalletConfigV1: {
+      isTemplate: true,
+      address: '0x0E7064202c4F906Adc4D9F6D3C92470b62F624F1',
+    },
+    AgentWrapperV1: {
+      address: '0x9d3F593380875860cC18F5736373ae4B084Ba2F9',
     },
     SignatureHelperV1: {
       ...Manifest.contracts.SignatureHelper,
@@ -298,6 +302,10 @@ export default {
           ],
         },
       ],
+    },
+    EarnVault: {
+      isTemplate: true,
+      address: Manifest.contracts.UndyUsd.address,
     },
   },
 }

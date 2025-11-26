@@ -164,10 +164,32 @@ export const abi = [
     type: 'event',
   },
   {
-    name: 'ApprovedVaultTokenSet',
+    name: 'IsLeveragedVaultSet',
     inputs: [
       {
         name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'isLeveragedVault',
+        type: 'bool',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'ApprovedVaultTokenSet',
+    inputs: [
+      {
+        name: 'undyVaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'underlyingAsset',
         type: 'address',
         indexed: true,
       },
@@ -178,6 +200,128 @@ export const abi = [
       },
       {
         name: 'isApproved',
+        type: 'bool',
+        indexed: false,
+      },
+      {
+        name: 'shouldMaxWithdraw',
+        type: 'bool',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'VaultTokenAdded',
+    inputs: [
+      {
+        name: 'undyVaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'underlyingAsset',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'vaultToken',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'VaultTokenRemoved',
+    inputs: [
+      {
+        name: 'undyVaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'underlyingAsset',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'vaultToken',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'AssetVaultTokenAdded',
+    inputs: [
+      {
+        name: 'asset',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'vaultToken',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'AssetVaultTokenRemoved',
+    inputs: [
+      {
+        name: 'asset',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'vaultToken',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'ShouldEnforceAllowlistSet',
+    inputs: [
+      {
+        name: 'undyVault',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'shouldEnforce',
+        type: 'bool',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'AllowlistSet',
+    inputs: [
+      {
+        name: 'undyVault',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'user',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'isAllowed',
         type: 'bool',
         indexed: false,
       },
@@ -1422,7 +1566,41 @@ export const abi = [
     name: 'isEarnVault',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'isLeveragedVault',
+    inputs: [
+      {
+        name: '_undyVaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'isBasicEarnVault',
+    inputs: [
+      {
+        name: '_undyVaultAddr',
         type: 'address',
       },
     ],
@@ -1439,7 +1617,7 @@ export const abi = [
     name: 'hasConfig',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
     ],
@@ -1456,7 +1634,7 @@ export const abi = [
     name: 'startAddNewAddressToRegistry',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
       {
@@ -1477,7 +1655,7 @@ export const abi = [
     name: 'confirmNewAddressToRegistry',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
     ],
@@ -1494,8 +1672,62 @@ export const abi = [
     name: 'confirmNewAddressToRegistry',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
+      },
+      {
+        name: '_isLeveragedVault',
+        type: 'bool',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmNewAddressToRegistry',
+    inputs: [
+      {
+        name: '_undyVaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_isLeveragedVault',
+        type: 'bool',
+      },
+      {
+        name: '_shouldEnforceAllowlist',
+        type: 'bool',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmNewAddressToRegistry',
+    inputs: [
+      {
+        name: '_undyVaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_isLeveragedVault',
+        type: 'bool',
+      },
+      {
+        name: '_shouldEnforceAllowlist',
+        type: 'bool',
       },
       {
         name: '_approvedVaultTokens',
@@ -1515,8 +1747,16 @@ export const abi = [
     name: 'confirmNewAddressToRegistry',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
+      },
+      {
+        name: '_isLeveragedVault',
+        type: 'bool',
+      },
+      {
+        name: '_shouldEnforceAllowlist',
+        type: 'bool',
       },
       {
         name: '_approvedVaultTokens',
@@ -1540,8 +1780,16 @@ export const abi = [
     name: 'confirmNewAddressToRegistry',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
+      },
+      {
+        name: '_isLeveragedVault',
+        type: 'bool',
+      },
+      {
+        name: '_shouldEnforceAllowlist',
+        type: 'bool',
       },
       {
         name: '_approvedVaultTokens',
@@ -1569,8 +1817,16 @@ export const abi = [
     name: 'confirmNewAddressToRegistry',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
+      },
+      {
+        name: '_isLeveragedVault',
+        type: 'bool',
+      },
+      {
+        name: '_shouldEnforceAllowlist',
+        type: 'bool',
       },
       {
         name: '_approvedVaultTokens',
@@ -1602,8 +1858,16 @@ export const abi = [
     name: 'confirmNewAddressToRegistry',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
+      },
+      {
+        name: '_isLeveragedVault',
+        type: 'bool',
+      },
+      {
+        name: '_shouldEnforceAllowlist',
+        type: 'bool',
       },
       {
         name: '_approvedVaultTokens',
@@ -1639,8 +1903,16 @@ export const abi = [
     name: 'confirmNewAddressToRegistry',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
+      },
+      {
+        name: '_isLeveragedVault',
+        type: 'bool',
+      },
+      {
+        name: '_shouldEnforceAllowlist',
+        type: 'bool',
       },
       {
         name: '_approvedVaultTokens',
@@ -1680,8 +1952,16 @@ export const abi = [
     name: 'confirmNewAddressToRegistry',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
+      },
+      {
+        name: '_isLeveragedVault',
+        type: 'bool',
+      },
+      {
+        name: '_shouldEnforceAllowlist',
+        type: 'bool',
       },
       {
         name: '_approvedVaultTokens',
@@ -1725,8 +2005,16 @@ export const abi = [
     name: 'confirmNewAddressToRegistry',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
+      },
+      {
+        name: '_isLeveragedVault',
+        type: 'bool',
+      },
+      {
+        name: '_shouldEnforceAllowlist',
+        type: 'bool',
       },
       {
         name: '_approvedVaultTokens',
@@ -1774,8 +2062,16 @@ export const abi = [
     name: 'confirmNewAddressToRegistry',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
+      },
+      {
+        name: '_isLeveragedVault',
+        type: 'bool',
+      },
+      {
+        name: '_shouldEnforceAllowlist',
+        type: 'bool',
       },
       {
         name: '_approvedVaultTokens',
@@ -1827,8 +2123,16 @@ export const abi = [
     name: 'confirmNewAddressToRegistry',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
+      },
+      {
+        name: '_isLeveragedVault',
+        type: 'bool',
+      },
+      {
+        name: '_shouldEnforceAllowlist',
+        type: 'bool',
       },
       {
         name: '_approvedVaultTokens',
@@ -1884,7 +2188,7 @@ export const abi = [
     name: 'cancelNewAddressToRegistry',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
     ],
@@ -1952,7 +2256,7 @@ export const abi = [
     name: 'setCanDeposit',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
       {
@@ -1968,7 +2272,7 @@ export const abi = [
     name: 'setCanWithdraw',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
       {
@@ -1984,7 +2288,7 @@ export const abi = [
     name: 'setMaxDepositAmount',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
       {
@@ -2000,7 +2304,7 @@ export const abi = [
     name: 'setVaultOpsFrozen',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
       {
@@ -2016,7 +2320,7 @@ export const abi = [
     name: 'setShouldAutoDeposit',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
       {
@@ -2032,7 +2336,7 @@ export const abi = [
     name: 'setMinYieldWithdrawAmount',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
       {
@@ -2045,39 +2349,74 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'setApprovedVaultToken',
+    name: 'setIsLeveragedVault',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
       {
-        name: '_vaultToken',
-        type: 'address',
-      },
-      {
-        name: '_isApproved',
+        name: '_isLeveragedVault',
         type: 'bool',
       },
     ],
     outputs: [],
   },
   {
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
     type: 'function',
-    name: 'isValidVaultToken',
+    name: 'setShouldEnforceAllowlist',
     inputs: [
       {
-        name: '_vaultToken',
+        name: '_undyVaultAddr',
         type: 'address',
       },
-    ],
-    outputs: [
       {
-        name: '',
+        name: '_shouldEnforce',
         type: 'bool',
       },
     ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setAllowed',
+    inputs: [
+      {
+        name: '_undyVaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_user',
+        type: 'address',
+      },
+      {
+        name: '_isAllowed',
+        type: 'bool',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setAllowedBatch',
+    inputs: [
+      {
+        name: '_undyVaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_users',
+        type: 'address[]',
+      },
+      {
+        name: '_isAllowed',
+        type: 'bool',
+      },
+    ],
+    outputs: [],
   },
   {
     stateMutability: 'nonpayable',
@@ -2085,7 +2424,7 @@ export const abi = [
     name: 'setDefaultTargetVaultToken',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
       {
@@ -2101,7 +2440,7 @@ export const abi = [
     name: 'isValidDefaultTargetVaultToken',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
       {
@@ -2122,7 +2461,7 @@ export const abi = [
     name: 'setPerformanceFee',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
       {
@@ -2155,7 +2494,7 @@ export const abi = [
     name: 'setRedemptionBuffer',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
       {
@@ -2183,12 +2522,149 @@ export const abi = [
     ],
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setApprovedVaultToken',
+    inputs: [
+      {
+        name: '_undyVaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_isApproved',
+        type: 'bool',
+      },
+      {
+        name: '_shouldMaxWithdraw',
+        type: 'bool',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setApprovedVaultTokens',
+    inputs: [
+      {
+        name: '_undyVaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_vaultTokens',
+        type: 'address[]',
+      },
+      {
+        name: '_isApproved',
+        type: 'bool',
+      },
+      {
+        name: '_shouldMaxWithdraw',
+        type: 'bool',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getApprovedVaultTokens',
+    inputs: [
+      {
+        name: '_undyVaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address[]',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAssetVaultTokens',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address[]',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getNumApprovedVaultTokens',
+    inputs: [
+      {
+        name: '_undyVaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getNumAssetVaultTokens',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'isApprovedVaultTokenForAsset',
+    inputs: [
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
     stateMutability: 'view',
     type: 'function',
     name: 'canDeposit',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
     ],
@@ -2205,7 +2681,7 @@ export const abi = [
     name: 'canWithdraw',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
     ],
@@ -2222,7 +2698,7 @@ export const abi = [
     name: 'maxDepositAmount',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
     ],
@@ -2239,7 +2715,7 @@ export const abi = [
     name: 'isVaultOpsFrozen',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
     ],
@@ -2256,7 +2732,7 @@ export const abi = [
     name: 'redemptionBuffer',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
     ],
@@ -2273,7 +2749,7 @@ export const abi = [
     name: 'minYieldWithdrawAmount',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
     ],
@@ -2290,7 +2766,7 @@ export const abi = [
     name: 'redemptionConfig',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
     ],
@@ -2311,7 +2787,7 @@ export const abi = [
     name: 'getPerformanceFee',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
     ],
@@ -2328,7 +2804,7 @@ export const abi = [
     name: 'getDefaultTargetVaultToken',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
     ],
@@ -2345,7 +2821,45 @@ export const abi = [
     name: 'shouldAutoDeposit',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'shouldEnforceAllowlist',
+    inputs: [
+      {
+        name: '_undyVaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'isUserAllowed',
+    inputs: [
+      {
+        name: '_undyVaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_userAddr',
         type: 'address',
       },
     ],
@@ -2362,7 +2876,7 @@ export const abi = [
     name: 'isApprovedVaultTokenByAddr',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
       {
@@ -2383,7 +2897,7 @@ export const abi = [
     name: 'checkVaultApprovals',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
       {
@@ -2449,6 +2963,14 @@ export const abi = [
             name: 'defaultTargetVaultToken',
             type: 'address',
           },
+          {
+            name: 'isLeveragedVault',
+            type: 'bool',
+          },
+          {
+            name: 'shouldEnforceAllowlist',
+            type: 'bool',
+          },
         ],
       },
     ],
@@ -2459,7 +2981,7 @@ export const abi = [
     name: 'getVaultConfigByAddr',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
     ],
@@ -2503,6 +3025,14 @@ export const abi = [
           {
             name: 'defaultTargetVaultToken',
             type: 'address',
+          },
+          {
+            name: 'isLeveragedVault',
+            type: 'bool',
+          },
+          {
+            name: 'shouldEnforceAllowlist',
+            type: 'bool',
           },
         ],
       },
@@ -2581,7 +3111,7 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
     ],
@@ -2678,7 +3208,7 @@ export const abi = [
     name: 'getDepositConfig',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
     ],
@@ -2698,6 +3228,77 @@ export const abi = [
       {
         name: '',
         type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDepositConfig',
+    inputs: [
+      {
+        name: '_undyVaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_user',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'canUserDeposit',
+    inputs: [
+      {
+        name: '_undyVaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'canUserDeposit',
+    inputs: [
+      {
+        name: '_undyVaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_user',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
       },
     ],
   },
@@ -2752,6 +3353,14 @@ export const abi = [
             name: 'defaultTargetVaultToken',
             type: 'address',
           },
+          {
+            name: 'isLeveragedVault',
+            type: 'bool',
+          },
+          {
+            name: 'shouldEnforceAllowlist',
+            type: 'bool',
+          },
         ],
       },
     ],
@@ -2760,6 +3369,166 @@ export const abi = [
     stateMutability: 'view',
     type: 'function',
     name: 'isApprovedVaultToken',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+      {
+        name: 'arg1',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'approvedVaultTokens',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+      {
+        name: 'arg1',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'indexOfApprovedVaultToken',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+      {
+        name: 'arg1',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'numApprovedVaultTokens',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'assetVaultTokens',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+      {
+        name: 'arg1',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'indexOfAssetVaultToken',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+      {
+        name: 'arg1',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'numAssetVaultTokens',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'assetVaultTokenRefCount',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+      {
+        name: 'arg1',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'isAllowed',
     inputs: [
       {
         name: 'arg0',
@@ -2802,7 +3571,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xC64A779FE55673F93F647F1E2A30B3C3a9A25b64'
+export const deployAddress: Address | undefined = '0x1C17ef5Ef2AefcEE958E7e3dC345e96aBfF4e3Cf'
 
 export type Contract = {
   calls: {
@@ -2865,24 +3634,32 @@ export type Contract = {
     getUndyHq: () => Promise<`0x${string}`>
     canMintUndy: () => Promise<boolean>
     isPaused: () => Promise<boolean>
-    isEarnVault: (vaultAddr: `0x${string}`) => Promise<boolean>
-    hasConfig: (vaultAddr: `0x${string}`) => Promise<boolean>
-    isValidVaultToken: (vaultToken: `0x${string}`) => Promise<boolean>
-    isValidDefaultTargetVaultToken: (vaultAddr: `0x${string}`, targetVaultToken: `0x${string}`) => Promise<boolean>
+    isEarnVault: (undyVaultAddr: `0x${string}`) => Promise<boolean>
+    isLeveragedVault: (undyVaultAddr: `0x${string}`) => Promise<boolean>
+    isBasicEarnVault: (undyVaultAddr: `0x${string}`) => Promise<boolean>
+    hasConfig: (undyVaultAddr: `0x${string}`) => Promise<boolean>
+    isValidDefaultTargetVaultToken: (undyVaultAddr: `0x${string}`, targetVaultToken: `0x${string}`) => Promise<boolean>
     isValidPerformanceFee: (performanceFee: bigint) => Promise<boolean>
     isValidRedemptionBuffer: (buffer: bigint) => Promise<boolean>
-    canDeposit: (vaultAddr: `0x${string}`) => Promise<boolean>
-    canWithdraw: (vaultAddr: `0x${string}`) => Promise<boolean>
-    maxDepositAmount: (vaultAddr: `0x${string}`) => Promise<bigint>
-    isVaultOpsFrozen: (vaultAddr: `0x${string}`) => Promise<boolean>
-    redemptionBuffer: (vaultAddr: `0x${string}`) => Promise<bigint>
-    minYieldWithdrawAmount: (vaultAddr: `0x${string}`) => Promise<bigint>
-    redemptionConfig: (vaultAddr: `0x${string}`) => Promise<[bigint, bigint]>
-    getPerformanceFee: (vaultAddr: `0x${string}`) => Promise<bigint>
-    getDefaultTargetVaultToken: (vaultAddr: `0x${string}`) => Promise<`0x${string}`>
-    shouldAutoDeposit: (vaultAddr: `0x${string}`) => Promise<boolean>
-    isApprovedVaultTokenByAddr: (vaultAddr: `0x${string}`, vaultToken: `0x${string}`) => Promise<boolean>
-    checkVaultApprovals: (vaultAddr: `0x${string}`, vaultToken: `0x${string}`) => Promise<boolean>
+    getApprovedVaultTokens: (undyVaultAddr: `0x${string}`) => Promise<`0x${string}`[]>
+    getAssetVaultTokens: (asset: `0x${string}`) => Promise<`0x${string}`[]>
+    getNumApprovedVaultTokens: (undyVaultAddr: `0x${string}`) => Promise<bigint>
+    getNumAssetVaultTokens: (asset: `0x${string}`) => Promise<bigint>
+    isApprovedVaultTokenForAsset: (underlyingAsset: `0x${string}`, vaultToken: `0x${string}`) => Promise<boolean>
+    canDeposit: (undyVaultAddr: `0x${string}`) => Promise<boolean>
+    canWithdraw: (undyVaultAddr: `0x${string}`) => Promise<boolean>
+    maxDepositAmount: (undyVaultAddr: `0x${string}`) => Promise<bigint>
+    isVaultOpsFrozen: (undyVaultAddr: `0x${string}`) => Promise<boolean>
+    redemptionBuffer: (undyVaultAddr: `0x${string}`) => Promise<bigint>
+    minYieldWithdrawAmount: (undyVaultAddr: `0x${string}`) => Promise<bigint>
+    redemptionConfig: (undyVaultAddr: `0x${string}`) => Promise<[bigint, bigint]>
+    getPerformanceFee: (undyVaultAddr: `0x${string}`) => Promise<bigint>
+    getDefaultTargetVaultToken: (undyVaultAddr: `0x${string}`) => Promise<`0x${string}`>
+    shouldAutoDeposit: (undyVaultAddr: `0x${string}`) => Promise<boolean>
+    shouldEnforceAllowlist: (undyVaultAddr: `0x${string}`) => Promise<boolean>
+    isUserAllowed: (undyVaultAddr: `0x${string}`, userAddr: `0x${string}`) => Promise<boolean>
+    isApprovedVaultTokenByAddr: (undyVaultAddr: `0x${string}`, vaultToken: `0x${string}`) => Promise<boolean>
+    checkVaultApprovals: (undyVaultAddr: `0x${string}`, vaultToken: `0x${string}`) => Promise<boolean>
     getVaultConfig: (
       regId: bigint,
     ) => Promise<{
@@ -2895,9 +3672,11 @@ export type Contract = {
       performanceFee: bigint
       shouldAutoDeposit: boolean
       defaultTargetVaultToken: `0x${string}`
+      isLeveragedVault: boolean
+      shouldEnforceAllowlist: boolean
     }>
     getVaultConfigByAddr: (
-      vaultAddr: `0x${string}`,
+      undyVaultAddr: `0x${string}`,
     ) => Promise<{
       canDeposit: boolean
       canWithdraw: boolean
@@ -2908,6 +3687,8 @@ export type Contract = {
       performanceFee: bigint
       shouldAutoDeposit: boolean
       defaultTargetVaultToken: `0x${string}`
+      isLeveragedVault: boolean
+      shouldEnforceAllowlist: boolean
     }>
     getVaultActionDataBundle: (
       legoId: bigint,
@@ -2926,7 +3707,7 @@ export type Contract = {
     getVaultActionDataWithFrozenStatus: (
       legoId: bigint,
       signer: `0x${string}`,
-      vaultAddr: `0x${string}`,
+      undyVaultAddr: `0x${string}`,
     ) => Promise<
       [
         {
@@ -2945,7 +3726,11 @@ export type Contract = {
     >
     getLegoDataFromVaultToken: (vaultToken: `0x${string}`) => Promise<[bigint, `0x${string}`]>
     getLegoAddrFromVaultToken: (vaultToken: `0x${string}`) => Promise<`0x${string}`>
-    getDepositConfig: (vaultAddr: `0x${string}`) => Promise<[boolean, bigint, boolean, `0x${string}`]>
+    getDepositConfig: (
+      undyVaultAddr: `0x${string}`,
+      user?: `0x${string}`,
+    ) => Promise<[boolean, bigint, boolean, `0x${string}`]>
+    canUserDeposit: (undyVaultAddr: `0x${string}`, user?: `0x${string}`) => Promise<boolean>
     vaultConfigs: (
       arg0: `0x${string}`,
     ) => Promise<{
@@ -2958,8 +3743,18 @@ export type Contract = {
       performanceFee: bigint
       shouldAutoDeposit: boolean
       defaultTargetVaultToken: `0x${string}`
+      isLeveragedVault: boolean
+      shouldEnforceAllowlist: boolean
     }>
     isApprovedVaultToken: (arg0: `0x${string}`, arg1: `0x${string}`) => Promise<boolean>
+    approvedVaultTokens: (arg0: `0x${string}`, arg1: bigint) => Promise<`0x${string}`>
+    indexOfApprovedVaultToken: (arg0: `0x${string}`, arg1: `0x${string}`) => Promise<bigint>
+    numApprovedVaultTokens: (arg0: `0x${string}`) => Promise<bigint>
+    assetVaultTokens: (arg0: `0x${string}`, arg1: bigint) => Promise<`0x${string}`>
+    indexOfAssetVaultToken: (arg0: `0x${string}`, arg1: `0x${string}`) => Promise<bigint>
+    numAssetVaultTokens: (arg0: `0x${string}`) => Promise<bigint>
+    assetVaultTokenRefCount: (arg0: `0x${string}`, arg1: `0x${string}`) => Promise<bigint>
+    isAllowed: (arg0: `0x${string}`, arg1: `0x${string}`) => Promise<boolean>
   }
   mutations: {
     startGovernanceChange: (newGov: `0x${string}`) => Promise<void>
@@ -2973,9 +3768,11 @@ export type Contract = {
     pause: (shouldPause: boolean) => Promise<void>
     recoverFunds: (recipient: `0x${string}`, asset: `0x${string}`) => Promise<void>
     recoverFundsMany: (recipient: `0x${string}`, assets: `0x${string}`[]) => Promise<void>
-    startAddNewAddressToRegistry: (vaultAddr: `0x${string}`, description: string) => Promise<boolean>
+    startAddNewAddressToRegistry: (undyVaultAddr: `0x${string}`, description: string) => Promise<boolean>
     confirmNewAddressToRegistry: (
-      vaultAddr: `0x${string}`,
+      undyVaultAddr: `0x${string}`,
+      isLeveragedVault?: boolean,
+      shouldEnforceAllowlist?: boolean,
       approvedVaultTokens?: `0x${string}`[],
       maxDepositAmount?: bigint,
       minYieldWithdrawAmount?: bigint,
@@ -2987,20 +3784,35 @@ export type Contract = {
       isVaultOpsFrozen?: boolean,
       redemptionBuffer?: bigint,
     ) => Promise<bigint>
-    cancelNewAddressToRegistry: (vaultAddr: `0x${string}`) => Promise<boolean>
+    cancelNewAddressToRegistry: (undyVaultAddr: `0x${string}`) => Promise<boolean>
     startAddressDisableInRegistry: (regId: bigint) => Promise<boolean>
     confirmAddressDisableInRegistry: (regId: bigint) => Promise<boolean>
     cancelAddressDisableInRegistry: (regId: bigint) => Promise<boolean>
-    setCanDeposit: (vaultAddr: `0x${string}`, canDeposit: boolean) => Promise<void>
-    setCanWithdraw: (vaultAddr: `0x${string}`, canWithdraw: boolean) => Promise<void>
-    setMaxDepositAmount: (vaultAddr: `0x${string}`, maxDepositAmount: bigint) => Promise<void>
-    setVaultOpsFrozen: (vaultAddr: `0x${string}`, isFrozen: boolean) => Promise<void>
-    setShouldAutoDeposit: (vaultAddr: `0x${string}`, shouldAutoDeposit: boolean) => Promise<void>
-    setMinYieldWithdrawAmount: (vaultAddr: `0x${string}`, amount: bigint) => Promise<void>
-    setApprovedVaultToken: (vaultAddr: `0x${string}`, vaultToken: `0x${string}`, isApproved: boolean) => Promise<void>
-    setDefaultTargetVaultToken: (vaultAddr: `0x${string}`, targetVaultToken: `0x${string}`) => Promise<void>
-    setPerformanceFee: (vaultAddr: `0x${string}`, performanceFee: bigint) => Promise<void>
-    setRedemptionBuffer: (vaultAddr: `0x${string}`, buffer: bigint) => Promise<void>
+    setCanDeposit: (undyVaultAddr: `0x${string}`, canDeposit: boolean) => Promise<void>
+    setCanWithdraw: (undyVaultAddr: `0x${string}`, canWithdraw: boolean) => Promise<void>
+    setMaxDepositAmount: (undyVaultAddr: `0x${string}`, maxDepositAmount: bigint) => Promise<void>
+    setVaultOpsFrozen: (undyVaultAddr: `0x${string}`, isFrozen: boolean) => Promise<void>
+    setShouldAutoDeposit: (undyVaultAddr: `0x${string}`, shouldAutoDeposit: boolean) => Promise<void>
+    setMinYieldWithdrawAmount: (undyVaultAddr: `0x${string}`, amount: bigint) => Promise<void>
+    setIsLeveragedVault: (undyVaultAddr: `0x${string}`, isLeveragedVault: boolean) => Promise<void>
+    setShouldEnforceAllowlist: (undyVaultAddr: `0x${string}`, shouldEnforce: boolean) => Promise<void>
+    setAllowed: (undyVaultAddr: `0x${string}`, user: `0x${string}`, isAllowed: boolean) => Promise<void>
+    setAllowedBatch: (undyVaultAddr: `0x${string}`, users: `0x${string}`[], isAllowed: boolean) => Promise<void>
+    setDefaultTargetVaultToken: (undyVaultAddr: `0x${string}`, targetVaultToken: `0x${string}`) => Promise<void>
+    setPerformanceFee: (undyVaultAddr: `0x${string}`, performanceFee: bigint) => Promise<void>
+    setRedemptionBuffer: (undyVaultAddr: `0x${string}`, buffer: bigint) => Promise<void>
+    setApprovedVaultToken: (
+      undyVaultAddr: `0x${string}`,
+      vaultToken: `0x${string}`,
+      isApproved: boolean,
+      shouldMaxWithdraw: boolean,
+    ) => Promise<void>
+    setApprovedVaultTokens: (
+      undyVaultAddr: `0x${string}`,
+      vaultTokens: `0x${string}`[],
+      isApproved: boolean,
+      shouldMaxWithdraw: boolean,
+    ) => Promise<void>
   }
   events: {
     CanDepositSet: (vaultAddr: `0x${string}`, canDeposit: boolean) => Promise<void>
@@ -3012,7 +3824,28 @@ export type Contract = {
     PerformanceFeeSet: (vaultAddr: `0x${string}`, performanceFee: bigint) => Promise<void>
     DefaultTargetVaultTokenSet: (vaultAddr: `0x${string}`, targetVaultToken: `0x${string}`) => Promise<void>
     ShouldAutoDepositSet: (vaultAddr: `0x${string}`, shouldAutoDeposit: boolean) => Promise<void>
-    ApprovedVaultTokenSet: (vaultAddr: `0x${string}`, vaultToken: `0x${string}`, isApproved: boolean) => Promise<void>
+    IsLeveragedVaultSet: (vaultAddr: `0x${string}`, isLeveragedVault: boolean) => Promise<void>
+    ApprovedVaultTokenSet: (
+      undyVaultAddr: `0x${string}`,
+      underlyingAsset: `0x${string}`,
+      vaultToken: `0x${string}`,
+      isApproved: boolean,
+      shouldMaxWithdraw: boolean,
+    ) => Promise<void>
+    VaultTokenAdded: (
+      undyVaultAddr: `0x${string}`,
+      underlyingAsset: `0x${string}`,
+      vaultToken: `0x${string}`,
+    ) => Promise<void>
+    VaultTokenRemoved: (
+      undyVaultAddr: `0x${string}`,
+      underlyingAsset: `0x${string}`,
+      vaultToken: `0x${string}`,
+    ) => Promise<void>
+    AssetVaultTokenAdded: (asset: `0x${string}`, vaultToken: `0x${string}`) => Promise<void>
+    AssetVaultTokenRemoved: (asset: `0x${string}`, vaultToken: `0x${string}`) => Promise<void>
+    ShouldEnforceAllowlistSet: (undyVault: `0x${string}`, shouldEnforce: boolean) => Promise<void>
+    AllowlistSet: (undyVault: `0x${string}`, user: `0x${string}`, isAllowed: boolean) => Promise<void>
     GovChangeTimeLockModified: (prevTimeLock: bigint, newTimeLock: bigint) => Promise<void>
     RegistryTimeLockModified: (newTimeLock: bigint, prevTimeLock: bigint, registry: string) => Promise<void>
     GovChangeStarted: (prevGov: `0x${string}`, newGov: `0x${string}`, confirmBlock: bigint) => Promise<void>
@@ -3183,15 +4016,27 @@ export const call: CallType = {
   canMintUndy: (...args: ExtractArgs<Contract['calls']['canMintUndy']>) => getRequest('canMintUndy', args),
   isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) => getRequest('isPaused', args),
   isEarnVault: (...args: ExtractArgs<Contract['calls']['isEarnVault']>) => getRequest('isEarnVault', args),
+  isLeveragedVault: (...args: ExtractArgs<Contract['calls']['isLeveragedVault']>) =>
+    getRequest('isLeveragedVault', args),
+  isBasicEarnVault: (...args: ExtractArgs<Contract['calls']['isBasicEarnVault']>) =>
+    getRequest('isBasicEarnVault', args),
   hasConfig: (...args: ExtractArgs<Contract['calls']['hasConfig']>) => getRequest('hasConfig', args),
-  isValidVaultToken: (...args: ExtractArgs<Contract['calls']['isValidVaultToken']>) =>
-    getRequest('isValidVaultToken', args),
   isValidDefaultTargetVaultToken: (...args: ExtractArgs<Contract['calls']['isValidDefaultTargetVaultToken']>) =>
     getRequest('isValidDefaultTargetVaultToken', args),
   isValidPerformanceFee: (...args: ExtractArgs<Contract['calls']['isValidPerformanceFee']>) =>
     getRequest('isValidPerformanceFee', args),
   isValidRedemptionBuffer: (...args: ExtractArgs<Contract['calls']['isValidRedemptionBuffer']>) =>
     getRequest('isValidRedemptionBuffer', args),
+  getApprovedVaultTokens: (...args: ExtractArgs<Contract['calls']['getApprovedVaultTokens']>) =>
+    getRequest('getApprovedVaultTokens', args),
+  getAssetVaultTokens: (...args: ExtractArgs<Contract['calls']['getAssetVaultTokens']>) =>
+    getRequest('getAssetVaultTokens', args),
+  getNumApprovedVaultTokens: (...args: ExtractArgs<Contract['calls']['getNumApprovedVaultTokens']>) =>
+    getRequest('getNumApprovedVaultTokens', args),
+  getNumAssetVaultTokens: (...args: ExtractArgs<Contract['calls']['getNumAssetVaultTokens']>) =>
+    getRequest('getNumAssetVaultTokens', args),
+  isApprovedVaultTokenForAsset: (...args: ExtractArgs<Contract['calls']['isApprovedVaultTokenForAsset']>) =>
+    getRequest('isApprovedVaultTokenForAsset', args),
   canDeposit: (...args: ExtractArgs<Contract['calls']['canDeposit']>) => getRequest('canDeposit', args),
   canWithdraw: (...args: ExtractArgs<Contract['calls']['canWithdraw']>) => getRequest('canWithdraw', args),
   maxDepositAmount: (...args: ExtractArgs<Contract['calls']['maxDepositAmount']>) =>
@@ -3210,6 +4055,9 @@ export const call: CallType = {
     getRequest('getDefaultTargetVaultToken', args),
   shouldAutoDeposit: (...args: ExtractArgs<Contract['calls']['shouldAutoDeposit']>) =>
     getRequest('shouldAutoDeposit', args),
+  shouldEnforceAllowlist: (...args: ExtractArgs<Contract['calls']['shouldEnforceAllowlist']>) =>
+    getRequest('shouldEnforceAllowlist', args),
+  isUserAllowed: (...args: ExtractArgs<Contract['calls']['isUserAllowed']>) => getRequest('isUserAllowed', args),
   isApprovedVaultTokenByAddr: (...args: ExtractArgs<Contract['calls']['isApprovedVaultTokenByAddr']>) =>
     getRequest('isApprovedVaultTokenByAddr', args),
   checkVaultApprovals: (...args: ExtractArgs<Contract['calls']['checkVaultApprovals']>) =>
@@ -3227,9 +4075,25 @@ export const call: CallType = {
     getRequest('getLegoAddrFromVaultToken', args),
   getDepositConfig: (...args: ExtractArgs<Contract['calls']['getDepositConfig']>) =>
     getRequest('getDepositConfig', args),
+  canUserDeposit: (...args: ExtractArgs<Contract['calls']['canUserDeposit']>) => getRequest('canUserDeposit', args),
   vaultConfigs: (...args: ExtractArgs<Contract['calls']['vaultConfigs']>) => getRequest('vaultConfigs', args),
   isApprovedVaultToken: (...args: ExtractArgs<Contract['calls']['isApprovedVaultToken']>) =>
     getRequest('isApprovedVaultToken', args),
+  approvedVaultTokens: (...args: ExtractArgs<Contract['calls']['approvedVaultTokens']>) =>
+    getRequest('approvedVaultTokens', args),
+  indexOfApprovedVaultToken: (...args: ExtractArgs<Contract['calls']['indexOfApprovedVaultToken']>) =>
+    getRequest('indexOfApprovedVaultToken', args),
+  numApprovedVaultTokens: (...args: ExtractArgs<Contract['calls']['numApprovedVaultTokens']>) =>
+    getRequest('numApprovedVaultTokens', args),
+  assetVaultTokens: (...args: ExtractArgs<Contract['calls']['assetVaultTokens']>) =>
+    getRequest('assetVaultTokens', args),
+  indexOfAssetVaultToken: (...args: ExtractArgs<Contract['calls']['indexOfAssetVaultToken']>) =>
+    getRequest('indexOfAssetVaultToken', args),
+  numAssetVaultTokens: (...args: ExtractArgs<Contract['calls']['numAssetVaultTokens']>) =>
+    getRequest('numAssetVaultTokens', args),
+  assetVaultTokenRefCount: (...args: ExtractArgs<Contract['calls']['assetVaultTokenRefCount']>) =>
+    getRequest('assetVaultTokenRefCount', args),
+  isAllowed: (...args: ExtractArgs<Contract['calls']['isAllowed']>) => getRequest('isAllowed', args),
 }
 
 export type Mutations = keyof Contract['mutations']
@@ -3275,10 +4139,15 @@ export const mutation: {
   setVaultOpsFrozen: getMutation('setVaultOpsFrozen'),
   setShouldAutoDeposit: getMutation('setShouldAutoDeposit'),
   setMinYieldWithdrawAmount: getMutation('setMinYieldWithdrawAmount'),
-  setApprovedVaultToken: getMutation('setApprovedVaultToken'),
+  setIsLeveragedVault: getMutation('setIsLeveragedVault'),
+  setShouldEnforceAllowlist: getMutation('setShouldEnforceAllowlist'),
+  setAllowed: getMutation('setAllowed'),
+  setAllowedBatch: getMutation('setAllowedBatch'),
   setDefaultTargetVaultToken: getMutation('setDefaultTargetVaultToken'),
   setPerformanceFee: getMutation('setPerformanceFee'),
   setRedemptionBuffer: getMutation('setRedemptionBuffer'),
+  setApprovedVaultToken: getMutation('setApprovedVaultToken'),
+  setApprovedVaultTokens: getMutation('setApprovedVaultTokens'),
 }
 
 export type SDK = {
@@ -3357,10 +4226,13 @@ export type SDK = {
   canMintUndy: (...args: ExtractArgs<Contract['calls']['canMintUndy']>) => Promise<CallReturn<'canMintUndy'>>
   isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) => Promise<CallReturn<'isPaused'>>
   isEarnVault: (...args: ExtractArgs<Contract['calls']['isEarnVault']>) => Promise<CallReturn<'isEarnVault'>>
+  isLeveragedVault: (
+    ...args: ExtractArgs<Contract['calls']['isLeveragedVault']>
+  ) => Promise<CallReturn<'isLeveragedVault'>>
+  isBasicEarnVault: (
+    ...args: ExtractArgs<Contract['calls']['isBasicEarnVault']>
+  ) => Promise<CallReturn<'isBasicEarnVault'>>
   hasConfig: (...args: ExtractArgs<Contract['calls']['hasConfig']>) => Promise<CallReturn<'hasConfig'>>
-  isValidVaultToken: (
-    ...args: ExtractArgs<Contract['calls']['isValidVaultToken']>
-  ) => Promise<CallReturn<'isValidVaultToken'>>
   isValidDefaultTargetVaultToken: (
     ...args: ExtractArgs<Contract['calls']['isValidDefaultTargetVaultToken']>
   ) => Promise<CallReturn<'isValidDefaultTargetVaultToken'>>
@@ -3370,6 +4242,21 @@ export type SDK = {
   isValidRedemptionBuffer: (
     ...args: ExtractArgs<Contract['calls']['isValidRedemptionBuffer']>
   ) => Promise<CallReturn<'isValidRedemptionBuffer'>>
+  getApprovedVaultTokens: (
+    ...args: ExtractArgs<Contract['calls']['getApprovedVaultTokens']>
+  ) => Promise<CallReturn<'getApprovedVaultTokens'>>
+  getAssetVaultTokens: (
+    ...args: ExtractArgs<Contract['calls']['getAssetVaultTokens']>
+  ) => Promise<CallReturn<'getAssetVaultTokens'>>
+  getNumApprovedVaultTokens: (
+    ...args: ExtractArgs<Contract['calls']['getNumApprovedVaultTokens']>
+  ) => Promise<CallReturn<'getNumApprovedVaultTokens'>>
+  getNumAssetVaultTokens: (
+    ...args: ExtractArgs<Contract['calls']['getNumAssetVaultTokens']>
+  ) => Promise<CallReturn<'getNumAssetVaultTokens'>>
+  isApprovedVaultTokenForAsset: (
+    ...args: ExtractArgs<Contract['calls']['isApprovedVaultTokenForAsset']>
+  ) => Promise<CallReturn<'isApprovedVaultTokenForAsset'>>
   canDeposit: (...args: ExtractArgs<Contract['calls']['canDeposit']>) => Promise<CallReturn<'canDeposit'>>
   canWithdraw: (...args: ExtractArgs<Contract['calls']['canWithdraw']>) => Promise<CallReturn<'canWithdraw'>>
   maxDepositAmount: (
@@ -3396,6 +4283,10 @@ export type SDK = {
   shouldAutoDeposit: (
     ...args: ExtractArgs<Contract['calls']['shouldAutoDeposit']>
   ) => Promise<CallReturn<'shouldAutoDeposit'>>
+  shouldEnforceAllowlist: (
+    ...args: ExtractArgs<Contract['calls']['shouldEnforceAllowlist']>
+  ) => Promise<CallReturn<'shouldEnforceAllowlist'>>
+  isUserAllowed: (...args: ExtractArgs<Contract['calls']['isUserAllowed']>) => Promise<CallReturn<'isUserAllowed'>>
   isApprovedVaultTokenByAddr: (
     ...args: ExtractArgs<Contract['calls']['isApprovedVaultTokenByAddr']>
   ) => Promise<CallReturn<'isApprovedVaultTokenByAddr'>>
@@ -3421,10 +4312,33 @@ export type SDK = {
   getDepositConfig: (
     ...args: ExtractArgs<Contract['calls']['getDepositConfig']>
   ) => Promise<CallReturn<'getDepositConfig'>>
+  canUserDeposit: (...args: ExtractArgs<Contract['calls']['canUserDeposit']>) => Promise<CallReturn<'canUserDeposit'>>
   vaultConfigs: (...args: ExtractArgs<Contract['calls']['vaultConfigs']>) => Promise<CallReturn<'vaultConfigs'>>
   isApprovedVaultToken: (
     ...args: ExtractArgs<Contract['calls']['isApprovedVaultToken']>
   ) => Promise<CallReturn<'isApprovedVaultToken'>>
+  approvedVaultTokens: (
+    ...args: ExtractArgs<Contract['calls']['approvedVaultTokens']>
+  ) => Promise<CallReturn<'approvedVaultTokens'>>
+  indexOfApprovedVaultToken: (
+    ...args: ExtractArgs<Contract['calls']['indexOfApprovedVaultToken']>
+  ) => Promise<CallReturn<'indexOfApprovedVaultToken'>>
+  numApprovedVaultTokens: (
+    ...args: ExtractArgs<Contract['calls']['numApprovedVaultTokens']>
+  ) => Promise<CallReturn<'numApprovedVaultTokens'>>
+  assetVaultTokens: (
+    ...args: ExtractArgs<Contract['calls']['assetVaultTokens']>
+  ) => Promise<CallReturn<'assetVaultTokens'>>
+  indexOfAssetVaultToken: (
+    ...args: ExtractArgs<Contract['calls']['indexOfAssetVaultToken']>
+  ) => Promise<CallReturn<'indexOfAssetVaultToken'>>
+  numAssetVaultTokens: (
+    ...args: ExtractArgs<Contract['calls']['numAssetVaultTokens']>
+  ) => Promise<CallReturn<'numAssetVaultTokens'>>
+  assetVaultTokenRefCount: (
+    ...args: ExtractArgs<Contract['calls']['assetVaultTokenRefCount']>
+  ) => Promise<CallReturn<'assetVaultTokenRefCount'>>
+  isAllowed: (...args: ExtractArgs<Contract['calls']['isAllowed']>) => Promise<CallReturn<'isAllowed'>>
   startGovernanceChange: (...args: ExtractArgs<Contract['mutations']['startGovernanceChange']>) => Promise<Address>
   confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) => Promise<Address>
   cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) => Promise<Address>
@@ -3464,12 +4378,19 @@ export type SDK = {
   setMinYieldWithdrawAmount: (
     ...args: ExtractArgs<Contract['mutations']['setMinYieldWithdrawAmount']>
   ) => Promise<Address>
-  setApprovedVaultToken: (...args: ExtractArgs<Contract['mutations']['setApprovedVaultToken']>) => Promise<Address>
+  setIsLeveragedVault: (...args: ExtractArgs<Contract['mutations']['setIsLeveragedVault']>) => Promise<Address>
+  setShouldEnforceAllowlist: (
+    ...args: ExtractArgs<Contract['mutations']['setShouldEnforceAllowlist']>
+  ) => Promise<Address>
+  setAllowed: (...args: ExtractArgs<Contract['mutations']['setAllowed']>) => Promise<Address>
+  setAllowedBatch: (...args: ExtractArgs<Contract['mutations']['setAllowedBatch']>) => Promise<Address>
   setDefaultTargetVaultToken: (
     ...args: ExtractArgs<Contract['mutations']['setDefaultTargetVaultToken']>
   ) => Promise<Address>
   setPerformanceFee: (...args: ExtractArgs<Contract['mutations']['setPerformanceFee']>) => Promise<Address>
   setRedemptionBuffer: (...args: ExtractArgs<Contract['mutations']['setRedemptionBuffer']>) => Promise<Address>
+  setApprovedVaultToken: (...args: ExtractArgs<Contract['mutations']['setApprovedVaultToken']>) => Promise<Address>
+  setApprovedVaultTokens: (...args: ExtractArgs<Contract['mutations']['setApprovedVaultTokens']>) => Promise<Address>
 }
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
@@ -3557,10 +4478,12 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.isPaused(...args)) as Promise<CallReturn<'isPaused'>>,
     isEarnVault: (...args: ExtractArgs<Contract['calls']['isEarnVault']>) =>
       singleQuery(publicClient!, call.isEarnVault(...args)) as Promise<CallReturn<'isEarnVault'>>,
+    isLeveragedVault: (...args: ExtractArgs<Contract['calls']['isLeveragedVault']>) =>
+      singleQuery(publicClient!, call.isLeveragedVault(...args)) as Promise<CallReturn<'isLeveragedVault'>>,
+    isBasicEarnVault: (...args: ExtractArgs<Contract['calls']['isBasicEarnVault']>) =>
+      singleQuery(publicClient!, call.isBasicEarnVault(...args)) as Promise<CallReturn<'isBasicEarnVault'>>,
     hasConfig: (...args: ExtractArgs<Contract['calls']['hasConfig']>) =>
       singleQuery(publicClient!, call.hasConfig(...args)) as Promise<CallReturn<'hasConfig'>>,
-    isValidVaultToken: (...args: ExtractArgs<Contract['calls']['isValidVaultToken']>) =>
-      singleQuery(publicClient!, call.isValidVaultToken(...args)) as Promise<CallReturn<'isValidVaultToken'>>,
     isValidDefaultTargetVaultToken: (...args: ExtractArgs<Contract['calls']['isValidDefaultTargetVaultToken']>) =>
       singleQuery(publicClient!, call.isValidDefaultTargetVaultToken(...args)) as Promise<
         CallReturn<'isValidDefaultTargetVaultToken'>
@@ -3570,6 +4493,20 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
     isValidRedemptionBuffer: (...args: ExtractArgs<Contract['calls']['isValidRedemptionBuffer']>) =>
       singleQuery(publicClient!, call.isValidRedemptionBuffer(...args)) as Promise<
         CallReturn<'isValidRedemptionBuffer'>
+      >,
+    getApprovedVaultTokens: (...args: ExtractArgs<Contract['calls']['getApprovedVaultTokens']>) =>
+      singleQuery(publicClient!, call.getApprovedVaultTokens(...args)) as Promise<CallReturn<'getApprovedVaultTokens'>>,
+    getAssetVaultTokens: (...args: ExtractArgs<Contract['calls']['getAssetVaultTokens']>) =>
+      singleQuery(publicClient!, call.getAssetVaultTokens(...args)) as Promise<CallReturn<'getAssetVaultTokens'>>,
+    getNumApprovedVaultTokens: (...args: ExtractArgs<Contract['calls']['getNumApprovedVaultTokens']>) =>
+      singleQuery(publicClient!, call.getNumApprovedVaultTokens(...args)) as Promise<
+        CallReturn<'getNumApprovedVaultTokens'>
+      >,
+    getNumAssetVaultTokens: (...args: ExtractArgs<Contract['calls']['getNumAssetVaultTokens']>) =>
+      singleQuery(publicClient!, call.getNumAssetVaultTokens(...args)) as Promise<CallReturn<'getNumAssetVaultTokens'>>,
+    isApprovedVaultTokenForAsset: (...args: ExtractArgs<Contract['calls']['isApprovedVaultTokenForAsset']>) =>
+      singleQuery(publicClient!, call.isApprovedVaultTokenForAsset(...args)) as Promise<
+        CallReturn<'isApprovedVaultTokenForAsset'>
       >,
     canDeposit: (...args: ExtractArgs<Contract['calls']['canDeposit']>) =>
       singleQuery(publicClient!, call.canDeposit(...args)) as Promise<CallReturn<'canDeposit'>>,
@@ -3593,6 +4530,10 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       >,
     shouldAutoDeposit: (...args: ExtractArgs<Contract['calls']['shouldAutoDeposit']>) =>
       singleQuery(publicClient!, call.shouldAutoDeposit(...args)) as Promise<CallReturn<'shouldAutoDeposit'>>,
+    shouldEnforceAllowlist: (...args: ExtractArgs<Contract['calls']['shouldEnforceAllowlist']>) =>
+      singleQuery(publicClient!, call.shouldEnforceAllowlist(...args)) as Promise<CallReturn<'shouldEnforceAllowlist'>>,
+    isUserAllowed: (...args: ExtractArgs<Contract['calls']['isUserAllowed']>) =>
+      singleQuery(publicClient!, call.isUserAllowed(...args)) as Promise<CallReturn<'isUserAllowed'>>,
     isApprovedVaultTokenByAddr: (...args: ExtractArgs<Contract['calls']['isApprovedVaultTokenByAddr']>) =>
       singleQuery(publicClient!, call.isApprovedVaultTokenByAddr(...args)) as Promise<
         CallReturn<'isApprovedVaultTokenByAddr'>
@@ -3623,10 +4564,32 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       >,
     getDepositConfig: (...args: ExtractArgs<Contract['calls']['getDepositConfig']>) =>
       singleQuery(publicClient!, call.getDepositConfig(...args)) as Promise<CallReturn<'getDepositConfig'>>,
+    canUserDeposit: (...args: ExtractArgs<Contract['calls']['canUserDeposit']>) =>
+      singleQuery(publicClient!, call.canUserDeposit(...args)) as Promise<CallReturn<'canUserDeposit'>>,
     vaultConfigs: (...args: ExtractArgs<Contract['calls']['vaultConfigs']>) =>
       singleQuery(publicClient!, call.vaultConfigs(...args)) as Promise<CallReturn<'vaultConfigs'>>,
     isApprovedVaultToken: (...args: ExtractArgs<Contract['calls']['isApprovedVaultToken']>) =>
       singleQuery(publicClient!, call.isApprovedVaultToken(...args)) as Promise<CallReturn<'isApprovedVaultToken'>>,
+    approvedVaultTokens: (...args: ExtractArgs<Contract['calls']['approvedVaultTokens']>) =>
+      singleQuery(publicClient!, call.approvedVaultTokens(...args)) as Promise<CallReturn<'approvedVaultTokens'>>,
+    indexOfApprovedVaultToken: (...args: ExtractArgs<Contract['calls']['indexOfApprovedVaultToken']>) =>
+      singleQuery(publicClient!, call.indexOfApprovedVaultToken(...args)) as Promise<
+        CallReturn<'indexOfApprovedVaultToken'>
+      >,
+    numApprovedVaultTokens: (...args: ExtractArgs<Contract['calls']['numApprovedVaultTokens']>) =>
+      singleQuery(publicClient!, call.numApprovedVaultTokens(...args)) as Promise<CallReturn<'numApprovedVaultTokens'>>,
+    assetVaultTokens: (...args: ExtractArgs<Contract['calls']['assetVaultTokens']>) =>
+      singleQuery(publicClient!, call.assetVaultTokens(...args)) as Promise<CallReturn<'assetVaultTokens'>>,
+    indexOfAssetVaultToken: (...args: ExtractArgs<Contract['calls']['indexOfAssetVaultToken']>) =>
+      singleQuery(publicClient!, call.indexOfAssetVaultToken(...args)) as Promise<CallReturn<'indexOfAssetVaultToken'>>,
+    numAssetVaultTokens: (...args: ExtractArgs<Contract['calls']['numAssetVaultTokens']>) =>
+      singleQuery(publicClient!, call.numAssetVaultTokens(...args)) as Promise<CallReturn<'numAssetVaultTokens'>>,
+    assetVaultTokenRefCount: (...args: ExtractArgs<Contract['calls']['assetVaultTokenRefCount']>) =>
+      singleQuery(publicClient!, call.assetVaultTokenRefCount(...args)) as Promise<
+        CallReturn<'assetVaultTokenRefCount'>
+      >,
+    isAllowed: (...args: ExtractArgs<Contract['calls']['isAllowed']>) =>
+      singleQuery(publicClient!, call.isAllowed(...args)) as Promise<CallReturn<'isAllowed'>>,
 
     // Mutations
     startGovernanceChange: (...args: ExtractArgs<Contract['mutations']['startGovernanceChange']>) =>
@@ -3674,13 +4637,23 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.setShouldAutoDeposit)(...args),
     setMinYieldWithdrawAmount: (...args: ExtractArgs<Contract['mutations']['setMinYieldWithdrawAmount']>) =>
       mutate(walletClient!, mutation.setMinYieldWithdrawAmount)(...args),
-    setApprovedVaultToken: (...args: ExtractArgs<Contract['mutations']['setApprovedVaultToken']>) =>
-      mutate(walletClient!, mutation.setApprovedVaultToken)(...args),
+    setIsLeveragedVault: (...args: ExtractArgs<Contract['mutations']['setIsLeveragedVault']>) =>
+      mutate(walletClient!, mutation.setIsLeveragedVault)(...args),
+    setShouldEnforceAllowlist: (...args: ExtractArgs<Contract['mutations']['setShouldEnforceAllowlist']>) =>
+      mutate(walletClient!, mutation.setShouldEnforceAllowlist)(...args),
+    setAllowed: (...args: ExtractArgs<Contract['mutations']['setAllowed']>) =>
+      mutate(walletClient!, mutation.setAllowed)(...args),
+    setAllowedBatch: (...args: ExtractArgs<Contract['mutations']['setAllowedBatch']>) =>
+      mutate(walletClient!, mutation.setAllowedBatch)(...args),
     setDefaultTargetVaultToken: (...args: ExtractArgs<Contract['mutations']['setDefaultTargetVaultToken']>) =>
       mutate(walletClient!, mutation.setDefaultTargetVaultToken)(...args),
     setPerformanceFee: (...args: ExtractArgs<Contract['mutations']['setPerformanceFee']>) =>
       mutate(walletClient!, mutation.setPerformanceFee)(...args),
     setRedemptionBuffer: (...args: ExtractArgs<Contract['mutations']['setRedemptionBuffer']>) =>
       mutate(walletClient!, mutation.setRedemptionBuffer)(...args),
+    setApprovedVaultToken: (...args: ExtractArgs<Contract['mutations']['setApprovedVaultToken']>) =>
+      mutate(walletClient!, mutation.setApprovedVaultToken)(...args),
+    setApprovedVaultTokens: (...args: ExtractArgs<Contract['mutations']['setApprovedVaultTokens']>) =>
+      mutate(walletClient!, mutation.setApprovedVaultTokens)(...args),
   }
 }

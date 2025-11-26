@@ -232,6 +232,60 @@ export const abi = [
     type: 'event',
   },
   {
+    name: 'PendingApprovedVaultTokensChange',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'numTokens',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'isApproved',
+        type: 'bool',
+        indexed: false,
+      },
+      {
+        name: 'confirmationBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'actionId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'ApprovedVaultTokensSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'numTokens',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'isApproved',
+        type: 'bool',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
     name: 'PendingPerformanceFeeChange',
     inputs: [
       {
@@ -364,6 +418,50 @@ export const abi = [
     type: 'event',
   },
   {
+    name: 'PendingIsLeveragedVaultChange',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'isLeveragedVault',
+        type: 'bool',
+        indexed: false,
+      },
+      {
+        name: 'confirmationBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'actionId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'IsLeveragedVaultSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'isLeveragedVault',
+        type: 'bool',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
     name: 'CanDepositSet',
     inputs: [
       {
@@ -452,6 +550,82 @@ export const abi = [
     type: 'event',
   },
   {
+    name: 'ShouldEnforceAllowlistSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'shouldEnforce',
+        type: 'bool',
+        indexed: false,
+      },
+      {
+        name: 'caller',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'AllowlistUserSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'user',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'isAllowed',
+        type: 'bool',
+        indexed: false,
+      },
+      {
+        name: 'caller',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'AllowlistBatchSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'numUsers',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'isAllowed',
+        type: 'bool',
+        indexed: false,
+      },
+      {
+        name: 'caller',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
     name: 'PendingCollateralVaultChange',
     inputs: [
       {
@@ -472,6 +646,11 @@ export const abi = [
       {
         name: 'legoId',
         type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'shouldMaxWithdraw',
+        type: 'bool',
         indexed: false,
       },
       {
@@ -539,6 +718,11 @@ export const abi = [
         indexed: false,
       },
       {
+        name: 'shouldMaxWithdraw',
+        type: 'bool',
+        indexed: false,
+      },
+      {
         name: 'confirmationBlock',
         type: 'uint256',
         indexed: false,
@@ -580,7 +764,7 @@ export const abi = [
     type: 'event',
   },
   {
-    name: 'PendingUsdcSlippageChange',
+    name: 'PendingSlippagesChange',
     inputs: [
       {
         name: 'vaultAddr',
@@ -588,7 +772,12 @@ export const abi = [
         indexed: true,
       },
       {
-        name: 'slippage',
+        name: 'usdcSlippage',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'greenSlippage',
         type: 'uint256',
         indexed: false,
       },
@@ -607,7 +796,7 @@ export const abi = [
     type: 'event',
   },
   {
-    name: 'UsdcSlippageSet',
+    name: 'SlippagesSet',
     inputs: [
       {
         name: 'vaultAddr',
@@ -615,51 +804,12 @@ export const abi = [
         indexed: true,
       },
       {
-        name: 'slippage',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
-    name: 'PendingGreenSlippageChange',
-    inputs: [
-      {
-        name: 'vaultAddr',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'slippage',
+        name: 'usdcSlippage',
         type: 'uint256',
         indexed: false,
       },
       {
-        name: 'confirmationBlock',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'actionId',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
-    name: 'GreenSlippageSet',
-    inputs: [
-      {
-        name: 'vaultAddr',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'slippage',
+        name: 'greenSlippage',
         type: 'uint256',
         indexed: false,
       },
@@ -838,6 +988,342 @@ export const abi = [
         name: 'manager',
         type: 'address',
         indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PriceSnapshotAdded',
+    inputs: [
+      {
+        name: 'legoId',
+        type: 'uint256',
+        indexed: true,
+      },
+      {
+        name: 'legoAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'vaultToken',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'success',
+        type: 'bool',
+        indexed: false,
+      },
+      {
+        name: 'caller',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'YieldPositionUpdated',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'vaultToken',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'caller',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PerformanceFeesClaimed',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'amount',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'caller',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PendingRegisterVaultTokenOnLegoChange',
+    inputs: [
+      {
+        name: 'legoId',
+        type: 'uint256',
+        indexed: true,
+      },
+      {
+        name: 'asset',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'vaultToken',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'confirmationBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'actionId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'VaultTokenRegisteredOnLego',
+    inputs: [
+      {
+        name: 'legoId',
+        type: 'uint256',
+        indexed: true,
+      },
+      {
+        name: 'legoAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'asset',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'vaultToken',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'VaultTokenDeregisteredOnLego',
+    inputs: [
+      {
+        name: 'legoId',
+        type: 'uint256',
+        indexed: true,
+      },
+      {
+        name: 'legoAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'asset',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'vaultToken',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'caller',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PendingMorphoRewardsAddrChange',
+    inputs: [
+      {
+        name: 'legoId',
+        type: 'uint256',
+        indexed: true,
+      },
+      {
+        name: 'rewardsAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'confirmationBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'actionId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'MorphoRewardsAddrSet',
+    inputs: [
+      {
+        name: 'legoId',
+        type: 'uint256',
+        indexed: true,
+      },
+      {
+        name: 'legoAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'rewardsAddr',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PendingEulerRewardsAddrChange',
+    inputs: [
+      {
+        name: 'legoId',
+        type: 'uint256',
+        indexed: true,
+      },
+      {
+        name: 'rewardsAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'confirmationBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'actionId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'EulerRewardsAddrSet',
+    inputs: [
+      {
+        name: 'legoId',
+        type: 'uint256',
+        indexed: true,
+      },
+      {
+        name: 'legoAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'rewardsAddr',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PendingCompRewardsAddrChange',
+    inputs: [
+      {
+        name: 'legoId',
+        type: 'uint256',
+        indexed: true,
+      },
+      {
+        name: 'rewardsAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'confirmationBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'actionId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'CompRewardsAddrSet',
+    inputs: [
+      {
+        name: 'legoId',
+        type: 'uint256',
+        indexed: true,
+      },
+      {
+        name: 'legoAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'rewardsAddr',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'LeftoversSwept',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'amount',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'caller',
+        type: 'address',
+        indexed: false,
       },
     ],
     anonymous: false,
@@ -1618,6 +2104,158 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'setShouldEnforceAllowlist',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_shouldEnforce',
+        type: 'bool',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setAllowed',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_user',
+        type: 'address',
+      },
+      {
+        name: '_isAllowed',
+        type: 'bool',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setAllowedBatch',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_users',
+        type: 'address[]',
+      },
+      {
+        name: '_isAllowed',
+        type: 'bool',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'addPriceSnapshot',
+    inputs: [
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'deregisterVaultTokenOnLego',
+    inputs: [
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'updateYieldPosition',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'claimPerformanceFees',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'sweepLeftovers',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'setRedemptionBuffer',
     inputs: [
       {
@@ -1696,7 +2334,7 @@ export const abi = [
     name: 'setApprovedVaultToken',
     inputs: [
       {
-        name: '_vaultAddr',
+        name: '_undyVaultAddr',
         type: 'address',
       },
       {
@@ -1705,6 +2343,39 @@ export const abi = [
       },
       {
         name: '_isApproved',
+        type: 'bool',
+      },
+      {
+        name: '_shouldMaxWithdraw',
+        type: 'bool',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setApprovedVaultTokens',
+    inputs: [
+      {
+        name: '_undyVaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_vaultTokens',
+        type: 'address[]',
+      },
+      {
+        name: '_isApproved',
+        type: 'bool',
+      },
+      {
+        name: '_shouldMaxWithdraw',
         type: 'bool',
       },
     ],
@@ -1781,6 +2452,27 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'setIsLeveragedVault',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_isLeveragedVault',
+        type: 'bool',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'setCollateralVault',
     inputs: [
       {
@@ -1792,12 +2484,16 @@ export const abi = [
         type: 'address',
       },
       {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
         name: '_ripeVaultId',
         type: 'uint256',
       },
       {
-        name: '_legoId',
-        type: 'uint256',
+        name: '_shouldMaxWithdraw',
+        type: 'bool',
       },
     ],
     outputs: [
@@ -1828,26 +2524,9 @@ export const abi = [
         name: '_ripeVaultId',
         type: 'uint256',
       },
-    ],
-    outputs: [
       {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'setUsdcSlippageAllowed',
-    inputs: [
-      {
-        name: '_vaultAddr',
-        type: 'address',
-      },
-      {
-        name: '_slippage',
-        type: 'uint256',
+        name: '_shouldMaxWithdraw',
+        type: 'bool',
       },
     ],
     outputs: [
@@ -1860,14 +2539,18 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'setGreenSlippageAllowed',
+    name: 'setSlippagesAllowed',
     inputs: [
       {
         name: '_vaultAddr',
         type: 'address',
       },
       {
-        name: '_slippage',
+        name: '_usdcSlippage',
+        type: 'uint256',
+      },
+      {
+        name: '_greenSlippage',
         type: 'uint256',
       },
     ],
@@ -1952,6 +2635,94 @@ export const abi = [
       },
       {
         name: '_manager',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'registerVaultTokenOnLego',
+    inputs: [
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setMorphoRewardsAddr',
+    inputs: [
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_rewardsAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setEulerRewardsAddr',
+    inputs: [
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_rewardsAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setCompRewardsAddr',
+    inputs: [
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_rewardsAddr',
         type: 'address',
       },
     ],
@@ -2139,6 +2910,45 @@ export const abi = [
             name: 'isApproved',
             type: 'bool',
           },
+          {
+            name: 'shouldMaxWithdraw',
+            type: 'bool',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingApprovedVaultTokens',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'vaultAddr',
+            type: 'address',
+          },
+          {
+            name: 'vaultTokens',
+            type: 'address[]',
+          },
+          {
+            name: 'isApproved',
+            type: 'bool',
+          },
+          {
+            name: 'shouldMaxWithdraw',
+            type: 'bool',
+          },
         ],
       },
     ],
@@ -2227,6 +3037,33 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
+    name: 'pendingIsLeveragedVault',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'vaultAddr',
+            type: 'address',
+          },
+          {
+            name: 'isLeveragedVault',
+            type: 'bool',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     name: 'pendingCollateralVault',
     inputs: [
       {
@@ -2254,6 +3091,10 @@ export const abi = [
           {
             name: 'legoId',
             type: 'uint256',
+          },
+          {
+            name: 'shouldMaxWithdraw',
+            type: 'bool',
           },
         ],
       },
@@ -2290,6 +3131,10 @@ export const abi = [
             name: 'ripeVaultId',
             type: 'uint256',
           },
+          {
+            name: 'shouldMaxWithdraw',
+            type: 'bool',
+          },
         ],
       },
     ],
@@ -2297,7 +3142,7 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'pendingUsdcSlippage',
+    name: 'pendingSlippages',
     inputs: [
       {
         name: 'arg0',
@@ -2314,34 +3159,11 @@ export const abi = [
             type: 'address',
           },
           {
-            name: 'slippage',
+            name: 'usdcSlippage',
             type: 'uint256',
           },
-        ],
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'pendingGreenSlippage',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'tuple',
-        components: [
           {
-            name: 'vaultAddr',
-            type: 'address',
-          },
-          {
-            name: 'slippage',
+            name: 'greenSlippage',
             type: 'uint256',
           },
         ],
@@ -2457,6 +3279,118 @@ export const abi = [
     ],
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingRegisterVaultTokenOnLego',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'asset',
+            type: 'address',
+          },
+          {
+            name: 'vaultToken',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingMorphoRewardsAddr',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'rewardsAddr',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingEulerRewardsAddr',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'rewardsAddr',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingCompRewardsAddr',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'rewardsAddr',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'constructor',
     inputs: [
@@ -2481,7 +3415,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xAb0e52dDBcF376f6716Dd6187861FC3551518987'
+export const deployAddress: Address | undefined = '0xDd7507f7FC1845Ba0f07C3f0164D7b114C150117'
 
 export type Contract = {
   calls: {
@@ -2533,24 +3467,57 @@ export type Contract = {
     }>
     pendingApprovedVaultToken: (
       arg0: bigint,
-    ) => Promise<{ vaultAddr: `0x${string}`; vaultToken: `0x${string}`; isApproved: boolean }>
+    ) => Promise<{
+      vaultAddr: `0x${string}`
+      vaultToken: `0x${string}`
+      isApproved: boolean
+      shouldMaxWithdraw: boolean
+    }>
+    pendingApprovedVaultTokens: (
+      arg0: bigint,
+    ) => Promise<{
+      vaultAddr: `0x${string}`
+      vaultTokens: `0x${string}`[]
+      isApproved: boolean
+      shouldMaxWithdraw: boolean
+    }>
     pendingPerformanceFee: (arg0: bigint) => Promise<{ vaultAddr: `0x${string}`; performanceFee: bigint }>
     pendingDefaultTargetVaultToken: (
       arg0: bigint,
     ) => Promise<{ vaultAddr: `0x${string}`; targetVaultToken: `0x${string}` }>
     pendingMaxDepositAmount: (arg0: bigint) => Promise<{ vaultAddr: `0x${string}`; maxDepositAmount: bigint }>
+    pendingIsLeveragedVault: (arg0: bigint) => Promise<{ vaultAddr: `0x${string}`; isLeveragedVault: boolean }>
     pendingCollateralVault: (
       arg0: bigint,
-    ) => Promise<{ vaultAddr: `0x${string}`; vaultToken: `0x${string}`; ripeVaultId: bigint; legoId: bigint }>
+    ) => Promise<{
+      vaultAddr: `0x${string}`
+      vaultToken: `0x${string}`
+      ripeVaultId: bigint
+      legoId: bigint
+      shouldMaxWithdraw: boolean
+    }>
     pendingLeverageVault: (
       arg0: bigint,
-    ) => Promise<{ vaultAddr: `0x${string}`; vaultToken: `0x${string}`; legoId: bigint; ripeVaultId: bigint }>
-    pendingUsdcSlippage: (arg0: bigint) => Promise<{ vaultAddr: `0x${string}`; slippage: bigint }>
-    pendingGreenSlippage: (arg0: bigint) => Promise<{ vaultAddr: `0x${string}`; slippage: bigint }>
+    ) => Promise<{
+      vaultAddr: `0x${string}`
+      vaultToken: `0x${string}`
+      legoId: bigint
+      ripeVaultId: bigint
+      shouldMaxWithdraw: boolean
+    }>
+    pendingSlippages: (
+      arg0: bigint,
+    ) => Promise<{ vaultAddr: `0x${string}`; usdcSlippage: bigint; greenSlippage: bigint }>
     pendingLevgVaultHelper: (arg0: bigint) => Promise<{ vaultAddr: `0x${string}`; levgVaultHelper: `0x${string}` }>
     pendingMaxDebtRatio: (arg0: bigint) => Promise<{ vaultAddr: `0x${string}`; ratio: bigint }>
     pendingAddManager: (arg0: bigint) => Promise<{ vaultAddr: `0x${string}`; manager: `0x${string}` }>
     pendingRemoveManager: (arg0: bigint) => Promise<{ vaultAddr: `0x${string}`; manager: `0x${string}` }>
+    pendingRegisterVaultTokenOnLego: (
+      arg0: bigint,
+    ) => Promise<{ legoId: bigint; asset: `0x${string}`; vaultToken: `0x${string}` }>
+    pendingMorphoRewardsAddr: (arg0: bigint) => Promise<{ legoId: bigint; rewardsAddr: `0x${string}` }>
+    pendingEulerRewardsAddr: (arg0: bigint) => Promise<{ legoId: bigint; rewardsAddr: `0x${string}` }>
+    pendingCompRewardsAddr: (arg0: bigint) => Promise<{ legoId: bigint; rewardsAddr: `0x${string}` }>
   }
   mutations: {
     startGovernanceChange: (newGov: `0x${string}`) => Promise<void>
@@ -2566,6 +3533,14 @@ export type Contract = {
     setCanWithdraw: (vaultAddr: `0x${string}`, canWithdraw: boolean) => Promise<void>
     setVaultOpsFrozen: (vaultAddr: `0x${string}`, isFrozen: boolean) => Promise<void>
     setShouldAutoDeposit: (vaultAddr: `0x${string}`, shouldAutoDeposit: boolean) => Promise<void>
+    setShouldEnforceAllowlist: (vaultAddr: `0x${string}`, shouldEnforce: boolean) => Promise<void>
+    setAllowed: (vaultAddr: `0x${string}`, user: `0x${string}`, isAllowed: boolean) => Promise<void>
+    setAllowedBatch: (vaultAddr: `0x${string}`, users: `0x${string}`[], isAllowed: boolean) => Promise<void>
+    addPriceSnapshot: (legoId: bigint, vaultToken: `0x${string}`) => Promise<boolean>
+    deregisterVaultTokenOnLego: (legoId: bigint, asset: `0x${string}`, vaultToken: `0x${string}`) => Promise<bigint>
+    updateYieldPosition: (vaultAddr: `0x${string}`, vaultToken: `0x${string}`) => Promise<void>
+    claimPerformanceFees: (vaultAddr: `0x${string}`) => Promise<bigint>
+    sweepLeftovers: (vaultAddr: `0x${string}`) => Promise<bigint>
     setRedemptionBuffer: (vaultAddr: `0x${string}`, buffer: bigint) => Promise<bigint>
     setMinYieldWithdrawAmount: (vaultAddr: `0x${string}`, amount: bigint) => Promise<bigint>
     setSnapShotPriceConfig: (
@@ -2575,28 +3550,45 @@ export type Contract = {
       maxUpsideDeviation: bigint,
       staleTime: bigint,
     ) => Promise<bigint>
-    setApprovedVaultToken: (vaultAddr: `0x${string}`, vaultToken: `0x${string}`, isApproved: boolean) => Promise<bigint>
+    setApprovedVaultToken: (
+      undyVaultAddr: `0x${string}`,
+      vaultToken: `0x${string}`,
+      isApproved: boolean,
+      shouldMaxWithdraw: boolean,
+    ) => Promise<bigint>
+    setApprovedVaultTokens: (
+      undyVaultAddr: `0x${string}`,
+      vaultTokens: `0x${string}`[],
+      isApproved: boolean,
+      shouldMaxWithdraw: boolean,
+    ) => Promise<bigint>
     setPerformanceFee: (vaultAddr: `0x${string}`, performanceFee: bigint) => Promise<bigint>
     setDefaultTargetVaultToken: (vaultAddr: `0x${string}`, targetVaultToken: `0x${string}`) => Promise<bigint>
     setMaxDepositAmount: (vaultAddr: `0x${string}`, maxDepositAmount: bigint) => Promise<bigint>
+    setIsLeveragedVault: (vaultAddr: `0x${string}`, isLeveragedVault: boolean) => Promise<bigint>
     setCollateralVault: (
       vaultAddr: `0x${string}`,
       vaultToken: `0x${string}`,
-      ripeVaultId: bigint,
       legoId: bigint,
+      ripeVaultId: bigint,
+      shouldMaxWithdraw: boolean,
     ) => Promise<bigint>
     setLeverageVault: (
       vaultAddr: `0x${string}`,
       vaultToken: `0x${string}`,
       legoId: bigint,
       ripeVaultId: bigint,
+      shouldMaxWithdraw: boolean,
     ) => Promise<bigint>
-    setUsdcSlippageAllowed: (vaultAddr: `0x${string}`, slippage: bigint) => Promise<bigint>
-    setGreenSlippageAllowed: (vaultAddr: `0x${string}`, slippage: bigint) => Promise<bigint>
+    setSlippagesAllowed: (vaultAddr: `0x${string}`, usdcSlippage: bigint, greenSlippage: bigint) => Promise<bigint>
     setLevgVaultHelper: (vaultAddr: `0x${string}`, levgVaultHelper: `0x${string}`) => Promise<bigint>
     setMaxDebtRatio: (vaultAddr: `0x${string}`, ratio: bigint) => Promise<bigint>
     addVaultManager: (vaultAddr: `0x${string}`, manager: `0x${string}`) => Promise<bigint>
     removeVaultManager: (vaultAddr: `0x${string}`, manager: `0x${string}`) => Promise<bigint>
+    registerVaultTokenOnLego: (legoId: bigint, asset: `0x${string}`, vaultToken: `0x${string}`) => Promise<bigint>
+    setMorphoRewardsAddr: (legoId: bigint, rewardsAddr: `0x${string}`) => Promise<bigint>
+    setEulerRewardsAddr: (legoId: bigint, rewardsAddr: `0x${string}`) => Promise<bigint>
+    setCompRewardsAddr: (legoId: bigint, rewardsAddr: `0x${string}`) => Promise<bigint>
     executePendingAction: (aid: bigint) => Promise<boolean>
     cancelPendingAction: (aid: bigint) => Promise<boolean>
   }
@@ -2640,6 +3632,14 @@ export type Contract = {
       actionId: bigint,
     ) => Promise<void>
     ApprovedVaultTokenSet: (vaultAddr: `0x${string}`, vaultToken: `0x${string}`, isApproved: boolean) => Promise<void>
+    PendingApprovedVaultTokensChange: (
+      vaultAddr: `0x${string}`,
+      numTokens: bigint,
+      isApproved: boolean,
+      confirmationBlock: bigint,
+      actionId: bigint,
+    ) => Promise<void>
+    ApprovedVaultTokensSet: (vaultAddr: `0x${string}`, numTokens: bigint, isApproved: boolean) => Promise<void>
     PendingPerformanceFeeChange: (
       vaultAddr: `0x${string}`,
       performanceFee: bigint,
@@ -2661,15 +3661,40 @@ export type Contract = {
       actionId: bigint,
     ) => Promise<void>
     MaxDepositAmountSet: (vaultAddr: `0x${string}`, maxDepositAmount: bigint) => Promise<void>
+    PendingIsLeveragedVaultChange: (
+      vaultAddr: `0x${string}`,
+      isLeveragedVault: boolean,
+      confirmationBlock: bigint,
+      actionId: bigint,
+    ) => Promise<void>
+    IsLeveragedVaultSet: (vaultAddr: `0x${string}`, isLeveragedVault: boolean) => Promise<void>
     CanDepositSet: (vaultAddr: `0x${string}`, canDeposit: boolean, caller: `0x${string}`) => Promise<void>
     CanWithdrawSet: (vaultAddr: `0x${string}`, canWithdraw: boolean, caller: `0x${string}`) => Promise<void>
     VaultOpsFrozenSet: (vaultAddr: `0x${string}`, isFrozen: boolean, caller: `0x${string}`) => Promise<void>
     ShouldAutoDepositSet: (vaultAddr: `0x${string}`, shouldAutoDeposit: boolean, caller: `0x${string}`) => Promise<void>
+    ShouldEnforceAllowlistSet: (
+      vaultAddr: `0x${string}`,
+      shouldEnforce: boolean,
+      caller: `0x${string}`,
+    ) => Promise<void>
+    AllowlistUserSet: (
+      vaultAddr: `0x${string}`,
+      user: `0x${string}`,
+      isAllowed: boolean,
+      caller: `0x${string}`,
+    ) => Promise<void>
+    AllowlistBatchSet: (
+      vaultAddr: `0x${string}`,
+      numUsers: bigint,
+      isAllowed: boolean,
+      caller: `0x${string}`,
+    ) => Promise<void>
     PendingCollateralVaultChange: (
       vaultAddr: `0x${string}`,
       vaultToken: `0x${string}`,
       ripeVaultId: bigint,
       legoId: bigint,
+      shouldMaxWithdraw: boolean,
       confirmationBlock: bigint,
       actionId: bigint,
     ) => Promise<void>
@@ -2684,6 +3709,7 @@ export type Contract = {
       vaultToken: `0x${string}`,
       legoId: bigint,
       ripeVaultId: bigint,
+      shouldMaxWithdraw: boolean,
       confirmationBlock: bigint,
       actionId: bigint,
     ) => Promise<void>
@@ -2693,20 +3719,14 @@ export type Contract = {
       legoId: bigint,
       ripeVaultId: bigint,
     ) => Promise<void>
-    PendingUsdcSlippageChange: (
+    PendingSlippagesChange: (
       vaultAddr: `0x${string}`,
-      slippage: bigint,
+      usdcSlippage: bigint,
+      greenSlippage: bigint,
       confirmationBlock: bigint,
       actionId: bigint,
     ) => Promise<void>
-    UsdcSlippageSet: (vaultAddr: `0x${string}`, slippage: bigint) => Promise<void>
-    PendingGreenSlippageChange: (
-      vaultAddr: `0x${string}`,
-      slippage: bigint,
-      confirmationBlock: bigint,
-      actionId: bigint,
-    ) => Promise<void>
-    GreenSlippageSet: (vaultAddr: `0x${string}`, slippage: bigint) => Promise<void>
+    SlippagesSet: (vaultAddr: `0x${string}`, usdcSlippage: bigint, greenSlippage: bigint) => Promise<void>
     PendingLevgVaultHelperChange: (
       vaultAddr: `0x${string}`,
       levgVaultHelper: `0x${string}`,
@@ -2735,6 +3755,57 @@ export type Contract = {
       actionId: bigint,
     ) => Promise<void>
     ManagerRemoved: (vaultAddr: `0x${string}`, manager: `0x${string}`) => Promise<void>
+    PriceSnapshotAdded: (
+      legoId: bigint,
+      legoAddr: `0x${string}`,
+      vaultToken: `0x${string}`,
+      success: boolean,
+      caller: `0x${string}`,
+    ) => Promise<void>
+    YieldPositionUpdated: (vaultAddr: `0x${string}`, vaultToken: `0x${string}`, caller: `0x${string}`) => Promise<void>
+    PerformanceFeesClaimed: (vaultAddr: `0x${string}`, amount: bigint, caller: `0x${string}`) => Promise<void>
+    PendingRegisterVaultTokenOnLegoChange: (
+      legoId: bigint,
+      asset: `0x${string}`,
+      vaultToken: `0x${string}`,
+      confirmationBlock: bigint,
+      actionId: bigint,
+    ) => Promise<void>
+    VaultTokenRegisteredOnLego: (
+      legoId: bigint,
+      legoAddr: `0x${string}`,
+      asset: `0x${string}`,
+      vaultToken: `0x${string}`,
+    ) => Promise<void>
+    VaultTokenDeregisteredOnLego: (
+      legoId: bigint,
+      legoAddr: `0x${string}`,
+      asset: `0x${string}`,
+      vaultToken: `0x${string}`,
+      caller: `0x${string}`,
+    ) => Promise<void>
+    PendingMorphoRewardsAddrChange: (
+      legoId: bigint,
+      rewardsAddr: `0x${string}`,
+      confirmationBlock: bigint,
+      actionId: bigint,
+    ) => Promise<void>
+    MorphoRewardsAddrSet: (legoId: bigint, legoAddr: `0x${string}`, rewardsAddr: `0x${string}`) => Promise<void>
+    PendingEulerRewardsAddrChange: (
+      legoId: bigint,
+      rewardsAddr: `0x${string}`,
+      confirmationBlock: bigint,
+      actionId: bigint,
+    ) => Promise<void>
+    EulerRewardsAddrSet: (legoId: bigint, legoAddr: `0x${string}`, rewardsAddr: `0x${string}`) => Promise<void>
+    PendingCompRewardsAddrChange: (
+      legoId: bigint,
+      rewardsAddr: `0x${string}`,
+      confirmationBlock: bigint,
+      actionId: bigint,
+    ) => Promise<void>
+    CompRewardsAddrSet: (legoId: bigint, legoAddr: `0x${string}`, rewardsAddr: `0x${string}`) => Promise<void>
+    LeftoversSwept: (vaultAddr: `0x${string}`, amount: bigint, caller: `0x${string}`) => Promise<void>
     GovChangeTimeLockModified: (prevTimeLock: bigint, newTimeLock: bigint) => Promise<void>
     ExpirationSet: (expiration: bigint) => Promise<void>
     ActionTimeLockSet: (newTimeLock: bigint, prevTimeLock: bigint) => Promise<void>
@@ -2856,20 +3927,22 @@ export const call: CallType = {
     getRequest('pendingSnapShotPriceConfig', args),
   pendingApprovedVaultToken: (...args: ExtractArgs<Contract['calls']['pendingApprovedVaultToken']>) =>
     getRequest('pendingApprovedVaultToken', args),
+  pendingApprovedVaultTokens: (...args: ExtractArgs<Contract['calls']['pendingApprovedVaultTokens']>) =>
+    getRequest('pendingApprovedVaultTokens', args),
   pendingPerformanceFee: (...args: ExtractArgs<Contract['calls']['pendingPerformanceFee']>) =>
     getRequest('pendingPerformanceFee', args),
   pendingDefaultTargetVaultToken: (...args: ExtractArgs<Contract['calls']['pendingDefaultTargetVaultToken']>) =>
     getRequest('pendingDefaultTargetVaultToken', args),
   pendingMaxDepositAmount: (...args: ExtractArgs<Contract['calls']['pendingMaxDepositAmount']>) =>
     getRequest('pendingMaxDepositAmount', args),
+  pendingIsLeveragedVault: (...args: ExtractArgs<Contract['calls']['pendingIsLeveragedVault']>) =>
+    getRequest('pendingIsLeveragedVault', args),
   pendingCollateralVault: (...args: ExtractArgs<Contract['calls']['pendingCollateralVault']>) =>
     getRequest('pendingCollateralVault', args),
   pendingLeverageVault: (...args: ExtractArgs<Contract['calls']['pendingLeverageVault']>) =>
     getRequest('pendingLeverageVault', args),
-  pendingUsdcSlippage: (...args: ExtractArgs<Contract['calls']['pendingUsdcSlippage']>) =>
-    getRequest('pendingUsdcSlippage', args),
-  pendingGreenSlippage: (...args: ExtractArgs<Contract['calls']['pendingGreenSlippage']>) =>
-    getRequest('pendingGreenSlippage', args),
+  pendingSlippages: (...args: ExtractArgs<Contract['calls']['pendingSlippages']>) =>
+    getRequest('pendingSlippages', args),
   pendingLevgVaultHelper: (...args: ExtractArgs<Contract['calls']['pendingLevgVaultHelper']>) =>
     getRequest('pendingLevgVaultHelper', args),
   pendingMaxDebtRatio: (...args: ExtractArgs<Contract['calls']['pendingMaxDebtRatio']>) =>
@@ -2878,6 +3951,14 @@ export const call: CallType = {
     getRequest('pendingAddManager', args),
   pendingRemoveManager: (...args: ExtractArgs<Contract['calls']['pendingRemoveManager']>) =>
     getRequest('pendingRemoveManager', args),
+  pendingRegisterVaultTokenOnLego: (...args: ExtractArgs<Contract['calls']['pendingRegisterVaultTokenOnLego']>) =>
+    getRequest('pendingRegisterVaultTokenOnLego', args),
+  pendingMorphoRewardsAddr: (...args: ExtractArgs<Contract['calls']['pendingMorphoRewardsAddr']>) =>
+    getRequest('pendingMorphoRewardsAddr', args),
+  pendingEulerRewardsAddr: (...args: ExtractArgs<Contract['calls']['pendingEulerRewardsAddr']>) =>
+    getRequest('pendingEulerRewardsAddr', args),
+  pendingCompRewardsAddr: (...args: ExtractArgs<Contract['calls']['pendingCompRewardsAddr']>) =>
+    getRequest('pendingCompRewardsAddr', args),
 }
 
 export type Mutations = keyof Contract['mutations']
@@ -2913,21 +3994,34 @@ export const mutation: {
   setCanWithdraw: getMutation('setCanWithdraw'),
   setVaultOpsFrozen: getMutation('setVaultOpsFrozen'),
   setShouldAutoDeposit: getMutation('setShouldAutoDeposit'),
+  setShouldEnforceAllowlist: getMutation('setShouldEnforceAllowlist'),
+  setAllowed: getMutation('setAllowed'),
+  setAllowedBatch: getMutation('setAllowedBatch'),
+  addPriceSnapshot: getMutation('addPriceSnapshot'),
+  deregisterVaultTokenOnLego: getMutation('deregisterVaultTokenOnLego'),
+  updateYieldPosition: getMutation('updateYieldPosition'),
+  claimPerformanceFees: getMutation('claimPerformanceFees'),
+  sweepLeftovers: getMutation('sweepLeftovers'),
   setRedemptionBuffer: getMutation('setRedemptionBuffer'),
   setMinYieldWithdrawAmount: getMutation('setMinYieldWithdrawAmount'),
   setSnapShotPriceConfig: getMutation('setSnapShotPriceConfig'),
   setApprovedVaultToken: getMutation('setApprovedVaultToken'),
+  setApprovedVaultTokens: getMutation('setApprovedVaultTokens'),
   setPerformanceFee: getMutation('setPerformanceFee'),
   setDefaultTargetVaultToken: getMutation('setDefaultTargetVaultToken'),
   setMaxDepositAmount: getMutation('setMaxDepositAmount'),
+  setIsLeveragedVault: getMutation('setIsLeveragedVault'),
   setCollateralVault: getMutation('setCollateralVault'),
   setLeverageVault: getMutation('setLeverageVault'),
-  setUsdcSlippageAllowed: getMutation('setUsdcSlippageAllowed'),
-  setGreenSlippageAllowed: getMutation('setGreenSlippageAllowed'),
+  setSlippagesAllowed: getMutation('setSlippagesAllowed'),
   setLevgVaultHelper: getMutation('setLevgVaultHelper'),
   setMaxDebtRatio: getMutation('setMaxDebtRatio'),
   addVaultManager: getMutation('addVaultManager'),
   removeVaultManager: getMutation('removeVaultManager'),
+  registerVaultTokenOnLego: getMutation('registerVaultTokenOnLego'),
+  setMorphoRewardsAddr: getMutation('setMorphoRewardsAddr'),
+  setEulerRewardsAddr: getMutation('setEulerRewardsAddr'),
+  setCompRewardsAddr: getMutation('setCompRewardsAddr'),
   executePendingAction: getMutation('executePendingAction'),
   cancelPendingAction: getMutation('cancelPendingAction'),
 }
@@ -2996,6 +4090,9 @@ export type SDK = {
   pendingApprovedVaultToken: (
     ...args: ExtractArgs<Contract['calls']['pendingApprovedVaultToken']>
   ) => Promise<CallReturn<'pendingApprovedVaultToken'>>
+  pendingApprovedVaultTokens: (
+    ...args: ExtractArgs<Contract['calls']['pendingApprovedVaultTokens']>
+  ) => Promise<CallReturn<'pendingApprovedVaultTokens'>>
   pendingPerformanceFee: (
     ...args: ExtractArgs<Contract['calls']['pendingPerformanceFee']>
   ) => Promise<CallReturn<'pendingPerformanceFee'>>
@@ -3005,18 +4102,18 @@ export type SDK = {
   pendingMaxDepositAmount: (
     ...args: ExtractArgs<Contract['calls']['pendingMaxDepositAmount']>
   ) => Promise<CallReturn<'pendingMaxDepositAmount'>>
+  pendingIsLeveragedVault: (
+    ...args: ExtractArgs<Contract['calls']['pendingIsLeveragedVault']>
+  ) => Promise<CallReturn<'pendingIsLeveragedVault'>>
   pendingCollateralVault: (
     ...args: ExtractArgs<Contract['calls']['pendingCollateralVault']>
   ) => Promise<CallReturn<'pendingCollateralVault'>>
   pendingLeverageVault: (
     ...args: ExtractArgs<Contract['calls']['pendingLeverageVault']>
   ) => Promise<CallReturn<'pendingLeverageVault'>>
-  pendingUsdcSlippage: (
-    ...args: ExtractArgs<Contract['calls']['pendingUsdcSlippage']>
-  ) => Promise<CallReturn<'pendingUsdcSlippage'>>
-  pendingGreenSlippage: (
-    ...args: ExtractArgs<Contract['calls']['pendingGreenSlippage']>
-  ) => Promise<CallReturn<'pendingGreenSlippage'>>
+  pendingSlippages: (
+    ...args: ExtractArgs<Contract['calls']['pendingSlippages']>
+  ) => Promise<CallReturn<'pendingSlippages'>>
   pendingLevgVaultHelper: (
     ...args: ExtractArgs<Contract['calls']['pendingLevgVaultHelper']>
   ) => Promise<CallReturn<'pendingLevgVaultHelper'>>
@@ -3029,6 +4126,18 @@ export type SDK = {
   pendingRemoveManager: (
     ...args: ExtractArgs<Contract['calls']['pendingRemoveManager']>
   ) => Promise<CallReturn<'pendingRemoveManager'>>
+  pendingRegisterVaultTokenOnLego: (
+    ...args: ExtractArgs<Contract['calls']['pendingRegisterVaultTokenOnLego']>
+  ) => Promise<CallReturn<'pendingRegisterVaultTokenOnLego'>>
+  pendingMorphoRewardsAddr: (
+    ...args: ExtractArgs<Contract['calls']['pendingMorphoRewardsAddr']>
+  ) => Promise<CallReturn<'pendingMorphoRewardsAddr'>>
+  pendingEulerRewardsAddr: (
+    ...args: ExtractArgs<Contract['calls']['pendingEulerRewardsAddr']>
+  ) => Promise<CallReturn<'pendingEulerRewardsAddr'>>
+  pendingCompRewardsAddr: (
+    ...args: ExtractArgs<Contract['calls']['pendingCompRewardsAddr']>
+  ) => Promise<CallReturn<'pendingCompRewardsAddr'>>
   startGovernanceChange: (...args: ExtractArgs<Contract['mutations']['startGovernanceChange']>) => Promise<Address>
   confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) => Promise<Address>
   cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) => Promise<Address>
@@ -3044,25 +4153,44 @@ export type SDK = {
   setCanWithdraw: (...args: ExtractArgs<Contract['mutations']['setCanWithdraw']>) => Promise<Address>
   setVaultOpsFrozen: (...args: ExtractArgs<Contract['mutations']['setVaultOpsFrozen']>) => Promise<Address>
   setShouldAutoDeposit: (...args: ExtractArgs<Contract['mutations']['setShouldAutoDeposit']>) => Promise<Address>
+  setShouldEnforceAllowlist: (
+    ...args: ExtractArgs<Contract['mutations']['setShouldEnforceAllowlist']>
+  ) => Promise<Address>
+  setAllowed: (...args: ExtractArgs<Contract['mutations']['setAllowed']>) => Promise<Address>
+  setAllowedBatch: (...args: ExtractArgs<Contract['mutations']['setAllowedBatch']>) => Promise<Address>
+  addPriceSnapshot: (...args: ExtractArgs<Contract['mutations']['addPriceSnapshot']>) => Promise<Address>
+  deregisterVaultTokenOnLego: (
+    ...args: ExtractArgs<Contract['mutations']['deregisterVaultTokenOnLego']>
+  ) => Promise<Address>
+  updateYieldPosition: (...args: ExtractArgs<Contract['mutations']['updateYieldPosition']>) => Promise<Address>
+  claimPerformanceFees: (...args: ExtractArgs<Contract['mutations']['claimPerformanceFees']>) => Promise<Address>
+  sweepLeftovers: (...args: ExtractArgs<Contract['mutations']['sweepLeftovers']>) => Promise<Address>
   setRedemptionBuffer: (...args: ExtractArgs<Contract['mutations']['setRedemptionBuffer']>) => Promise<Address>
   setMinYieldWithdrawAmount: (
     ...args: ExtractArgs<Contract['mutations']['setMinYieldWithdrawAmount']>
   ) => Promise<Address>
   setSnapShotPriceConfig: (...args: ExtractArgs<Contract['mutations']['setSnapShotPriceConfig']>) => Promise<Address>
   setApprovedVaultToken: (...args: ExtractArgs<Contract['mutations']['setApprovedVaultToken']>) => Promise<Address>
+  setApprovedVaultTokens: (...args: ExtractArgs<Contract['mutations']['setApprovedVaultTokens']>) => Promise<Address>
   setPerformanceFee: (...args: ExtractArgs<Contract['mutations']['setPerformanceFee']>) => Promise<Address>
   setDefaultTargetVaultToken: (
     ...args: ExtractArgs<Contract['mutations']['setDefaultTargetVaultToken']>
   ) => Promise<Address>
   setMaxDepositAmount: (...args: ExtractArgs<Contract['mutations']['setMaxDepositAmount']>) => Promise<Address>
+  setIsLeveragedVault: (...args: ExtractArgs<Contract['mutations']['setIsLeveragedVault']>) => Promise<Address>
   setCollateralVault: (...args: ExtractArgs<Contract['mutations']['setCollateralVault']>) => Promise<Address>
   setLeverageVault: (...args: ExtractArgs<Contract['mutations']['setLeverageVault']>) => Promise<Address>
-  setUsdcSlippageAllowed: (...args: ExtractArgs<Contract['mutations']['setUsdcSlippageAllowed']>) => Promise<Address>
-  setGreenSlippageAllowed: (...args: ExtractArgs<Contract['mutations']['setGreenSlippageAllowed']>) => Promise<Address>
+  setSlippagesAllowed: (...args: ExtractArgs<Contract['mutations']['setSlippagesAllowed']>) => Promise<Address>
   setLevgVaultHelper: (...args: ExtractArgs<Contract['mutations']['setLevgVaultHelper']>) => Promise<Address>
   setMaxDebtRatio: (...args: ExtractArgs<Contract['mutations']['setMaxDebtRatio']>) => Promise<Address>
   addVaultManager: (...args: ExtractArgs<Contract['mutations']['addVaultManager']>) => Promise<Address>
   removeVaultManager: (...args: ExtractArgs<Contract['mutations']['removeVaultManager']>) => Promise<Address>
+  registerVaultTokenOnLego: (
+    ...args: ExtractArgs<Contract['mutations']['registerVaultTokenOnLego']>
+  ) => Promise<Address>
+  setMorphoRewardsAddr: (...args: ExtractArgs<Contract['mutations']['setMorphoRewardsAddr']>) => Promise<Address>
+  setEulerRewardsAddr: (...args: ExtractArgs<Contract['mutations']['setEulerRewardsAddr']>) => Promise<Address>
+  setCompRewardsAddr: (...args: ExtractArgs<Contract['mutations']['setCompRewardsAddr']>) => Promise<Address>
   executePendingAction: (...args: ExtractArgs<Contract['mutations']['executePendingAction']>) => Promise<Address>
   cancelPendingAction: (...args: ExtractArgs<Contract['mutations']['cancelPendingAction']>) => Promise<Address>
 }
@@ -3140,6 +4268,10 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.pendingApprovedVaultToken(...args)) as Promise<
         CallReturn<'pendingApprovedVaultToken'>
       >,
+    pendingApprovedVaultTokens: (...args: ExtractArgs<Contract['calls']['pendingApprovedVaultTokens']>) =>
+      singleQuery(publicClient!, call.pendingApprovedVaultTokens(...args)) as Promise<
+        CallReturn<'pendingApprovedVaultTokens'>
+      >,
     pendingPerformanceFee: (...args: ExtractArgs<Contract['calls']['pendingPerformanceFee']>) =>
       singleQuery(publicClient!, call.pendingPerformanceFee(...args)) as Promise<CallReturn<'pendingPerformanceFee'>>,
     pendingDefaultTargetVaultToken: (...args: ExtractArgs<Contract['calls']['pendingDefaultTargetVaultToken']>) =>
@@ -3150,14 +4282,16 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.pendingMaxDepositAmount(...args)) as Promise<
         CallReturn<'pendingMaxDepositAmount'>
       >,
+    pendingIsLeveragedVault: (...args: ExtractArgs<Contract['calls']['pendingIsLeveragedVault']>) =>
+      singleQuery(publicClient!, call.pendingIsLeveragedVault(...args)) as Promise<
+        CallReturn<'pendingIsLeveragedVault'>
+      >,
     pendingCollateralVault: (...args: ExtractArgs<Contract['calls']['pendingCollateralVault']>) =>
       singleQuery(publicClient!, call.pendingCollateralVault(...args)) as Promise<CallReturn<'pendingCollateralVault'>>,
     pendingLeverageVault: (...args: ExtractArgs<Contract['calls']['pendingLeverageVault']>) =>
       singleQuery(publicClient!, call.pendingLeverageVault(...args)) as Promise<CallReturn<'pendingLeverageVault'>>,
-    pendingUsdcSlippage: (...args: ExtractArgs<Contract['calls']['pendingUsdcSlippage']>) =>
-      singleQuery(publicClient!, call.pendingUsdcSlippage(...args)) as Promise<CallReturn<'pendingUsdcSlippage'>>,
-    pendingGreenSlippage: (...args: ExtractArgs<Contract['calls']['pendingGreenSlippage']>) =>
-      singleQuery(publicClient!, call.pendingGreenSlippage(...args)) as Promise<CallReturn<'pendingGreenSlippage'>>,
+    pendingSlippages: (...args: ExtractArgs<Contract['calls']['pendingSlippages']>) =>
+      singleQuery(publicClient!, call.pendingSlippages(...args)) as Promise<CallReturn<'pendingSlippages'>>,
     pendingLevgVaultHelper: (...args: ExtractArgs<Contract['calls']['pendingLevgVaultHelper']>) =>
       singleQuery(publicClient!, call.pendingLevgVaultHelper(...args)) as Promise<CallReturn<'pendingLevgVaultHelper'>>,
     pendingMaxDebtRatio: (...args: ExtractArgs<Contract['calls']['pendingMaxDebtRatio']>) =>
@@ -3166,6 +4300,20 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.pendingAddManager(...args)) as Promise<CallReturn<'pendingAddManager'>>,
     pendingRemoveManager: (...args: ExtractArgs<Contract['calls']['pendingRemoveManager']>) =>
       singleQuery(publicClient!, call.pendingRemoveManager(...args)) as Promise<CallReturn<'pendingRemoveManager'>>,
+    pendingRegisterVaultTokenOnLego: (...args: ExtractArgs<Contract['calls']['pendingRegisterVaultTokenOnLego']>) =>
+      singleQuery(publicClient!, call.pendingRegisterVaultTokenOnLego(...args)) as Promise<
+        CallReturn<'pendingRegisterVaultTokenOnLego'>
+      >,
+    pendingMorphoRewardsAddr: (...args: ExtractArgs<Contract['calls']['pendingMorphoRewardsAddr']>) =>
+      singleQuery(publicClient!, call.pendingMorphoRewardsAddr(...args)) as Promise<
+        CallReturn<'pendingMorphoRewardsAddr'>
+      >,
+    pendingEulerRewardsAddr: (...args: ExtractArgs<Contract['calls']['pendingEulerRewardsAddr']>) =>
+      singleQuery(publicClient!, call.pendingEulerRewardsAddr(...args)) as Promise<
+        CallReturn<'pendingEulerRewardsAddr'>
+      >,
+    pendingCompRewardsAddr: (...args: ExtractArgs<Contract['calls']['pendingCompRewardsAddr']>) =>
+      singleQuery(publicClient!, call.pendingCompRewardsAddr(...args)) as Promise<CallReturn<'pendingCompRewardsAddr'>>,
 
     // Mutations
     startGovernanceChange: (...args: ExtractArgs<Contract['mutations']['startGovernanceChange']>) =>
@@ -3194,6 +4342,22 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.setVaultOpsFrozen)(...args),
     setShouldAutoDeposit: (...args: ExtractArgs<Contract['mutations']['setShouldAutoDeposit']>) =>
       mutate(walletClient!, mutation.setShouldAutoDeposit)(...args),
+    setShouldEnforceAllowlist: (...args: ExtractArgs<Contract['mutations']['setShouldEnforceAllowlist']>) =>
+      mutate(walletClient!, mutation.setShouldEnforceAllowlist)(...args),
+    setAllowed: (...args: ExtractArgs<Contract['mutations']['setAllowed']>) =>
+      mutate(walletClient!, mutation.setAllowed)(...args),
+    setAllowedBatch: (...args: ExtractArgs<Contract['mutations']['setAllowedBatch']>) =>
+      mutate(walletClient!, mutation.setAllowedBatch)(...args),
+    addPriceSnapshot: (...args: ExtractArgs<Contract['mutations']['addPriceSnapshot']>) =>
+      mutate(walletClient!, mutation.addPriceSnapshot)(...args),
+    deregisterVaultTokenOnLego: (...args: ExtractArgs<Contract['mutations']['deregisterVaultTokenOnLego']>) =>
+      mutate(walletClient!, mutation.deregisterVaultTokenOnLego)(...args),
+    updateYieldPosition: (...args: ExtractArgs<Contract['mutations']['updateYieldPosition']>) =>
+      mutate(walletClient!, mutation.updateYieldPosition)(...args),
+    claimPerformanceFees: (...args: ExtractArgs<Contract['mutations']['claimPerformanceFees']>) =>
+      mutate(walletClient!, mutation.claimPerformanceFees)(...args),
+    sweepLeftovers: (...args: ExtractArgs<Contract['mutations']['sweepLeftovers']>) =>
+      mutate(walletClient!, mutation.sweepLeftovers)(...args),
     setRedemptionBuffer: (...args: ExtractArgs<Contract['mutations']['setRedemptionBuffer']>) =>
       mutate(walletClient!, mutation.setRedemptionBuffer)(...args),
     setMinYieldWithdrawAmount: (...args: ExtractArgs<Contract['mutations']['setMinYieldWithdrawAmount']>) =>
@@ -3202,20 +4366,22 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.setSnapShotPriceConfig)(...args),
     setApprovedVaultToken: (...args: ExtractArgs<Contract['mutations']['setApprovedVaultToken']>) =>
       mutate(walletClient!, mutation.setApprovedVaultToken)(...args),
+    setApprovedVaultTokens: (...args: ExtractArgs<Contract['mutations']['setApprovedVaultTokens']>) =>
+      mutate(walletClient!, mutation.setApprovedVaultTokens)(...args),
     setPerformanceFee: (...args: ExtractArgs<Contract['mutations']['setPerformanceFee']>) =>
       mutate(walletClient!, mutation.setPerformanceFee)(...args),
     setDefaultTargetVaultToken: (...args: ExtractArgs<Contract['mutations']['setDefaultTargetVaultToken']>) =>
       mutate(walletClient!, mutation.setDefaultTargetVaultToken)(...args),
     setMaxDepositAmount: (...args: ExtractArgs<Contract['mutations']['setMaxDepositAmount']>) =>
       mutate(walletClient!, mutation.setMaxDepositAmount)(...args),
+    setIsLeveragedVault: (...args: ExtractArgs<Contract['mutations']['setIsLeveragedVault']>) =>
+      mutate(walletClient!, mutation.setIsLeveragedVault)(...args),
     setCollateralVault: (...args: ExtractArgs<Contract['mutations']['setCollateralVault']>) =>
       mutate(walletClient!, mutation.setCollateralVault)(...args),
     setLeverageVault: (...args: ExtractArgs<Contract['mutations']['setLeverageVault']>) =>
       mutate(walletClient!, mutation.setLeverageVault)(...args),
-    setUsdcSlippageAllowed: (...args: ExtractArgs<Contract['mutations']['setUsdcSlippageAllowed']>) =>
-      mutate(walletClient!, mutation.setUsdcSlippageAllowed)(...args),
-    setGreenSlippageAllowed: (...args: ExtractArgs<Contract['mutations']['setGreenSlippageAllowed']>) =>
-      mutate(walletClient!, mutation.setGreenSlippageAllowed)(...args),
+    setSlippagesAllowed: (...args: ExtractArgs<Contract['mutations']['setSlippagesAllowed']>) =>
+      mutate(walletClient!, mutation.setSlippagesAllowed)(...args),
     setLevgVaultHelper: (...args: ExtractArgs<Contract['mutations']['setLevgVaultHelper']>) =>
       mutate(walletClient!, mutation.setLevgVaultHelper)(...args),
     setMaxDebtRatio: (...args: ExtractArgs<Contract['mutations']['setMaxDebtRatio']>) =>
@@ -3224,6 +4390,14 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.addVaultManager)(...args),
     removeVaultManager: (...args: ExtractArgs<Contract['mutations']['removeVaultManager']>) =>
       mutate(walletClient!, mutation.removeVaultManager)(...args),
+    registerVaultTokenOnLego: (...args: ExtractArgs<Contract['mutations']['registerVaultTokenOnLego']>) =>
+      mutate(walletClient!, mutation.registerVaultTokenOnLego)(...args),
+    setMorphoRewardsAddr: (...args: ExtractArgs<Contract['mutations']['setMorphoRewardsAddr']>) =>
+      mutate(walletClient!, mutation.setMorphoRewardsAddr)(...args),
+    setEulerRewardsAddr: (...args: ExtractArgs<Contract['mutations']['setEulerRewardsAddr']>) =>
+      mutate(walletClient!, mutation.setEulerRewardsAddr)(...args),
+    setCompRewardsAddr: (...args: ExtractArgs<Contract['mutations']['setCompRewardsAddr']>) =>
+      mutate(walletClient!, mutation.setCompRewardsAddr)(...args),
     executePendingAction: (...args: ExtractArgs<Contract['mutations']['executePendingAction']>) =>
       mutate(walletClient!, mutation.executePendingAction)(...args),
     cancelPendingAction: (...args: ExtractArgs<Contract['mutations']['cancelPendingAction']>) =>

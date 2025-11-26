@@ -396,8 +396,30 @@ export const abi = [
             type: 'bool',
           },
           {
+            name: 'onlyApprovedYieldOpps',
+            type: 'bool',
+          },
+          {
             name: 'allowedLegos',
             type: 'uint256[]',
+          },
+        ],
+      },
+      {
+        name: '_swapPerms',
+        type: 'tuple',
+        components: [
+          {
+            name: 'mustHaveUsdValue',
+            type: 'bool',
+          },
+          {
+            name: 'maxNumSwapsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'maxSlippage',
+            type: 'uint256',
           },
         ],
       },
@@ -529,8 +551,30 @@ export const abi = [
             type: 'bool',
           },
           {
+            name: 'onlyApprovedYieldOpps',
+            type: 'bool',
+          },
+          {
             name: 'allowedLegos',
             type: 'uint256[]',
+          },
+        ],
+      },
+      {
+        name: '_swapPerms',
+        type: 'tuple',
+        components: [
+          {
+            name: 'mustHaveUsdValue',
+            type: 'bool',
+          },
+          {
+            name: 'maxNumSwapsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'maxSlippage',
+            type: 'uint256',
           },
         ],
       },
@@ -666,8 +710,30 @@ export const abi = [
             type: 'bool',
           },
           {
+            name: 'onlyApprovedYieldOpps',
+            type: 'bool',
+          },
+          {
             name: 'allowedLegos',
             type: 'uint256[]',
+          },
+        ],
+      },
+      {
+        name: '_swapPerms',
+        type: 'tuple',
+        components: [
+          {
+            name: 'mustHaveUsdValue',
+            type: 'bool',
+          },
+          {
+            name: 'maxNumSwapsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'maxSlippage',
+            type: 'uint256',
           },
         ],
       },
@@ -807,8 +873,30 @@ export const abi = [
             type: 'bool',
           },
           {
+            name: 'onlyApprovedYieldOpps',
+            type: 'bool',
+          },
+          {
             name: 'allowedLegos',
             type: 'uint256[]',
+          },
+        ],
+      },
+      {
+        name: '_swapPerms',
+        type: 'tuple',
+        components: [
+          {
+            name: 'mustHaveUsdValue',
+            type: 'bool',
+          },
+          {
+            name: 'maxNumSwapsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'maxSlippage',
+            type: 'uint256',
           },
         ],
       },
@@ -1027,8 +1115,30 @@ export const abi = [
             type: 'bool',
           },
           {
+            name: 'onlyApprovedYieldOpps',
+            type: 'bool',
+          },
+          {
             name: 'allowedLegos',
             type: 'uint256[]',
+          },
+        ],
+      },
+      {
+        name: '_swapPerms',
+        type: 'tuple',
+        components: [
+          {
+            name: 'mustHaveUsdValue',
+            type: 'bool',
+          },
+          {
+            name: 'maxNumSwapsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'maxSlippage',
+            type: 'uint256',
           },
         ],
       },
@@ -1164,8 +1274,30 @@ export const abi = [
             type: 'bool',
           },
           {
+            name: 'onlyApprovedYieldOpps',
+            type: 'bool',
+          },
+          {
             name: 'allowedLegos',
             type: 'uint256[]',
+          },
+        ],
+      },
+      {
+        name: '_swapPerms',
+        type: 'tuple',
+        components: [
+          {
+            name: 'mustHaveUsdValue',
+            type: 'bool',
+          },
+          {
+            name: 'maxNumSwapsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'maxSlippage',
+            type: 'uint256',
           },
         ],
       },
@@ -1297,8 +1429,30 @@ export const abi = [
             type: 'bool',
           },
           {
+            name: 'onlyApprovedYieldOpps',
+            type: 'bool',
+          },
+          {
             name: 'allowedLegos',
             type: 'uint256[]',
+          },
+        ],
+      },
+      {
+        name: '_swapPerms',
+        type: 'tuple',
+        components: [
+          {
+            name: 'mustHaveUsdValue',
+            type: 'bool',
+          },
+          {
+            name: 'maxNumSwapsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'maxSlippage',
+            type: 'uint256',
           },
         ],
       },
@@ -1442,8 +1596,30 @@ export const abi = [
             type: 'bool',
           },
           {
+            name: 'onlyApprovedYieldOpps',
+            type: 'bool',
+          },
+          {
             name: 'allowedLegos',
             type: 'uint256[]',
+          },
+        ],
+      },
+      {
+        name: '_swapPerms',
+        type: 'tuple',
+        components: [
+          {
+            name: 'mustHaveUsdValue',
+            type: 'bool',
+          },
+          {
+            name: 'maxNumSwapsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'maxSlippage',
+            type: 'uint256',
           },
         ],
       },
@@ -1519,6 +1695,22 @@ export const abi = [
       {
         name: '_defaultActivationLength',
         type: 'uint256',
+      },
+      {
+        name: '_mustHaveUsdValueOnSwaps',
+        type: 'bool',
+      },
+      {
+        name: '_maxNumSwapsPerPeriod',
+        type: 'uint256',
+      },
+      {
+        name: '_maxSlippageOnSwaps',
+        type: 'uint256',
+      },
+      {
+        name: '_onlyApprovedYieldOpps',
+        type: 'bool',
       },
     ],
     outputs: [
@@ -1597,8 +1789,30 @@ export const abi = [
                 type: 'bool',
               },
               {
+                name: 'onlyApprovedYieldOpps',
+                type: 'bool',
+              },
+              {
                 name: 'allowedLegos',
                 type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'swapPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'mustHaveUsdValue',
+                type: 'bool',
+              },
+              {
+                name: 'maxNumSwapsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxSlippage',
+                type: 'uint256',
               },
             ],
           },
@@ -1732,8 +1946,30 @@ export const abi = [
                 type: 'bool',
               },
               {
+                name: 'onlyApprovedYieldOpps',
+                type: 'bool',
+              },
+              {
                 name: 'allowedLegos',
                 type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'swapPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'mustHaveUsdValue',
+                type: 'bool',
+              },
+              {
+                name: 'maxNumSwapsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxSlippage',
+                type: 'uint256',
               },
             ],
           },
@@ -1907,8 +2143,30 @@ export const abi = [
                     type: 'bool',
                   },
                   {
+                    name: 'onlyApprovedYieldOpps',
+                    type: 'bool',
+                  },
+                  {
                     name: 'allowedLegos',
                     type: 'uint256[]',
+                  },
+                ],
+              },
+              {
+                name: 'swapPerms',
+                type: 'tuple',
+                components: [
+                  {
+                    name: 'mustHaveUsdValue',
+                    type: 'bool',
+                  },
+                  {
+                    name: 'maxNumSwapsPerPeriod',
+                    type: 'uint256',
+                  },
+                  {
+                    name: 'maxSlippage',
+                    type: 'uint256',
                   },
                 ],
               },
@@ -2071,7 +2329,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x84c54F4801FBf5c189E49d7CE5B1CB4378BE4372'
+export const deployAddress: Address | undefined = '0x06492EA8F83B3a61d71B61FEEF7F167aDD9A78EC'
 
 export type Contract = {
   calls: {
@@ -2094,8 +2352,10 @@ export type Contract = {
         canManageDebt: boolean
         canManageLiq: boolean
         canClaimRewards: boolean
+        onlyApprovedYieldOpps: boolean
         allowedLegos: bigint[]
       },
+      swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint },
       whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean },
       transferPerms: {
         canTransfer: boolean
@@ -2123,8 +2383,10 @@ export type Contract = {
         canManageDebt: boolean
         canManageLiq: boolean
         canClaimRewards: boolean
+        onlyApprovedYieldOpps: boolean
         allowedLegos: bigint[]
       },
+      swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint },
       whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean },
       transferPerms: {
         canTransfer: boolean
@@ -2155,8 +2417,10 @@ export type Contract = {
         canManageDebt: boolean
         canManageLiq: boolean
         canClaimRewards: boolean
+        onlyApprovedYieldOpps: boolean
         allowedLegos: bigint[]
       },
+      swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint },
       whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean },
       transferPerms: {
         canTransfer: boolean
@@ -2170,6 +2434,10 @@ export type Contract = {
       managerPeriod: bigint,
       minTimeLock: bigint,
       defaultActivationLength: bigint,
+      mustHaveUsdValueOnSwaps: boolean,
+      maxNumSwapsPerPeriod: bigint,
+      maxSlippageOnSwaps: bigint,
+      onlyApprovedYieldOpps: boolean,
     ) => Promise<{
       managerPeriod: bigint
       startDelay: bigint
@@ -2189,8 +2457,10 @@ export type Contract = {
         canManageDebt: boolean
         canManageLiq: boolean
         canClaimRewards: boolean
+        onlyApprovedYieldOpps: boolean
         allowedLegos: bigint[]
       }
+      swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint }
       whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean }
       transferPerms: {
         canTransfer: boolean
@@ -2219,8 +2489,10 @@ export type Contract = {
         canManageDebt: boolean
         canManageLiq: boolean
         canClaimRewards: boolean
+        onlyApprovedYieldOpps: boolean
         allowedLegos: bigint[]
       }
+      swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint }
       whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean }
       transferPerms: {
         canTransfer: boolean
@@ -2259,8 +2531,10 @@ export type Contract = {
           canManageDebt: boolean
           canManageLiq: boolean
           canClaimRewards: boolean
+          onlyApprovedYieldOpps: boolean
           allowedLegos: bigint[]
         }
+        swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint }
         whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean }
         transferPerms: {
           canTransfer: boolean
@@ -2296,8 +2570,10 @@ export type Contract = {
         canManageDebt: boolean
         canManageLiq: boolean
         canClaimRewards: boolean
+        onlyApprovedYieldOpps: boolean
         allowedLegos: bigint[]
       },
+      swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint },
       whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean },
       transferPerms: {
         canTransfer: boolean
@@ -2327,8 +2603,10 @@ export type Contract = {
         canManageDebt: boolean
         canManageLiq: boolean
         canClaimRewards: boolean
+        onlyApprovedYieldOpps: boolean
         allowedLegos: bigint[]
       },
+      swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint },
       whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean },
       transferPerms: {
         canTransfer: boolean
@@ -2366,8 +2644,10 @@ export type Contract = {
         canManageDebt: boolean
         canManageLiq: boolean
         canClaimRewards: boolean
+        onlyApprovedYieldOpps: boolean
         allowedLegos: bigint[]
       },
+      swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint },
       whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean },
       transferPerms: {
         canTransfer: boolean

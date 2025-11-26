@@ -1107,44 +1107,6 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'isEligibleVaultForTrialFunds',
-    inputs: [
-      {
-        name: '_vaultToken',
-        type: 'address',
-      },
-      {
-        name: '_underlyingAsset',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'isEligibleForYieldBonus',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
     name: 'totalAssets',
     inputs: [
       {
@@ -1173,6 +1135,57 @@ export const abi = [
       {
         name: '',
         type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAvailLiquidity',
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getUtilizationRatio',
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'isEligibleForYieldBonus',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
       },
     ],
   },
@@ -3045,6 +3058,18 @@ export const abi = [
     ],
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'FORTY_ACRES_LOANS',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'constructor',
     inputs: [
@@ -3057,6 +3082,10 @@ export const abi = [
         type: 'address',
       },
       {
+        name: '_fortyAcresLoans',
+        type: 'address',
+      },
+      {
         name: '_ripeRegistry',
         type: 'address',
       },
@@ -3065,7 +3094,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xea19B48ae835CC6198ecfCb36Fe710f6dAAdFA91'
+export const deployAddress: Address | undefined = '0x39F5EDd73ce1682Da63C92C34fBbBEdB07156514'
 
 export type Contract = {
   calls: {
@@ -3147,16 +3176,18 @@ export type Contract = {
     isRebasing: () => Promise<boolean>
     getPricePerShare: (vaultToken: `0x${string}`, decimals?: bigint) => Promise<bigint>
     getVaultTokenAmount: (asset: `0x${string}`, assetAmount: bigint, vaultToken: `0x${string}`) => Promise<bigint>
-    isEligibleVaultForTrialFunds: (vaultToken: `0x${string}`, underlyingAsset: `0x${string}`) => Promise<boolean>
-    isEligibleForYieldBonus: (asset: `0x${string}`) => Promise<boolean>
     totalAssets: (vaultToken: `0x${string}`) => Promise<bigint>
     totalBorrows: (vaultToken: `0x${string}`) => Promise<bigint>
+    getAvailLiquidity: (vaultToken: `0x${string}`) => Promise<bigint>
+    getUtilizationRatio: (vaultToken: `0x${string}`) => Promise<bigint>
+    isEligibleForYieldBonus: (asset: `0x${string}`) => Promise<boolean>
     getWithdrawalFees: (vaultToken: `0x${string}`, vaultTokenAmount: bigint) => Promise<bigint>
     canRegisterVaultToken: (asset: `0x${string}`, vaultToken: `0x${string}`) => Promise<boolean>
     getAccessForLego: (user: `0x${string}`, action: bigint) => Promise<[`0x${string}`, string, bigint]>
     hasClaimableRewards: (user: `0x${string}`) => Promise<boolean>
     RIPE_REGISTRY: () => Promise<`0x${string}`>
     FORTY_ACRES_USDC_VAULT: () => Promise<`0x${string}`>
+    FORTY_ACRES_LOANS: () => Promise<`0x${string}`>
   }
   mutations: {
     pause: (shouldPause: boolean) => Promise<void>
@@ -3533,12 +3564,14 @@ export const call: CallType = {
     getRequest('getPricePerShare', args),
   getVaultTokenAmount: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>) =>
     getRequest('getVaultTokenAmount', args),
-  isEligibleVaultForTrialFunds: (...args: ExtractArgs<Contract['calls']['isEligibleVaultForTrialFunds']>) =>
-    getRequest('isEligibleVaultForTrialFunds', args),
-  isEligibleForYieldBonus: (...args: ExtractArgs<Contract['calls']['isEligibleForYieldBonus']>) =>
-    getRequest('isEligibleForYieldBonus', args),
   totalAssets: (...args: ExtractArgs<Contract['calls']['totalAssets']>) => getRequest('totalAssets', args),
   totalBorrows: (...args: ExtractArgs<Contract['calls']['totalBorrows']>) => getRequest('totalBorrows', args),
+  getAvailLiquidity: (...args: ExtractArgs<Contract['calls']['getAvailLiquidity']>) =>
+    getRequest('getAvailLiquidity', args),
+  getUtilizationRatio: (...args: ExtractArgs<Contract['calls']['getUtilizationRatio']>) =>
+    getRequest('getUtilizationRatio', args),
+  isEligibleForYieldBonus: (...args: ExtractArgs<Contract['calls']['isEligibleForYieldBonus']>) =>
+    getRequest('isEligibleForYieldBonus', args),
   getWithdrawalFees: (...args: ExtractArgs<Contract['calls']['getWithdrawalFees']>) =>
     getRequest('getWithdrawalFees', args),
   canRegisterVaultToken: (...args: ExtractArgs<Contract['calls']['canRegisterVaultToken']>) =>
@@ -3550,6 +3583,8 @@ export const call: CallType = {
   RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => getRequest('RIPE_REGISTRY', args),
   FORTY_ACRES_USDC_VAULT: (...args: ExtractArgs<Contract['calls']['FORTY_ACRES_USDC_VAULT']>) =>
     getRequest('FORTY_ACRES_USDC_VAULT', args),
+  FORTY_ACRES_LOANS: (...args: ExtractArgs<Contract['calls']['FORTY_ACRES_LOANS']>) =>
+    getRequest('FORTY_ACRES_LOANS', args),
 }
 
 export type Mutations = keyof Contract['mutations']
@@ -3669,14 +3704,17 @@ export type SDK = {
   getVaultTokenAmount: (
     ...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>
   ) => Promise<CallReturn<'getVaultTokenAmount'>>
-  isEligibleVaultForTrialFunds: (
-    ...args: ExtractArgs<Contract['calls']['isEligibleVaultForTrialFunds']>
-  ) => Promise<CallReturn<'isEligibleVaultForTrialFunds'>>
+  totalAssets: (...args: ExtractArgs<Contract['calls']['totalAssets']>) => Promise<CallReturn<'totalAssets'>>
+  totalBorrows: (...args: ExtractArgs<Contract['calls']['totalBorrows']>) => Promise<CallReturn<'totalBorrows'>>
+  getAvailLiquidity: (
+    ...args: ExtractArgs<Contract['calls']['getAvailLiquidity']>
+  ) => Promise<CallReturn<'getAvailLiquidity'>>
+  getUtilizationRatio: (
+    ...args: ExtractArgs<Contract['calls']['getUtilizationRatio']>
+  ) => Promise<CallReturn<'getUtilizationRatio'>>
   isEligibleForYieldBonus: (
     ...args: ExtractArgs<Contract['calls']['isEligibleForYieldBonus']>
   ) => Promise<CallReturn<'isEligibleForYieldBonus'>>
-  totalAssets: (...args: ExtractArgs<Contract['calls']['totalAssets']>) => Promise<CallReturn<'totalAssets'>>
-  totalBorrows: (...args: ExtractArgs<Contract['calls']['totalBorrows']>) => Promise<CallReturn<'totalBorrows'>>
   getWithdrawalFees: (
     ...args: ExtractArgs<Contract['calls']['getWithdrawalFees']>
   ) => Promise<CallReturn<'getWithdrawalFees'>>
@@ -3693,6 +3731,9 @@ export type SDK = {
   FORTY_ACRES_USDC_VAULT: (
     ...args: ExtractArgs<Contract['calls']['FORTY_ACRES_USDC_VAULT']>
   ) => Promise<CallReturn<'FORTY_ACRES_USDC_VAULT'>>
+  FORTY_ACRES_LOANS: (
+    ...args: ExtractArgs<Contract['calls']['FORTY_ACRES_LOANS']>
+  ) => Promise<CallReturn<'FORTY_ACRES_LOANS'>>
   pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => Promise<Address>
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
   recoverFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverFundsMany']>) => Promise<Address>
@@ -3808,18 +3849,18 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.getPricePerShare(...args)) as Promise<CallReturn<'getPricePerShare'>>,
     getVaultTokenAmount: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>) =>
       singleQuery(publicClient!, call.getVaultTokenAmount(...args)) as Promise<CallReturn<'getVaultTokenAmount'>>,
-    isEligibleVaultForTrialFunds: (...args: ExtractArgs<Contract['calls']['isEligibleVaultForTrialFunds']>) =>
-      singleQuery(publicClient!, call.isEligibleVaultForTrialFunds(...args)) as Promise<
-        CallReturn<'isEligibleVaultForTrialFunds'>
-      >,
-    isEligibleForYieldBonus: (...args: ExtractArgs<Contract['calls']['isEligibleForYieldBonus']>) =>
-      singleQuery(publicClient!, call.isEligibleForYieldBonus(...args)) as Promise<
-        CallReturn<'isEligibleForYieldBonus'>
-      >,
     totalAssets: (...args: ExtractArgs<Contract['calls']['totalAssets']>) =>
       singleQuery(publicClient!, call.totalAssets(...args)) as Promise<CallReturn<'totalAssets'>>,
     totalBorrows: (...args: ExtractArgs<Contract['calls']['totalBorrows']>) =>
       singleQuery(publicClient!, call.totalBorrows(...args)) as Promise<CallReturn<'totalBorrows'>>,
+    getAvailLiquidity: (...args: ExtractArgs<Contract['calls']['getAvailLiquidity']>) =>
+      singleQuery(publicClient!, call.getAvailLiquidity(...args)) as Promise<CallReturn<'getAvailLiquidity'>>,
+    getUtilizationRatio: (...args: ExtractArgs<Contract['calls']['getUtilizationRatio']>) =>
+      singleQuery(publicClient!, call.getUtilizationRatio(...args)) as Promise<CallReturn<'getUtilizationRatio'>>,
+    isEligibleForYieldBonus: (...args: ExtractArgs<Contract['calls']['isEligibleForYieldBonus']>) =>
+      singleQuery(publicClient!, call.isEligibleForYieldBonus(...args)) as Promise<
+        CallReturn<'isEligibleForYieldBonus'>
+      >,
     getWithdrawalFees: (...args: ExtractArgs<Contract['calls']['getWithdrawalFees']>) =>
       singleQuery(publicClient!, call.getWithdrawalFees(...args)) as Promise<CallReturn<'getWithdrawalFees'>>,
     canRegisterVaultToken: (...args: ExtractArgs<Contract['calls']['canRegisterVaultToken']>) =>
@@ -3832,6 +3873,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.RIPE_REGISTRY(...args)) as Promise<CallReturn<'RIPE_REGISTRY'>>,
     FORTY_ACRES_USDC_VAULT: (...args: ExtractArgs<Contract['calls']['FORTY_ACRES_USDC_VAULT']>) =>
       singleQuery(publicClient!, call.FORTY_ACRES_USDC_VAULT(...args)) as Promise<CallReturn<'FORTY_ACRES_USDC_VAULT'>>,
+    FORTY_ACRES_LOANS: (...args: ExtractArgs<Contract['calls']['FORTY_ACRES_LOANS']>) =>
+      singleQuery(publicClient!, call.FORTY_ACRES_LOANS(...args)) as Promise<CallReturn<'FORTY_ACRES_LOANS'>>,
 
     // Mutations
     pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => mutate(walletClient!, mutation.pause)(...args),

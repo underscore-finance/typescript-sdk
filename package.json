@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@dappql/async": "^1.0.3",
-    "dappql": "^2.0.30",
+    "dappql": "^2.0.34",
     "viem": "^2.23.7"
   }
 }

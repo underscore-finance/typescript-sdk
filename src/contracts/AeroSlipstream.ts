@@ -189,6 +189,48 @@ export const abi = [
     type: 'event',
   },
   {
+    name: 'AeroSlipstreamFeesCollected',
+    inputs: [
+      {
+        name: 'sender',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'nftTokenId',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'token0',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'token1',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'amount0',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'amount1',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'recipient',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
     name: 'LegoPauseModified',
     inputs: [
       {
@@ -2643,7 +2685,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xC626C1DaEbe71CC4e51028eDABE69f13b6362248'
+export const deployAddress: Address | undefined = '0x2DD267Ab1BA631E93e7c6a9EA6fbcc48882770bd'
 
 export type Contract = {
   calls: {
@@ -2977,6 +3019,15 @@ export type Contract = {
     AeroSlipStreamNftRecovered: (
       collection: `0x${string}`,
       nftTokenId: bigint,
+      recipient: `0x${string}`,
+    ) => Promise<void>
+    AeroSlipstreamFeesCollected: (
+      sender: `0x${string}`,
+      nftTokenId: bigint,
+      token0: `0x${string}`,
+      token1: `0x${string}`,
+      amount0: bigint,
+      amount1: bigint,
       recipient: `0x${string}`,
     ) => Promise<void>
     LegoPauseModified: (isPaused: boolean) => Promise<void>

@@ -320,18 +320,6 @@ export const abi = [
     type: 'event',
   },
   {
-    name: 'ClawbackTrialFundsExecuted',
-    inputs: [
-      {
-        name: 'numUsers',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
     name: 'DepositPointsUpdated',
     inputs: [
       {
@@ -641,6 +629,10 @@ export const abi = [
           },
           {
             name: 'billing',
+            type: 'address',
+          },
+          {
+            name: 'vaultRegistry',
             type: 'address',
           },
         ],
@@ -1245,23 +1237,6 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'clawBackTrialFunds',
-    inputs: [
-      {
-        name: '_users',
-        type: 'address[]',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
     name: 'claimLootForUser',
     inputs: [
       {
@@ -1699,7 +1674,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xf1F5938559884D3c54400b417292B93cd81C368c'
+export const deployAddress: Address | undefined = '0x5ed80D2F832da36CCCCd26F856C72b1AdD359B84'
 
 export type Contract = {
   calls: {
@@ -1715,6 +1690,7 @@ export type Contract = {
       appraiser: `0x${string}`
       walletBackpack: `0x${string}`
       billing: `0x${string}`
+      vaultRegistry: `0x${string}`
     }>
     getUndyHq: () => Promise<`0x${string}`>
     getUndyHqFromGov: () => Promise<`0x${string}`>
@@ -1786,7 +1762,6 @@ export type Contract = {
       nftTokenId: bigint,
       recipient: `0x${string}`,
     ) => Promise<bigint>
-    clawBackTrialFunds: (users: `0x${string}`[]) => Promise<boolean>
     claimLootForUser: (user: `0x${string}`) => Promise<void>
     claimLootForManyUsers: (users: `0x${string}`[]) => Promise<void>
     adjustLoot: (user: `0x${string}`, asset: `0x${string}`, newClaimable: bigint) => Promise<bigint>
@@ -1857,7 +1832,6 @@ export type Contract = {
       nftTokenId: bigint,
       recipient: `0x${string}`,
     ) => Promise<void>
-    ClawbackTrialFundsExecuted: (numUsers: bigint) => Promise<void>
     DepositPointsUpdated: (numUsers: bigint, caller: `0x${string}`) => Promise<void>
     LootClaimedForUser: (user: `0x${string}`, caller: `0x${string}`) => Promise<void>
     LootClaimedForManyUsers: (numUsers: bigint, caller: `0x${string}`) => Promise<void>
@@ -2027,7 +2001,6 @@ export const mutation: {
   recoverFunds: getMutation('recoverFunds'),
   recoverFundsMany: getMutation('recoverFundsMany'),
   recoverNft: getMutation('recoverNft'),
-  clawBackTrialFunds: getMutation('clawBackTrialFunds'),
   claimLootForUser: getMutation('claimLootForUser'),
   claimLootForManyUsers: getMutation('claimLootForManyUsers'),
   adjustLoot: getMutation('adjustLoot'),
@@ -2128,7 +2101,6 @@ export type SDK = {
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
   recoverFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverFundsMany']>) => Promise<Address>
   recoverNft: (...args: ExtractArgs<Contract['mutations']['recoverNft']>) => Promise<Address>
-  clawBackTrialFunds: (...args: ExtractArgs<Contract['mutations']['clawBackTrialFunds']>) => Promise<Address>
   claimLootForUser: (...args: ExtractArgs<Contract['mutations']['claimLootForUser']>) => Promise<Address>
   claimLootForManyUsers: (...args: ExtractArgs<Contract['mutations']['claimLootForManyUsers']>) => Promise<Address>
   adjustLoot: (...args: ExtractArgs<Contract['mutations']['adjustLoot']>) => Promise<Address>
@@ -2253,8 +2225,6 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.recoverFundsMany)(...args),
     recoverNft: (...args: ExtractArgs<Contract['mutations']['recoverNft']>) =>
       mutate(walletClient!, mutation.recoverNft)(...args),
-    clawBackTrialFunds: (...args: ExtractArgs<Contract['mutations']['clawBackTrialFunds']>) =>
-      mutate(walletClient!, mutation.clawBackTrialFunds)(...args),
     claimLootForUser: (...args: ExtractArgs<Contract['mutations']['claimLootForUser']>) =>
       mutate(walletClient!, mutation.claimLootForUser)(...args),
     claimLootForManyUsers: (...args: ExtractArgs<Contract['mutations']['claimLootForManyUsers']>) =>

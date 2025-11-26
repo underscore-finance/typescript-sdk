@@ -98,6 +98,10 @@ export const abi = [
             name: 'billing',
             type: 'address',
           },
+          {
+            name: 'vaultRegistry',
+            type: 'address',
+          },
         ],
       },
     ],
@@ -200,14 +204,6 @@ export const abi = [
             type: 'address',
           },
           {
-            name: 'trialAsset',
-            type: 'address',
-          },
-          {
-            name: 'trialAmount',
-            type: 'uint256',
-          },
-          {
             name: 'numUserWalletsAllowed',
             type: 'uint256',
           },
@@ -224,12 +220,12 @@ export const abi = [
             type: 'uint256',
           },
           {
-            name: 'defaultStaleBlocks',
-            type: 'uint256',
-          },
-          {
             name: 'depositRewardsAsset',
             type: 'address',
+          },
+          {
+            name: 'lootClaimCoolOffPeriod',
+            type: 'uint256',
           },
           {
             name: 'txFees',
@@ -268,28 +264,30 @@ export const abi = [
             ],
           },
           {
-            name: 'defaultYieldMaxIncrease',
-            type: 'uint256',
-          },
-          {
-            name: 'defaultYieldPerformanceFee',
-            type: 'uint256',
-          },
-          {
-            name: 'defaultYieldAmbassadorBonusRatio',
-            type: 'uint256',
-          },
-          {
-            name: 'defaultYieldBonusRatio',
-            type: 'uint256',
-          },
-          {
-            name: 'defaultYieldAltBonusAsset',
-            type: 'address',
-          },
-          {
-            name: 'lootClaimCoolOffPeriod',
-            type: 'uint256',
+            name: 'yieldConfig',
+            type: 'tuple',
+            components: [
+              {
+                name: 'maxYieldIncrease',
+                type: 'uint256',
+              },
+              {
+                name: 'performanceFee',
+                type: 'uint256',
+              },
+              {
+                name: 'ambassadorBonusRatio',
+                type: 'uint256',
+              },
+              {
+                name: 'bonusRatio',
+                type: 'uint256',
+              },
+              {
+                name: 'bonusAsset',
+                type: 'address',
+              },
+            ],
           },
         ],
       },
@@ -312,6 +310,22 @@ export const abi = [
           {
             name: 'managerActivationLength',
             type: 'uint256',
+          },
+          {
+            name: 'mustHaveUsdValueOnSwaps',
+            type: 'bool',
+          },
+          {
+            name: 'maxNumSwapsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'maxSlippageOnSwaps',
+            type: 'uint256',
+          },
+          {
+            name: 'onlyApprovedYieldOpps',
+            type: 'bool',
           },
         ],
       },
@@ -422,6 +436,22 @@ export const abi = [
             type: 'uint256',
           },
           {
+            name: 'mustHaveUsdValueOnSwaps',
+            type: 'bool',
+          },
+          {
+            name: 'maxNumSwapsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'maxSlippageOnSwaps',
+            type: 'uint256',
+          },
+          {
+            name: 'onlyApprovedYieldOpps',
+            type: 'bool',
+          },
+          {
             name: 'payeePeriod',
             type: 'uint256',
           },
@@ -450,89 +480,12 @@ export const abi = [
             type: 'uint256',
           },
           {
-            name: 'trialAsset',
-            type: 'address',
-          },
-          {
-            name: 'trialAmount',
-            type: 'uint256',
-          },
-          {
             name: 'minKeyActionTimeLock',
             type: 'uint256',
           },
           {
             name: 'maxKeyActionTimeLock',
             type: 'uint256',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getLootDistroConfig',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ambassador',
-            type: 'address',
-          },
-          {
-            name: 'ambassadorRevShare',
-            type: 'tuple',
-            components: [
-              {
-                name: 'swapRatio',
-                type: 'uint256',
-              },
-              {
-                name: 'rewardsRatio',
-                type: 'uint256',
-              },
-              {
-                name: 'yieldRatio',
-                type: 'uint256',
-              },
-            ],
-          },
-          {
-            name: 'ambassadorBonusRatio',
-            type: 'uint256',
-          },
-          {
-            name: 'bonusRatio',
-            type: 'uint256',
-          },
-          {
-            name: 'altBonusAsset',
-            type: 'address',
-          },
-          {
-            name: 'underlyingAsset',
-            type: 'address',
-          },
-          {
-            name: 'decimals',
-            type: 'uint256',
-          },
-          {
-            name: 'legoId',
-            type: 'uint256',
-          },
-          {
-            name: 'legoAddr',
-            type: 'address',
           },
         ],
       },
@@ -572,18 +525,6 @@ export const abi = [
         type: 'tuple',
         components: [
           {
-            name: 'agentTemplate',
-            type: 'address',
-          },
-          {
-            name: 'numAgentsAllowed',
-            type: 'uint256',
-          },
-          {
-            name: 'enforceCreatorWhitelist',
-            type: 'bool',
-          },
-          {
             name: 'startingAgent',
             type: 'address',
           },
@@ -609,45 +550,6 @@ export const abi = [
     outputs: [],
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getAgentCreationConfig',
-    inputs: [
-      {
-        name: '_creator',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'tuple',
-        components: [
-          {
-            name: 'agentTemplate',
-            type: 'address',
-          },
-          {
-            name: 'numAgentsAllowed',
-            type: 'uint256',
-          },
-          {
-            name: 'isCreatorAllowed',
-            type: 'bool',
-          },
-          {
-            name: 'minTimeLock',
-            type: 'uint256',
-          },
-          {
-            name: 'maxTimeLock',
-            type: 'uint256',
-          },
-        ],
-      },
-    ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
     name: 'setAssetConfig',
@@ -661,16 +563,8 @@ export const abi = [
         type: 'tuple',
         components: [
           {
-            name: 'legoId',
-            type: 'uint256',
-          },
-          {
-            name: 'decimals',
-            type: 'uint256',
-          },
-          {
-            name: 'staleBlocks',
-            type: 'uint256',
+            name: 'hasConfig',
+            type: 'bool',
           },
           {
             name: 'txFees',
@@ -713,18 +607,6 @@ export const abi = [
             type: 'tuple',
             components: [
               {
-                name: 'isYieldAsset',
-                type: 'bool',
-              },
-              {
-                name: 'isRebasing',
-                type: 'bool',
-              },
-              {
-                name: 'underlyingAsset',
-                type: 'address',
-              },
-              {
                 name: 'maxYieldIncrease',
                 type: 'uint256',
               },
@@ -741,7 +623,7 @@ export const abi = [
                 type: 'uint256',
               },
               {
-                name: 'altBonusAsset',
+                name: 'bonusAsset',
                 type: 'address',
               },
             ],
@@ -766,104 +648,6 @@ export const abi = [
       },
     ],
     outputs: [],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getProfitCalcConfig',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'tuple',
-        components: [
-          {
-            name: 'legoId',
-            type: 'uint256',
-          },
-          {
-            name: 'legoAddr',
-            type: 'address',
-          },
-          {
-            name: 'decimals',
-            type: 'uint256',
-          },
-          {
-            name: 'staleBlocks',
-            type: 'uint256',
-          },
-          {
-            name: 'isYieldAsset',
-            type: 'bool',
-          },
-          {
-            name: 'isRebasing',
-            type: 'bool',
-          },
-          {
-            name: 'underlyingAsset',
-            type: 'address',
-          },
-          {
-            name: 'maxYieldIncrease',
-            type: 'uint256',
-          },
-          {
-            name: 'performanceFee',
-            type: 'uint256',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getAssetUsdValueConfig',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'tuple',
-        components: [
-          {
-            name: 'legoId',
-            type: 'uint256',
-          },
-          {
-            name: 'legoAddr',
-            type: 'address',
-          },
-          {
-            name: 'decimals',
-            type: 'uint256',
-          },
-          {
-            name: 'staleBlocks',
-            type: 'uint256',
-          },
-          {
-            name: 'isYieldAsset',
-            type: 'bool',
-          },
-          {
-            name: 'underlyingAsset',
-            type: 'address',
-          },
-        ],
-      },
-    ],
   },
   {
     stateMutability: 'view',
@@ -900,6 +684,157 @@ export const abi = [
       {
         name: '',
         type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getProfitCalcConfig',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'legoAddr',
+            type: 'address',
+          },
+          {
+            name: 'isYieldAsset',
+            type: 'bool',
+          },
+          {
+            name: 'underlyingAsset',
+            type: 'address',
+          },
+          {
+            name: 'maxYieldIncrease',
+            type: 'uint256',
+          },
+          {
+            name: 'performanceFee',
+            type: 'uint256',
+          },
+          {
+            name: 'isRebasing',
+            type: 'bool',
+          },
+          {
+            name: 'decimals',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAssetUsdValueConfig',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'legoAddr',
+            type: 'address',
+          },
+          {
+            name: 'isYieldAsset',
+            type: 'bool',
+          },
+          {
+            name: 'underlyingAsset',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getLootDistroConfig',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'legoAddr',
+            type: 'address',
+          },
+          {
+            name: 'underlyingAsset',
+            type: 'address',
+          },
+          {
+            name: 'ambassador',
+            type: 'address',
+          },
+          {
+            name: 'ambassadorRevShare',
+            type: 'tuple',
+            components: [
+              {
+                name: 'swapRatio',
+                type: 'uint256',
+              },
+              {
+                name: 'rewardsRatio',
+                type: 'uint256',
+              },
+              {
+                name: 'yieldRatio',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'ambassadorBonusRatio',
+            type: 'uint256',
+          },
+          {
+            name: 'bonusRatio',
+            type: 'uint256',
+          },
+          {
+            name: 'bonusAsset',
+            type: 'address',
+          },
+        ],
       },
     ],
   },
@@ -970,14 +905,6 @@ export const abi = [
             type: 'address',
           },
           {
-            name: 'trialAsset',
-            type: 'address',
-          },
-          {
-            name: 'trialAmount',
-            type: 'uint256',
-          },
-          {
             name: 'numUserWalletsAllowed',
             type: 'uint256',
           },
@@ -994,12 +921,12 @@ export const abi = [
             type: 'uint256',
           },
           {
-            name: 'defaultStaleBlocks',
-            type: 'uint256',
-          },
-          {
             name: 'depositRewardsAsset',
             type: 'address',
+          },
+          {
+            name: 'lootClaimCoolOffPeriod',
+            type: 'uint256',
           },
           {
             name: 'txFees',
@@ -1038,28 +965,30 @@ export const abi = [
             ],
           },
           {
-            name: 'defaultYieldMaxIncrease',
-            type: 'uint256',
-          },
-          {
-            name: 'defaultYieldPerformanceFee',
-            type: 'uint256',
-          },
-          {
-            name: 'defaultYieldAmbassadorBonusRatio',
-            type: 'uint256',
-          },
-          {
-            name: 'defaultYieldBonusRatio',
-            type: 'uint256',
-          },
-          {
-            name: 'defaultYieldAltBonusAsset',
-            type: 'address',
-          },
-          {
-            name: 'lootClaimCoolOffPeriod',
-            type: 'uint256',
+            name: 'yieldConfig',
+            type: 'tuple',
+            components: [
+              {
+                name: 'maxYieldIncrease',
+                type: 'uint256',
+              },
+              {
+                name: 'performanceFee',
+                type: 'uint256',
+              },
+              {
+                name: 'ambassadorBonusRatio',
+                type: 'uint256',
+              },
+              {
+                name: 'bonusRatio',
+                type: 'uint256',
+              },
+              {
+                name: 'bonusAsset',
+                type: 'address',
+              },
+            ],
           },
         ],
       },
@@ -1075,18 +1004,6 @@ export const abi = [
         name: '',
         type: 'tuple',
         components: [
-          {
-            name: 'agentTemplate',
-            type: 'address',
-          },
-          {
-            name: 'numAgentsAllowed',
-            type: 'uint256',
-          },
-          {
-            name: 'enforceCreatorWhitelist',
-            type: 'bool',
-          },
           {
             name: 'startingAgent',
             type: 'address',
@@ -1116,6 +1033,22 @@ export const abi = [
           {
             name: 'managerActivationLength',
             type: 'uint256',
+          },
+          {
+            name: 'mustHaveUsdValueOnSwaps',
+            type: 'bool',
+          },
+          {
+            name: 'maxNumSwapsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'maxSlippageOnSwaps',
+            type: 'uint256',
+          },
+          {
+            name: 'onlyApprovedYieldOpps',
+            type: 'bool',
           },
         ],
       },
@@ -1193,16 +1126,8 @@ export const abi = [
         type: 'tuple',
         components: [
           {
-            name: 'legoId',
-            type: 'uint256',
-          },
-          {
-            name: 'decimals',
-            type: 'uint256',
-          },
-          {
-            name: 'staleBlocks',
-            type: 'uint256',
+            name: 'hasConfig',
+            type: 'bool',
           },
           {
             name: 'txFees',
@@ -1245,18 +1170,6 @@ export const abi = [
             type: 'tuple',
             components: [
               {
-                name: 'isYieldAsset',
-                type: 'bool',
-              },
-              {
-                name: 'isRebasing',
-                type: 'bool',
-              },
-              {
-                name: 'underlyingAsset',
-                type: 'address',
-              },
-              {
                 name: 'maxYieldIncrease',
                 type: 'uint256',
               },
@@ -1273,7 +1186,7 @@ export const abi = [
                 type: 'uint256',
               },
               {
-                name: 'altBonusAsset',
+                name: 'bonusAsset',
                 type: 'address',
               },
             ],
@@ -1367,7 +1280,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x910FE9484540fa21B092eE04a478A30A6B342006'
+export const deployAddress: Address | undefined = '0x89c8A842CD9428024294cB6a52c28D5EB23e2cBE'
 
 export type Contract = {
   calls: {
@@ -1383,6 +1296,7 @@ export type Contract = {
       appraiser: `0x${string}`
       walletBackpack: `0x${string}`
       billing: `0x${string}`
+      vaultRegistry: `0x${string}`
     }>
     getUndyHq: () => Promise<`0x${string}`>
     canMintUndy: () => Promise<boolean>
@@ -1398,6 +1312,10 @@ export type Contract = {
       startingAgentActivationLength: bigint
       managerPeriod: bigint
       managerActivationLength: bigint
+      mustHaveUsdValueOnSwaps: boolean
+      maxNumSwapsPerPeriod: bigint
+      maxSlippageOnSwaps: bigint
+      onlyApprovedYieldOpps: boolean
       payeePeriod: bigint
       payeeActivationLength: bigint
       chequeMaxNumActiveCheques: bigint
@@ -1405,88 +1323,68 @@ export type Contract = {
       chequePeriodLength: bigint
       chequeExpensiveDelayBlocks: bigint
       chequeDefaultExpiryBlocks: bigint
-      trialAsset: `0x${string}`
-      trialAmount: bigint
       minKeyActionTimeLock: bigint
       maxKeyActionTimeLock: bigint
     }>
-    getLootDistroConfig: (
-      asset: `0x${string}`,
-    ) => Promise<{
-      ambassador: `0x${string}`
-      ambassadorRevShare: { swapRatio: bigint; rewardsRatio: bigint; yieldRatio: bigint }
-      ambassadorBonusRatio: bigint
-      bonusRatio: bigint
-      altBonusAsset: `0x${string}`
-      underlyingAsset: `0x${string}`
-      decimals: bigint
-      legoId: bigint
-      legoAddr: `0x${string}`
-    }>
     getDepositRewardsAsset: () => Promise<`0x${string}`>
     getLootClaimCoolOffPeriod: () => Promise<bigint>
-    getAgentCreationConfig: (
-      creator: `0x${string}`,
-    ) => Promise<{
-      agentTemplate: `0x${string}`
-      numAgentsAllowed: bigint
-      isCreatorAllowed: boolean
-      minTimeLock: bigint
-      maxTimeLock: bigint
-    }>
+    getSwapFee: (tokenIn: `0x${string}`, tokenOut: `0x${string}`) => Promise<bigint>
+    getRewardsFee: (asset: `0x${string}`) => Promise<bigint>
     getProfitCalcConfig: (
       asset: `0x${string}`,
     ) => Promise<{
       legoId: bigint
       legoAddr: `0x${string}`
-      decimals: bigint
-      staleBlocks: bigint
       isYieldAsset: boolean
-      isRebasing: boolean
       underlyingAsset: `0x${string}`
       maxYieldIncrease: bigint
       performanceFee: bigint
+      isRebasing: boolean
+      decimals: bigint
     }>
     getAssetUsdValueConfig: (
+      asset: `0x${string}`,
+    ) => Promise<{ legoId: bigint; legoAddr: `0x${string}`; isYieldAsset: boolean; underlyingAsset: `0x${string}` }>
+    getLootDistroConfig: (
       asset: `0x${string}`,
     ) => Promise<{
       legoId: bigint
       legoAddr: `0x${string}`
-      decimals: bigint
-      staleBlocks: bigint
-      isYieldAsset: boolean
       underlyingAsset: `0x${string}`
+      ambassador: `0x${string}`
+      ambassadorRevShare: { swapRatio: bigint; rewardsRatio: bigint; yieldRatio: bigint }
+      ambassadorBonusRatio: bigint
+      bonusRatio: bigint
+      bonusAsset: `0x${string}`
     }>
-    getSwapFee: (tokenIn: `0x${string}`, tokenOut: `0x${string}`) => Promise<bigint>
-    getRewardsFee: (asset: `0x${string}`) => Promise<bigint>
     userWalletConfig: () => Promise<{
       walletTemplate: `0x${string}`
       configTemplate: `0x${string}`
-      trialAsset: `0x${string}`
-      trialAmount: bigint
       numUserWalletsAllowed: bigint
       enforceCreatorWhitelist: boolean
       minKeyActionTimeLock: bigint
       maxKeyActionTimeLock: bigint
-      defaultStaleBlocks: bigint
       depositRewardsAsset: `0x${string}`
+      lootClaimCoolOffPeriod: bigint
       txFees: { swapFee: bigint; stableSwapFee: bigint; rewardsFee: bigint }
       ambassadorRevShare: { swapRatio: bigint; rewardsRatio: bigint; yieldRatio: bigint }
-      defaultYieldMaxIncrease: bigint
-      defaultYieldPerformanceFee: bigint
-      defaultYieldAmbassadorBonusRatio: bigint
-      defaultYieldBonusRatio: bigint
-      defaultYieldAltBonusAsset: `0x${string}`
-      lootClaimCoolOffPeriod: bigint
+      yieldConfig: {
+        maxYieldIncrease: bigint
+        performanceFee: bigint
+        ambassadorBonusRatio: bigint
+        bonusRatio: bigint
+        bonusAsset: `0x${string}`
+      }
     }>
-    agentConfig: () => Promise<{
-      agentTemplate: `0x${string}`
-      numAgentsAllowed: bigint
-      enforceCreatorWhitelist: boolean
-      startingAgent: `0x${string}`
-      startingAgentActivationLength: bigint
+    agentConfig: () => Promise<{ startingAgent: `0x${string}`; startingAgentActivationLength: bigint }>
+    managerConfig: () => Promise<{
+      managerPeriod: bigint
+      managerActivationLength: bigint
+      mustHaveUsdValueOnSwaps: boolean
+      maxNumSwapsPerPeriod: bigint
+      maxSlippageOnSwaps: bigint
+      onlyApprovedYieldOpps: boolean
     }>
-    managerConfig: () => Promise<{ managerPeriod: bigint; managerActivationLength: bigint }>
     payeeConfig: () => Promise<{ payeePeriod: bigint; payeeActivationLength: bigint }>
     chequeConfig: () => Promise<{
       maxNumActiveCheques: bigint
@@ -1498,20 +1396,15 @@ export type Contract = {
     assetConfig: (
       arg0: `0x${string}`,
     ) => Promise<{
-      legoId: bigint
-      decimals: bigint
-      staleBlocks: bigint
+      hasConfig: boolean
       txFees: { swapFee: bigint; stableSwapFee: bigint; rewardsFee: bigint }
       ambassadorRevShare: { swapRatio: bigint; rewardsRatio: bigint; yieldRatio: bigint }
       yieldConfig: {
-        isYieldAsset: boolean
-        isRebasing: boolean
-        underlyingAsset: `0x${string}`
         maxYieldIncrease: bigint
         performanceFee: bigint
         ambassadorBonusRatio: bigint
         bonusRatio: bigint
-        altBonusAsset: `0x${string}`
+        bonusAsset: `0x${string}`
       }
     }>
     isStablecoin: (arg0: `0x${string}`) => Promise<boolean>
@@ -1526,24 +1419,30 @@ export type Contract = {
     setUserWalletConfig: (config: {
       walletTemplate: `0x${string}`
       configTemplate: `0x${string}`
-      trialAsset: `0x${string}`
-      trialAmount: bigint
       numUserWalletsAllowed: bigint
       enforceCreatorWhitelist: boolean
       minKeyActionTimeLock: bigint
       maxKeyActionTimeLock: bigint
-      defaultStaleBlocks: bigint
       depositRewardsAsset: `0x${string}`
+      lootClaimCoolOffPeriod: bigint
       txFees: { swapFee: bigint; stableSwapFee: bigint; rewardsFee: bigint }
       ambassadorRevShare: { swapRatio: bigint; rewardsRatio: bigint; yieldRatio: bigint }
-      defaultYieldMaxIncrease: bigint
-      defaultYieldPerformanceFee: bigint
-      defaultYieldAmbassadorBonusRatio: bigint
-      defaultYieldBonusRatio: bigint
-      defaultYieldAltBonusAsset: `0x${string}`
-      lootClaimCoolOffPeriod: bigint
+      yieldConfig: {
+        maxYieldIncrease: bigint
+        performanceFee: bigint
+        ambassadorBonusRatio: bigint
+        bonusRatio: bigint
+        bonusAsset: `0x${string}`
+      }
     }) => Promise<void>
-    setManagerConfig: (config: { managerPeriod: bigint; managerActivationLength: bigint }) => Promise<void>
+    setManagerConfig: (config: {
+      managerPeriod: bigint
+      managerActivationLength: bigint
+      mustHaveUsdValueOnSwaps: boolean
+      maxNumSwapsPerPeriod: bigint
+      maxSlippageOnSwaps: bigint
+      onlyApprovedYieldOpps: boolean
+    }) => Promise<void>
     setPayeeConfig: (config: { payeePeriod: bigint; payeeActivationLength: bigint }) => Promise<void>
     setChequeConfig: (config: {
       maxNumActiveCheques: bigint
@@ -1552,31 +1451,20 @@ export type Contract = {
       expensiveDelayBlocks: bigint
       defaultExpiryBlocks: bigint
     }) => Promise<void>
-    setAgentConfig: (config: {
-      agentTemplate: `0x${string}`
-      numAgentsAllowed: bigint
-      enforceCreatorWhitelist: boolean
-      startingAgent: `0x${string}`
-      startingAgentActivationLength: bigint
-    }) => Promise<void>
+    setAgentConfig: (config: { startingAgent: `0x${string}`; startingAgentActivationLength: bigint }) => Promise<void>
     setStarterAgent: (agent: `0x${string}`) => Promise<void>
     setAssetConfig: (
       asset: `0x${string}`,
       config: {
-        legoId: bigint
-        decimals: bigint
-        staleBlocks: bigint
+        hasConfig: boolean
         txFees: { swapFee: bigint; stableSwapFee: bigint; rewardsFee: bigint }
         ambassadorRevShare: { swapRatio: bigint; rewardsRatio: bigint; yieldRatio: bigint }
         yieldConfig: {
-          isYieldAsset: boolean
-          isRebasing: boolean
-          underlyingAsset: `0x${string}`
           maxYieldIncrease: bigint
           performanceFee: bigint
           ambassadorBonusRatio: bigint
           bonusRatio: bigint
-          altBonusAsset: `0x${string}`
+          bonusAsset: `0x${string}`
         }
       },
     ) => Promise<void>
@@ -1657,20 +1545,18 @@ export const call: CallType = {
   isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) => getRequest('isPaused', args),
   getUserWalletCreationConfig: (...args: ExtractArgs<Contract['calls']['getUserWalletCreationConfig']>) =>
     getRequest('getUserWalletCreationConfig', args),
-  getLootDistroConfig: (...args: ExtractArgs<Contract['calls']['getLootDistroConfig']>) =>
-    getRequest('getLootDistroConfig', args),
   getDepositRewardsAsset: (...args: ExtractArgs<Contract['calls']['getDepositRewardsAsset']>) =>
     getRequest('getDepositRewardsAsset', args),
   getLootClaimCoolOffPeriod: (...args: ExtractArgs<Contract['calls']['getLootClaimCoolOffPeriod']>) =>
     getRequest('getLootClaimCoolOffPeriod', args),
-  getAgentCreationConfig: (...args: ExtractArgs<Contract['calls']['getAgentCreationConfig']>) =>
-    getRequest('getAgentCreationConfig', args),
+  getSwapFee: (...args: ExtractArgs<Contract['calls']['getSwapFee']>) => getRequest('getSwapFee', args),
+  getRewardsFee: (...args: ExtractArgs<Contract['calls']['getRewardsFee']>) => getRequest('getRewardsFee', args),
   getProfitCalcConfig: (...args: ExtractArgs<Contract['calls']['getProfitCalcConfig']>) =>
     getRequest('getProfitCalcConfig', args),
   getAssetUsdValueConfig: (...args: ExtractArgs<Contract['calls']['getAssetUsdValueConfig']>) =>
     getRequest('getAssetUsdValueConfig', args),
-  getSwapFee: (...args: ExtractArgs<Contract['calls']['getSwapFee']>) => getRequest('getSwapFee', args),
-  getRewardsFee: (...args: ExtractArgs<Contract['calls']['getRewardsFee']>) => getRequest('getRewardsFee', args),
+  getLootDistroConfig: (...args: ExtractArgs<Contract['calls']['getLootDistroConfig']>) =>
+    getRequest('getLootDistroConfig', args),
   userWalletConfig: (...args: ExtractArgs<Contract['calls']['userWalletConfig']>) =>
     getRequest('userWalletConfig', args),
   agentConfig: (...args: ExtractArgs<Contract['calls']['agentConfig']>) => getRequest('agentConfig', args),
@@ -1732,26 +1618,23 @@ export type SDK = {
   getUserWalletCreationConfig: (
     ...args: ExtractArgs<Contract['calls']['getUserWalletCreationConfig']>
   ) => Promise<CallReturn<'getUserWalletCreationConfig'>>
-  getLootDistroConfig: (
-    ...args: ExtractArgs<Contract['calls']['getLootDistroConfig']>
-  ) => Promise<CallReturn<'getLootDistroConfig'>>
   getDepositRewardsAsset: (
     ...args: ExtractArgs<Contract['calls']['getDepositRewardsAsset']>
   ) => Promise<CallReturn<'getDepositRewardsAsset'>>
   getLootClaimCoolOffPeriod: (
     ...args: ExtractArgs<Contract['calls']['getLootClaimCoolOffPeriod']>
   ) => Promise<CallReturn<'getLootClaimCoolOffPeriod'>>
-  getAgentCreationConfig: (
-    ...args: ExtractArgs<Contract['calls']['getAgentCreationConfig']>
-  ) => Promise<CallReturn<'getAgentCreationConfig'>>
+  getSwapFee: (...args: ExtractArgs<Contract['calls']['getSwapFee']>) => Promise<CallReturn<'getSwapFee'>>
+  getRewardsFee: (...args: ExtractArgs<Contract['calls']['getRewardsFee']>) => Promise<CallReturn<'getRewardsFee'>>
   getProfitCalcConfig: (
     ...args: ExtractArgs<Contract['calls']['getProfitCalcConfig']>
   ) => Promise<CallReturn<'getProfitCalcConfig'>>
   getAssetUsdValueConfig: (
     ...args: ExtractArgs<Contract['calls']['getAssetUsdValueConfig']>
   ) => Promise<CallReturn<'getAssetUsdValueConfig'>>
-  getSwapFee: (...args: ExtractArgs<Contract['calls']['getSwapFee']>) => Promise<CallReturn<'getSwapFee'>>
-  getRewardsFee: (...args: ExtractArgs<Contract['calls']['getRewardsFee']>) => Promise<CallReturn<'getRewardsFee'>>
+  getLootDistroConfig: (
+    ...args: ExtractArgs<Contract['calls']['getLootDistroConfig']>
+  ) => Promise<CallReturn<'getLootDistroConfig'>>
   userWalletConfig: (
     ...args: ExtractArgs<Contract['calls']['userWalletConfig']>
   ) => Promise<CallReturn<'userWalletConfig'>>
@@ -1803,24 +1686,22 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.getUserWalletCreationConfig(...args)) as Promise<
         CallReturn<'getUserWalletCreationConfig'>
       >,
-    getLootDistroConfig: (...args: ExtractArgs<Contract['calls']['getLootDistroConfig']>) =>
-      singleQuery(publicClient!, call.getLootDistroConfig(...args)) as Promise<CallReturn<'getLootDistroConfig'>>,
     getDepositRewardsAsset: (...args: ExtractArgs<Contract['calls']['getDepositRewardsAsset']>) =>
       singleQuery(publicClient!, call.getDepositRewardsAsset(...args)) as Promise<CallReturn<'getDepositRewardsAsset'>>,
     getLootClaimCoolOffPeriod: (...args: ExtractArgs<Contract['calls']['getLootClaimCoolOffPeriod']>) =>
       singleQuery(publicClient!, call.getLootClaimCoolOffPeriod(...args)) as Promise<
         CallReturn<'getLootClaimCoolOffPeriod'>
       >,
-    getAgentCreationConfig: (...args: ExtractArgs<Contract['calls']['getAgentCreationConfig']>) =>
-      singleQuery(publicClient!, call.getAgentCreationConfig(...args)) as Promise<CallReturn<'getAgentCreationConfig'>>,
-    getProfitCalcConfig: (...args: ExtractArgs<Contract['calls']['getProfitCalcConfig']>) =>
-      singleQuery(publicClient!, call.getProfitCalcConfig(...args)) as Promise<CallReturn<'getProfitCalcConfig'>>,
-    getAssetUsdValueConfig: (...args: ExtractArgs<Contract['calls']['getAssetUsdValueConfig']>) =>
-      singleQuery(publicClient!, call.getAssetUsdValueConfig(...args)) as Promise<CallReturn<'getAssetUsdValueConfig'>>,
     getSwapFee: (...args: ExtractArgs<Contract['calls']['getSwapFee']>) =>
       singleQuery(publicClient!, call.getSwapFee(...args)) as Promise<CallReturn<'getSwapFee'>>,
     getRewardsFee: (...args: ExtractArgs<Contract['calls']['getRewardsFee']>) =>
       singleQuery(publicClient!, call.getRewardsFee(...args)) as Promise<CallReturn<'getRewardsFee'>>,
+    getProfitCalcConfig: (...args: ExtractArgs<Contract['calls']['getProfitCalcConfig']>) =>
+      singleQuery(publicClient!, call.getProfitCalcConfig(...args)) as Promise<CallReturn<'getProfitCalcConfig'>>,
+    getAssetUsdValueConfig: (...args: ExtractArgs<Contract['calls']['getAssetUsdValueConfig']>) =>
+      singleQuery(publicClient!, call.getAssetUsdValueConfig(...args)) as Promise<CallReturn<'getAssetUsdValueConfig'>>,
+    getLootDistroConfig: (...args: ExtractArgs<Contract['calls']['getLootDistroConfig']>) =>
+      singleQuery(publicClient!, call.getLootDistroConfig(...args)) as Promise<CallReturn<'getLootDistroConfig'>>,
     userWalletConfig: (...args: ExtractArgs<Contract['calls']['userWalletConfig']>) =>
       singleQuery(publicClient!, call.userWalletConfig(...args)) as Promise<CallReturn<'userWalletConfig'>>,
     agentConfig: (...args: ExtractArgs<Contract['calls']['agentConfig']>) =>

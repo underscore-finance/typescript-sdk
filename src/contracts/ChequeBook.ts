@@ -340,8 +340,30 @@ export const abi = [
                 type: 'bool',
               },
               {
+                name: 'onlyApprovedYieldOpps',
+                type: 'bool',
+              },
+              {
                 name: 'allowedLegos',
                 type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'swapPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'mustHaveUsdValue',
+                type: 'bool',
+              },
+              {
+                name: 'maxNumSwapsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxSlippage',
+                type: 'uint256',
               },
             ],
           },
@@ -555,6 +577,10 @@ export const abi = [
       {
         name: '_numActiveCheques',
         type: 'uint256',
+      },
+      {
+        name: '_isExistingPayee',
+        type: 'bool',
       },
       {
         name: '_timeLock',
@@ -881,8 +907,30 @@ export const abi = [
                     type: 'bool',
                   },
                   {
+                    name: 'onlyApprovedYieldOpps',
+                    type: 'bool',
+                  },
+                  {
                     name: 'allowedLegos',
                     type: 'uint256[]',
+                  },
+                ],
+              },
+              {
+                name: 'swapPerms',
+                type: 'tuple',
+                components: [
+                  {
+                    name: 'mustHaveUsdValue',
+                    type: 'bool',
+                  },
+                  {
+                    name: 'maxNumSwapsPerPeriod',
+                    type: 'uint256',
+                  },
+                  {
+                    name: 'maxSlippage',
+                    type: 'uint256',
                   },
                 ],
               },
@@ -1067,6 +1115,10 @@ export const abi = [
           {
             name: 'numActiveCheques',
             type: 'uint256',
+          },
+          {
+            name: 'isExistingPayee',
+            type: 'bool',
           },
           {
             name: 'timeLock',
@@ -1280,7 +1332,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xF8009A583A82077c81A2c10C45Bd0122a26C0318'
+export const deployAddress: Address | undefined = '0xcC939d6b16C6a5f07cde6Bc2bD23cb9B8b7a0Dc9'
 
 export type Contract = {
   calls: {
@@ -1305,8 +1357,10 @@ export type Contract = {
           canManageDebt: boolean
           canManageLiq: boolean
           canClaimRewards: boolean
+          onlyApprovedYieldOpps: boolean
           allowedLegos: bigint[]
         }
+        swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint }
         whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean }
         transferPerms: {
           canTransfer: boolean
@@ -1356,6 +1410,7 @@ export type Contract = {
       },
       isExistingCheque: boolean,
       numActiveCheques: bigint,
+      isExistingPayee: boolean,
       timeLock: bigint,
       recipient: `0x${string}`,
       asset: `0x${string}`,
@@ -1409,8 +1464,10 @@ export type Contract = {
           canManageDebt: boolean
           canManageLiq: boolean
           canClaimRewards: boolean
+          onlyApprovedYieldOpps: boolean
           allowedLegos: bigint[]
         }
+        swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint }
         whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean }
         transferPerms: {
           canTransfer: boolean
@@ -1454,6 +1511,7 @@ export type Contract = {
       }
       isExistingCheque: boolean
       numActiveCheques: bigint
+      isExistingPayee: boolean
       timeLock: bigint
     }>
     createDefaultChequeSettings: (

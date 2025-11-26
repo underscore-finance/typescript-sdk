@@ -1274,6 +1274,10 @@ export const abi = [
             name: 'billing',
             type: 'address',
           },
+          {
+            name: 'vaultRegistry',
+            type: 'address',
+          },
         ],
       },
     ],
@@ -1570,6 +1574,10 @@ export const abi = [
         type: 'address',
       },
       {
+        name: '_tempGov',
+        type: 'address',
+      },
+      {
         name: '_minRegistryTimeLock',
         type: 'uint256',
       },
@@ -1582,7 +1590,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xe52A6790fC8210DE16847f1FaF55A6146c0BfC7e'
+export const deployAddress: Address | undefined = '0xd6B83538214B7e7d57Cd9faCd260E284a5fe4e11'
 
 export type Contract = {
   calls: {
@@ -1640,6 +1648,7 @@ export type Contract = {
       appraiser: `0x${string}`
       walletBackpack: `0x${string}`
       billing: `0x${string}`
+      vaultRegistry: `0x${string}`
     }>
     getUndyHq: () => Promise<`0x${string}`>
     canMintUndy: () => Promise<boolean>

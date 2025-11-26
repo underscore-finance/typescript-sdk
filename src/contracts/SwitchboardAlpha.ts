@@ -55,50 +55,6 @@ export const abi = [
     type: 'event',
   },
   {
-    name: 'PendingTrialFundsChange',
-    inputs: [
-      {
-        name: 'trialAsset',
-        type: 'address',
-        indexed: false,
-      },
-      {
-        name: 'trialAmount',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'confirmationBlock',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'actionId',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
-    name: 'TrialFundsSet',
-    inputs: [
-      {
-        name: 'trialAsset',
-        type: 'address',
-        indexed: false,
-      },
-      {
-        name: 'trialAmount',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
     name: 'PendingWalletCreationLimitsChange',
     inputs: [
       {
@@ -179,40 +135,6 @@ export const abi = [
       },
       {
         name: 'maxKeyActionTimeLock',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
-    name: 'PendingDefaultStaleBlocksChange',
-    inputs: [
-      {
-        name: 'defaultStaleBlocks',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'confirmationBlock',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'actionId',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
-    name: 'DefaultStaleBlocksSet',
-    inputs: [
-      {
-        name: 'defaultStaleBlocks',
         type: 'uint256',
         indexed: false,
       },
@@ -352,7 +274,7 @@ export const abi = [
         indexed: false,
       },
       {
-        name: 'defaultYieldAltBonusAsset',
+        name: 'defaultYieldBonusAsset',
         type: 'address',
         indexed: false,
       },
@@ -394,7 +316,7 @@ export const abi = [
         indexed: false,
       },
       {
-        name: 'defaultYieldAltBonusAsset',
+        name: 'defaultYieldBonusAsset',
         type: 'address',
         indexed: false,
       },
@@ -455,16 +377,6 @@ export const abi = [
         indexed: false,
       },
       {
-        name: 'legoId',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'staleBlocks',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
         name: 'txFeesSwapFee',
         type: 'uint256',
         indexed: false,
@@ -495,21 +407,6 @@ export const abi = [
         indexed: false,
       },
       {
-        name: 'isYieldAsset',
-        type: 'bool',
-        indexed: false,
-      },
-      {
-        name: 'isRebasing',
-        type: 'bool',
-        indexed: false,
-      },
-      {
-        name: 'underlyingAsset',
-        type: 'address',
-        indexed: false,
-      },
-      {
         name: 'maxYieldIncrease',
         type: 'uint256',
         indexed: false,
@@ -530,7 +427,7 @@ export const abi = [
         indexed: false,
       },
       {
-        name: 'altBonusAsset',
+        name: 'bonusAsset',
         type: 'address',
         indexed: false,
       },
@@ -601,16 +498,6 @@ export const abi = [
         indexed: false,
       },
       {
-        name: 'legoId',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'staleBlocks',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
         name: 'txFeesSwapFee',
         type: 'uint256',
         indexed: false,
@@ -641,17 +528,167 @@ export const abi = [
         indexed: false,
       },
       {
-        name: 'isYieldAsset',
-        type: 'bool',
+        name: 'maxYieldIncrease',
+        type: 'uint256',
         indexed: false,
       },
       {
-        name: 'isRebasing',
-        type: 'bool',
+        name: 'performanceFee',
+        type: 'uint256',
         indexed: false,
       },
       {
-        name: 'underlyingAsset',
+        name: 'ambassadorBonusRatio',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'bonusRatio',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'bonusAsset',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PendingAssetTxFeesChange',
+    inputs: [
+      {
+        name: 'asset',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'swapFee',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'stableSwapFee',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'rewardsFee',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'confirmationBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'actionId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'AssetTxFeesSet',
+    inputs: [
+      {
+        name: 'asset',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'swapFee',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'stableSwapFee',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'rewardsFee',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PendingAssetAmbassadorRevShareChange',
+    inputs: [
+      {
+        name: 'asset',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'swapRatio',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'rewardsRatio',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'yieldRatio',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'confirmationBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'actionId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'AssetAmbassadorRevShareSet',
+    inputs: [
+      {
+        name: 'asset',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'swapRatio',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'rewardsRatio',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'yieldRatio',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PendingAssetYieldConfigChange',
+    inputs: [
+      {
+        name: 'asset',
         type: 'address',
         indexed: false,
       },
@@ -676,19 +713,7 @@ export const abi = [
         indexed: false,
       },
       {
-        name: 'altBonusAsset',
-        type: 'address',
-        indexed: false,
-      },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
-    name: 'PendingAgentTemplateChange',
-    inputs: [
-      {
-        name: 'agentTemplate',
+        name: 'bonusAsset',
         type: 'address',
         indexed: false,
       },
@@ -707,55 +732,36 @@ export const abi = [
     type: 'event',
   },
   {
-    name: 'AgentTemplateSet',
+    name: 'AssetYieldConfigSet',
     inputs: [
       {
-        name: 'agentTemplate',
+        name: 'asset',
         type: 'address',
         indexed: false,
       },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
-    name: 'PendingAgentCreationLimitsChange',
-    inputs: [
       {
-        name: 'numAgentsAllowed',
+        name: 'maxYieldIncrease',
         type: 'uint256',
         indexed: false,
       },
       {
-        name: 'enforceCreatorWhitelist',
-        type: 'bool',
-        indexed: false,
-      },
-      {
-        name: 'confirmationBlock',
+        name: 'performanceFee',
         type: 'uint256',
         indexed: false,
       },
       {
-        name: 'actionId',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
-    name: 'AgentCreationLimitsSet',
-    inputs: [
-      {
-        name: 'numAgentsAllowed',
+        name: 'ambassadorBonusRatio',
         type: 'uint256',
         indexed: false,
       },
       {
-        name: 'enforceCreatorWhitelist',
-        type: 'bool',
+        name: 'bonusRatio',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'bonusAsset',
+        type: 'address',
         indexed: false,
       },
     ],
@@ -817,6 +823,26 @@ export const abi = [
       {
         name: 'managerActivationLength',
         type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'mustHaveUsdValueOnSwaps',
+        type: 'bool',
+        indexed: false,
+      },
+      {
+        name: 'maxNumSwapsPerPeriod',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'maxSlippageOnSwaps',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'onlyApprovedYieldOpps',
+        type: 'bool',
         indexed: false,
       },
       {
@@ -994,6 +1020,67 @@ export const abi = [
         name: 'ripeLockDuration',
         type: 'uint256',
         indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PendingAgentWrapperSenderAdd',
+    inputs: [
+      {
+        name: 'agentWrapper',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'agentSender',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'confirmationBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'actionId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'AgentWrapperSenderAdded',
+    inputs: [
+      {
+        name: 'agentWrapper',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'agentSender',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'AgentWrapperSenderRemoved',
+    inputs: [
+      {
+        name: 'agentWrapper',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'agentSender',
+        type: 'address',
+        indexed: true,
       },
     ],
     anonymous: false,
@@ -1731,27 +1818,6 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'setTrialFunds',
-    inputs: [
-      {
-        name: '_trialAsset',
-        type: 'address',
-      },
-      {
-        name: '_trialAmount',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
     name: 'setWalletCreationLimits',
     inputs: [
       {
@@ -1781,23 +1847,6 @@ export const abi = [
       },
       {
         name: '_maxKeyActionTimeLock',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'setDefaultStaleBlocks',
-    inputs: [
-      {
-        name: '_defaultStaleBlocks',
         type: 'uint256',
       },
     ],
@@ -1880,7 +1929,7 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_defaultYieldAltBonusAsset',
+        name: '_defaultYieldBonusAsset',
         type: 'address',
       },
     ],
@@ -1922,14 +1971,6 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_staleBlocks',
-        type: 'uint256',
-      },
-      {
         name: '_txFeesSwapFee',
         type: 'uint256',
       },
@@ -1954,15 +1995,98 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_isYieldAsset',
-        type: 'bool',
+        name: '_maxYieldIncrease',
+        type: 'uint256',
       },
       {
-        name: '_isRebasing',
-        type: 'bool',
+        name: '_performanceFee',
+        type: 'uint256',
       },
       {
-        name: '_underlyingAsset',
+        name: '_ambassadorBonusRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_bonusRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_bonusAsset',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setAssetTxFees',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_swapFee',
+        type: 'uint256',
+      },
+      {
+        name: '_stableSwapFee',
+        type: 'uint256',
+      },
+      {
+        name: '_rewardsFee',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setAssetAmbassadorRevShare',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_swapRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_rewardsRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_yieldRatio',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setAssetYieldConfig',
+    inputs: [
+      {
+        name: '_asset',
         type: 'address',
       },
       {
@@ -1982,7 +2106,7 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_altBonusAsset',
+        name: '_bonusAsset',
         type: 'address',
       },
     ],
@@ -2017,44 +2141,6 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'setAgentTemplate',
-    inputs: [
-      {
-        name: '_agentTemplate',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'setAgentCreationLimits',
-    inputs: [
-      {
-        name: '_numAgentsAllowed',
-        type: 'uint256',
-      },
-      {
-        name: '_enforceCreatorWhitelist',
-        type: 'bool',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
     name: 'setStarterAgentParams',
     inputs: [
       {
@@ -2076,6 +2162,31 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'setAgentWrapperSender',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_agentSender',
+        type: 'address',
+      },
+      {
+        name: '_shouldAdd',
+        type: 'bool',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'setManagerConfig',
     inputs: [
       {
@@ -2085,6 +2196,22 @@ export const abi = [
       {
         name: '_managerActivationLength',
         type: 'uint256',
+      },
+      {
+        name: '_mustHaveUsdValueOnSwaps',
+        type: 'bool',
+      },
+      {
+        name: '_maxNumSwapsPerPeriod',
+        type: 'uint256',
+      },
+      {
+        name: '_maxSlippageOnSwaps',
+        type: 'uint256',
+      },
+      {
+        name: '_onlyApprovedYieldOpps',
+        type: 'bool',
       },
     ],
     outputs: [
@@ -2259,14 +2386,6 @@ export const abi = [
             type: 'address',
           },
           {
-            name: 'trialAsset',
-            type: 'address',
-          },
-          {
-            name: 'trialAmount',
-            type: 'uint256',
-          },
-          {
             name: 'numUserWalletsAllowed',
             type: 'uint256',
           },
@@ -2283,12 +2402,12 @@ export const abi = [
             type: 'uint256',
           },
           {
-            name: 'defaultStaleBlocks',
-            type: 'uint256',
-          },
-          {
             name: 'depositRewardsAsset',
             type: 'address',
+          },
+          {
+            name: 'lootClaimCoolOffPeriod',
+            type: 'uint256',
           },
           {
             name: 'txFees',
@@ -2327,28 +2446,30 @@ export const abi = [
             ],
           },
           {
-            name: 'defaultYieldMaxIncrease',
-            type: 'uint256',
-          },
-          {
-            name: 'defaultYieldPerformanceFee',
-            type: 'uint256',
-          },
-          {
-            name: 'defaultYieldAmbassadorBonusRatio',
-            type: 'uint256',
-          },
-          {
-            name: 'defaultYieldBonusRatio',
-            type: 'uint256',
-          },
-          {
-            name: 'defaultYieldAltBonusAsset',
-            type: 'address',
-          },
-          {
-            name: 'lootClaimCoolOffPeriod',
-            type: 'uint256',
+            name: 'yieldConfig',
+            type: 'tuple',
+            components: [
+              {
+                name: 'maxYieldIncrease',
+                type: 'uint256',
+              },
+              {
+                name: 'performanceFee',
+                type: 'uint256',
+              },
+              {
+                name: 'ambassadorBonusRatio',
+                type: 'uint256',
+              },
+              {
+                name: 'bonusRatio',
+                type: 'uint256',
+              },
+              {
+                name: 'bonusAsset',
+                type: 'address',
+              },
+            ],
           },
         ],
       },
@@ -2378,16 +2499,8 @@ export const abi = [
             type: 'tuple',
             components: [
               {
-                name: 'legoId',
-                type: 'uint256',
-              },
-              {
-                name: 'decimals',
-                type: 'uint256',
-              },
-              {
-                name: 'staleBlocks',
-                type: 'uint256',
+                name: 'hasConfig',
+                type: 'bool',
               },
               {
                 name: 'txFees',
@@ -2430,18 +2543,6 @@ export const abi = [
                 type: 'tuple',
                 components: [
                   {
-                    name: 'isYieldAsset',
-                    type: 'bool',
-                  },
-                  {
-                    name: 'isRebasing',
-                    type: 'bool',
-                  },
-                  {
-                    name: 'underlyingAsset',
-                    type: 'address',
-                  },
-                  {
                     name: 'maxYieldIncrease',
                     type: 'uint256',
                   },
@@ -2458,10 +2559,141 @@ export const abi = [
                     type: 'uint256',
                   },
                   {
-                    name: 'altBonusAsset',
+                    name: 'bonusAsset',
                     type: 'address',
                   },
                 ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingAssetTxFees',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'asset',
+            type: 'address',
+          },
+          {
+            name: 'txFees',
+            type: 'tuple',
+            components: [
+              {
+                name: 'swapFee',
+                type: 'uint256',
+              },
+              {
+                name: 'stableSwapFee',
+                type: 'uint256',
+              },
+              {
+                name: 'rewardsFee',
+                type: 'uint256',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingAssetAmbassadorRevShare',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'asset',
+            type: 'address',
+          },
+          {
+            name: 'ambassadorRevShare',
+            type: 'tuple',
+            components: [
+              {
+                name: 'swapRatio',
+                type: 'uint256',
+              },
+              {
+                name: 'rewardsRatio',
+                type: 'uint256',
+              },
+              {
+                name: 'yieldRatio',
+                type: 'uint256',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingAssetYieldConfig',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'asset',
+            type: 'address',
+          },
+          {
+            name: 'yieldConfig',
+            type: 'tuple',
+            components: [
+              {
+                name: 'maxYieldIncrease',
+                type: 'uint256',
+              },
+              {
+                name: 'performanceFee',
+                type: 'uint256',
+              },
+              {
+                name: 'ambassadorBonusRatio',
+                type: 'uint256',
+              },
+              {
+                name: 'bonusRatio',
+                type: 'uint256',
+              },
+              {
+                name: 'bonusAsset',
+                type: 'address',
               },
             ],
           },
@@ -2484,18 +2716,6 @@ export const abi = [
         name: '',
         type: 'tuple',
         components: [
-          {
-            name: 'agentTemplate',
-            type: 'address',
-          },
-          {
-            name: 'numAgentsAllowed',
-            type: 'uint256',
-          },
-          {
-            name: 'enforceCreatorWhitelist',
-            type: 'bool',
-          },
           {
             name: 'startingAgent',
             type: 'address',
@@ -2530,6 +2750,22 @@ export const abi = [
           {
             name: 'managerActivationLength',
             type: 'uint256',
+          },
+          {
+            name: 'mustHaveUsdValueOnSwaps',
+            type: 'bool',
+          },
+          {
+            name: 'maxNumSwapsPerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'maxSlippageOnSwaps',
+            type: 'uint256',
+          },
+          {
+            name: 'onlyApprovedYieldOpps',
+            type: 'bool',
           },
         ],
       },
@@ -2590,6 +2826,33 @@ export const abi = [
     ],
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingAgentWrapperSender',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'agentWrapper',
+            type: 'address',
+          },
+          {
+            name: 'agentSender',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'constructor',
     inputs: [
@@ -2614,7 +2877,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xb7622CB741C2B26E59e262604d941C50D309C358'
+export const deployAddress: Address | undefined = '0xB7d32916c8E7F74f70aF7ECFcb35B04358E50bAc'
 
 export type Contract = {
   calls: {
@@ -2661,57 +2924,76 @@ export type Contract = {
     ) => Promise<{
       walletTemplate: `0x${string}`
       configTemplate: `0x${string}`
-      trialAsset: `0x${string}`
-      trialAmount: bigint
       numUserWalletsAllowed: bigint
       enforceCreatorWhitelist: boolean
       minKeyActionTimeLock: bigint
       maxKeyActionTimeLock: bigint
-      defaultStaleBlocks: bigint
       depositRewardsAsset: `0x${string}`
+      lootClaimCoolOffPeriod: bigint
       txFees: { swapFee: bigint; stableSwapFee: bigint; rewardsFee: bigint }
       ambassadorRevShare: { swapRatio: bigint; rewardsRatio: bigint; yieldRatio: bigint }
-      defaultYieldMaxIncrease: bigint
-      defaultYieldPerformanceFee: bigint
-      defaultYieldAmbassadorBonusRatio: bigint
-      defaultYieldBonusRatio: bigint
-      defaultYieldAltBonusAsset: `0x${string}`
-      lootClaimCoolOffPeriod: bigint
+      yieldConfig: {
+        maxYieldIncrease: bigint
+        performanceFee: bigint
+        ambassadorBonusRatio: bigint
+        bonusRatio: bigint
+        bonusAsset: `0x${string}`
+      }
     }>
     pendingAssetConfig: (
       arg0: bigint,
     ) => Promise<{
       asset: `0x${string}`
       config: {
-        legoId: bigint
-        decimals: bigint
-        staleBlocks: bigint
+        hasConfig: boolean
         txFees: { swapFee: bigint; stableSwapFee: bigint; rewardsFee: bigint }
         ambassadorRevShare: { swapRatio: bigint; rewardsRatio: bigint; yieldRatio: bigint }
         yieldConfig: {
-          isYieldAsset: boolean
-          isRebasing: boolean
-          underlyingAsset: `0x${string}`
           maxYieldIncrease: bigint
           performanceFee: bigint
           ambassadorBonusRatio: bigint
           bonusRatio: bigint
-          altBonusAsset: `0x${string}`
+          bonusAsset: `0x${string}`
         }
+      }
+    }>
+    pendingAssetTxFees: (
+      arg0: bigint,
+    ) => Promise<{ asset: `0x${string}`; txFees: { swapFee: bigint; stableSwapFee: bigint; rewardsFee: bigint } }>
+    pendingAssetAmbassadorRevShare: (
+      arg0: bigint,
+    ) => Promise<{
+      asset: `0x${string}`
+      ambassadorRevShare: { swapRatio: bigint; rewardsRatio: bigint; yieldRatio: bigint }
+    }>
+    pendingAssetYieldConfig: (
+      arg0: bigint,
+    ) => Promise<{
+      asset: `0x${string}`
+      yieldConfig: {
+        maxYieldIncrease: bigint
+        performanceFee: bigint
+        ambassadorBonusRatio: bigint
+        bonusRatio: bigint
+        bonusAsset: `0x${string}`
       }
     }>
     pendingAgentConfig: (
       arg0: bigint,
+    ) => Promise<{ startingAgent: `0x${string}`; startingAgentActivationLength: bigint }>
+    pendingManagerConfig: (
+      arg0: bigint,
     ) => Promise<{
-      agentTemplate: `0x${string}`
-      numAgentsAllowed: bigint
-      enforceCreatorWhitelist: boolean
-      startingAgent: `0x${string}`
-      startingAgentActivationLength: bigint
+      managerPeriod: bigint
+      managerActivationLength: bigint
+      mustHaveUsdValueOnSwaps: boolean
+      maxNumSwapsPerPeriod: bigint
+      maxSlippageOnSwaps: bigint
+      onlyApprovedYieldOpps: boolean
     }>
-    pendingManagerConfig: (arg0: bigint) => Promise<{ managerPeriod: bigint; managerActivationLength: bigint }>
     pendingPayeeConfig: (arg0: bigint) => Promise<{ payeePeriod: bigint; payeeActivationLength: bigint }>
     pendingAddrToBool: (arg0: bigint) => Promise<{ addr: `0x${string}`; isAllowed: boolean }>
+    pendingAgentWrapperSender: (arg0: bigint) => Promise<{ agentWrapper: `0x${string}`; agentSender: `0x${string}` }>
   }
   mutations: {
     startGovernanceChange: (newGov: `0x${string}`) => Promise<void>
@@ -2724,10 +3006,8 @@ export type Contract = {
     setExpiration: (expiration: bigint) => Promise<boolean>
     setActionTimeLockAfterSetup: (newTimeLock?: bigint) => Promise<boolean>
     setUserWalletTemplates: (walletTemplate: `0x${string}`, configTemplate: `0x${string}`) => Promise<bigint>
-    setTrialFunds: (trialAsset: `0x${string}`, trialAmount: bigint) => Promise<bigint>
     setWalletCreationLimits: (numUserWalletsAllowed: bigint, enforceCreatorWhitelist: boolean) => Promise<bigint>
     setKeyActionTimelockBounds: (minKeyActionTimeLock: bigint, maxKeyActionTimeLock: bigint) => Promise<bigint>
-    setDefaultStaleBlocks: (defaultStaleBlocks: bigint) => Promise<bigint>
     setTxFees: (swapFee: bigint, stableSwapFee: bigint, rewardsFee: bigint) => Promise<bigint>
     setAmbassadorRevShare: (swapRatio: bigint, rewardsRatio: bigint, yieldRatio: bigint) => Promise<bigint>
     setDefaultYieldParams: (
@@ -2735,33 +3015,58 @@ export type Contract = {
       defaultYieldPerformanceFee: bigint,
       defaultYieldAmbassadorBonusRatio: bigint,
       defaultYieldBonusRatio: bigint,
-      defaultYieldAltBonusAsset: `0x${string}`,
+      defaultYieldBonusAsset: `0x${string}`,
     ) => Promise<bigint>
     setLootParams: (depositRewardsAsset: `0x${string}`, lootClaimCoolOffPeriod: bigint) => Promise<bigint>
     setAssetConfig: (
       asset: `0x${string}`,
-      legoId: bigint,
-      staleBlocks: bigint,
       txFeesSwapFee: bigint,
       txFeesStableSwapFee: bigint,
       txFeesRewardsFee: bigint,
       ambassadorRevShareSwapRatio: bigint,
       ambassadorRevShareRewardsRatio: bigint,
       ambassadorRevShareYieldRatio: bigint,
-      isYieldAsset: boolean,
-      isRebasing: boolean,
-      underlyingAsset: `0x${string}`,
       maxYieldIncrease: bigint,
       performanceFee: bigint,
       ambassadorBonusRatio: bigint,
       bonusRatio: bigint,
-      altBonusAsset: `0x${string}`,
+      bonusAsset: `0x${string}`,
+    ) => Promise<bigint>
+    setAssetTxFees: (
+      asset: `0x${string}`,
+      swapFee: bigint,
+      stableSwapFee: bigint,
+      rewardsFee: bigint,
+    ) => Promise<bigint>
+    setAssetAmbassadorRevShare: (
+      asset: `0x${string}`,
+      swapRatio: bigint,
+      rewardsRatio: bigint,
+      yieldRatio: bigint,
+    ) => Promise<bigint>
+    setAssetYieldConfig: (
+      asset: `0x${string}`,
+      maxYieldIncrease: bigint,
+      performanceFee: bigint,
+      ambassadorBonusRatio: bigint,
+      bonusRatio: bigint,
+      bonusAsset: `0x${string}`,
     ) => Promise<bigint>
     setIsStablecoin: (asset: `0x${string}`, isStablecoin: boolean) => Promise<bigint>
-    setAgentTemplate: (agentTemplate: `0x${string}`) => Promise<bigint>
-    setAgentCreationLimits: (numAgentsAllowed: bigint, enforceCreatorWhitelist: boolean) => Promise<bigint>
     setStarterAgentParams: (startingAgent: `0x${string}`, startingAgentActivationLength: bigint) => Promise<bigint>
-    setManagerConfig: (managerPeriod: bigint, managerActivationLength: bigint) => Promise<bigint>
+    setAgentWrapperSender: (
+      agentWrapper: `0x${string}`,
+      agentSender: `0x${string}`,
+      shouldAdd: boolean,
+    ) => Promise<bigint>
+    setManagerConfig: (
+      managerPeriod: bigint,
+      managerActivationLength: bigint,
+      mustHaveUsdValueOnSwaps: boolean,
+      maxNumSwapsPerPeriod: bigint,
+      maxSlippageOnSwaps: bigint,
+      onlyApprovedYieldOpps: boolean,
+    ) => Promise<bigint>
     setPayeeConfig: (payeePeriod: bigint, payeeActivationLength: bigint) => Promise<bigint>
     setCanPerformSecurityAction: (signer: `0x${string}`, canPerform: boolean) => Promise<bigint>
     setCreatorWhitelist: (creator: `0x${string}`, isWhitelisted: boolean) => Promise<void>
@@ -2778,13 +3083,6 @@ export type Contract = {
       actionId: bigint,
     ) => Promise<void>
     UserWalletTemplatesSet: (walletTemplate: `0x${string}`, configTemplate: `0x${string}`) => Promise<void>
-    PendingTrialFundsChange: (
-      trialAsset: `0x${string}`,
-      trialAmount: bigint,
-      confirmationBlock: bigint,
-      actionId: bigint,
-    ) => Promise<void>
-    TrialFundsSet: (trialAsset: `0x${string}`, trialAmount: bigint) => Promise<void>
     PendingWalletCreationLimitsChange: (
       numUserWalletsAllowed: bigint,
       enforceCreatorWhitelist: boolean,
@@ -2799,12 +3097,6 @@ export type Contract = {
       actionId: bigint,
     ) => Promise<void>
     KeyActionTimelockBoundsSet: (minKeyActionTimeLock: bigint, maxKeyActionTimeLock: bigint) => Promise<void>
-    PendingDefaultStaleBlocksChange: (
-      defaultStaleBlocks: bigint,
-      confirmationBlock: bigint,
-      actionId: bigint,
-    ) => Promise<void>
-    DefaultStaleBlocksSet: (defaultStaleBlocks: bigint) => Promise<void>
     PendingTxFeesChange: (
       swapFee: bigint,
       stableSwapFee: bigint,
@@ -2826,7 +3118,7 @@ export type Contract = {
       defaultYieldPerformanceFee: bigint,
       defaultYieldAmbassadorBonusRatio: bigint,
       defaultYieldBonusRatio: bigint,
-      defaultYieldAltBonusAsset: `0x${string}`,
+      defaultYieldBonusAsset: `0x${string}`,
       confirmationBlock: bigint,
       actionId: bigint,
     ) => Promise<void>
@@ -2835,7 +3127,7 @@ export type Contract = {
       defaultYieldPerformanceFee: bigint,
       defaultYieldAmbassadorBonusRatio: bigint,
       defaultYieldBonusRatio: bigint,
-      defaultYieldAltBonusAsset: `0x${string}`,
+      defaultYieldBonusAsset: `0x${string}`,
     ) => Promise<void>
     PendingLootParamsChange: (
       depositRewardsAsset: `0x${string}`,
@@ -2846,22 +3138,17 @@ export type Contract = {
     LootParamsSet: (depositRewardsAsset: `0x${string}`, lootClaimCoolOffPeriod: bigint) => Promise<void>
     PendingAssetConfigChange: (
       asset: `0x${string}`,
-      legoId: bigint,
-      staleBlocks: bigint,
       txFeesSwapFee: bigint,
       txFeesStableSwapFee: bigint,
       txFeesRewardsFee: bigint,
       ambassadorRevShareSwapRatio: bigint,
       ambassadorRevShareRewardsRatio: bigint,
       ambassadorRevShareYieldRatio: bigint,
-      isYieldAsset: boolean,
-      isRebasing: boolean,
-      underlyingAsset: `0x${string}`,
       maxYieldIncrease: bigint,
       performanceFee: bigint,
       ambassadorBonusRatio: bigint,
       bonusRatio: bigint,
-      altBonusAsset: `0x${string}`,
+      bonusAsset: `0x${string}`,
       confirmationBlock: bigint,
       actionId: bigint,
     ) => Promise<void>
@@ -2874,36 +3161,59 @@ export type Contract = {
     IsStablecoinSet: (asset: `0x${string}`, isStablecoin: boolean) => Promise<void>
     AssetConfigSet: (
       asset: `0x${string}`,
-      legoId: bigint,
-      staleBlocks: bigint,
       txFeesSwapFee: bigint,
       txFeesStableSwapFee: bigint,
       txFeesRewardsFee: bigint,
       ambassadorRevShareSwapRatio: bigint,
       ambassadorRevShareRewardsRatio: bigint,
       ambassadorRevShareYieldRatio: bigint,
-      isYieldAsset: boolean,
-      isRebasing: boolean,
-      underlyingAsset: `0x${string}`,
       maxYieldIncrease: bigint,
       performanceFee: bigint,
       ambassadorBonusRatio: bigint,
       bonusRatio: bigint,
-      altBonusAsset: `0x${string}`,
+      bonusAsset: `0x${string}`,
     ) => Promise<void>
-    PendingAgentTemplateChange: (
-      agentTemplate: `0x${string}`,
+    PendingAssetTxFeesChange: (
+      asset: `0x${string}`,
+      swapFee: bigint,
+      stableSwapFee: bigint,
+      rewardsFee: bigint,
       confirmationBlock: bigint,
       actionId: bigint,
     ) => Promise<void>
-    AgentTemplateSet: (agentTemplate: `0x${string}`) => Promise<void>
-    PendingAgentCreationLimitsChange: (
-      numAgentsAllowed: bigint,
-      enforceCreatorWhitelist: boolean,
+    AssetTxFeesSet: (asset: `0x${string}`, swapFee: bigint, stableSwapFee: bigint, rewardsFee: bigint) => Promise<void>
+    PendingAssetAmbassadorRevShareChange: (
+      asset: `0x${string}`,
+      swapRatio: bigint,
+      rewardsRatio: bigint,
+      yieldRatio: bigint,
       confirmationBlock: bigint,
       actionId: bigint,
     ) => Promise<void>
-    AgentCreationLimitsSet: (numAgentsAllowed: bigint, enforceCreatorWhitelist: boolean) => Promise<void>
+    AssetAmbassadorRevShareSet: (
+      asset: `0x${string}`,
+      swapRatio: bigint,
+      rewardsRatio: bigint,
+      yieldRatio: bigint,
+    ) => Promise<void>
+    PendingAssetYieldConfigChange: (
+      asset: `0x${string}`,
+      maxYieldIncrease: bigint,
+      performanceFee: bigint,
+      ambassadorBonusRatio: bigint,
+      bonusRatio: bigint,
+      bonusAsset: `0x${string}`,
+      confirmationBlock: bigint,
+      actionId: bigint,
+    ) => Promise<void>
+    AssetYieldConfigSet: (
+      asset: `0x${string}`,
+      maxYieldIncrease: bigint,
+      performanceFee: bigint,
+      ambassadorBonusRatio: bigint,
+      bonusRatio: bigint,
+      bonusAsset: `0x${string}`,
+    ) => Promise<void>
     PendingStarterAgentParamsChange: (
       startingAgent: `0x${string}`,
       startingAgentActivationLength: bigint,
@@ -2914,6 +3224,10 @@ export type Contract = {
     PendingManagerConfigChange: (
       managerPeriod: bigint,
       managerActivationLength: bigint,
+      mustHaveUsdValueOnSwaps: boolean,
+      maxNumSwapsPerPeriod: bigint,
+      maxSlippageOnSwaps: bigint,
+      onlyApprovedYieldOpps: boolean,
       confirmationBlock: bigint,
       actionId: bigint,
     ) => Promise<void>
@@ -2935,6 +3249,14 @@ export type Contract = {
     CanPerformSecurityAction: (signer: `0x${string}`, canPerform: boolean) => Promise<void>
     LockedSignerSet: (signer: `0x${string}`, isLocked: boolean, caller: `0x${string}`) => Promise<void>
     RipeRewardsConfigSetFromSwitchboard: (ripeStakeRatio: bigint, ripeLockDuration: bigint) => Promise<void>
+    PendingAgentWrapperSenderAdd: (
+      agentWrapper: `0x${string}`,
+      agentSender: `0x${string}`,
+      confirmationBlock: bigint,
+      actionId: bigint,
+    ) => Promise<void>
+    AgentWrapperSenderAdded: (agentWrapper: `0x${string}`, agentSender: `0x${string}`) => Promise<void>
+    AgentWrapperSenderRemoved: (agentWrapper: `0x${string}`, agentSender: `0x${string}`) => Promise<void>
     GovChangeTimeLockModified: (prevTimeLock: bigint, newTimeLock: bigint) => Promise<void>
     ExpirationSet: (expiration: bigint) => Promise<void>
     ActionTimeLockSet: (newTimeLock: bigint, prevTimeLock: bigint) => Promise<void>
@@ -3052,6 +3374,12 @@ export const call: CallType = {
     getRequest('pendingUserWalletConfig', args),
   pendingAssetConfig: (...args: ExtractArgs<Contract['calls']['pendingAssetConfig']>) =>
     getRequest('pendingAssetConfig', args),
+  pendingAssetTxFees: (...args: ExtractArgs<Contract['calls']['pendingAssetTxFees']>) =>
+    getRequest('pendingAssetTxFees', args),
+  pendingAssetAmbassadorRevShare: (...args: ExtractArgs<Contract['calls']['pendingAssetAmbassadorRevShare']>) =>
+    getRequest('pendingAssetAmbassadorRevShare', args),
+  pendingAssetYieldConfig: (...args: ExtractArgs<Contract['calls']['pendingAssetYieldConfig']>) =>
+    getRequest('pendingAssetYieldConfig', args),
   pendingAgentConfig: (...args: ExtractArgs<Contract['calls']['pendingAgentConfig']>) =>
     getRequest('pendingAgentConfig', args),
   pendingManagerConfig: (...args: ExtractArgs<Contract['calls']['pendingManagerConfig']>) =>
@@ -3060,6 +3388,8 @@ export const call: CallType = {
     getRequest('pendingPayeeConfig', args),
   pendingAddrToBool: (...args: ExtractArgs<Contract['calls']['pendingAddrToBool']>) =>
     getRequest('pendingAddrToBool', args),
+  pendingAgentWrapperSender: (...args: ExtractArgs<Contract['calls']['pendingAgentWrapperSender']>) =>
+    getRequest('pendingAgentWrapperSender', args),
 }
 
 export type Mutations = keyof Contract['mutations']
@@ -3092,19 +3422,19 @@ export const mutation: {
   setExpiration: getMutation('setExpiration'),
   setActionTimeLockAfterSetup: getMutation('setActionTimeLockAfterSetup'),
   setUserWalletTemplates: getMutation('setUserWalletTemplates'),
-  setTrialFunds: getMutation('setTrialFunds'),
   setWalletCreationLimits: getMutation('setWalletCreationLimits'),
   setKeyActionTimelockBounds: getMutation('setKeyActionTimelockBounds'),
-  setDefaultStaleBlocks: getMutation('setDefaultStaleBlocks'),
   setTxFees: getMutation('setTxFees'),
   setAmbassadorRevShare: getMutation('setAmbassadorRevShare'),
   setDefaultYieldParams: getMutation('setDefaultYieldParams'),
   setLootParams: getMutation('setLootParams'),
   setAssetConfig: getMutation('setAssetConfig'),
+  setAssetTxFees: getMutation('setAssetTxFees'),
+  setAssetAmbassadorRevShare: getMutation('setAssetAmbassadorRevShare'),
+  setAssetYieldConfig: getMutation('setAssetYieldConfig'),
   setIsStablecoin: getMutation('setIsStablecoin'),
-  setAgentTemplate: getMutation('setAgentTemplate'),
-  setAgentCreationLimits: getMutation('setAgentCreationLimits'),
   setStarterAgentParams: getMutation('setStarterAgentParams'),
+  setAgentWrapperSender: getMutation('setAgentWrapperSender'),
   setManagerConfig: getMutation('setManagerConfig'),
   setPayeeConfig: getMutation('setPayeeConfig'),
   setCanPerformSecurityAction: getMutation('setCanPerformSecurityAction'),
@@ -3173,6 +3503,15 @@ export type SDK = {
   pendingAssetConfig: (
     ...args: ExtractArgs<Contract['calls']['pendingAssetConfig']>
   ) => Promise<CallReturn<'pendingAssetConfig'>>
+  pendingAssetTxFees: (
+    ...args: ExtractArgs<Contract['calls']['pendingAssetTxFees']>
+  ) => Promise<CallReturn<'pendingAssetTxFees'>>
+  pendingAssetAmbassadorRevShare: (
+    ...args: ExtractArgs<Contract['calls']['pendingAssetAmbassadorRevShare']>
+  ) => Promise<CallReturn<'pendingAssetAmbassadorRevShare'>>
+  pendingAssetYieldConfig: (
+    ...args: ExtractArgs<Contract['calls']['pendingAssetYieldConfig']>
+  ) => Promise<CallReturn<'pendingAssetYieldConfig'>>
   pendingAgentConfig: (
     ...args: ExtractArgs<Contract['calls']['pendingAgentConfig']>
   ) => Promise<CallReturn<'pendingAgentConfig'>>
@@ -3185,6 +3524,9 @@ export type SDK = {
   pendingAddrToBool: (
     ...args: ExtractArgs<Contract['calls']['pendingAddrToBool']>
   ) => Promise<CallReturn<'pendingAddrToBool'>>
+  pendingAgentWrapperSender: (
+    ...args: ExtractArgs<Contract['calls']['pendingAgentWrapperSender']>
+  ) => Promise<CallReturn<'pendingAgentWrapperSender'>>
   startGovernanceChange: (...args: ExtractArgs<Contract['mutations']['startGovernanceChange']>) => Promise<Address>
   confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) => Promise<Address>
   cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) => Promise<Address>
@@ -3197,21 +3539,23 @@ export type SDK = {
     ...args: ExtractArgs<Contract['mutations']['setActionTimeLockAfterSetup']>
   ) => Promise<Address>
   setUserWalletTemplates: (...args: ExtractArgs<Contract['mutations']['setUserWalletTemplates']>) => Promise<Address>
-  setTrialFunds: (...args: ExtractArgs<Contract['mutations']['setTrialFunds']>) => Promise<Address>
   setWalletCreationLimits: (...args: ExtractArgs<Contract['mutations']['setWalletCreationLimits']>) => Promise<Address>
   setKeyActionTimelockBounds: (
     ...args: ExtractArgs<Contract['mutations']['setKeyActionTimelockBounds']>
   ) => Promise<Address>
-  setDefaultStaleBlocks: (...args: ExtractArgs<Contract['mutations']['setDefaultStaleBlocks']>) => Promise<Address>
   setTxFees: (...args: ExtractArgs<Contract['mutations']['setTxFees']>) => Promise<Address>
   setAmbassadorRevShare: (...args: ExtractArgs<Contract['mutations']['setAmbassadorRevShare']>) => Promise<Address>
   setDefaultYieldParams: (...args: ExtractArgs<Contract['mutations']['setDefaultYieldParams']>) => Promise<Address>
   setLootParams: (...args: ExtractArgs<Contract['mutations']['setLootParams']>) => Promise<Address>
   setAssetConfig: (...args: ExtractArgs<Contract['mutations']['setAssetConfig']>) => Promise<Address>
+  setAssetTxFees: (...args: ExtractArgs<Contract['mutations']['setAssetTxFees']>) => Promise<Address>
+  setAssetAmbassadorRevShare: (
+    ...args: ExtractArgs<Contract['mutations']['setAssetAmbassadorRevShare']>
+  ) => Promise<Address>
+  setAssetYieldConfig: (...args: ExtractArgs<Contract['mutations']['setAssetYieldConfig']>) => Promise<Address>
   setIsStablecoin: (...args: ExtractArgs<Contract['mutations']['setIsStablecoin']>) => Promise<Address>
-  setAgentTemplate: (...args: ExtractArgs<Contract['mutations']['setAgentTemplate']>) => Promise<Address>
-  setAgentCreationLimits: (...args: ExtractArgs<Contract['mutations']['setAgentCreationLimits']>) => Promise<Address>
   setStarterAgentParams: (...args: ExtractArgs<Contract['mutations']['setStarterAgentParams']>) => Promise<Address>
+  setAgentWrapperSender: (...args: ExtractArgs<Contract['mutations']['setAgentWrapperSender']>) => Promise<Address>
   setManagerConfig: (...args: ExtractArgs<Contract['mutations']['setManagerConfig']>) => Promise<Address>
   setPayeeConfig: (...args: ExtractArgs<Contract['mutations']['setPayeeConfig']>) => Promise<Address>
   setCanPerformSecurityAction: (
@@ -3287,6 +3631,16 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       >,
     pendingAssetConfig: (...args: ExtractArgs<Contract['calls']['pendingAssetConfig']>) =>
       singleQuery(publicClient!, call.pendingAssetConfig(...args)) as Promise<CallReturn<'pendingAssetConfig'>>,
+    pendingAssetTxFees: (...args: ExtractArgs<Contract['calls']['pendingAssetTxFees']>) =>
+      singleQuery(publicClient!, call.pendingAssetTxFees(...args)) as Promise<CallReturn<'pendingAssetTxFees'>>,
+    pendingAssetAmbassadorRevShare: (...args: ExtractArgs<Contract['calls']['pendingAssetAmbassadorRevShare']>) =>
+      singleQuery(publicClient!, call.pendingAssetAmbassadorRevShare(...args)) as Promise<
+        CallReturn<'pendingAssetAmbassadorRevShare'>
+      >,
+    pendingAssetYieldConfig: (...args: ExtractArgs<Contract['calls']['pendingAssetYieldConfig']>) =>
+      singleQuery(publicClient!, call.pendingAssetYieldConfig(...args)) as Promise<
+        CallReturn<'pendingAssetYieldConfig'>
+      >,
     pendingAgentConfig: (...args: ExtractArgs<Contract['calls']['pendingAgentConfig']>) =>
       singleQuery(publicClient!, call.pendingAgentConfig(...args)) as Promise<CallReturn<'pendingAgentConfig'>>,
     pendingManagerConfig: (...args: ExtractArgs<Contract['calls']['pendingManagerConfig']>) =>
@@ -3295,6 +3649,10 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.pendingPayeeConfig(...args)) as Promise<CallReturn<'pendingPayeeConfig'>>,
     pendingAddrToBool: (...args: ExtractArgs<Contract['calls']['pendingAddrToBool']>) =>
       singleQuery(publicClient!, call.pendingAddrToBool(...args)) as Promise<CallReturn<'pendingAddrToBool'>>,
+    pendingAgentWrapperSender: (...args: ExtractArgs<Contract['calls']['pendingAgentWrapperSender']>) =>
+      singleQuery(publicClient!, call.pendingAgentWrapperSender(...args)) as Promise<
+        CallReturn<'pendingAgentWrapperSender'>
+      >,
 
     // Mutations
     startGovernanceChange: (...args: ExtractArgs<Contract['mutations']['startGovernanceChange']>) =>
@@ -3317,14 +3675,10 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.setActionTimeLockAfterSetup)(...args),
     setUserWalletTemplates: (...args: ExtractArgs<Contract['mutations']['setUserWalletTemplates']>) =>
       mutate(walletClient!, mutation.setUserWalletTemplates)(...args),
-    setTrialFunds: (...args: ExtractArgs<Contract['mutations']['setTrialFunds']>) =>
-      mutate(walletClient!, mutation.setTrialFunds)(...args),
     setWalletCreationLimits: (...args: ExtractArgs<Contract['mutations']['setWalletCreationLimits']>) =>
       mutate(walletClient!, mutation.setWalletCreationLimits)(...args),
     setKeyActionTimelockBounds: (...args: ExtractArgs<Contract['mutations']['setKeyActionTimelockBounds']>) =>
       mutate(walletClient!, mutation.setKeyActionTimelockBounds)(...args),
-    setDefaultStaleBlocks: (...args: ExtractArgs<Contract['mutations']['setDefaultStaleBlocks']>) =>
-      mutate(walletClient!, mutation.setDefaultStaleBlocks)(...args),
     setTxFees: (...args: ExtractArgs<Contract['mutations']['setTxFees']>) =>
       mutate(walletClient!, mutation.setTxFees)(...args),
     setAmbassadorRevShare: (...args: ExtractArgs<Contract['mutations']['setAmbassadorRevShare']>) =>
@@ -3335,14 +3689,18 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.setLootParams)(...args),
     setAssetConfig: (...args: ExtractArgs<Contract['mutations']['setAssetConfig']>) =>
       mutate(walletClient!, mutation.setAssetConfig)(...args),
+    setAssetTxFees: (...args: ExtractArgs<Contract['mutations']['setAssetTxFees']>) =>
+      mutate(walletClient!, mutation.setAssetTxFees)(...args),
+    setAssetAmbassadorRevShare: (...args: ExtractArgs<Contract['mutations']['setAssetAmbassadorRevShare']>) =>
+      mutate(walletClient!, mutation.setAssetAmbassadorRevShare)(...args),
+    setAssetYieldConfig: (...args: ExtractArgs<Contract['mutations']['setAssetYieldConfig']>) =>
+      mutate(walletClient!, mutation.setAssetYieldConfig)(...args),
     setIsStablecoin: (...args: ExtractArgs<Contract['mutations']['setIsStablecoin']>) =>
       mutate(walletClient!, mutation.setIsStablecoin)(...args),
-    setAgentTemplate: (...args: ExtractArgs<Contract['mutations']['setAgentTemplate']>) =>
-      mutate(walletClient!, mutation.setAgentTemplate)(...args),
-    setAgentCreationLimits: (...args: ExtractArgs<Contract['mutations']['setAgentCreationLimits']>) =>
-      mutate(walletClient!, mutation.setAgentCreationLimits)(...args),
     setStarterAgentParams: (...args: ExtractArgs<Contract['mutations']['setStarterAgentParams']>) =>
       mutate(walletClient!, mutation.setStarterAgentParams)(...args),
+    setAgentWrapperSender: (...args: ExtractArgs<Contract['mutations']['setAgentWrapperSender']>) =>
+      mutate(walletClient!, mutation.setAgentWrapperSender)(...args),
     setManagerConfig: (...args: ExtractArgs<Contract['mutations']['setManagerConfig']>) =>
       mutate(walletClient!, mutation.setManagerConfig)(...args),
     setPayeeConfig: (...args: ExtractArgs<Contract['mutations']['setPayeeConfig']>) =>

@@ -162,6 +162,10 @@ export const abi = [
             name: 'billing',
             type: 'address',
           },
+          {
+            name: 'vaultRegistry',
+            type: 'address',
+          },
         ],
       },
     ],
@@ -347,73 +351,6 @@ export const abi = [
     ],
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getAssetUsdValueConfig',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'tuple',
-        components: [
-          {
-            name: 'legoId',
-            type: 'uint256',
-          },
-          {
-            name: 'legoAddr',
-            type: 'address',
-          },
-          {
-            name: 'decimals',
-            type: 'uint256',
-          },
-          {
-            name: 'staleBlocks',
-            type: 'uint256',
-          },
-          {
-            name: 'isYieldAsset',
-            type: 'bool',
-          },
-          {
-            name: 'underlyingAsset',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'WETH',
-    inputs: [],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'ETH',
-    inputs: [],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'constructor',
     inputs: [
@@ -421,20 +358,12 @@ export const abi = [
         name: '_undyHq',
         type: 'address',
       },
-      {
-        name: '_wethAddr',
-        type: 'address',
-      },
-      {
-        name: '_ethAddr',
-        type: 'address',
-      },
     ],
     outputs: [],
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x413962eCe8652A0FAfd14d1dC141A421E3DcC73E'
+export const deployAddress: Address | undefined = '0xB61dDF5a56b4a008f072087BBe411A9B6F576E4e'
 
 export type Contract = {
   calls: {
@@ -450,24 +379,13 @@ export type Contract = {
       appraiser: `0x${string}`
       walletBackpack: `0x${string}`
       billing: `0x${string}`
+      vaultRegistry: `0x${string}`
     }>
     getUndyHq: () => Promise<`0x${string}`>
     canMintUndy: () => Promise<boolean>
     isPaused: () => Promise<boolean>
     canPullPaymentAsCheque: (userWallet: `0x${string}`, chequeRecipient: `0x${string}`) => Promise<boolean>
     canPullPaymentAsPayee: (userWallet: `0x${string}`, payee: `0x${string}`) => Promise<boolean>
-    getAssetUsdValueConfig: (
-      asset: `0x${string}`,
-    ) => Promise<{
-      legoId: bigint
-      legoAddr: `0x${string}`
-      decimals: bigint
-      staleBlocks: bigint
-      isYieldAsset: boolean
-      underlyingAsset: `0x${string}`
-    }>
-    WETH: () => Promise<`0x${string}`>
-    ETH: () => Promise<`0x${string}`>
   }
   mutations: {
     pause: (shouldPause: boolean) => Promise<void>
@@ -572,10 +490,6 @@ export const call: CallType = {
     getRequest('canPullPaymentAsCheque', args),
   canPullPaymentAsPayee: (...args: ExtractArgs<Contract['calls']['canPullPaymentAsPayee']>) =>
     getRequest('canPullPaymentAsPayee', args),
-  getAssetUsdValueConfig: (...args: ExtractArgs<Contract['calls']['getAssetUsdValueConfig']>) =>
-    getRequest('getAssetUsdValueConfig', args),
-  WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) => getRequest('WETH', args),
-  ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => getRequest('ETH', args),
 }
 
 export type Mutations = keyof Contract['mutations']
@@ -618,11 +532,6 @@ export type SDK = {
   canPullPaymentAsPayee: (
     ...args: ExtractArgs<Contract['calls']['canPullPaymentAsPayee']>
   ) => Promise<CallReturn<'canPullPaymentAsPayee'>>
-  getAssetUsdValueConfig: (
-    ...args: ExtractArgs<Contract['calls']['getAssetUsdValueConfig']>
-  ) => Promise<CallReturn<'getAssetUsdValueConfig'>>
-  WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) => Promise<CallReturn<'WETH'>>
-  ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) => Promise<CallReturn<'ETH'>>
   pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => Promise<Address>
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
   recoverFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverFundsMany']>) => Promise<Address>
@@ -647,12 +556,6 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.canPullPaymentAsCheque(...args)) as Promise<CallReturn<'canPullPaymentAsCheque'>>,
     canPullPaymentAsPayee: (...args: ExtractArgs<Contract['calls']['canPullPaymentAsPayee']>) =>
       singleQuery(publicClient!, call.canPullPaymentAsPayee(...args)) as Promise<CallReturn<'canPullPaymentAsPayee'>>,
-    getAssetUsdValueConfig: (...args: ExtractArgs<Contract['calls']['getAssetUsdValueConfig']>) =>
-      singleQuery(publicClient!, call.getAssetUsdValueConfig(...args)) as Promise<CallReturn<'getAssetUsdValueConfig'>>,
-    WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) =>
-      singleQuery(publicClient!, call.WETH(...args)) as Promise<CallReturn<'WETH'>>,
-    ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) =>
-      singleQuery(publicClient!, call.ETH(...args)) as Promise<CallReturn<'ETH'>>,
 
     // Mutations
     pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => mutate(walletClient!, mutation.pause)(...args),

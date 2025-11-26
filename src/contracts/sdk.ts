@@ -8,8 +8,10 @@ import { PublicClient, WalletClient } from 'viem'
 import * as AaveV3 from './AaveV3.js'
 import * as AeroClassic from './AeroClassic.js'
 import * as AeroSlipstream from './AeroSlipstream.js'
-import * as Agent from './Agent.js'
+import * as AgentSenderGeneric from './AgentSenderGeneric.js'
+import * as AgentSenderSpecial from './AgentSenderSpecial.js'
 import * as AgentWrapper from './AgentWrapper.js'
+import * as AgentWrapperV1 from './AgentWrapperV1.js'
 import * as Appraiser from './Appraiser.js'
 import * as Avantis from './Avantis.js'
 import * as Billing from './Billing.js'
@@ -19,6 +21,7 @@ import * as ConvertVaultToken from './ConvertVaultToken.js'
 import * as Curve from './Curve.js'
 import * as DefaultsBase from './DefaultsBase.js'
 import * as ERC20 from './ERC20.js'
+import * as EarnVault from './EarnVault.js'
 import * as EarnVaultAgent from './EarnVaultAgent.js'
 import * as EarnVaultAgentSigHelper from './EarnVaultAgentSigHelper.js'
 import * as Euler from './Euler.js'
@@ -30,6 +33,7 @@ import * as Kernel from './Kernel.js'
 import * as Ledger from './Ledger.js'
 import * as LegoBook from './LegoBook.js'
 import * as LegoTools from './LegoTools.js'
+import * as LevgVaultHelper from './LevgVaultHelper.js'
 import * as LootDistributor from './LootDistributor.js'
 import * as Migrator from './Migrator.js'
 import * as MissionControl from './MissionControl.js'
@@ -60,6 +64,8 @@ import * as UniswapV2 from './UniswapV2.js'
 import * as UniswapV3 from './UniswapV3.js'
 import * as UserWallet from './UserWallet.js'
 import * as UserWalletConfig from './UserWalletConfig.js'
+import * as UserWalletConfigV1 from './UserWalletConfigV1.js'
+import * as UserWalletV1 from './UserWalletV1.js'
 import * as VaultRegistry from './VaultRegistry.js'
 import * as WalletBackpack from './WalletBackpack.js'
 import * as Wasabi from './Wasabi.js'
@@ -68,8 +74,10 @@ export type SDK = {
   AaveV3: AaveV3.SDK
   AeroClassic: AeroClassic.SDK
   AeroSlipstream: AeroSlipstream.SDK
-  Agent: (address: `0x${string}`) => Agent.SDK
+  AgentSenderGeneric: AgentSenderGeneric.SDK
+  AgentSenderSpecial: AgentSenderSpecial.SDK
   AgentWrapper: AgentWrapper.SDK
+  AgentWrapperV1: AgentWrapperV1.SDK
   Appraiser: Appraiser.SDK
   Avantis: Avantis.SDK
   Billing: Billing.SDK
@@ -79,6 +87,7 @@ export type SDK = {
   Curve: Curve.SDK
   DefaultsBase: DefaultsBase.SDK
   ERC20: (address: `0x${string}`) => ERC20.SDK
+  EarnVault: (address: `0x${string}`) => EarnVault.SDK
   EarnVaultAgent: EarnVaultAgent.SDK
   EarnVaultAgentSigHelper: EarnVaultAgentSigHelper.SDK
   Euler: Euler.SDK
@@ -90,6 +99,7 @@ export type SDK = {
   Ledger: Ledger.SDK
   LegoBook: LegoBook.SDK
   LegoTools: LegoTools.SDK
+  LevgVaultHelper: LevgVaultHelper.SDK
   LootDistributor: LootDistributor.SDK
   Migrator: Migrator.SDK
   MissionControl: MissionControl.SDK
@@ -120,6 +130,8 @@ export type SDK = {
   UniswapV3: UniswapV3.SDK
   UserWallet: (address: `0x${string}`) => UserWallet.SDK
   UserWalletConfig: (address: `0x${string}`) => UserWalletConfig.SDK
+  UserWalletConfigV1: (address: `0x${string}`) => UserWalletConfigV1.SDK
+  UserWalletV1: (address: `0x${string}`) => UserWalletV1.SDK
   VaultRegistry: VaultRegistry.SDK
   WalletBackpack: WalletBackpack.SDK
   Wasabi: Wasabi.SDK
@@ -130,8 +142,10 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     AaveV3: AaveV3.toSdk(publicClient, walletClient),
     AeroClassic: AeroClassic.toSdk(publicClient, walletClient),
     AeroSlipstream: AeroSlipstream.toSdk(publicClient, walletClient),
-    Agent: (address: `0x${string}`) => Agent.toSdk(address, publicClient, walletClient),
+    AgentSenderGeneric: AgentSenderGeneric.toSdk(publicClient, walletClient),
+    AgentSenderSpecial: AgentSenderSpecial.toSdk(publicClient, walletClient),
     AgentWrapper: AgentWrapper.toSdk(publicClient, walletClient),
+    AgentWrapperV1: AgentWrapperV1.toSdk(publicClient, walletClient),
     Appraiser: Appraiser.toSdk(publicClient, walletClient),
     Avantis: Avantis.toSdk(publicClient, walletClient),
     Billing: Billing.toSdk(publicClient, walletClient),
@@ -141,6 +155,7 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     Curve: Curve.toSdk(publicClient, walletClient),
     DefaultsBase: DefaultsBase.toSdk(publicClient, walletClient),
     ERC20: (address: `0x${string}`) => ERC20.toSdk(address, publicClient, walletClient),
+    EarnVault: (address: `0x${string}`) => EarnVault.toSdk(address, publicClient, walletClient),
     EarnVaultAgent: EarnVaultAgent.toSdk(publicClient, walletClient),
     EarnVaultAgentSigHelper: EarnVaultAgentSigHelper.toSdk(publicClient, walletClient),
     Euler: Euler.toSdk(publicClient, walletClient),
@@ -152,6 +167,7 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     Ledger: Ledger.toSdk(publicClient, walletClient),
     LegoBook: LegoBook.toSdk(publicClient, walletClient),
     LegoTools: LegoTools.toSdk(publicClient, walletClient),
+    LevgVaultHelper: LevgVaultHelper.toSdk(publicClient, walletClient),
     LootDistributor: LootDistributor.toSdk(publicClient, walletClient),
     Migrator: Migrator.toSdk(publicClient, walletClient),
     MissionControl: MissionControl.toSdk(publicClient, walletClient),
@@ -182,6 +198,8 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     UniswapV3: UniswapV3.toSdk(publicClient, walletClient),
     UserWallet: (address: `0x${string}`) => UserWallet.toSdk(address, publicClient, walletClient),
     UserWalletConfig: (address: `0x${string}`) => UserWalletConfig.toSdk(address, publicClient, walletClient),
+    UserWalletConfigV1: (address: `0x${string}`) => UserWalletConfigV1.toSdk(address, publicClient, walletClient),
+    UserWalletV1: (address: `0x${string}`) => UserWalletV1.toSdk(address, publicClient, walletClient),
     VaultRegistry: VaultRegistry.toSdk(publicClient, walletClient),
     WalletBackpack: WalletBackpack.toSdk(publicClient, walletClient),
     Wasabi: Wasabi.toSdk(publicClient, walletClient),

@@ -1418,7 +1418,7 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'claimRewards',
+    name: 'claimIncentives',
     inputs: [
       {
         name: '_legoId',
@@ -1439,32 +1439,7 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'claimRewards',
-    inputs: [
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_rewardToken',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'claimRewards',
+    name: 'claimIncentives',
     inputs: [
       {
         name: '_legoId',
@@ -1474,10 +1449,6 @@ export const abi = [
         name: '_rewardToken',
         type: 'address',
       },
-      {
-        name: '_rewardAmount',
-        type: 'uint256',
-      },
     ],
     outputs: [
       {
@@ -1493,7 +1464,7 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'claimRewards',
+    name: 'claimIncentives',
     inputs: [
       {
         name: '_legoId',
@@ -1507,9 +1478,38 @@ export const abi = [
         name: '_rewardAmount',
         type: 'uint256',
       },
+    ],
+    outputs: [
       {
-        name: '_extraData',
-        type: 'bytes32',
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'claimIncentives',
+    inputs: [
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_rewardToken',
+        type: 'address',
+      },
+      {
+        name: '_rewardAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_proofs',
+        type: 'bytes32[]',
       },
     ],
     outputs: [
@@ -3137,6 +3137,10 @@ export const abi = [
             type: 'address',
           },
           {
+            name: 'vaultRegistry',
+            type: 'address',
+          },
+          {
             name: 'wallet',
             type: 'address',
           },
@@ -3390,7 +3394,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x4C4D1a888a0b49eA217a8F41f207CFe59Ab03a40'
+export const deployAddress: Address | undefined = '0x880E453Ec494FB17bffba537BeaB4Cc6CD1B7C12'
 
 export type Contract = {
   calls: {
@@ -3488,11 +3492,11 @@ export type Contract = {
       paymentAmount?: bigint,
       extraData?: `0x${string}`,
     ) => Promise<[bigint, bigint]>
-    claimRewards: (
+    claimIncentives: (
       legoId: bigint,
       rewardToken?: `0x${string}`,
       rewardAmount?: bigint,
-      extraData?: `0x${string}`,
+      proofs?: `0x${string}`[],
     ) => Promise<[bigint, bigint]>
     convertWethToEth: (amount?: bigint) => Promise<[bigint, bigint]>
     convertEthToWeth: (amount?: bigint) => Promise<[bigint, bigint]>
@@ -3559,6 +3563,7 @@ export type Contract = {
         lootDistributor: `0x${string}`
         appraiser: `0x${string}`
         billing: `0x${string}`
+        vaultRegistry: `0x${string}`
         wallet: `0x${string}`
         walletConfig: `0x${string}`
         walletOwner: `0x${string}`
@@ -3704,7 +3709,7 @@ export const mutation: {
   removeCollateral: getMutation('removeCollateral'),
   borrow: getMutation('borrow'),
   repayDebt: getMutation('repayDebt'),
-  claimRewards: getMutation('claimRewards'),
+  claimIncentives: getMutation('claimIncentives'),
   convertWethToEth: getMutation('convertWethToEth'),
   convertEthToWeth: getMutation('convertEthToWeth'),
   addLiquidity: getMutation('addLiquidity'),
@@ -3744,7 +3749,7 @@ export type SDK = {
   removeCollateral: (...args: ExtractArgs<Contract['mutations']['removeCollateral']>) => Promise<Address>
   borrow: (...args: ExtractArgs<Contract['mutations']['borrow']>) => Promise<Address>
   repayDebt: (...args: ExtractArgs<Contract['mutations']['repayDebt']>) => Promise<Address>
-  claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) => Promise<Address>
+  claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) => Promise<Address>
   convertWethToEth: (...args: ExtractArgs<Contract['mutations']['convertWethToEth']>) => Promise<Address>
   convertEthToWeth: (...args: ExtractArgs<Contract['mutations']['convertEthToWeth']>) => Promise<Address>
   addLiquidity: (...args: ExtractArgs<Contract['mutations']['addLiquidity']>) => Promise<Address>
@@ -3810,8 +3815,8 @@ export function toSdk(deployAddress: Address, publicClient?: PublicClient, walle
       mutate(walletClient!, mutation.borrow, { address: deployAddress })(...args),
     repayDebt: (...args: ExtractArgs<Contract['mutations']['repayDebt']>) =>
       mutate(walletClient!, mutation.repayDebt, { address: deployAddress })(...args),
-    claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) =>
-      mutate(walletClient!, mutation.claimRewards, { address: deployAddress })(...args),
+    claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) =>
+      mutate(walletClient!, mutation.claimIncentives, { address: deployAddress })(...args),
     convertWethToEth: (...args: ExtractArgs<Contract['mutations']['convertWethToEth']>) =>
       mutate(walletClient!, mutation.convertWethToEth, { address: deployAddress })(...args),
     convertEthToWeth: (...args: ExtractArgs<Contract['mutations']['convertEthToWeth']>) =>

@@ -237,6 +237,10 @@ export const abi = [
             name: 'groupId',
             type: 'uint256',
           },
+          {
+            name: 'numActiveCheques',
+            type: 'uint256',
+          },
         ],
       },
     ],
@@ -266,7 +270,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x99bf2C624C02082C16bD12a241bfC4cA1659b22C'
+export const deployAddress: Address | undefined = '0xe008114992187138a7C341Db0CD900F88BC0169a'
 
 export type Contract = {
   calls: {
@@ -288,6 +292,7 @@ export type Contract = {
       startingAgentIndex: bigint
       hasPendingOwnerChange: boolean
       groupId: bigint
+      numActiveCheques: bigint
     }>
     UNDY_HQ: () => Promise<`0x${string}`>
   }
