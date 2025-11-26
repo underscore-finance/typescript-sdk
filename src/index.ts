@@ -10,7 +10,39 @@ export * from './contracts/index.js'
 export type Contracts = SDK
 export type ContractsNames = keyof typeof CONTRACTS
 
-interface UnderscoreConfig {
+export const DEPARTMENT_IDS = {
+  LEDGER: 1n,
+  MISSION_CONTROL: 2n,
+  LEGO_BOOK: 3n,
+  SWITCHBOARD: 4n,
+  HATCHERY: 5n,
+  LOOT_DISTRIBUTOR: 6n,
+  APPRAISER: 7n,
+  WALLET_BACKPACK: 8n,
+  BILLING: 9n,
+  VAULT_REGISTRY: 10n,
+}
+
+export const LEGOS_IDS = {
+  RIPE: 1n,
+  AAVE_V3: 2n,
+  COMPOUND_V3: 3n,
+  EULER: 4n,
+  FLUID: 5n,
+  MOONWELL: 6n,
+  MORPHO: 7n,
+  AERO_CLASSIC: 8n,
+  AERO_SLIPSTREAM: 9n,
+  CURVE: 10n,
+  UNISWAP_V2: 11n,
+  UNISWAP_V3: 12n,
+  UNDERSCORE: 13n,
+  FORTY_ACRES: 14n,
+  WASABI: 15n,
+  AVANTIS: 16n,
+}
+
+export type UnderscoreConfig = {
   rpcUrl?: string
   publicClient?: PublicClient
   walletClient?: WalletClient
@@ -82,6 +114,10 @@ class Underscore {
   }) {
     return getSwapInstructionsAmountIn(this.publicClient, payload)
   }
+
+  DEPARTMENT_IDS = DEPARTMENT_IDS
+
+  LEGOS_IDS = LEGOS_IDS
 }
 
 export default Underscore
