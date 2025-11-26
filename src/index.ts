@@ -75,13 +75,16 @@ class Underscore {
     this.contracts = createSdk(this.publicClient, this.walletClient)
   }
 
-  async multicall<T extends RequestCollection>(cb: (contracts: SDK) => T, options: { blockNumber?: bigint } = {}) {
-    const request = cb(this.contracts)
+  async multicall<T extends RequestCollection>(
+    cb: (contracts: typeof CONTRACTS) => T,
+    options: { blockNumber?: bigint } = {},
+  ) {
+    const request = cb(CONTRACTS)
     return query(this.publicClient, request, options)
   }
 
   async iterate<T>(
-    cb: (contracts: SDK) => {
+    cb: (contracts: typeof CONTRACTS) => {
       total: bigint
       getItem: GetItemCallFunction<T>
     },
@@ -90,7 +93,7 @@ class Underscore {
       firstIndex?: bigint
     } = {},
   ) {
-    const { total, getItem } = cb(this.contracts)
+    const { total, getItem } = cb(CONTRACTS)
     return iteratorQuery(this.publicClient, total, getItem, options)
   }
 
