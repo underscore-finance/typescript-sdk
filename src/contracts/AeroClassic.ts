@@ -2007,6 +2007,94 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'claimIncentives',
+    inputs: [
+      {
+        name: '_user',
+        type: 'address',
+      },
+      {
+        name: '_rewardToken',
+        type: 'address',
+      },
+      {
+        name: '_rewardAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_proofs',
+        type: 'bytes32[]',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'claimIncentives',
+    inputs: [
+      {
+        name: '_user',
+        type: 'address',
+      },
+      {
+        name: '_rewardToken',
+        type: 'address',
+      },
+      {
+        name: '_rewardAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_proofs',
+        type: 'bytes32[]',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'addLiquidityConcentrated',
     inputs: [
       {
@@ -2388,6 +2476,18 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
+    name: 'RIPE_REGISTRY',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     name: 'coreRouterPool',
     inputs: [],
     outputs: [
@@ -2417,12 +2517,16 @@ export const abi = [
         name: '_coreRouterPool',
         type: 'address',
       },
+      {
+        name: '_ripeRegistry',
+        type: 'address',
+      },
     ],
     outputs: [],
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xb145807366F28Db32d498Ac37d790c50ce0Cf834'
+export const deployAddress: Address | undefined = '0x5Decf97EA12AaBFF0e4E5810F6fa2C920d640245'
 
 export type Contract = {
   calls: {
@@ -2494,6 +2598,7 @@ export type Contract = {
     getAccessForLego: (user: `0x${string}`, action: bigint) => Promise<[`0x${string}`, string, bigint]>
     AERODROME_FACTORY: () => Promise<`0x${string}`>
     AERODROME_ROUTER: () => Promise<`0x${string}`>
+    RIPE_REGISTRY: () => Promise<`0x${string}`>
     coreRouterPool: () => Promise<`0x${string}`>
   }
   mutations: {
@@ -2652,6 +2757,18 @@ export type Contract = {
       rewardToken: `0x${string}`,
       rewardAmount: bigint,
       extraData: `0x${string}`,
+      miniAddys?: {
+        ledger: `0x${string}`
+        missionControl: `0x${string}`
+        legoBook: `0x${string}`
+        appraiser: `0x${string}`
+      },
+    ) => Promise<[bigint, bigint]>
+    claimIncentives: (
+      user: `0x${string}`,
+      rewardToken: `0x${string}`,
+      rewardAmount: bigint,
+      proofs: `0x${string}`[],
       miniAddys?: {
         ledger: `0x${string}`
         missionControl: `0x${string}`
@@ -2829,6 +2946,7 @@ export const call: CallType = {
     getRequest('AERODROME_FACTORY', args),
   AERODROME_ROUTER: (...args: ExtractArgs<Contract['calls']['AERODROME_ROUTER']>) =>
     getRequest('AERODROME_ROUTER', args),
+  RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => getRequest('RIPE_REGISTRY', args),
   coreRouterPool: (...args: ExtractArgs<Contract['calls']['coreRouterPool']>) => getRequest('coreRouterPool', args),
 }
 
@@ -2867,6 +2985,7 @@ export const mutation: {
   borrow: getMutation('borrow'),
   repayDebt: getMutation('repayDebt'),
   claimRewards: getMutation('claimRewards'),
+  claimIncentives: getMutation('claimIncentives'),
   addLiquidityConcentrated: getMutation('addLiquidityConcentrated'),
   removeLiquidityConcentrated: getMutation('removeLiquidityConcentrated'),
 }
@@ -2921,6 +3040,7 @@ export type SDK = {
   AERODROME_ROUTER: (
     ...args: ExtractArgs<Contract['calls']['AERODROME_ROUTER']>
   ) => Promise<CallReturn<'AERODROME_ROUTER'>>
+  RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => Promise<CallReturn<'RIPE_REGISTRY'>>
   coreRouterPool: (...args: ExtractArgs<Contract['calls']['coreRouterPool']>) => Promise<CallReturn<'coreRouterPool'>>
   pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => Promise<Address>
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
@@ -2939,6 +3059,7 @@ export type SDK = {
   borrow: (...args: ExtractArgs<Contract['mutations']['borrow']>) => Promise<Address>
   repayDebt: (...args: ExtractArgs<Contract['mutations']['repayDebt']>) => Promise<Address>
   claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) => Promise<Address>
+  claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) => Promise<Address>
   addLiquidityConcentrated: (
     ...args: ExtractArgs<Contract['mutations']['addLiquidityConcentrated']>
   ) => Promise<Address>
@@ -2998,6 +3119,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.AERODROME_FACTORY(...args)) as Promise<CallReturn<'AERODROME_FACTORY'>>,
     AERODROME_ROUTER: (...args: ExtractArgs<Contract['calls']['AERODROME_ROUTER']>) =>
       singleQuery(publicClient!, call.AERODROME_ROUTER(...args)) as Promise<CallReturn<'AERODROME_ROUTER'>>,
+    RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) =>
+      singleQuery(publicClient!, call.RIPE_REGISTRY(...args)) as Promise<CallReturn<'RIPE_REGISTRY'>>,
     coreRouterPool: (...args: ExtractArgs<Contract['calls']['coreRouterPool']>) =>
       singleQuery(publicClient!, call.coreRouterPool(...args)) as Promise<CallReturn<'coreRouterPool'>>,
 
@@ -3030,6 +3153,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.repayDebt)(...args),
     claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) =>
       mutate(walletClient!, mutation.claimRewards)(...args),
+    claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) =>
+      mutate(walletClient!, mutation.claimIncentives)(...args),
     addLiquidityConcentrated: (...args: ExtractArgs<Contract['mutations']['addLiquidityConcentrated']>) =>
       mutate(walletClient!, mutation.addLiquidityConcentrated)(...args),
     removeLiquidityConcentrated: (...args: ExtractArgs<Contract['mutations']['removeLiquidityConcentrated']>) =>

@@ -452,6 +452,398 @@ export const abi = [
     type: 'event',
   },
   {
+    name: 'PendingCollateralVaultChange',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'vaultToken',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'ripeVaultId',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'legoId',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'confirmationBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'actionId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'CollateralVaultSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'vaultToken',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'ripeVaultId',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'legoId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PendingLeverageVaultChange',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'vaultToken',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'legoId',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'ripeVaultId',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'confirmationBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'actionId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'LeverageVaultSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'vaultToken',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'legoId',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'ripeVaultId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PendingUsdcSlippageChange',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'slippage',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'confirmationBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'actionId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'UsdcSlippageSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'slippage',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PendingGreenSlippageChange',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'slippage',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'confirmationBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'actionId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'GreenSlippageSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'slippage',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PendingLevgVaultHelperChange',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'levgVaultHelper',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'confirmationBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'actionId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'LevgVaultHelperSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'levgVaultHelper',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PendingMaxDebtRatioChange',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'ratio',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'confirmationBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'actionId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'MaxDebtRatioSet',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'ratio',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PendingAddManagerChange',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'manager',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'confirmationBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'actionId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'ManagerAdded',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'manager',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'PendingRemoveManagerChange',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'manager',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'confirmationBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'actionId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'ManagerRemoved',
+    inputs: [
+      {
+        name: 'vaultAddr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'manager',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
     name: 'GovChangeTimeLockModified',
     inputs: [
       {
@@ -1389,6 +1781,190 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'setCollateralVault',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_ripeVaultId',
+        type: 'uint256',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setLeverageVault',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_ripeVaultId',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setUsdcSlippageAllowed',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_slippage',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setGreenSlippageAllowed',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_slippage',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setLevgVaultHelper',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_levgVaultHelper',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setMaxDebtRatio',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_ratio',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'addVaultManager',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_manager',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'removeVaultManager',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+      {
+        name: '_manager',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'executePendingAction',
     inputs: [
       {
@@ -1649,6 +2225,238 @@ export const abi = [
     ],
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingCollateralVault',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'vaultAddr',
+            type: 'address',
+          },
+          {
+            name: 'vaultToken',
+            type: 'address',
+          },
+          {
+            name: 'ripeVaultId',
+            type: 'uint256',
+          },
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingLeverageVault',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'vaultAddr',
+            type: 'address',
+          },
+          {
+            name: 'vaultToken',
+            type: 'address',
+          },
+          {
+            name: 'legoId',
+            type: 'uint256',
+          },
+          {
+            name: 'ripeVaultId',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingUsdcSlippage',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'vaultAddr',
+            type: 'address',
+          },
+          {
+            name: 'slippage',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingGreenSlippage',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'vaultAddr',
+            type: 'address',
+          },
+          {
+            name: 'slippage',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingLevgVaultHelper',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'vaultAddr',
+            type: 'address',
+          },
+          {
+            name: 'levgVaultHelper',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingMaxDebtRatio',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'vaultAddr',
+            type: 'address',
+          },
+          {
+            name: 'ratio',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingAddManager',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'vaultAddr',
+            type: 'address',
+          },
+          {
+            name: 'manager',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingRemoveManager',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'vaultAddr',
+            type: 'address',
+          },
+          {
+            name: 'manager',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'constructor',
     inputs: [
@@ -1673,7 +2481,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x2258662cA2AF19846b9e62A74b803009f5770417'
+export const deployAddress: Address | undefined = '0xAb0e52dDBcF376f6716Dd6187861FC3551518987'
 
 export type Contract = {
   calls: {
@@ -1731,6 +2539,18 @@ export type Contract = {
       arg0: bigint,
     ) => Promise<{ vaultAddr: `0x${string}`; targetVaultToken: `0x${string}` }>
     pendingMaxDepositAmount: (arg0: bigint) => Promise<{ vaultAddr: `0x${string}`; maxDepositAmount: bigint }>
+    pendingCollateralVault: (
+      arg0: bigint,
+    ) => Promise<{ vaultAddr: `0x${string}`; vaultToken: `0x${string}`; ripeVaultId: bigint; legoId: bigint }>
+    pendingLeverageVault: (
+      arg0: bigint,
+    ) => Promise<{ vaultAddr: `0x${string}`; vaultToken: `0x${string}`; legoId: bigint; ripeVaultId: bigint }>
+    pendingUsdcSlippage: (arg0: bigint) => Promise<{ vaultAddr: `0x${string}`; slippage: bigint }>
+    pendingGreenSlippage: (arg0: bigint) => Promise<{ vaultAddr: `0x${string}`; slippage: bigint }>
+    pendingLevgVaultHelper: (arg0: bigint) => Promise<{ vaultAddr: `0x${string}`; levgVaultHelper: `0x${string}` }>
+    pendingMaxDebtRatio: (arg0: bigint) => Promise<{ vaultAddr: `0x${string}`; ratio: bigint }>
+    pendingAddManager: (arg0: bigint) => Promise<{ vaultAddr: `0x${string}`; manager: `0x${string}` }>
+    pendingRemoveManager: (arg0: bigint) => Promise<{ vaultAddr: `0x${string}`; manager: `0x${string}` }>
   }
   mutations: {
     startGovernanceChange: (newGov: `0x${string}`) => Promise<void>
@@ -1759,6 +2579,24 @@ export type Contract = {
     setPerformanceFee: (vaultAddr: `0x${string}`, performanceFee: bigint) => Promise<bigint>
     setDefaultTargetVaultToken: (vaultAddr: `0x${string}`, targetVaultToken: `0x${string}`) => Promise<bigint>
     setMaxDepositAmount: (vaultAddr: `0x${string}`, maxDepositAmount: bigint) => Promise<bigint>
+    setCollateralVault: (
+      vaultAddr: `0x${string}`,
+      vaultToken: `0x${string}`,
+      ripeVaultId: bigint,
+      legoId: bigint,
+    ) => Promise<bigint>
+    setLeverageVault: (
+      vaultAddr: `0x${string}`,
+      vaultToken: `0x${string}`,
+      legoId: bigint,
+      ripeVaultId: bigint,
+    ) => Promise<bigint>
+    setUsdcSlippageAllowed: (vaultAddr: `0x${string}`, slippage: bigint) => Promise<bigint>
+    setGreenSlippageAllowed: (vaultAddr: `0x${string}`, slippage: bigint) => Promise<bigint>
+    setLevgVaultHelper: (vaultAddr: `0x${string}`, levgVaultHelper: `0x${string}`) => Promise<bigint>
+    setMaxDebtRatio: (vaultAddr: `0x${string}`, ratio: bigint) => Promise<bigint>
+    addVaultManager: (vaultAddr: `0x${string}`, manager: `0x${string}`) => Promise<bigint>
+    removeVaultManager: (vaultAddr: `0x${string}`, manager: `0x${string}`) => Promise<bigint>
     executePendingAction: (aid: bigint) => Promise<boolean>
     cancelPendingAction: (aid: bigint) => Promise<boolean>
   }
@@ -1827,6 +2665,76 @@ export type Contract = {
     CanWithdrawSet: (vaultAddr: `0x${string}`, canWithdraw: boolean, caller: `0x${string}`) => Promise<void>
     VaultOpsFrozenSet: (vaultAddr: `0x${string}`, isFrozen: boolean, caller: `0x${string}`) => Promise<void>
     ShouldAutoDepositSet: (vaultAddr: `0x${string}`, shouldAutoDeposit: boolean, caller: `0x${string}`) => Promise<void>
+    PendingCollateralVaultChange: (
+      vaultAddr: `0x${string}`,
+      vaultToken: `0x${string}`,
+      ripeVaultId: bigint,
+      legoId: bigint,
+      confirmationBlock: bigint,
+      actionId: bigint,
+    ) => Promise<void>
+    CollateralVaultSet: (
+      vaultAddr: `0x${string}`,
+      vaultToken: `0x${string}`,
+      ripeVaultId: bigint,
+      legoId: bigint,
+    ) => Promise<void>
+    PendingLeverageVaultChange: (
+      vaultAddr: `0x${string}`,
+      vaultToken: `0x${string}`,
+      legoId: bigint,
+      ripeVaultId: bigint,
+      confirmationBlock: bigint,
+      actionId: bigint,
+    ) => Promise<void>
+    LeverageVaultSet: (
+      vaultAddr: `0x${string}`,
+      vaultToken: `0x${string}`,
+      legoId: bigint,
+      ripeVaultId: bigint,
+    ) => Promise<void>
+    PendingUsdcSlippageChange: (
+      vaultAddr: `0x${string}`,
+      slippage: bigint,
+      confirmationBlock: bigint,
+      actionId: bigint,
+    ) => Promise<void>
+    UsdcSlippageSet: (vaultAddr: `0x${string}`, slippage: bigint) => Promise<void>
+    PendingGreenSlippageChange: (
+      vaultAddr: `0x${string}`,
+      slippage: bigint,
+      confirmationBlock: bigint,
+      actionId: bigint,
+    ) => Promise<void>
+    GreenSlippageSet: (vaultAddr: `0x${string}`, slippage: bigint) => Promise<void>
+    PendingLevgVaultHelperChange: (
+      vaultAddr: `0x${string}`,
+      levgVaultHelper: `0x${string}`,
+      confirmationBlock: bigint,
+      actionId: bigint,
+    ) => Promise<void>
+    LevgVaultHelperSet: (vaultAddr: `0x${string}`, levgVaultHelper: `0x${string}`) => Promise<void>
+    PendingMaxDebtRatioChange: (
+      vaultAddr: `0x${string}`,
+      ratio: bigint,
+      confirmationBlock: bigint,
+      actionId: bigint,
+    ) => Promise<void>
+    MaxDebtRatioSet: (vaultAddr: `0x${string}`, ratio: bigint) => Promise<void>
+    PendingAddManagerChange: (
+      vaultAddr: `0x${string}`,
+      manager: `0x${string}`,
+      confirmationBlock: bigint,
+      actionId: bigint,
+    ) => Promise<void>
+    ManagerAdded: (vaultAddr: `0x${string}`, manager: `0x${string}`) => Promise<void>
+    PendingRemoveManagerChange: (
+      vaultAddr: `0x${string}`,
+      manager: `0x${string}`,
+      confirmationBlock: bigint,
+      actionId: bigint,
+    ) => Promise<void>
+    ManagerRemoved: (vaultAddr: `0x${string}`, manager: `0x${string}`) => Promise<void>
     GovChangeTimeLockModified: (prevTimeLock: bigint, newTimeLock: bigint) => Promise<void>
     ExpirationSet: (expiration: bigint) => Promise<void>
     ActionTimeLockSet: (newTimeLock: bigint, prevTimeLock: bigint) => Promise<void>
@@ -1954,6 +2862,22 @@ export const call: CallType = {
     getRequest('pendingDefaultTargetVaultToken', args),
   pendingMaxDepositAmount: (...args: ExtractArgs<Contract['calls']['pendingMaxDepositAmount']>) =>
     getRequest('pendingMaxDepositAmount', args),
+  pendingCollateralVault: (...args: ExtractArgs<Contract['calls']['pendingCollateralVault']>) =>
+    getRequest('pendingCollateralVault', args),
+  pendingLeverageVault: (...args: ExtractArgs<Contract['calls']['pendingLeverageVault']>) =>
+    getRequest('pendingLeverageVault', args),
+  pendingUsdcSlippage: (...args: ExtractArgs<Contract['calls']['pendingUsdcSlippage']>) =>
+    getRequest('pendingUsdcSlippage', args),
+  pendingGreenSlippage: (...args: ExtractArgs<Contract['calls']['pendingGreenSlippage']>) =>
+    getRequest('pendingGreenSlippage', args),
+  pendingLevgVaultHelper: (...args: ExtractArgs<Contract['calls']['pendingLevgVaultHelper']>) =>
+    getRequest('pendingLevgVaultHelper', args),
+  pendingMaxDebtRatio: (...args: ExtractArgs<Contract['calls']['pendingMaxDebtRatio']>) =>
+    getRequest('pendingMaxDebtRatio', args),
+  pendingAddManager: (...args: ExtractArgs<Contract['calls']['pendingAddManager']>) =>
+    getRequest('pendingAddManager', args),
+  pendingRemoveManager: (...args: ExtractArgs<Contract['calls']['pendingRemoveManager']>) =>
+    getRequest('pendingRemoveManager', args),
 }
 
 export type Mutations = keyof Contract['mutations']
@@ -1996,6 +2920,14 @@ export const mutation: {
   setPerformanceFee: getMutation('setPerformanceFee'),
   setDefaultTargetVaultToken: getMutation('setDefaultTargetVaultToken'),
   setMaxDepositAmount: getMutation('setMaxDepositAmount'),
+  setCollateralVault: getMutation('setCollateralVault'),
+  setLeverageVault: getMutation('setLeverageVault'),
+  setUsdcSlippageAllowed: getMutation('setUsdcSlippageAllowed'),
+  setGreenSlippageAllowed: getMutation('setGreenSlippageAllowed'),
+  setLevgVaultHelper: getMutation('setLevgVaultHelper'),
+  setMaxDebtRatio: getMutation('setMaxDebtRatio'),
+  addVaultManager: getMutation('addVaultManager'),
+  removeVaultManager: getMutation('removeVaultManager'),
   executePendingAction: getMutation('executePendingAction'),
   cancelPendingAction: getMutation('cancelPendingAction'),
 }
@@ -2073,6 +3005,30 @@ export type SDK = {
   pendingMaxDepositAmount: (
     ...args: ExtractArgs<Contract['calls']['pendingMaxDepositAmount']>
   ) => Promise<CallReturn<'pendingMaxDepositAmount'>>
+  pendingCollateralVault: (
+    ...args: ExtractArgs<Contract['calls']['pendingCollateralVault']>
+  ) => Promise<CallReturn<'pendingCollateralVault'>>
+  pendingLeverageVault: (
+    ...args: ExtractArgs<Contract['calls']['pendingLeverageVault']>
+  ) => Promise<CallReturn<'pendingLeverageVault'>>
+  pendingUsdcSlippage: (
+    ...args: ExtractArgs<Contract['calls']['pendingUsdcSlippage']>
+  ) => Promise<CallReturn<'pendingUsdcSlippage'>>
+  pendingGreenSlippage: (
+    ...args: ExtractArgs<Contract['calls']['pendingGreenSlippage']>
+  ) => Promise<CallReturn<'pendingGreenSlippage'>>
+  pendingLevgVaultHelper: (
+    ...args: ExtractArgs<Contract['calls']['pendingLevgVaultHelper']>
+  ) => Promise<CallReturn<'pendingLevgVaultHelper'>>
+  pendingMaxDebtRatio: (
+    ...args: ExtractArgs<Contract['calls']['pendingMaxDebtRatio']>
+  ) => Promise<CallReturn<'pendingMaxDebtRatio'>>
+  pendingAddManager: (
+    ...args: ExtractArgs<Contract['calls']['pendingAddManager']>
+  ) => Promise<CallReturn<'pendingAddManager'>>
+  pendingRemoveManager: (
+    ...args: ExtractArgs<Contract['calls']['pendingRemoveManager']>
+  ) => Promise<CallReturn<'pendingRemoveManager'>>
   startGovernanceChange: (...args: ExtractArgs<Contract['mutations']['startGovernanceChange']>) => Promise<Address>
   confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) => Promise<Address>
   cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) => Promise<Address>
@@ -2099,6 +3055,14 @@ export type SDK = {
     ...args: ExtractArgs<Contract['mutations']['setDefaultTargetVaultToken']>
   ) => Promise<Address>
   setMaxDepositAmount: (...args: ExtractArgs<Contract['mutations']['setMaxDepositAmount']>) => Promise<Address>
+  setCollateralVault: (...args: ExtractArgs<Contract['mutations']['setCollateralVault']>) => Promise<Address>
+  setLeverageVault: (...args: ExtractArgs<Contract['mutations']['setLeverageVault']>) => Promise<Address>
+  setUsdcSlippageAllowed: (...args: ExtractArgs<Contract['mutations']['setUsdcSlippageAllowed']>) => Promise<Address>
+  setGreenSlippageAllowed: (...args: ExtractArgs<Contract['mutations']['setGreenSlippageAllowed']>) => Promise<Address>
+  setLevgVaultHelper: (...args: ExtractArgs<Contract['mutations']['setLevgVaultHelper']>) => Promise<Address>
+  setMaxDebtRatio: (...args: ExtractArgs<Contract['mutations']['setMaxDebtRatio']>) => Promise<Address>
+  addVaultManager: (...args: ExtractArgs<Contract['mutations']['addVaultManager']>) => Promise<Address>
+  removeVaultManager: (...args: ExtractArgs<Contract['mutations']['removeVaultManager']>) => Promise<Address>
   executePendingAction: (...args: ExtractArgs<Contract['mutations']['executePendingAction']>) => Promise<Address>
   cancelPendingAction: (...args: ExtractArgs<Contract['mutations']['cancelPendingAction']>) => Promise<Address>
 }
@@ -2186,6 +3150,22 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.pendingMaxDepositAmount(...args)) as Promise<
         CallReturn<'pendingMaxDepositAmount'>
       >,
+    pendingCollateralVault: (...args: ExtractArgs<Contract['calls']['pendingCollateralVault']>) =>
+      singleQuery(publicClient!, call.pendingCollateralVault(...args)) as Promise<CallReturn<'pendingCollateralVault'>>,
+    pendingLeverageVault: (...args: ExtractArgs<Contract['calls']['pendingLeverageVault']>) =>
+      singleQuery(publicClient!, call.pendingLeverageVault(...args)) as Promise<CallReturn<'pendingLeverageVault'>>,
+    pendingUsdcSlippage: (...args: ExtractArgs<Contract['calls']['pendingUsdcSlippage']>) =>
+      singleQuery(publicClient!, call.pendingUsdcSlippage(...args)) as Promise<CallReturn<'pendingUsdcSlippage'>>,
+    pendingGreenSlippage: (...args: ExtractArgs<Contract['calls']['pendingGreenSlippage']>) =>
+      singleQuery(publicClient!, call.pendingGreenSlippage(...args)) as Promise<CallReturn<'pendingGreenSlippage'>>,
+    pendingLevgVaultHelper: (...args: ExtractArgs<Contract['calls']['pendingLevgVaultHelper']>) =>
+      singleQuery(publicClient!, call.pendingLevgVaultHelper(...args)) as Promise<CallReturn<'pendingLevgVaultHelper'>>,
+    pendingMaxDebtRatio: (...args: ExtractArgs<Contract['calls']['pendingMaxDebtRatio']>) =>
+      singleQuery(publicClient!, call.pendingMaxDebtRatio(...args)) as Promise<CallReturn<'pendingMaxDebtRatio'>>,
+    pendingAddManager: (...args: ExtractArgs<Contract['calls']['pendingAddManager']>) =>
+      singleQuery(publicClient!, call.pendingAddManager(...args)) as Promise<CallReturn<'pendingAddManager'>>,
+    pendingRemoveManager: (...args: ExtractArgs<Contract['calls']['pendingRemoveManager']>) =>
+      singleQuery(publicClient!, call.pendingRemoveManager(...args)) as Promise<CallReturn<'pendingRemoveManager'>>,
 
     // Mutations
     startGovernanceChange: (...args: ExtractArgs<Contract['mutations']['startGovernanceChange']>) =>
@@ -2228,6 +3208,22 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.setDefaultTargetVaultToken)(...args),
     setMaxDepositAmount: (...args: ExtractArgs<Contract['mutations']['setMaxDepositAmount']>) =>
       mutate(walletClient!, mutation.setMaxDepositAmount)(...args),
+    setCollateralVault: (...args: ExtractArgs<Contract['mutations']['setCollateralVault']>) =>
+      mutate(walletClient!, mutation.setCollateralVault)(...args),
+    setLeverageVault: (...args: ExtractArgs<Contract['mutations']['setLeverageVault']>) =>
+      mutate(walletClient!, mutation.setLeverageVault)(...args),
+    setUsdcSlippageAllowed: (...args: ExtractArgs<Contract['mutations']['setUsdcSlippageAllowed']>) =>
+      mutate(walletClient!, mutation.setUsdcSlippageAllowed)(...args),
+    setGreenSlippageAllowed: (...args: ExtractArgs<Contract['mutations']['setGreenSlippageAllowed']>) =>
+      mutate(walletClient!, mutation.setGreenSlippageAllowed)(...args),
+    setLevgVaultHelper: (...args: ExtractArgs<Contract['mutations']['setLevgVaultHelper']>) =>
+      mutate(walletClient!, mutation.setLevgVaultHelper)(...args),
+    setMaxDebtRatio: (...args: ExtractArgs<Contract['mutations']['setMaxDebtRatio']>) =>
+      mutate(walletClient!, mutation.setMaxDebtRatio)(...args),
+    addVaultManager: (...args: ExtractArgs<Contract['mutations']['addVaultManager']>) =>
+      mutate(walletClient!, mutation.addVaultManager)(...args),
+    removeVaultManager: (...args: ExtractArgs<Contract['mutations']['removeVaultManager']>) =>
+      mutate(walletClient!, mutation.removeVaultManager)(...args),
     executePendingAction: (...args: ExtractArgs<Contract['mutations']['executePendingAction']>) =>
       mutate(walletClient!, mutation.executePendingAction)(...args),
     cancelPendingAction: (...args: ExtractArgs<Contract['mutations']['cancelPendingAction']>) =>

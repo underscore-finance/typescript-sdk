@@ -11,7 +11,7 @@ type Address = `0x${string}`
 
 export const abi = [
   {
-    name: 'UnderscoreEarnVaultDeposit',
+    name: 'AvantisDeposit',
     inputs: [
       {
         name: 'sender',
@@ -53,7 +53,7 @@ export const abi = [
     type: 'event',
   },
   {
-    name: 'UnderscoreEarnVaultWithdrawal',
+    name: 'AvantisWithdrawal',
     inputs: [
       {
         name: 'sender',
@@ -1044,6 +1044,27 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
+    name: 'getWithdrawalFees',
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_vaultTokenAmount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     name: 'getPricePerShare',
     inputs: [
       {
@@ -1167,27 +1188,6 @@ export const abi = [
       {
         name: '_vaultToken',
         type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getWithdrawalFees',
-    inputs: [
-      {
-        name: '_vaultToken',
-        type: 'address',
-      },
-      {
-        name: '_vaultTokenAmount',
-        type: 'uint256',
       },
     ],
     outputs: [
@@ -1503,9 +1503,38 @@ export const abi = [
     ],
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAccessForLego',
+    inputs: [
+      {
+        name: '_user',
+        type: 'address',
+      },
+      {
+        name: '_action',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'string',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'claimIncentives',
+    name: 'claimRewards',
     inputs: [
       {
         name: '_user',
@@ -1520,8 +1549,8 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_proofs',
-        type: 'bytes32[]',
+        name: '_extraData',
+        type: 'bytes32',
       },
     ],
     outputs: [
@@ -1538,7 +1567,7 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'claimIncentives',
+    name: 'claimRewards',
     inputs: [
       {
         name: '_user',
@@ -1553,8 +1582,8 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_proofs',
-        type: 'bytes32[]',
+        name: '_extraData',
+        type: 'bytes32',
       },
       {
         name: '_miniAddys',
@@ -1593,7 +1622,7 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'claimRewards',
+    name: 'claimIncentives',
     inputs: [
       {
         name: '_user',
@@ -1608,8 +1637,8 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_extraData',
-        type: 'bytes32',
+        name: '_proofs',
+        type: 'bytes32[]',
       },
     ],
     outputs: [
@@ -1626,7 +1655,7 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'claimRewards',
+    name: 'claimIncentives',
     inputs: [
       {
         name: '_user',
@@ -1641,8 +1670,8 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_extraData',
-        type: 'bytes32',
+        name: '_proofs',
+        type: 'bytes32[]',
       },
       {
         name: '_miniAddys',
@@ -1696,1327 +1725,1310 @@ export const abi = [
     ],
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'swapTokens',
+    inputs: [
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenPath',
+        type: 'address[]',
+      },
+      {
+        name: '_poolPath',
+        type: 'address[]',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'swapTokens',
+    inputs: [
+      {
+        name: '_amountIn',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_tokenPath',
+        type: 'address[]',
+      },
+      {
+        name: '_poolPath',
+        type: 'address[]',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'mintOrRedeemAsset',
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_tokenInAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'mintOrRedeemAsset',
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_tokenInAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmMintOrRedeemAsset',
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmMintOrRedeemAsset',
+    inputs: [
+      {
+        name: '_tokenIn',
+        type: 'address',
+      },
+      {
+        name: '_tokenOut',
+        type: 'address',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'addCollateral',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'addCollateral',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'removeCollateral',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'removeCollateral',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'borrow',
+    inputs: [
+      {
+        name: '_borrowAsset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'borrow',
+    inputs: [
+      {
+        name: '_borrowAsset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'repayDebt',
+    inputs: [
+      {
+        name: '_paymentAsset',
+        type: 'address',
+      },
+      {
+        name: '_paymentAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'repayDebt',
+    inputs: [
+      {
+        name: '_paymentAsset',
+        type: 'address',
+      },
+      {
+        name: '_paymentAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'addLiquidity',
+    inputs: [
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minLpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'addLiquidity',
+    inputs: [
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minLpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'removeLiquidity',
+    inputs: [
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_lpToken',
+        type: 'address',
+      },
+      {
+        name: '_lpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'removeLiquidity',
+    inputs: [
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_lpToken',
+        type: 'address',
+      },
+      {
+        name: '_lpAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'addLiquidityConcentrated',
+    inputs: [
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_tickLower',
+        type: 'int24',
+      },
+      {
+        name: '_tickUpper',
+        type: 'int24',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'addLiquidityConcentrated',
+    inputs: [
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_tickLower',
+        type: 'int24',
+      },
+      {
+        name: '_tickUpper',
+        type: 'int24',
+      },
+      {
+        name: '_amountA',
+        type: 'uint256',
+      },
+      {
+        name: '_amountB',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'removeLiquidityConcentrated',
+    inputs: [
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_liqToRemove',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'removeLiquidityConcentrated',
+    inputs: [
+      {
+        name: '_nftTokenId',
+        type: 'uint256',
+      },
+      {
+        name: '_pool',
+        type: 'address',
+      },
+      {
+        name: '_tokenA',
+        type: 'address',
+      },
+      {
+        name: '_tokenB',
+        type: 'address',
+      },
+      {
+        name: '_liqToRemove',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountA',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountB',
+        type: 'uint256',
+      },
+      {
+        name: '_extraData',
+        type: 'bytes32',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'bool',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
     stateMutability: 'view',
     type: 'function',
-    name: 'getAccessForLego',
-    inputs: [
-      {
-        name: '_user',
-        type: 'address',
-      },
-      {
-        name: '_action',
-        type: 'uint256',
-      },
-    ],
+    name: 'AVANTIS_USDC_VAULT',
+    inputs: [],
     outputs: [
       {
         name: '',
         type: 'address',
-      },
-      {
-        name: '',
-        type: 'string',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'swapTokens',
-    inputs: [
-      {
-        name: '_amountIn',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountOut',
-        type: 'uint256',
-      },
-      {
-        name: '_tokenPath',
-        type: 'address[]',
-      },
-      {
-        name: '_poolPath',
-        type: 'address[]',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'swapTokens',
-    inputs: [
-      {
-        name: '_amountIn',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountOut',
-        type: 'uint256',
-      },
-      {
-        name: '_tokenPath',
-        type: 'address[]',
-      },
-      {
-        name: '_poolPath',
-        type: 'address[]',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'mintOrRedeemAsset',
-    inputs: [
-      {
-        name: '_tokenIn',
-        type: 'address',
-      },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-      {
-        name: '_tokenInAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountOut',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'bool',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'mintOrRedeemAsset',
-    inputs: [
-      {
-        name: '_tokenIn',
-        type: 'address',
-      },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-      {
-        name: '_tokenInAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountOut',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'bool',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'confirmMintOrRedeemAsset',
-    inputs: [
-      {
-        name: '_tokenIn',
-        type: 'address',
-      },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'confirmMintOrRedeemAsset',
-    inputs: [
-      {
-        name: '_tokenIn',
-        type: 'address',
-      },
-      {
-        name: '_tokenOut',
-        type: 'address',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'addCollateral',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'addCollateral',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'removeCollateral',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'removeCollateral',
-    inputs: [
-      {
-        name: '_asset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'borrow',
-    inputs: [
-      {
-        name: '_borrowAsset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'borrow',
-    inputs: [
-      {
-        name: '_borrowAsset',
-        type: 'address',
-      },
-      {
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'repayDebt',
-    inputs: [
-      {
-        name: '_paymentAsset',
-        type: 'address',
-      },
-      {
-        name: '_paymentAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'repayDebt',
-    inputs: [
-      {
-        name: '_paymentAsset',
-        type: 'address',
-      },
-      {
-        name: '_paymentAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'addLiquidity',
-    inputs: [
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minLpAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'addLiquidity',
-    inputs: [
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minLpAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'removeLiquidity',
-    inputs: [
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_lpToken',
-        type: 'address',
-      },
-      {
-        name: '_lpAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'removeLiquidity',
-    inputs: [
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_lpToken',
-        type: 'address',
-      },
-      {
-        name: '_lpAmount',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'addLiquidityConcentrated',
-    inputs: [
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_tickLower',
-        type: 'int24',
-      },
-      {
-        name: '_tickUpper',
-        type: 'int24',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'addLiquidityConcentrated',
-    inputs: [
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_tickLower',
-        type: 'int24',
-      },
-      {
-        name: '_tickUpper',
-        type: 'int24',
-      },
-      {
-        name: '_amountA',
-        type: 'uint256',
-      },
-      {
-        name: '_amountB',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'removeLiquidityConcentrated',
-    inputs: [
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_liqToRemove',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'bool',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'removeLiquidityConcentrated',
-    inputs: [
-      {
-        name: '_nftTokenId',
-        type: 'uint256',
-      },
-      {
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        name: '_tokenA',
-        type: 'address',
-      },
-      {
-        name: '_tokenB',
-        type: 'address',
-      },
-      {
-        name: '_liqToRemove',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountA',
-        type: 'uint256',
-      },
-      {
-        name: '_minAmountB',
-        type: 'uint256',
-      },
-      {
-        name: '_extraData',
-        type: 'bytes32',
-      },
-      {
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        name: '_miniAddys',
-        type: 'tuple',
-        components: [
-          {
-            name: 'ledger',
-            type: 'address',
-          },
-          {
-            name: 'missionControl',
-            type: 'address',
-          },
-          {
-            name: 'legoBook',
-            type: 'address',
-          },
-          {
-            name: 'appraiser',
-            type: 'address',
-          },
-        ],
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'bool',
-      },
-      {
-        name: '',
-        type: 'uint256',
       },
     ],
   },
@@ -3041,6 +3053,10 @@ export const abi = [
         type: 'address',
       },
       {
+        name: '_avantisUsdcVault',
+        type: 'address',
+      },
+      {
         name: '_ripeRegistry',
         type: 'address',
       },
@@ -3049,7 +3065,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xB3a04D48a85d052496a6ee3Fad28A557717C220a'
+export const deployAddress: Address | undefined = '0x0b6DF4b22891139a17588523cc1AF068Ecf03D35'
 
 export type Contract = {
   calls: {
@@ -3129,16 +3145,17 @@ export type Contract = {
       appraiser?: `0x${string}`,
     ) => Promise<bigint>
     isRebasing: () => Promise<boolean>
+    getWithdrawalFees: (vaultToken: `0x${string}`, vaultTokenAmount: bigint) => Promise<bigint>
     getPricePerShare: (vaultToken: `0x${string}`, decimals?: bigint) => Promise<bigint>
     getVaultTokenAmount: (asset: `0x${string}`, assetAmount: bigint, vaultToken: `0x${string}`) => Promise<bigint>
     isEligibleVaultForTrialFunds: (vaultToken: `0x${string}`, underlyingAsset: `0x${string}`) => Promise<boolean>
     isEligibleForYieldBonus: (asset: `0x${string}`) => Promise<boolean>
     totalAssets: (vaultToken: `0x${string}`) => Promise<bigint>
     totalBorrows: (vaultToken: `0x${string}`) => Promise<bigint>
-    getWithdrawalFees: (vaultToken: `0x${string}`, vaultTokenAmount: bigint) => Promise<bigint>
     canRegisterVaultToken: (asset: `0x${string}`, vaultToken: `0x${string}`) => Promise<boolean>
-    hasClaimableRewards: (user: `0x${string}`) => Promise<boolean>
     getAccessForLego: (user: `0x${string}`, action: bigint) => Promise<[`0x${string}`, string, bigint]>
+    hasClaimableRewards: (user: `0x${string}`) => Promise<boolean>
+    AVANTIS_USDC_VAULT: () => Promise<`0x${string}`>
     RIPE_REGISTRY: () => Promise<`0x${string}`>
   }
   mutations: {
@@ -3182,11 +3199,11 @@ export type Contract = {
         appraiser: `0x${string}`
       },
     ) => Promise<[bigint, `0x${string}`, bigint, bigint]>
-    claimIncentives: (
+    claimRewards: (
       user: `0x${string}`,
       rewardToken: `0x${string}`,
       rewardAmount: bigint,
-      proofs: `0x${string}`[],
+      extraData: `0x${string}`,
       miniAddys?: {
         ledger: `0x${string}`
         missionControl: `0x${string}`
@@ -3194,11 +3211,11 @@ export type Contract = {
         appraiser: `0x${string}`
       },
     ) => Promise<[bigint, bigint]>
-    claimRewards: (
+    claimIncentives: (
       user: `0x${string}`,
       rewardToken: `0x${string}`,
       rewardAmount: bigint,
-      extraData: `0x${string}`,
+      proofs: `0x${string}`[],
       miniAddys?: {
         ledger: `0x${string}`
         missionControl: `0x${string}`
@@ -3367,7 +3384,7 @@ export type Contract = {
     ) => Promise<[bigint, bigint, bigint, boolean, bigint]>
   }
   events: {
-    UnderscoreEarnVaultDeposit: (
+    AvantisDeposit: (
       sender: `0x${string}`,
       asset: `0x${string}`,
       vaultToken: `0x${string}`,
@@ -3376,7 +3393,7 @@ export type Contract = {
       vaultTokenAmountReceived: bigint,
       recipient: `0x${string}`,
     ) => Promise<void>
-    UnderscoreEarnVaultWithdrawal: (
+    AvantisWithdrawal: (
       sender: `0x${string}`,
       asset: `0x${string}`,
       vaultToken: `0x${string}`,
@@ -3406,7 +3423,7 @@ export type Contract = {
 
 export type Calls = keyof Contract['calls']
 export type Request<M extends Calls> = {
-  contractName: 'UnderscoreLego'
+  contractName: 'Avantis'
   method: M
   args: ExtractArgs<Contract['calls'][M]>
   address: Address | undefined
@@ -3434,7 +3451,7 @@ function getRequest<M extends Calls>(
   const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
 
   const call = {
-    contractName: 'UnderscoreLego' as const,
+    contractName: 'Avantis' as const,
     method,
     args,
     address,
@@ -3512,6 +3529,8 @@ export const call: CallType = {
   getUsdValueOfVaultToken: (...args: ExtractArgs<Contract['calls']['getUsdValueOfVaultToken']>) =>
     getRequest('getUsdValueOfVaultToken', args),
   isRebasing: (...args: ExtractArgs<Contract['calls']['isRebasing']>) => getRequest('isRebasing', args),
+  getWithdrawalFees: (...args: ExtractArgs<Contract['calls']['getWithdrawalFees']>) =>
+    getRequest('getWithdrawalFees', args),
   getPricePerShare: (...args: ExtractArgs<Contract['calls']['getPricePerShare']>) =>
     getRequest('getPricePerShare', args),
   getVaultTokenAmount: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>) =>
@@ -3522,21 +3541,21 @@ export const call: CallType = {
     getRequest('isEligibleForYieldBonus', args),
   totalAssets: (...args: ExtractArgs<Contract['calls']['totalAssets']>) => getRequest('totalAssets', args),
   totalBorrows: (...args: ExtractArgs<Contract['calls']['totalBorrows']>) => getRequest('totalBorrows', args),
-  getWithdrawalFees: (...args: ExtractArgs<Contract['calls']['getWithdrawalFees']>) =>
-    getRequest('getWithdrawalFees', args),
   canRegisterVaultToken: (...args: ExtractArgs<Contract['calls']['canRegisterVaultToken']>) =>
     getRequest('canRegisterVaultToken', args),
-  hasClaimableRewards: (...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>) =>
-    getRequest('hasClaimableRewards', args),
   getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
     getRequest('getAccessForLego', args),
+  hasClaimableRewards: (...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>) =>
+    getRequest('hasClaimableRewards', args),
+  AVANTIS_USDC_VAULT: (...args: ExtractArgs<Contract['calls']['AVANTIS_USDC_VAULT']>) =>
+    getRequest('AVANTIS_USDC_VAULT', args),
   RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => getRequest('RIPE_REGISTRY', args),
 }
 
 export type Mutations = keyof Contract['mutations']
 function getMutation<M extends Mutations>(functionName: M) {
   return {
-    contractName: 'UnderscoreLego' as const,
+    contractName: 'Avantis' as const,
     functionName,
     deployAddress,
     argsType: undefined as ExtractArgs<Contract['mutations'][M]> | undefined,
@@ -3546,7 +3565,7 @@ function getMutation<M extends Mutations>(functionName: M) {
 
 export const mutation: {
   [K in Mutations]: {
-    contractName: 'UnderscoreLego'
+    contractName: 'Avantis'
     deployAddress: Address | undefined
     getAbi: () => typeof abi
     functionName: K
@@ -3562,8 +3581,8 @@ export const mutation: {
   addPriceSnapshot: getMutation('addPriceSnapshot'),
   depositForYield: getMutation('depositForYield'),
   withdrawFromYield: getMutation('withdrawFromYield'),
-  claimIncentives: getMutation('claimIncentives'),
   claimRewards: getMutation('claimRewards'),
+  claimIncentives: getMutation('claimIncentives'),
   swapTokens: getMutation('swapTokens'),
   mintOrRedeemAsset: getMutation('mintOrRedeemAsset'),
   confirmMintOrRedeemAsset: getMutation('confirmMintOrRedeemAsset'),
@@ -3644,6 +3663,9 @@ export type SDK = {
     ...args: ExtractArgs<Contract['calls']['getUsdValueOfVaultToken']>
   ) => Promise<CallReturn<'getUsdValueOfVaultToken'>>
   isRebasing: (...args: ExtractArgs<Contract['calls']['isRebasing']>) => Promise<CallReturn<'isRebasing'>>
+  getWithdrawalFees: (
+    ...args: ExtractArgs<Contract['calls']['getWithdrawalFees']>
+  ) => Promise<CallReturn<'getWithdrawalFees'>>
   getPricePerShare: (
     ...args: ExtractArgs<Contract['calls']['getPricePerShare']>
   ) => Promise<CallReturn<'getPricePerShare'>>
@@ -3658,18 +3680,18 @@ export type SDK = {
   ) => Promise<CallReturn<'isEligibleForYieldBonus'>>
   totalAssets: (...args: ExtractArgs<Contract['calls']['totalAssets']>) => Promise<CallReturn<'totalAssets'>>
   totalBorrows: (...args: ExtractArgs<Contract['calls']['totalBorrows']>) => Promise<CallReturn<'totalBorrows'>>
-  getWithdrawalFees: (
-    ...args: ExtractArgs<Contract['calls']['getWithdrawalFees']>
-  ) => Promise<CallReturn<'getWithdrawalFees'>>
   canRegisterVaultToken: (
     ...args: ExtractArgs<Contract['calls']['canRegisterVaultToken']>
   ) => Promise<CallReturn<'canRegisterVaultToken'>>
-  hasClaimableRewards: (
-    ...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>
-  ) => Promise<CallReturn<'hasClaimableRewards'>>
   getAccessForLego: (
     ...args: ExtractArgs<Contract['calls']['getAccessForLego']>
   ) => Promise<CallReturn<'getAccessForLego'>>
+  hasClaimableRewards: (
+    ...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>
+  ) => Promise<CallReturn<'hasClaimableRewards'>>
+  AVANTIS_USDC_VAULT: (
+    ...args: ExtractArgs<Contract['calls']['AVANTIS_USDC_VAULT']>
+  ) => Promise<CallReturn<'AVANTIS_USDC_VAULT'>>
   RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => Promise<CallReturn<'RIPE_REGISTRY'>>
   pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => Promise<Address>
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
@@ -3684,8 +3706,8 @@ export type SDK = {
   addPriceSnapshot: (...args: ExtractArgs<Contract['mutations']['addPriceSnapshot']>) => Promise<Address>
   depositForYield: (...args: ExtractArgs<Contract['mutations']['depositForYield']>) => Promise<Address>
   withdrawFromYield: (...args: ExtractArgs<Contract['mutations']['withdrawFromYield']>) => Promise<Address>
-  claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) => Promise<Address>
   claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) => Promise<Address>
+  claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) => Promise<Address>
   swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) => Promise<Address>
   mintOrRedeemAsset: (...args: ExtractArgs<Contract['mutations']['mintOrRedeemAsset']>) => Promise<Address>
   confirmMintOrRedeemAsset: (
@@ -3782,6 +3804,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       >,
     isRebasing: (...args: ExtractArgs<Contract['calls']['isRebasing']>) =>
       singleQuery(publicClient!, call.isRebasing(...args)) as Promise<CallReturn<'isRebasing'>>,
+    getWithdrawalFees: (...args: ExtractArgs<Contract['calls']['getWithdrawalFees']>) =>
+      singleQuery(publicClient!, call.getWithdrawalFees(...args)) as Promise<CallReturn<'getWithdrawalFees'>>,
     getPricePerShare: (...args: ExtractArgs<Contract['calls']['getPricePerShare']>) =>
       singleQuery(publicClient!, call.getPricePerShare(...args)) as Promise<CallReturn<'getPricePerShare'>>,
     getVaultTokenAmount: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmount']>) =>
@@ -3798,14 +3822,14 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.totalAssets(...args)) as Promise<CallReturn<'totalAssets'>>,
     totalBorrows: (...args: ExtractArgs<Contract['calls']['totalBorrows']>) =>
       singleQuery(publicClient!, call.totalBorrows(...args)) as Promise<CallReturn<'totalBorrows'>>,
-    getWithdrawalFees: (...args: ExtractArgs<Contract['calls']['getWithdrawalFees']>) =>
-      singleQuery(publicClient!, call.getWithdrawalFees(...args)) as Promise<CallReturn<'getWithdrawalFees'>>,
     canRegisterVaultToken: (...args: ExtractArgs<Contract['calls']['canRegisterVaultToken']>) =>
       singleQuery(publicClient!, call.canRegisterVaultToken(...args)) as Promise<CallReturn<'canRegisterVaultToken'>>,
-    hasClaimableRewards: (...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>) =>
-      singleQuery(publicClient!, call.hasClaimableRewards(...args)) as Promise<CallReturn<'hasClaimableRewards'>>,
     getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
       singleQuery(publicClient!, call.getAccessForLego(...args)) as Promise<CallReturn<'getAccessForLego'>>,
+    hasClaimableRewards: (...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>) =>
+      singleQuery(publicClient!, call.hasClaimableRewards(...args)) as Promise<CallReturn<'hasClaimableRewards'>>,
+    AVANTIS_USDC_VAULT: (...args: ExtractArgs<Contract['calls']['AVANTIS_USDC_VAULT']>) =>
+      singleQuery(publicClient!, call.AVANTIS_USDC_VAULT(...args)) as Promise<CallReturn<'AVANTIS_USDC_VAULT'>>,
     RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) =>
       singleQuery(publicClient!, call.RIPE_REGISTRY(...args)) as Promise<CallReturn<'RIPE_REGISTRY'>>,
 
@@ -3827,10 +3851,10 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.depositForYield)(...args),
     withdrawFromYield: (...args: ExtractArgs<Contract['mutations']['withdrawFromYield']>) =>
       mutate(walletClient!, mutation.withdrawFromYield)(...args),
-    claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) =>
-      mutate(walletClient!, mutation.claimIncentives)(...args),
     claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) =>
       mutate(walletClient!, mutation.claimRewards)(...args),
+    claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) =>
+      mutate(walletClient!, mutation.claimIncentives)(...args),
     swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) =>
       mutate(walletClient!, mutation.swapTokens)(...args),
     mintOrRedeemAsset: (...args: ExtractArgs<Contract['mutations']['mintOrRedeemAsset']>) =>

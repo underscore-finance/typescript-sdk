@@ -1220,6 +1220,18 @@ export const abi = [
     ],
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'RIPE_REGISTRY',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'constructor',
     inputs: [
@@ -1231,12 +1243,16 @@ export const abi = [
         name: '_curveAddressProvider',
         type: 'address',
       },
+      {
+        name: '_ripeRegistry',
+        type: 'address',
+      },
     ],
     outputs: [],
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xbFaAFEa6BC07ed8338F5D399A3B96e5d438bfeFD'
+export const deployAddress: Address | undefined = '0x4e0C4B96FAdc84D41144C1aE868aA1411c1d0743'
 
 export type Contract = {
   calls: {
@@ -1315,6 +1331,7 @@ export type Contract = {
       MetaPool: `0x${string}`
       RateProvider: `0x${string}`
     }>
+    RIPE_REGISTRY: () => Promise<`0x${string}`>
   }
   mutations: {
     pause: (shouldPause: boolean) => Promise<void>
@@ -1501,6 +1518,7 @@ export const call: CallType = {
     getRequest('CURVE_META_REGISTRY', args),
   CURVE_REGISTRIES: (...args: ExtractArgs<Contract['calls']['CURVE_REGISTRIES']>) =>
     getRequest('CURVE_REGISTRIES', args),
+  RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => getRequest('RIPE_REGISTRY', args),
 }
 
 export type Mutations = keyof Contract['mutations']
@@ -1581,6 +1599,7 @@ export type SDK = {
   CURVE_REGISTRIES: (
     ...args: ExtractArgs<Contract['calls']['CURVE_REGISTRIES']>
   ) => Promise<CallReturn<'CURVE_REGISTRIES'>>
+  RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => Promise<CallReturn<'RIPE_REGISTRY'>>
   pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => Promise<Address>
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
   recoverFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverFundsMany']>) => Promise<Address>
@@ -1640,6 +1659,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.CURVE_META_REGISTRY(...args)) as Promise<CallReturn<'CURVE_META_REGISTRY'>>,
     CURVE_REGISTRIES: (...args: ExtractArgs<Contract['calls']['CURVE_REGISTRIES']>) =>
       singleQuery(publicClient!, call.CURVE_REGISTRIES(...args)) as Promise<CallReturn<'CURVE_REGISTRIES'>>,
+    RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) =>
+      singleQuery(publicClient!, call.RIPE_REGISTRY(...args)) as Promise<CallReturn<'RIPE_REGISTRY'>>,
 
     // Mutations
     pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => mutate(walletClient!, mutation.pause)(...args),

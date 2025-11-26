@@ -1152,6 +1152,27 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
+    name: 'getWithdrawalFees',
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_vaultTokenAmount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     name: 'canRegisterVaultToken',
     inputs: [
       {
@@ -1536,6 +1557,94 @@ export const abi = [
       {
         name: '_extraData',
         type: 'bytes32',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'claimIncentives',
+    inputs: [
+      {
+        name: '_user',
+        type: 'address',
+      },
+      {
+        name: '_rewardToken',
+        type: 'address',
+      },
+      {
+        name: '_rewardAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_proofs',
+        type: 'bytes32[]',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'claimIncentives',
+    inputs: [
+      {
+        name: '_user',
+        type: 'address',
+      },
+      {
+        name: '_rewardToken',
+        type: 'address',
+      },
+      {
+        name: '_rewardAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_proofs',
+        type: 'bytes32[]',
       },
       {
         name: '_miniAddys',
@@ -2909,6 +3018,18 @@ export const abi = [
     ],
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'RIPE_REGISTRY',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'constructor',
     inputs: [
@@ -2924,12 +3045,16 @@ export const abi = [
         name: '_addressProvider',
         type: 'address',
       },
+      {
+        name: '_ripeRegistry',
+        type: 'address',
+      },
     ],
     outputs: [],
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x826BD427D842E18d5FC60975983829F37f90f77b'
+export const deployAddress: Address | undefined = '0x256f0f254B44C69e431C5eaFbB9A86F85DA1d1D3'
 
 export type Contract = {
   calls: {
@@ -3015,11 +3140,13 @@ export type Contract = {
     isEligibleForYieldBonus: (asset: `0x${string}`) => Promise<boolean>
     totalAssets: (vaultToken: `0x${string}`) => Promise<bigint>
     totalBorrows: (vaultToken: `0x${string}`) => Promise<bigint>
+    getWithdrawalFees: (vaultToken: `0x${string}`, vaultTokenAmount: bigint) => Promise<bigint>
     canRegisterVaultToken: (asset: `0x${string}`, vaultToken: `0x${string}`) => Promise<boolean>
     getAccessForLego: (user: `0x${string}`, action: bigint) => Promise<[`0x${string}`, string, bigint]>
     hasClaimableRewards: (user: `0x${string}`) => Promise<boolean>
     AAVE_V3_POOL: () => Promise<`0x${string}`>
     AAVE_V3_ADDRESS_PROVIDER: () => Promise<`0x${string}`>
+    RIPE_REGISTRY: () => Promise<`0x${string}`>
   }
   mutations: {
     pause: (shouldPause: boolean) => Promise<void>
@@ -3067,6 +3194,18 @@ export type Contract = {
       rewardToken: `0x${string}`,
       rewardAmount: bigint,
       extraData: `0x${string}`,
+      miniAddys?: {
+        ledger: `0x${string}`
+        missionControl: `0x${string}`
+        legoBook: `0x${string}`
+        appraiser: `0x${string}`
+      },
+    ) => Promise<[bigint, bigint]>
+    claimIncentives: (
+      user: `0x${string}`,
+      rewardToken: `0x${string}`,
+      rewardAmount: bigint,
+      proofs: `0x${string}`[],
       miniAddys?: {
         ledger: `0x${string}`
         missionControl: `0x${string}`
@@ -3384,6 +3523,8 @@ export const call: CallType = {
     getRequest('isEligibleForYieldBonus', args),
   totalAssets: (...args: ExtractArgs<Contract['calls']['totalAssets']>) => getRequest('totalAssets', args),
   totalBorrows: (...args: ExtractArgs<Contract['calls']['totalBorrows']>) => getRequest('totalBorrows', args),
+  getWithdrawalFees: (...args: ExtractArgs<Contract['calls']['getWithdrawalFees']>) =>
+    getRequest('getWithdrawalFees', args),
   canRegisterVaultToken: (...args: ExtractArgs<Contract['calls']['canRegisterVaultToken']>) =>
     getRequest('canRegisterVaultToken', args),
   getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
@@ -3393,6 +3534,7 @@ export const call: CallType = {
   AAVE_V3_POOL: (...args: ExtractArgs<Contract['calls']['AAVE_V3_POOL']>) => getRequest('AAVE_V3_POOL', args),
   AAVE_V3_ADDRESS_PROVIDER: (...args: ExtractArgs<Contract['calls']['AAVE_V3_ADDRESS_PROVIDER']>) =>
     getRequest('AAVE_V3_ADDRESS_PROVIDER', args),
+  RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => getRequest('RIPE_REGISTRY', args),
 }
 
 export type Mutations = keyof Contract['mutations']
@@ -3425,6 +3567,7 @@ export const mutation: {
   withdrawFromYield: getMutation('withdrawFromYield'),
   addPriceSnapshot: getMutation('addPriceSnapshot'),
   claimRewards: getMutation('claimRewards'),
+  claimIncentives: getMutation('claimIncentives'),
   swapTokens: getMutation('swapTokens'),
   mintOrRedeemAsset: getMutation('mintOrRedeemAsset'),
   confirmMintOrRedeemAsset: getMutation('confirmMintOrRedeemAsset'),
@@ -3519,6 +3662,9 @@ export type SDK = {
   ) => Promise<CallReturn<'isEligibleForYieldBonus'>>
   totalAssets: (...args: ExtractArgs<Contract['calls']['totalAssets']>) => Promise<CallReturn<'totalAssets'>>
   totalBorrows: (...args: ExtractArgs<Contract['calls']['totalBorrows']>) => Promise<CallReturn<'totalBorrows'>>
+  getWithdrawalFees: (
+    ...args: ExtractArgs<Contract['calls']['getWithdrawalFees']>
+  ) => Promise<CallReturn<'getWithdrawalFees'>>
   canRegisterVaultToken: (
     ...args: ExtractArgs<Contract['calls']['canRegisterVaultToken']>
   ) => Promise<CallReturn<'canRegisterVaultToken'>>
@@ -3532,6 +3678,7 @@ export type SDK = {
   AAVE_V3_ADDRESS_PROVIDER: (
     ...args: ExtractArgs<Contract['calls']['AAVE_V3_ADDRESS_PROVIDER']>
   ) => Promise<CallReturn<'AAVE_V3_ADDRESS_PROVIDER'>>
+  RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => Promise<CallReturn<'RIPE_REGISTRY'>>
   pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => Promise<Address>
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
   recoverFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverFundsMany']>) => Promise<Address>
@@ -3546,6 +3693,7 @@ export type SDK = {
   withdrawFromYield: (...args: ExtractArgs<Contract['mutations']['withdrawFromYield']>) => Promise<Address>
   addPriceSnapshot: (...args: ExtractArgs<Contract['mutations']['addPriceSnapshot']>) => Promise<Address>
   claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) => Promise<Address>
+  claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) => Promise<Address>
   swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) => Promise<Address>
   mintOrRedeemAsset: (...args: ExtractArgs<Contract['mutations']['mintOrRedeemAsset']>) => Promise<Address>
   confirmMintOrRedeemAsset: (
@@ -3658,6 +3806,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.totalAssets(...args)) as Promise<CallReturn<'totalAssets'>>,
     totalBorrows: (...args: ExtractArgs<Contract['calls']['totalBorrows']>) =>
       singleQuery(publicClient!, call.totalBorrows(...args)) as Promise<CallReturn<'totalBorrows'>>,
+    getWithdrawalFees: (...args: ExtractArgs<Contract['calls']['getWithdrawalFees']>) =>
+      singleQuery(publicClient!, call.getWithdrawalFees(...args)) as Promise<CallReturn<'getWithdrawalFees'>>,
     canRegisterVaultToken: (...args: ExtractArgs<Contract['calls']['canRegisterVaultToken']>) =>
       singleQuery(publicClient!, call.canRegisterVaultToken(...args)) as Promise<CallReturn<'canRegisterVaultToken'>>,
     getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
@@ -3670,6 +3820,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.AAVE_V3_ADDRESS_PROVIDER(...args)) as Promise<
         CallReturn<'AAVE_V3_ADDRESS_PROVIDER'>
       >,
+    RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) =>
+      singleQuery(publicClient!, call.RIPE_REGISTRY(...args)) as Promise<CallReturn<'RIPE_REGISTRY'>>,
 
     // Mutations
     pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => mutate(walletClient!, mutation.pause)(...args),
@@ -3691,6 +3843,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.addPriceSnapshot)(...args),
     claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) =>
       mutate(walletClient!, mutation.claimRewards)(...args),
+    claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) =>
+      mutate(walletClient!, mutation.claimIncentives)(...args),
     swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) =>
       mutate(walletClient!, mutation.swapTokens)(...args),
     mintOrRedeemAsset: (...args: ExtractArgs<Contract['mutations']['mintOrRedeemAsset']>) =>

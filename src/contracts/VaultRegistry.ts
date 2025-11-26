@@ -450,6 +450,112 @@ export const abi = [
     type: 'event',
   },
   {
+    name: 'AddressDisablePending',
+    inputs: [
+      {
+        name: 'regId',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'description',
+        type: 'string',
+        indexed: false,
+      },
+      {
+        name: 'addr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'version',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'confirmBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'registry',
+        type: 'string',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'AddressDisableConfirmed',
+    inputs: [
+      {
+        name: 'regId',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'description',
+        type: 'string',
+        indexed: false,
+      },
+      {
+        name: 'addr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'version',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'registry',
+        type: 'string',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'AddressDisableCancelled',
+    inputs: [
+      {
+        name: 'regId',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'description',
+        type: 'string',
+        indexed: false,
+      },
+      {
+        name: 'addr',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'initiatedBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'confirmBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'registry',
+        type: 'string',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
     stateMutability: 'view',
     type: 'function',
     name: 'getUndyHqFromGov',
@@ -1328,6 +1434,23 @@ export const abi = [
     ],
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'hasConfig',
+    inputs: [
+      {
+        name: '_vaultAddr',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'function',
     name: 'startAddNewAddressToRegistry',
@@ -1763,6 +1886,57 @@ export const abi = [
       {
         name: '_vaultAddr',
         type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'startAddressDisableInRegistry',
+    inputs: [
+      {
+        name: '_regId',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'confirmAddressDisableInRegistry',
+    inputs: [
+      {
+        name: '_regId',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'cancelAddressDisableInRegistry',
+    inputs: [
+      {
+        name: '_regId',
+        type: 'uint256',
       },
     ],
     outputs: [
@@ -2628,7 +2802,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x73388bD7f17CeCA0679604405A5d2C418Db2b702'
+export const deployAddress: Address | undefined = '0xC64A779FE55673F93F647F1E2A30B3C3a9A25b64'
 
 export type Contract = {
   calls: {
@@ -2692,6 +2866,7 @@ export type Contract = {
     canMintUndy: () => Promise<boolean>
     isPaused: () => Promise<boolean>
     isEarnVault: (vaultAddr: `0x${string}`) => Promise<boolean>
+    hasConfig: (vaultAddr: `0x${string}`) => Promise<boolean>
     isValidVaultToken: (vaultToken: `0x${string}`) => Promise<boolean>
     isValidDefaultTargetVaultToken: (vaultAddr: `0x${string}`, targetVaultToken: `0x${string}`) => Promise<boolean>
     isValidPerformanceFee: (performanceFee: bigint) => Promise<boolean>
@@ -2813,6 +2988,9 @@ export type Contract = {
       redemptionBuffer?: bigint,
     ) => Promise<bigint>
     cancelNewAddressToRegistry: (vaultAddr: `0x${string}`) => Promise<boolean>
+    startAddressDisableInRegistry: (regId: bigint) => Promise<boolean>
+    confirmAddressDisableInRegistry: (regId: bigint) => Promise<boolean>
+    cancelAddressDisableInRegistry: (regId: bigint) => Promise<boolean>
     setCanDeposit: (vaultAddr: `0x${string}`, canDeposit: boolean) => Promise<void>
     setCanWithdraw: (vaultAddr: `0x${string}`, canWithdraw: boolean) => Promise<void>
     setMaxDepositAmount: (vaultAddr: `0x${string}`, maxDepositAmount: bigint) => Promise<void>
@@ -2857,6 +3035,29 @@ export type Contract = {
     ) => Promise<void>
     NewAddressConfirmed: (addr: `0x${string}`, regId: bigint, description: string, registry: string) => Promise<void>
     NewAddressCancelled: (
+      description: string,
+      addr: `0x${string}`,
+      initiatedBlock: bigint,
+      confirmBlock: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddressDisablePending: (
+      regId: bigint,
+      description: string,
+      addr: `0x${string}`,
+      version: bigint,
+      confirmBlock: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddressDisableConfirmed: (
+      regId: bigint,
+      description: string,
+      addr: `0x${string}`,
+      version: bigint,
+      registry: string,
+    ) => Promise<void>
+    AddressDisableCancelled: (
+      regId: bigint,
       description: string,
       addr: `0x${string}`,
       initiatedBlock: bigint,
@@ -2982,6 +3183,7 @@ export const call: CallType = {
   canMintUndy: (...args: ExtractArgs<Contract['calls']['canMintUndy']>) => getRequest('canMintUndy', args),
   isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) => getRequest('isPaused', args),
   isEarnVault: (...args: ExtractArgs<Contract['calls']['isEarnVault']>) => getRequest('isEarnVault', args),
+  hasConfig: (...args: ExtractArgs<Contract['calls']['hasConfig']>) => getRequest('hasConfig', args),
   isValidVaultToken: (...args: ExtractArgs<Contract['calls']['isValidVaultToken']>) =>
     getRequest('isValidVaultToken', args),
   isValidDefaultTargetVaultToken: (...args: ExtractArgs<Contract['calls']['isValidDefaultTargetVaultToken']>) =>
@@ -3064,6 +3266,9 @@ export const mutation: {
   startAddNewAddressToRegistry: getMutation('startAddNewAddressToRegistry'),
   confirmNewAddressToRegistry: getMutation('confirmNewAddressToRegistry'),
   cancelNewAddressToRegistry: getMutation('cancelNewAddressToRegistry'),
+  startAddressDisableInRegistry: getMutation('startAddressDisableInRegistry'),
+  confirmAddressDisableInRegistry: getMutation('confirmAddressDisableInRegistry'),
+  cancelAddressDisableInRegistry: getMutation('cancelAddressDisableInRegistry'),
   setCanDeposit: getMutation('setCanDeposit'),
   setCanWithdraw: getMutation('setCanWithdraw'),
   setMaxDepositAmount: getMutation('setMaxDepositAmount'),
@@ -3152,6 +3357,7 @@ export type SDK = {
   canMintUndy: (...args: ExtractArgs<Contract['calls']['canMintUndy']>) => Promise<CallReturn<'canMintUndy'>>
   isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) => Promise<CallReturn<'isPaused'>>
   isEarnVault: (...args: ExtractArgs<Contract['calls']['isEarnVault']>) => Promise<CallReturn<'isEarnVault'>>
+  hasConfig: (...args: ExtractArgs<Contract['calls']['hasConfig']>) => Promise<CallReturn<'hasConfig'>>
   isValidVaultToken: (
     ...args: ExtractArgs<Contract['calls']['isValidVaultToken']>
   ) => Promise<CallReturn<'isValidVaultToken'>>
@@ -3240,6 +3446,15 @@ export type SDK = {
   ) => Promise<Address>
   cancelNewAddressToRegistry: (
     ...args: ExtractArgs<Contract['mutations']['cancelNewAddressToRegistry']>
+  ) => Promise<Address>
+  startAddressDisableInRegistry: (
+    ...args: ExtractArgs<Contract['mutations']['startAddressDisableInRegistry']>
+  ) => Promise<Address>
+  confirmAddressDisableInRegistry: (
+    ...args: ExtractArgs<Contract['mutations']['confirmAddressDisableInRegistry']>
+  ) => Promise<Address>
+  cancelAddressDisableInRegistry: (
+    ...args: ExtractArgs<Contract['mutations']['cancelAddressDisableInRegistry']>
   ) => Promise<Address>
   setCanDeposit: (...args: ExtractArgs<Contract['mutations']['setCanDeposit']>) => Promise<Address>
   setCanWithdraw: (...args: ExtractArgs<Contract['mutations']['setCanWithdraw']>) => Promise<Address>
@@ -3342,6 +3557,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.isPaused(...args)) as Promise<CallReturn<'isPaused'>>,
     isEarnVault: (...args: ExtractArgs<Contract['calls']['isEarnVault']>) =>
       singleQuery(publicClient!, call.isEarnVault(...args)) as Promise<CallReturn<'isEarnVault'>>,
+    hasConfig: (...args: ExtractArgs<Contract['calls']['hasConfig']>) =>
+      singleQuery(publicClient!, call.hasConfig(...args)) as Promise<CallReturn<'hasConfig'>>,
     isValidVaultToken: (...args: ExtractArgs<Contract['calls']['isValidVaultToken']>) =>
       singleQuery(publicClient!, call.isValidVaultToken(...args)) as Promise<CallReturn<'isValidVaultToken'>>,
     isValidDefaultTargetVaultToken: (...args: ExtractArgs<Contract['calls']['isValidDefaultTargetVaultToken']>) =>
@@ -3439,6 +3656,12 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.confirmNewAddressToRegistry)(...args),
     cancelNewAddressToRegistry: (...args: ExtractArgs<Contract['mutations']['cancelNewAddressToRegistry']>) =>
       mutate(walletClient!, mutation.cancelNewAddressToRegistry)(...args),
+    startAddressDisableInRegistry: (...args: ExtractArgs<Contract['mutations']['startAddressDisableInRegistry']>) =>
+      mutate(walletClient!, mutation.startAddressDisableInRegistry)(...args),
+    confirmAddressDisableInRegistry: (...args: ExtractArgs<Contract['mutations']['confirmAddressDisableInRegistry']>) =>
+      mutate(walletClient!, mutation.confirmAddressDisableInRegistry)(...args),
+    cancelAddressDisableInRegistry: (...args: ExtractArgs<Contract['mutations']['cancelAddressDisableInRegistry']>) =>
+      mutate(walletClient!, mutation.cancelAddressDisableInRegistry)(...args),
     setCanDeposit: (...args: ExtractArgs<Contract['mutations']['setCanDeposit']>) =>
       mutate(walletClient!, mutation.setCanDeposit)(...args),
     setCanWithdraw: (...args: ExtractArgs<Contract['mutations']['setCanWithdraw']>) =>

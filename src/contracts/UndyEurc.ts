@@ -2034,7 +2034,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xb33852cfd0c22647AAC501a6Af59Bc4210a686Bf'
+export const deployAddress: Address | undefined = '0x1cb8DAB80f19fC5Aca06C2552AECd79015008eA8'
 
 export type Contract = {
   calls: {
@@ -2197,7 +2197,7 @@ export type Contract = {
 
 export type Calls = keyof Contract['calls']
 export type Request<M extends Calls> = {
-  contractName: 'UndyUsd'
+  contractName: 'UndyEurc'
   method: M
   args: ExtractArgs<Contract['calls'][M]>
   address: Address | undefined
@@ -2225,7 +2225,7 @@ function getRequest<M extends Calls>(
   const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
 
   const call = {
-    contractName: 'UndyUsd' as const,
+    contractName: 'UndyEurc' as const,
     method,
     args,
     address,
@@ -2306,7 +2306,7 @@ export const call: CallType = {
 export type Mutations = keyof Contract['mutations']
 function getMutation<M extends Mutations>(functionName: M) {
   return {
-    contractName: 'UndyUsd' as const,
+    contractName: 'UndyEurc' as const,
     functionName,
     deployAddress,
     argsType: undefined as ExtractArgs<Contract['mutations'][M]> | undefined,
@@ -2316,7 +2316,7 @@ function getMutation<M extends Mutations>(functionName: M) {
 
 export const mutation: {
   [K in Mutations]: {
-    contractName: 'UndyUsd'
+    contractName: 'UndyEurc'
     deployAddress: Address | undefined
     getAbi: () => typeof abi
     functionName: K

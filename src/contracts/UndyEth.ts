@@ -143,30 +143,156 @@ export const abi = [
     type: 'event',
   },
   {
-    name: 'EarnVaultAction',
+    name: 'EarnVaultDeposit',
     inputs: [
       {
-        name: 'op',
-        type: 'uint8',
-        indexed: false,
-      },
-      {
-        name: 'asset1',
+        name: 'asset',
         type: 'address',
         indexed: true,
       },
       {
-        name: 'asset2',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'amount1',
+        name: 'assetAmountDeposited',
         type: 'uint256',
         indexed: false,
       },
       {
-        name: 'amount2',
+        name: 'assetAmountAdjusted',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'vaultToken',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'vaultTokenReceived',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'vaultTokenExpected',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'usdValue',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'legoId',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'signer',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'EarnVaultWithdrawal',
+    inputs: [
+      {
+        name: 'vaultToken',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'vaultTokenBurned',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'underlyingAsset',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'underlyingAmountReceived',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'usdValue',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'legoId',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'signer',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'EarnVaultSwap',
+    inputs: [
+      {
+        name: 'tokenIn',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'tokenInAmount',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'tokenOut',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'tokenOutAmount',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'usdValue',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'swapFee',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'legoId',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'signer',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'EarnVaultRewardsClaim',
+    inputs: [
+      {
+        name: 'rewardToken',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'rewardAmount',
         type: 'uint256',
         indexed: false,
       },
@@ -1005,7 +1131,7 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'claimRewards',
+    name: 'claimIncentives',
     inputs: [
       {
         name: '_legoId',
@@ -1026,32 +1152,7 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'claimRewards',
-    inputs: [
-      {
-        name: '_legoId',
-        type: 'uint256',
-      },
-      {
-        name: '_rewardToken',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'claimRewards',
+    name: 'claimIncentives',
     inputs: [
       {
         name: '_legoId',
@@ -1061,10 +1162,6 @@ export const abi = [
         name: '_rewardToken',
         type: 'address',
       },
-      {
-        name: '_rewardAmount',
-        type: 'uint256',
-      },
     ],
     outputs: [
       {
@@ -1080,7 +1177,7 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'claimRewards',
+    name: 'claimIncentives',
     inputs: [
       {
         name: '_legoId',
@@ -1094,9 +1191,38 @@ export const abi = [
         name: '_rewardAmount',
         type: 'uint256',
       },
+    ],
+    outputs: [
       {
-        name: '_extraData',
-        type: 'bytes32',
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'claimIncentives',
+    inputs: [
+      {
+        name: '_legoId',
+        type: 'uint256',
+      },
+      {
+        name: '_rewardToken',
+        type: 'address',
+      },
+      {
+        name: '_rewardAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_proofs',
+        type: 'bytes32[]',
       },
     ],
     outputs: [
@@ -1417,6 +1543,52 @@ export const abi = [
     ],
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'depositWithMinAmountOut',
+    inputs: [
+      {
+        name: '_assets',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'depositWithMinAmountOut',
+    inputs: [
+      {
+        name: '_assets',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_receiver',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
     stateMutability: 'view',
     type: 'function',
     name: 'maxMint',
@@ -1683,6 +1855,81 @@ export const abi = [
     ],
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'redeemWithMinAmountOut',
+    inputs: [
+      {
+        name: '_shares',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'redeemWithMinAmountOut',
+    inputs: [
+      {
+        name: '_shares',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_receiver',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'redeemWithMinAmountOut',
+    inputs: [
+      {
+        name: '_shares',
+        type: 'uint256',
+      },
+      {
+        name: '_minAmountOut',
+        type: 'uint256',
+      },
+      {
+        name: '_receiver',
+        type: 'address',
+      },
+      {
+        name: '_owner',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
     stateMutability: 'view',
     type: 'function',
     name: 'convertToShares',
@@ -1787,7 +2034,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x16a36ccBe56cA080D522CEC2f8769B82c134D663'
+export const deployAddress: Address | undefined = '0x02981DB1a99A14912b204437e7a2E02679B57668'
 
 export type Contract = {
   calls: {
@@ -1872,20 +2119,27 @@ export type Contract = {
         poolPath: `0x${string}`[]
       }[],
     ) => Promise<[`0x${string}`, bigint, `0x${string}`, bigint, bigint]>
-    claimRewards: (
+    claimIncentives: (
       legoId: bigint,
       rewardToken?: `0x${string}`,
       rewardAmount?: bigint,
-      extraData?: `0x${string}`,
+      proofs?: `0x${string}`[],
     ) => Promise<[bigint, bigint]>
     claimPerformanceFees: () => Promise<bigint>
     updateYieldPosition: (vaultToken: `0x${string}`) => Promise<void>
     addManager: (manager: `0x${string}`) => Promise<void>
     removeManager: (manager: `0x${string}`) => Promise<void>
     deposit: (assets: bigint, receiver?: `0x${string}`) => Promise<bigint>
+    depositWithMinAmountOut: (assets: bigint, minAmountOut: bigint, receiver?: `0x${string}`) => Promise<bigint>
     mint: (shares: bigint, receiver?: `0x${string}`) => Promise<bigint>
     withdraw: (assets: bigint, receiver?: `0x${string}`, owner?: `0x${string}`) => Promise<bigint>
     redeem: (shares: bigint, receiver?: `0x${string}`, owner?: `0x${string}`) => Promise<bigint>
+    redeemWithMinAmountOut: (
+      shares: bigint,
+      minAmountOut: bigint,
+      receiver?: `0x${string}`,
+      owner?: `0x${string}`,
+    ) => Promise<bigint>
   }
   events: {
     Deposit: (sender: `0x${string}`, owner: `0x${string}`, assets: bigint, shares: bigint) => Promise<void>
@@ -1900,12 +2154,39 @@ export type Contract = {
     Approval: (owner: `0x${string}`, spender: `0x${string}`, amount: bigint) => Promise<void>
     BlacklistModified: (addr: `0x${string}`, isBlacklisted: boolean) => Promise<void>
     TokenPauseModified: (isPaused: boolean) => Promise<void>
-    EarnVaultAction: (
-      op: number,
-      asset1: `0x${string}`,
-      asset2: `0x${string}`,
-      amount1: bigint,
-      amount2: bigint,
+    EarnVaultDeposit: (
+      asset: `0x${string}`,
+      assetAmountDeposited: bigint,
+      assetAmountAdjusted: bigint,
+      vaultToken: `0x${string}`,
+      vaultTokenReceived: bigint,
+      vaultTokenExpected: bigint,
+      usdValue: bigint,
+      legoId: bigint,
+      signer: `0x${string}`,
+    ) => Promise<void>
+    EarnVaultWithdrawal: (
+      vaultToken: `0x${string}`,
+      vaultTokenBurned: bigint,
+      underlyingAsset: `0x${string}`,
+      underlyingAmountReceived: bigint,
+      usdValue: bigint,
+      legoId: bigint,
+      signer: `0x${string}`,
+    ) => Promise<void>
+    EarnVaultSwap: (
+      tokenIn: `0x${string}`,
+      tokenInAmount: bigint,
+      tokenOut: `0x${string}`,
+      tokenOutAmount: bigint,
+      usdValue: bigint,
+      swapFee: bigint,
+      legoId: bigint,
+      signer: `0x${string}`,
+    ) => Promise<void>
+    EarnVaultRewardsClaim: (
+      rewardToken: `0x${string}`,
+      rewardAmount: bigint,
       usdValue: bigint,
       legoId: bigint,
       signer: `0x${string}`,
@@ -2055,15 +2336,17 @@ export const mutation: {
   depositForYield: getMutation('depositForYield'),
   withdrawFromYield: getMutation('withdrawFromYield'),
   swapTokens: getMutation('swapTokens'),
-  claimRewards: getMutation('claimRewards'),
+  claimIncentives: getMutation('claimIncentives'),
   claimPerformanceFees: getMutation('claimPerformanceFees'),
   updateYieldPosition: getMutation('updateYieldPosition'),
   addManager: getMutation('addManager'),
   removeManager: getMutation('removeManager'),
   deposit: getMutation('deposit'),
+  depositWithMinAmountOut: getMutation('depositWithMinAmountOut'),
   mint: getMutation('mint'),
   withdraw: getMutation('withdraw'),
   redeem: getMutation('redeem'),
+  redeemWithMinAmountOut: getMutation('redeemWithMinAmountOut'),
 }
 
 export type SDK = {
@@ -2140,15 +2423,17 @@ export type SDK = {
   depositForYield: (...args: ExtractArgs<Contract['mutations']['depositForYield']>) => Promise<Address>
   withdrawFromYield: (...args: ExtractArgs<Contract['mutations']['withdrawFromYield']>) => Promise<Address>
   swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) => Promise<Address>
-  claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) => Promise<Address>
+  claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) => Promise<Address>
   claimPerformanceFees: (...args: ExtractArgs<Contract['mutations']['claimPerformanceFees']>) => Promise<Address>
   updateYieldPosition: (...args: ExtractArgs<Contract['mutations']['updateYieldPosition']>) => Promise<Address>
   addManager: (...args: ExtractArgs<Contract['mutations']['addManager']>) => Promise<Address>
   removeManager: (...args: ExtractArgs<Contract['mutations']['removeManager']>) => Promise<Address>
   deposit: (...args: ExtractArgs<Contract['mutations']['deposit']>) => Promise<Address>
+  depositWithMinAmountOut: (...args: ExtractArgs<Contract['mutations']['depositWithMinAmountOut']>) => Promise<Address>
   mint: (...args: ExtractArgs<Contract['mutations']['mint']>) => Promise<Address>
   withdraw: (...args: ExtractArgs<Contract['mutations']['withdraw']>) => Promise<Address>
   redeem: (...args: ExtractArgs<Contract['mutations']['redeem']>) => Promise<Address>
+  redeemWithMinAmountOut: (...args: ExtractArgs<Contract['mutations']['redeemWithMinAmountOut']>) => Promise<Address>
 }
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
@@ -2263,8 +2548,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.withdrawFromYield)(...args),
     swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) =>
       mutate(walletClient!, mutation.swapTokens)(...args),
-    claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) =>
-      mutate(walletClient!, mutation.claimRewards)(...args),
+    claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) =>
+      mutate(walletClient!, mutation.claimIncentives)(...args),
     claimPerformanceFees: (...args: ExtractArgs<Contract['mutations']['claimPerformanceFees']>) =>
       mutate(walletClient!, mutation.claimPerformanceFees)(...args),
     updateYieldPosition: (...args: ExtractArgs<Contract['mutations']['updateYieldPosition']>) =>
@@ -2275,9 +2560,13 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.removeManager)(...args),
     deposit: (...args: ExtractArgs<Contract['mutations']['deposit']>) =>
       mutate(walletClient!, mutation.deposit)(...args),
+    depositWithMinAmountOut: (...args: ExtractArgs<Contract['mutations']['depositWithMinAmountOut']>) =>
+      mutate(walletClient!, mutation.depositWithMinAmountOut)(...args),
     mint: (...args: ExtractArgs<Contract['mutations']['mint']>) => mutate(walletClient!, mutation.mint)(...args),
     withdraw: (...args: ExtractArgs<Contract['mutations']['withdraw']>) =>
       mutate(walletClient!, mutation.withdraw)(...args),
     redeem: (...args: ExtractArgs<Contract['mutations']['redeem']>) => mutate(walletClient!, mutation.redeem)(...args),
+    redeemWithMinAmountOut: (...args: ExtractArgs<Contract['mutations']['redeemWithMinAmountOut']>) =>
+      mutate(walletClient!, mutation.redeemWithMinAmountOut)(...args),
   }
 }

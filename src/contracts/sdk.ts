@@ -11,12 +11,16 @@ import * as AeroSlipstream from './AeroSlipstream.js'
 import * as Agent from './Agent.js'
 import * as AgentWrapper from './AgentWrapper.js'
 import * as Appraiser from './Appraiser.js'
+import * as Avantis from './Avantis.js'
 import * as Billing from './Billing.js'
 import * as ChequeBook from './ChequeBook.js'
 import * as CompoundV3 from './CompoundV3.js'
+import * as ConvertVaultToken from './ConvertVaultToken.js'
 import * as Curve from './Curve.js'
 import * as DefaultsBase from './DefaultsBase.js'
 import * as ERC20 from './ERC20.js'
+import * as EarnVaultAgent from './EarnVaultAgent.js'
+import * as EarnVaultAgentSigHelper from './EarnVaultAgentSigHelper.js'
 import * as Euler from './Euler.js'
 import * as Fluid from './Fluid.js'
 import * as FortyAcres from './FortyAcres.js'
@@ -36,22 +40,29 @@ import * as RipeLego from './RipeLego.js'
 import * as Sentinel from './Sentinel.js'
 import * as SignatureHelper from './SignatureHelper.js'
 import * as SignatureHelperV1 from './SignatureHelperV1.js'
+import * as SkyPsm from './SkyPsm.js'
 import * as Switchboard from './Switchboard.js'
 import * as SwitchboardAlpha from './SwitchboardAlpha.js'
 import * as SwitchboardBravo from './SwitchboardBravo.js'
 import * as SwitchboardCharlie from './SwitchboardCharlie.js'
 import * as UnderscoreLego from './UnderscoreLego.js'
+import * as UndyAero from './UndyAero.js'
 import * as UndyBtc from './UndyBtc.js'
+import * as UndyCbeth from './UndyCbeth.js'
 import * as UndyEth from './UndyEth.js'
+import * as UndyEurc from './UndyEurc.js'
+import * as UndyGho from './UndyGho.js'
 import * as UndyHq from './UndyHq.js'
 import * as UndyRewardsLego from './UndyRewardsLego.js'
 import * as UndyUsd from './UndyUsd.js'
+import * as UndyUsds from './UndyUsds.js'
 import * as UniswapV2 from './UniswapV2.js'
 import * as UniswapV3 from './UniswapV3.js'
 import * as UserWallet from './UserWallet.js'
 import * as UserWalletConfig from './UserWalletConfig.js'
 import * as VaultRegistry from './VaultRegistry.js'
 import * as WalletBackpack from './WalletBackpack.js'
+import * as Wasabi from './Wasabi.js'
 
 export type SDK = {
   AaveV3: AaveV3.SDK
@@ -60,12 +71,16 @@ export type SDK = {
   Agent: (address: `0x${string}`) => Agent.SDK
   AgentWrapper: AgentWrapper.SDK
   Appraiser: Appraiser.SDK
+  Avantis: Avantis.SDK
   Billing: Billing.SDK
   ChequeBook: ChequeBook.SDK
   CompoundV3: CompoundV3.SDK
+  ConvertVaultToken: ConvertVaultToken.SDK
   Curve: Curve.SDK
   DefaultsBase: DefaultsBase.SDK
   ERC20: (address: `0x${string}`) => ERC20.SDK
+  EarnVaultAgent: EarnVaultAgent.SDK
+  EarnVaultAgentSigHelper: EarnVaultAgentSigHelper.SDK
   Euler: Euler.SDK
   Fluid: Fluid.SDK
   FortyAcres: FortyAcres.SDK
@@ -85,22 +100,29 @@ export type SDK = {
   Sentinel: Sentinel.SDK
   SignatureHelper: SignatureHelper.SDK
   SignatureHelperV1: SignatureHelperV1.SDK
+  SkyPsm: SkyPsm.SDK
   Switchboard: Switchboard.SDK
   SwitchboardAlpha: SwitchboardAlpha.SDK
   SwitchboardBravo: SwitchboardBravo.SDK
   SwitchboardCharlie: SwitchboardCharlie.SDK
   UnderscoreLego: UnderscoreLego.SDK
+  UndyAero: UndyAero.SDK
   UndyBtc: UndyBtc.SDK
+  UndyCbeth: UndyCbeth.SDK
   UndyEth: UndyEth.SDK
+  UndyEurc: UndyEurc.SDK
+  UndyGho: UndyGho.SDK
   UndyHq: UndyHq.SDK
   UndyRewardsLego: UndyRewardsLego.SDK
   UndyUsd: UndyUsd.SDK
+  UndyUsds: UndyUsds.SDK
   UniswapV2: UniswapV2.SDK
   UniswapV3: UniswapV3.SDK
   UserWallet: (address: `0x${string}`) => UserWallet.SDK
   UserWalletConfig: (address: `0x${string}`) => UserWalletConfig.SDK
   VaultRegistry: VaultRegistry.SDK
   WalletBackpack: WalletBackpack.SDK
+  Wasabi: Wasabi.SDK
 }
 
 export default function createSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
@@ -111,12 +133,16 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     Agent: (address: `0x${string}`) => Agent.toSdk(address, publicClient, walletClient),
     AgentWrapper: AgentWrapper.toSdk(publicClient, walletClient),
     Appraiser: Appraiser.toSdk(publicClient, walletClient),
+    Avantis: Avantis.toSdk(publicClient, walletClient),
     Billing: Billing.toSdk(publicClient, walletClient),
     ChequeBook: ChequeBook.toSdk(publicClient, walletClient),
     CompoundV3: CompoundV3.toSdk(publicClient, walletClient),
+    ConvertVaultToken: ConvertVaultToken.toSdk(publicClient, walletClient),
     Curve: Curve.toSdk(publicClient, walletClient),
     DefaultsBase: DefaultsBase.toSdk(publicClient, walletClient),
     ERC20: (address: `0x${string}`) => ERC20.toSdk(address, publicClient, walletClient),
+    EarnVaultAgent: EarnVaultAgent.toSdk(publicClient, walletClient),
+    EarnVaultAgentSigHelper: EarnVaultAgentSigHelper.toSdk(publicClient, walletClient),
     Euler: Euler.toSdk(publicClient, walletClient),
     Fluid: Fluid.toSdk(publicClient, walletClient),
     FortyAcres: FortyAcres.toSdk(publicClient, walletClient),
@@ -136,21 +162,28 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     Sentinel: Sentinel.toSdk(publicClient, walletClient),
     SignatureHelper: SignatureHelper.toSdk(publicClient, walletClient),
     SignatureHelperV1: SignatureHelperV1.toSdk(publicClient, walletClient),
+    SkyPsm: SkyPsm.toSdk(publicClient, walletClient),
     Switchboard: Switchboard.toSdk(publicClient, walletClient),
     SwitchboardAlpha: SwitchboardAlpha.toSdk(publicClient, walletClient),
     SwitchboardBravo: SwitchboardBravo.toSdk(publicClient, walletClient),
     SwitchboardCharlie: SwitchboardCharlie.toSdk(publicClient, walletClient),
     UnderscoreLego: UnderscoreLego.toSdk(publicClient, walletClient),
+    UndyAero: UndyAero.toSdk(publicClient, walletClient),
     UndyBtc: UndyBtc.toSdk(publicClient, walletClient),
+    UndyCbeth: UndyCbeth.toSdk(publicClient, walletClient),
     UndyEth: UndyEth.toSdk(publicClient, walletClient),
+    UndyEurc: UndyEurc.toSdk(publicClient, walletClient),
+    UndyGho: UndyGho.toSdk(publicClient, walletClient),
     UndyHq: UndyHq.toSdk(publicClient, walletClient),
     UndyRewardsLego: UndyRewardsLego.toSdk(publicClient, walletClient),
     UndyUsd: UndyUsd.toSdk(publicClient, walletClient),
+    UndyUsds: UndyUsds.toSdk(publicClient, walletClient),
     UniswapV2: UniswapV2.toSdk(publicClient, walletClient),
     UniswapV3: UniswapV3.toSdk(publicClient, walletClient),
     UserWallet: (address: `0x${string}`) => UserWallet.toSdk(address, publicClient, walletClient),
     UserWalletConfig: (address: `0x${string}`) => UserWalletConfig.toSdk(address, publicClient, walletClient),
     VaultRegistry: VaultRegistry.toSdk(publicClient, walletClient),
     WalletBackpack: WalletBackpack.toSdk(publicClient, walletClient),
+    Wasabi: Wasabi.toSdk(publicClient, walletClient),
   }
 }

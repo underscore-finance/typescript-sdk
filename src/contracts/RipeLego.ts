@@ -377,6 +377,11 @@ export const abi = [
         type: 'uint256',
         indexed: false,
       },
+      {
+        name: 'lastAveragePricePerShare',
+        type: 'uint256',
+        indexed: false,
+      },
     ],
     anonymous: false,
     type: 'event',
@@ -1344,6 +1349,27 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
+    name: 'getWithdrawalFees',
+    inputs: [
+      {
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        name: '_vaultTokenAmount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     name: 'canRegisterVaultToken',
     inputs: [
       {
@@ -1963,6 +1989,94 @@ export const abi = [
       {
         name: '_recipient',
         type: 'address',
+      },
+      {
+        name: '_miniAddys',
+        type: 'tuple',
+        components: [
+          {
+            name: 'ledger',
+            type: 'address',
+          },
+          {
+            name: 'missionControl',
+            type: 'address',
+          },
+          {
+            name: 'legoBook',
+            type: 'address',
+          },
+          {
+            name: 'appraiser',
+            type: 'address',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'claimIncentives',
+    inputs: [
+      {
+        name: '_user',
+        type: 'address',
+      },
+      {
+        name: '_rewardToken',
+        type: 'address',
+      },
+      {
+        name: '_rewardAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_proofs',
+        type: 'bytes32[]',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'claimIncentives',
+    inputs: [
+      {
+        name: '_user',
+        type: 'address',
+      },
+      {
+        name: '_rewardToken',
+        type: 'address',
+      },
+      {
+        name: '_rewardAmount',
+        type: 'uint256',
+      },
+      {
+        name: '_proofs',
+        type: 'bytes32[]',
       },
       {
         name: '_miniAddys',
@@ -3141,7 +3255,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xAFb801435960932B563Ab1047b8eb0d9C77FFb9B'
+export const deployAddress: Address | undefined = '0xf8190935c8682d5f802A0b4AF0C782AcEb9ecb56'
 
 export type Contract = {
   calls: {
@@ -3227,6 +3341,7 @@ export type Contract = {
     isEligibleForYieldBonus: (asset: `0x${string}`) => Promise<boolean>
     totalAssets: (vaultToken: `0x${string}`) => Promise<bigint>
     totalBorrows: (vaultToken: `0x${string}`) => Promise<bigint>
+    getWithdrawalFees: (vaultToken: `0x${string}`, vaultTokenAmount: bigint) => Promise<bigint>
     canRegisterVaultToken: (asset: `0x${string}`, vaultToken: `0x${string}`) => Promise<boolean>
     hasClaimableRewards: (user: `0x${string}`) => Promise<boolean>
     getAccessForLego: (user: `0x${string}`, action: bigint) => Promise<[`0x${string}`, string, bigint]>
@@ -3317,6 +3432,18 @@ export type Contract = {
       paymentAmount: bigint,
       extraData: `0x${string}`,
       recipient: `0x${string}`,
+      miniAddys?: {
+        ledger: `0x${string}`
+        missionControl: `0x${string}`
+        legoBook: `0x${string}`
+        appraiser: `0x${string}`
+      },
+    ) => Promise<[bigint, bigint]>
+    claimIncentives: (
+      user: `0x${string}`,
+      rewardToken: `0x${string}`,
+      rewardAmount: bigint,
+      proofs: `0x${string}`[],
       miniAddys?: {
         ledger: `0x${string}`
         missionControl: `0x${string}`
@@ -3514,7 +3641,12 @@ export type Contract = {
     ) => Promise<void>
     AssetOpportunityAdded: (asset: `0x${string}`, vaultAddr: `0x${string}`) => Promise<void>
     AssetOpportunityRemoved: (asset: `0x${string}`, vaultAddr: `0x${string}`) => Promise<void>
-    PricePerShareSnapShotAdded: (vaultToken: `0x${string}`, totalSupply: bigint, pricePerShare: bigint) => Promise<void>
+    PricePerShareSnapShotAdded: (
+      vaultToken: `0x${string}`,
+      totalSupply: bigint,
+      pricePerShare: bigint,
+      lastAveragePricePerShare: bigint,
+    ) => Promise<void>
   }
 }
 
@@ -3636,6 +3768,8 @@ export const call: CallType = {
     getRequest('isEligibleForYieldBonus', args),
   totalAssets: (...args: ExtractArgs<Contract['calls']['totalAssets']>) => getRequest('totalAssets', args),
   totalBorrows: (...args: ExtractArgs<Contract['calls']['totalBorrows']>) => getRequest('totalBorrows', args),
+  getWithdrawalFees: (...args: ExtractArgs<Contract['calls']['getWithdrawalFees']>) =>
+    getRequest('getWithdrawalFees', args),
   canRegisterVaultToken: (...args: ExtractArgs<Contract['calls']['canRegisterVaultToken']>) =>
     getRequest('canRegisterVaultToken', args),
   hasClaimableRewards: (...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>) =>
@@ -3683,6 +3817,7 @@ export const mutation: {
   removeCollateral: getMutation('removeCollateral'),
   borrow: getMutation('borrow'),
   repayDebt: getMutation('repayDebt'),
+  claimIncentives: getMutation('claimIncentives'),
   claimRewards: getMutation('claimRewards'),
   swapTokens: getMutation('swapTokens'),
   mintOrRedeemAsset: getMutation('mintOrRedeemAsset'),
@@ -3774,6 +3909,9 @@ export type SDK = {
   ) => Promise<CallReturn<'isEligibleForYieldBonus'>>
   totalAssets: (...args: ExtractArgs<Contract['calls']['totalAssets']>) => Promise<CallReturn<'totalAssets'>>
   totalBorrows: (...args: ExtractArgs<Contract['calls']['totalBorrows']>) => Promise<CallReturn<'totalBorrows'>>
+  getWithdrawalFees: (
+    ...args: ExtractArgs<Contract['calls']['getWithdrawalFees']>
+  ) => Promise<CallReturn<'getWithdrawalFees'>>
   canRegisterVaultToken: (
     ...args: ExtractArgs<Contract['calls']['canRegisterVaultToken']>
   ) => Promise<CallReturn<'canRegisterVaultToken'>>
@@ -3808,6 +3946,7 @@ export type SDK = {
   removeCollateral: (...args: ExtractArgs<Contract['mutations']['removeCollateral']>) => Promise<Address>
   borrow: (...args: ExtractArgs<Contract['mutations']['borrow']>) => Promise<Address>
   repayDebt: (...args: ExtractArgs<Contract['mutations']['repayDebt']>) => Promise<Address>
+  claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) => Promise<Address>
   claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) => Promise<Address>
   swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) => Promise<Address>
   mintOrRedeemAsset: (...args: ExtractArgs<Contract['mutations']['mintOrRedeemAsset']>) => Promise<Address>
@@ -3917,6 +4056,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.totalAssets(...args)) as Promise<CallReturn<'totalAssets'>>,
     totalBorrows: (...args: ExtractArgs<Contract['calls']['totalBorrows']>) =>
       singleQuery(publicClient!, call.totalBorrows(...args)) as Promise<CallReturn<'totalBorrows'>>,
+    getWithdrawalFees: (...args: ExtractArgs<Contract['calls']['getWithdrawalFees']>) =>
+      singleQuery(publicClient!, call.getWithdrawalFees(...args)) as Promise<CallReturn<'getWithdrawalFees'>>,
     canRegisterVaultToken: (...args: ExtractArgs<Contract['calls']['canRegisterVaultToken']>) =>
       singleQuery(publicClient!, call.canRegisterVaultToken(...args)) as Promise<CallReturn<'canRegisterVaultToken'>>,
     hasClaimableRewards: (...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>) =>
@@ -3957,6 +4098,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
     borrow: (...args: ExtractArgs<Contract['mutations']['borrow']>) => mutate(walletClient!, mutation.borrow)(...args),
     repayDebt: (...args: ExtractArgs<Contract['mutations']['repayDebt']>) =>
       mutate(walletClient!, mutation.repayDebt)(...args),
+    claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) =>
+      mutate(walletClient!, mutation.claimIncentives)(...args),
     claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) =>
       mutate(walletClient!, mutation.claimRewards)(...args),
     swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) =>
