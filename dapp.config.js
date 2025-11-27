@@ -307,5 +307,9 @@ export default {
       isTemplate: true,
       address: Manifest.contracts.UndyUsd.address,
     },
+    LevgVault: {
+      isTemplate: true,
+      address: '0x936c3C493Dc45D0f4D2FA36C7640f3BCABd64B4B',
+    },
   },
 }

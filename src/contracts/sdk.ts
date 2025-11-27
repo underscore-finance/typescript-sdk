@@ -33,6 +33,7 @@ import * as Kernel from './Kernel.js'
 import * as Ledger from './Ledger.js'
 import * as LegoBook from './LegoBook.js'
 import * as LegoTools from './LegoTools.js'
+import * as LevgVault from './LevgVault.js'
 import * as LevgVaultHelper from './LevgVaultHelper.js'
 import * as LootDistributor from './LootDistributor.js'
 import * as Migrator from './Migrator.js'
@@ -99,6 +100,7 @@ export type SDK = {
   Ledger: Ledger.SDK
   LegoBook: LegoBook.SDK
   LegoTools: LegoTools.SDK
+  LevgVault: (address: `0x${string}`) => LevgVault.SDK
   LevgVaultHelper: LevgVaultHelper.SDK
   LootDistributor: LootDistributor.SDK
   Migrator: Migrator.SDK
@@ -167,6 +169,7 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     Ledger: Ledger.toSdk(publicClient, walletClient),
     LegoBook: LegoBook.toSdk(publicClient, walletClient),
     LegoTools: LegoTools.toSdk(publicClient, walletClient),
+    LevgVault: (address: `0x${string}`) => LevgVault.toSdk(address, publicClient, walletClient),
     LevgVaultHelper: LevgVaultHelper.toSdk(publicClient, walletClient),
     LootDistributor: LootDistributor.toSdk(publicClient, walletClient),
     Migrator: Migrator.toSdk(publicClient, walletClient),
