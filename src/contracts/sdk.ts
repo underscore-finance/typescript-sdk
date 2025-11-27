@@ -66,6 +66,7 @@ import * as UniswapV3 from './UniswapV3.js'
 import * as UserWallet from './UserWallet.js'
 import * as UserWalletConfig from './UserWalletConfig.js'
 import * as UserWalletConfigV1 from './UserWalletConfigV1.js'
+import * as UserWalletSignatureHelper from './UserWalletSignatureHelper.js'
 import * as UserWalletV1 from './UserWalletV1.js'
 import * as VaultRegistry from './VaultRegistry.js'
 import * as WalletBackpack from './WalletBackpack.js'
@@ -133,6 +134,7 @@ export type SDK = {
   UserWallet: (address: `0x${string}`) => UserWallet.SDK
   UserWalletConfig: (address: `0x${string}`) => UserWalletConfig.SDK
   UserWalletConfigV1: (address: `0x${string}`) => UserWalletConfigV1.SDK
+  UserWalletSignatureHelper: UserWalletSignatureHelper.SDK
   UserWalletV1: (address: `0x${string}`) => UserWalletV1.SDK
   VaultRegistry: VaultRegistry.SDK
   WalletBackpack: WalletBackpack.SDK
@@ -202,6 +204,7 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     UserWallet: (address: `0x${string}`) => UserWallet.toSdk(address, publicClient, walletClient),
     UserWalletConfig: (address: `0x${string}`) => UserWalletConfig.toSdk(address, publicClient, walletClient),
     UserWalletConfigV1: (address: `0x${string}`) => UserWalletConfigV1.toSdk(address, publicClient, walletClient),
+    UserWalletSignatureHelper: UserWalletSignatureHelper.toSdk(publicClient, walletClient),
     UserWalletV1: (address: `0x${string}`) => UserWalletV1.toSdk(address, publicClient, walletClient),
     VaultRegistry: VaultRegistry.toSdk(publicClient, walletClient),
     WalletBackpack: WalletBackpack.toSdk(publicClient, walletClient),
