@@ -2226,6 +2226,44 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'deleverageUser',
+    inputs: [
+      {
+        name: '_user',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'deleverageUser',
+    inputs: [
+      {
+        name: '_user',
+        type: 'address',
+      },
+      {
+        name: '_targetRepayAmount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'claimIncentives',
     inputs: [
       {
@@ -3366,7 +3404,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x272812fC816a6a8C1A2988b24D06878493459A54'
+export const deployAddress: Address | undefined = '0x06Df9C710c96500D98f9eca1f838873e1Eb7e17F'
 
 export type Contract = {
   calls: {
@@ -3569,6 +3607,7 @@ export type Contract = {
       assets: { vaultId: bigint; asset: `0x${string}`; targetRepayAmount: bigint }[],
       user: `0x${string}`,
     ) => Promise<bigint>
+    deleverageUser: (user: `0x${string}`, targetRepayAmount?: bigint) => Promise<bigint>
     claimIncentives: (
       user: `0x${string}`,
       rewardToken: `0x${string}`,
@@ -3949,6 +3988,7 @@ export const mutation: {
   borrow: getMutation('borrow'),
   repayDebt: getMutation('repayDebt'),
   deleverageWithSpecificAssets: getMutation('deleverageWithSpecificAssets'),
+  deleverageUser: getMutation('deleverageUser'),
   claimIncentives: getMutation('claimIncentives'),
   claimRewards: getMutation('claimRewards'),
   mintOrRedeemAsset: getMutation('mintOrRedeemAsset'),
@@ -4085,6 +4125,7 @@ export type SDK = {
   deleverageWithSpecificAssets: (
     ...args: ExtractArgs<Contract['mutations']['deleverageWithSpecificAssets']>
   ) => Promise<Address>
+  deleverageUser: (...args: ExtractArgs<Contract['mutations']['deleverageUser']>) => Promise<Address>
   claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) => Promise<Address>
   claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) => Promise<Address>
   mintOrRedeemAsset: (...args: ExtractArgs<Contract['mutations']['mintOrRedeemAsset']>) => Promise<Address>
@@ -4242,6 +4283,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.repayDebt)(...args),
     deleverageWithSpecificAssets: (...args: ExtractArgs<Contract['mutations']['deleverageWithSpecificAssets']>) =>
       mutate(walletClient!, mutation.deleverageWithSpecificAssets)(...args),
+    deleverageUser: (...args: ExtractArgs<Contract['mutations']['deleverageUser']>) =>
+      mutate(walletClient!, mutation.deleverageUser)(...args),
     claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) =>
       mutate(walletClient!, mutation.claimIncentives)(...args),
     claimRewards: (...args: ExtractArgs<Contract['mutations']['claimRewards']>) =>
