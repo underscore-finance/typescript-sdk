@@ -1009,7 +1009,34 @@ export const abi = [
     type: 'event',
   },
   {
-    name: 'RipeRewardsConfigSetFromSwitchboard',
+    name: 'PendingRipeRewardsConfigChange',
+    inputs: [
+      {
+        name: 'ripeStakeRatio',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'ripeLockDuration',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'confirmationBlock',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'actionId',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'RipeRewardsConfigSet',
     inputs: [
       {
         name: 'ripeStakeRatio',
@@ -1818,6 +1845,31 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'setUserWalletTemplates',
+    inputs: [
+      {
+        name: '_walletTemplate',
+        type: 'address',
+      },
+      {
+        name: '_configTemplate',
+        type: 'address',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'setWalletCreationLimits',
     inputs: [
       {
@@ -1839,6 +1891,31 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'setWalletCreationLimits',
+    inputs: [
+      {
+        name: '_numUserWalletsAllowed',
+        type: 'uint256',
+      },
+      {
+        name: '_enforceCreatorWhitelist',
+        type: 'bool',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'setKeyActionTimelockBounds',
     inputs: [
       {
@@ -1848,6 +1925,31 @@ export const abi = [
       {
         name: '_maxKeyActionTimeLock',
         type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setKeyActionTimelockBounds',
+    inputs: [
+      {
+        name: '_minKeyActionTimeLock',
+        type: 'uint256',
+      },
+      {
+        name: '_maxKeyActionTimeLock',
+        type: 'uint256',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
       },
     ],
     outputs: [
@@ -1885,6 +1987,35 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'setTxFees',
+    inputs: [
+      {
+        name: '_swapFee',
+        type: 'uint256',
+      },
+      {
+        name: '_stableSwapFee',
+        type: 'uint256',
+      },
+      {
+        name: '_rewardsFee',
+        type: 'uint256',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'setAmbassadorRevShare',
     inputs: [
       {
@@ -1898,6 +2029,35 @@ export const abi = [
       {
         name: '_yieldRatio',
         type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setAmbassadorRevShare',
+    inputs: [
+      {
+        name: '_swapRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_rewardsRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_yieldRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
       },
     ],
     outputs: [
@@ -1943,6 +2103,43 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'setDefaultYieldParams',
+    inputs: [
+      {
+        name: '_defaultYieldMaxIncrease',
+        type: 'uint256',
+      },
+      {
+        name: '_defaultYieldPerformanceFee',
+        type: 'uint256',
+      },
+      {
+        name: '_defaultYieldAmbassadorBonusRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_defaultYieldBonusRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_defaultYieldBonusAsset',
+        type: 'address',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'setLootParams',
     inputs: [
       {
@@ -1952,6 +2149,31 @@ export const abi = [
       {
         name: '_lootClaimCoolOffPeriod',
         type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setLootParams',
+    inputs: [
+      {
+        name: '_depositRewardsAsset',
+        type: 'address',
+      },
+      {
+        name: '_lootClaimCoolOffPeriod',
+        type: 'uint256',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
       },
     ],
     outputs: [
@@ -2025,6 +2247,71 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'setAssetConfig',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_txFeesSwapFee',
+        type: 'uint256',
+      },
+      {
+        name: '_txFeesStableSwapFee',
+        type: 'uint256',
+      },
+      {
+        name: '_txFeesRewardsFee',
+        type: 'uint256',
+      },
+      {
+        name: '_ambassadorRevShareSwapRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_ambassadorRevShareRewardsRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_ambassadorRevShareYieldRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_maxYieldIncrease',
+        type: 'uint256',
+      },
+      {
+        name: '_performanceFee',
+        type: 'uint256',
+      },
+      {
+        name: '_ambassadorBonusRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_bonusRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_bonusAsset',
+        type: 'address',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'setAssetTxFees',
     inputs: [
       {
@@ -2041,6 +2328,68 @@ export const abi = [
       },
       {
         name: '_rewardsFee',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setAssetTxFees',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_swapFee',
+        type: 'uint256',
+      },
+      {
+        name: '_stableSwapFee',
+        type: 'uint256',
+      },
+      {
+        name: '_rewardsFee',
+        type: 'uint256',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setAssetAmbassadorRevShare',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_swapRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_rewardsRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_yieldRatio',
         type: 'uint256',
       },
     ],
@@ -2071,6 +2420,10 @@ export const abi = [
       {
         name: '_yieldRatio',
         type: 'uint256',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
       },
     ],
     outputs: [
@@ -2120,6 +2473,47 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'setAssetYieldConfig',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_maxYieldIncrease',
+        type: 'uint256',
+      },
+      {
+        name: '_performanceFee',
+        type: 'uint256',
+      },
+      {
+        name: '_ambassadorBonusRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_bonusRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_bonusAsset',
+        type: 'address',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'setIsStablecoin',
     inputs: [
       {
@@ -2141,6 +2535,31 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'setIsStablecoin',
+    inputs: [
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_isStablecoin',
+        type: 'bool',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'setStarterAgentParams',
     inputs: [
       {
@@ -2150,6 +2569,31 @@ export const abi = [
       {
         name: '_startingAgentActivationLength',
         type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setStarterAgentParams',
+    inputs: [
+      {
+        name: '_startingAgent',
+        type: 'address',
+      },
+      {
+        name: '_startingAgentActivationLength',
+        type: 'uint256',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
       },
     ],
     outputs: [
@@ -2224,6 +2668,47 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'setManagerConfig',
+    inputs: [
+      {
+        name: '_managerPeriod',
+        type: 'uint256',
+      },
+      {
+        name: '_managerActivationLength',
+        type: 'uint256',
+      },
+      {
+        name: '_mustHaveUsdValueOnSwaps',
+        type: 'bool',
+      },
+      {
+        name: '_maxNumSwapsPerPeriod',
+        type: 'uint256',
+      },
+      {
+        name: '_maxSlippageOnSwaps',
+        type: 'uint256',
+      },
+      {
+        name: '_onlyApprovedYieldOpps',
+        type: 'bool',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'setPayeeConfig',
     inputs: [
       {
@@ -2233,6 +2718,31 @@ export const abi = [
       {
         name: '_payeeActivationLength',
         type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setPayeeConfig',
+    inputs: [
+      {
+        name: '_payeePeriod',
+        type: 'uint256',
+      },
+      {
+        name: '_payeeActivationLength',
+        type: 'uint256',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
       },
     ],
     outputs: [
@@ -2266,6 +2776,31 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'setCanPerformSecurityAction',
+    inputs: [
+      {
+        name: '_signer',
+        type: 'address',
+      },
+      {
+        name: '_canPerform',
+        type: 'bool',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'setCreatorWhitelist',
     inputs: [
       {
@@ -2275,6 +2810,26 @@ export const abi = [
       {
         name: '_isWhitelisted',
         type: 'bool',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setCreatorWhitelist',
+    inputs: [
+      {
+        name: '_creator',
+        type: 'address',
+      },
+      {
+        name: '_isWhitelisted',
+        type: 'bool',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
       },
     ],
     outputs: [],
@@ -2298,6 +2853,26 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'setLockedSigner',
+    inputs: [
+      {
+        name: '_signer',
+        type: 'address',
+      },
+      {
+        name: '_isLocked',
+        type: 'bool',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'setRipeRewardsConfig',
     inputs: [
       {
@@ -2309,7 +2884,37 @@ export const abi = [
         type: 'uint256',
       },
     ],
-    outputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'setRipeRewardsConfig',
+    inputs: [
+      {
+        name: '_ripeStakeRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_ripeLockDuration',
+        type: 'uint256',
+      },
+      {
+        name: '_missionControl',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
   },
   {
     stateMutability: 'nonpayable',
@@ -2853,6 +3458,50 @@ export const abi = [
     ],
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingRipeRewardsConfig',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'stakeRatio',
+            type: 'uint256',
+          },
+          {
+            name: 'lockDuration',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'pendingMissionControl',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'constructor',
     inputs: [
@@ -2877,7 +3526,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xB7d32916c8E7F74f70aF7ECFcb35B04358E50bAc'
+export const deployAddress: Address | undefined = '0xD63278252E4306Dc2361F0353b8C681fccb15873'
 
 export type Contract = {
   calls: {
@@ -2994,6 +3643,8 @@ export type Contract = {
     pendingPayeeConfig: (arg0: bigint) => Promise<{ payeePeriod: bigint; payeeActivationLength: bigint }>
     pendingAddrToBool: (arg0: bigint) => Promise<{ addr: `0x${string}`; isAllowed: boolean }>
     pendingAgentWrapperSender: (arg0: bigint) => Promise<{ agentWrapper: `0x${string}`; agentSender: `0x${string}` }>
+    pendingRipeRewardsConfig: (arg0: bigint) => Promise<{ stakeRatio: bigint; lockDuration: bigint }>
+    pendingMissionControl: (arg0: bigint) => Promise<`0x${string}`>
   }
   mutations: {
     startGovernanceChange: (newGov: `0x${string}`) => Promise<void>
@@ -3005,19 +3656,46 @@ export type Contract = {
     setActionTimeLock: (newTimeLock: bigint) => Promise<boolean>
     setExpiration: (expiration: bigint) => Promise<boolean>
     setActionTimeLockAfterSetup: (newTimeLock?: bigint) => Promise<boolean>
-    setUserWalletTemplates: (walletTemplate: `0x${string}`, configTemplate: `0x${string}`) => Promise<bigint>
-    setWalletCreationLimits: (numUserWalletsAllowed: bigint, enforceCreatorWhitelist: boolean) => Promise<bigint>
-    setKeyActionTimelockBounds: (minKeyActionTimeLock: bigint, maxKeyActionTimeLock: bigint) => Promise<bigint>
-    setTxFees: (swapFee: bigint, stableSwapFee: bigint, rewardsFee: bigint) => Promise<bigint>
-    setAmbassadorRevShare: (swapRatio: bigint, rewardsRatio: bigint, yieldRatio: bigint) => Promise<bigint>
+    setUserWalletTemplates: (
+      walletTemplate: `0x${string}`,
+      configTemplate: `0x${string}`,
+      missionControl?: `0x${string}`,
+    ) => Promise<bigint>
+    setWalletCreationLimits: (
+      numUserWalletsAllowed: bigint,
+      enforceCreatorWhitelist: boolean,
+      missionControl?: `0x${string}`,
+    ) => Promise<bigint>
+    setKeyActionTimelockBounds: (
+      minKeyActionTimeLock: bigint,
+      maxKeyActionTimeLock: bigint,
+      missionControl?: `0x${string}`,
+    ) => Promise<bigint>
+    setTxFees: (
+      swapFee: bigint,
+      stableSwapFee: bigint,
+      rewardsFee: bigint,
+      missionControl?: `0x${string}`,
+    ) => Promise<bigint>
+    setAmbassadorRevShare: (
+      swapRatio: bigint,
+      rewardsRatio: bigint,
+      yieldRatio: bigint,
+      missionControl?: `0x${string}`,
+    ) => Promise<bigint>
     setDefaultYieldParams: (
       defaultYieldMaxIncrease: bigint,
       defaultYieldPerformanceFee: bigint,
       defaultYieldAmbassadorBonusRatio: bigint,
       defaultYieldBonusRatio: bigint,
       defaultYieldBonusAsset: `0x${string}`,
+      missionControl?: `0x${string}`,
     ) => Promise<bigint>
-    setLootParams: (depositRewardsAsset: `0x${string}`, lootClaimCoolOffPeriod: bigint) => Promise<bigint>
+    setLootParams: (
+      depositRewardsAsset: `0x${string}`,
+      lootClaimCoolOffPeriod: bigint,
+      missionControl?: `0x${string}`,
+    ) => Promise<bigint>
     setAssetConfig: (
       asset: `0x${string}`,
       txFeesSwapFee: bigint,
@@ -3031,18 +3709,21 @@ export type Contract = {
       ambassadorBonusRatio: bigint,
       bonusRatio: bigint,
       bonusAsset: `0x${string}`,
+      missionControl?: `0x${string}`,
     ) => Promise<bigint>
     setAssetTxFees: (
       asset: `0x${string}`,
       swapFee: bigint,
       stableSwapFee: bigint,
       rewardsFee: bigint,
+      missionControl?: `0x${string}`,
     ) => Promise<bigint>
     setAssetAmbassadorRevShare: (
       asset: `0x${string}`,
       swapRatio: bigint,
       rewardsRatio: bigint,
       yieldRatio: bigint,
+      missionControl?: `0x${string}`,
     ) => Promise<bigint>
     setAssetYieldConfig: (
       asset: `0x${string}`,
@@ -3051,9 +3732,14 @@ export type Contract = {
       ambassadorBonusRatio: bigint,
       bonusRatio: bigint,
       bonusAsset: `0x${string}`,
+      missionControl?: `0x${string}`,
     ) => Promise<bigint>
-    setIsStablecoin: (asset: `0x${string}`, isStablecoin: boolean) => Promise<bigint>
-    setStarterAgentParams: (startingAgent: `0x${string}`, startingAgentActivationLength: bigint) => Promise<bigint>
+    setIsStablecoin: (asset: `0x${string}`, isStablecoin: boolean, missionControl?: `0x${string}`) => Promise<bigint>
+    setStarterAgentParams: (
+      startingAgent: `0x${string}`,
+      startingAgentActivationLength: bigint,
+      missionControl?: `0x${string}`,
+    ) => Promise<bigint>
     setAgentWrapperSender: (
       agentWrapper: `0x${string}`,
       agentSender: `0x${string}`,
@@ -3066,12 +3752,29 @@ export type Contract = {
       maxNumSwapsPerPeriod: bigint,
       maxSlippageOnSwaps: bigint,
       onlyApprovedYieldOpps: boolean,
+      missionControl?: `0x${string}`,
     ) => Promise<bigint>
-    setPayeeConfig: (payeePeriod: bigint, payeeActivationLength: bigint) => Promise<bigint>
-    setCanPerformSecurityAction: (signer: `0x${string}`, canPerform: boolean) => Promise<bigint>
-    setCreatorWhitelist: (creator: `0x${string}`, isWhitelisted: boolean) => Promise<void>
-    setLockedSigner: (signer: `0x${string}`, isLocked: boolean) => Promise<void>
-    setRipeRewardsConfig: (ripeStakeRatio: bigint, ripeLockDuration: bigint) => Promise<void>
+    setPayeeConfig: (
+      payeePeriod: bigint,
+      payeeActivationLength: bigint,
+      missionControl?: `0x${string}`,
+    ) => Promise<bigint>
+    setCanPerformSecurityAction: (
+      signer: `0x${string}`,
+      canPerform: boolean,
+      missionControl?: `0x${string}`,
+    ) => Promise<bigint>
+    setCreatorWhitelist: (
+      creator: `0x${string}`,
+      isWhitelisted: boolean,
+      missionControl?: `0x${string}`,
+    ) => Promise<void>
+    setLockedSigner: (signer: `0x${string}`, isLocked: boolean, missionControl?: `0x${string}`) => Promise<void>
+    setRipeRewardsConfig: (
+      ripeStakeRatio: bigint,
+      ripeLockDuration: bigint,
+      missionControl?: `0x${string}`,
+    ) => Promise<bigint>
     executePendingAction: (aid: bigint) => Promise<boolean>
     cancelPendingAction: (aid: bigint) => Promise<boolean>
   }
@@ -3248,7 +3951,13 @@ export type Contract = {
     PayeeConfigSet: (payeePeriod: bigint, payeeActivationLength: bigint) => Promise<void>
     CanPerformSecurityAction: (signer: `0x${string}`, canPerform: boolean) => Promise<void>
     LockedSignerSet: (signer: `0x${string}`, isLocked: boolean, caller: `0x${string}`) => Promise<void>
-    RipeRewardsConfigSetFromSwitchboard: (ripeStakeRatio: bigint, ripeLockDuration: bigint) => Promise<void>
+    PendingRipeRewardsConfigChange: (
+      ripeStakeRatio: bigint,
+      ripeLockDuration: bigint,
+      confirmationBlock: bigint,
+      actionId: bigint,
+    ) => Promise<void>
+    RipeRewardsConfigSet: (ripeStakeRatio: bigint, ripeLockDuration: bigint) => Promise<void>
     PendingAgentWrapperSenderAdd: (
       agentWrapper: `0x${string}`,
       agentSender: `0x${string}`,
@@ -3390,6 +4099,10 @@ export const call: CallType = {
     getRequest('pendingAddrToBool', args),
   pendingAgentWrapperSender: (...args: ExtractArgs<Contract['calls']['pendingAgentWrapperSender']>) =>
     getRequest('pendingAgentWrapperSender', args),
+  pendingRipeRewardsConfig: (...args: ExtractArgs<Contract['calls']['pendingRipeRewardsConfig']>) =>
+    getRequest('pendingRipeRewardsConfig', args),
+  pendingMissionControl: (...args: ExtractArgs<Contract['calls']['pendingMissionControl']>) =>
+    getRequest('pendingMissionControl', args),
 }
 
 export type Mutations = keyof Contract['mutations']
@@ -3527,6 +4240,12 @@ export type SDK = {
   pendingAgentWrapperSender: (
     ...args: ExtractArgs<Contract['calls']['pendingAgentWrapperSender']>
   ) => Promise<CallReturn<'pendingAgentWrapperSender'>>
+  pendingRipeRewardsConfig: (
+    ...args: ExtractArgs<Contract['calls']['pendingRipeRewardsConfig']>
+  ) => Promise<CallReturn<'pendingRipeRewardsConfig'>>
+  pendingMissionControl: (
+    ...args: ExtractArgs<Contract['calls']['pendingMissionControl']>
+  ) => Promise<CallReturn<'pendingMissionControl'>>
   startGovernanceChange: (...args: ExtractArgs<Contract['mutations']['startGovernanceChange']>) => Promise<Address>
   confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) => Promise<Address>
   cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) => Promise<Address>
@@ -3653,6 +4372,12 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.pendingAgentWrapperSender(...args)) as Promise<
         CallReturn<'pendingAgentWrapperSender'>
       >,
+    pendingRipeRewardsConfig: (...args: ExtractArgs<Contract['calls']['pendingRipeRewardsConfig']>) =>
+      singleQuery(publicClient!, call.pendingRipeRewardsConfig(...args)) as Promise<
+        CallReturn<'pendingRipeRewardsConfig'>
+      >,
+    pendingMissionControl: (...args: ExtractArgs<Contract['calls']['pendingMissionControl']>) =>
+      singleQuery(publicClient!, call.pendingMissionControl(...args)) as Promise<CallReturn<'pendingMissionControl'>>,
 
     // Mutations
     startGovernanceChange: (...args: ExtractArgs<Contract['mutations']['startGovernanceChange']>) =>

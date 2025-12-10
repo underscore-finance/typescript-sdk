@@ -40,6 +40,8 @@ export const LEGOS_IDS = {
   FORTY_ACRES: 14n,
   WASABI: 15n,
   AVANTIS: 16n,
+  SKY_PSM: 17n,
+  EXTRA_FI: 18n,
 }
 
 export type UnderscoreConfig = {

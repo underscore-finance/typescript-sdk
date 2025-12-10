@@ -235,31 +235,54 @@ export const abi = [
     ],
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'constructor',
-    inputs: [
+    stateMutability: 'view',
+    type: 'function',
+    name: 'ripeRewardsConfig',
+    inputs: [],
+    outputs: [
       {
-        name: '_walletTemplate',
-        type: 'address',
-      },
-      {
-        name: '_configTemplate',
-        type: 'address',
-      },
-      {
-        name: '_startingAgent',
-        type: 'address',
-      },
-      {
-        name: '_rewardsAsset',
-        type: 'address',
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'stakeRatio',
+            type: 'uint256',
+          },
+          {
+            name: 'lockDuration',
+            type: 'uint256',
+          },
+        ],
       },
     ],
-    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'securitySigners',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address[]',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'whitelistedCreators',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address[]',
+      },
+    ],
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xC66e387A9215B146eD6434D63034ddbdcd2Fd7DC'
+export const deployAddress: Address | undefined = '0xdd1b957934efecE6b1097f3e4a5DC5cFb89b5f5d'
 
 export type Contract = {
   calls: {
@@ -299,6 +322,9 @@ export type Contract = {
       expensiveDelayBlocks: bigint
       defaultExpiryBlocks: bigint
     }>
+    ripeRewardsConfig: () => Promise<{ stakeRatio: bigint; lockDuration: bigint }>
+    securitySigners: () => Promise<`0x${string}`[]>
+    whitelistedCreators: () => Promise<`0x${string}`[]>
   }
   mutations: {}
   events: {}
@@ -370,6 +396,11 @@ export const call: CallType = {
   managerConfig: (...args: ExtractArgs<Contract['calls']['managerConfig']>) => getRequest('managerConfig', args),
   payeeConfig: (...args: ExtractArgs<Contract['calls']['payeeConfig']>) => getRequest('payeeConfig', args),
   chequeConfig: (...args: ExtractArgs<Contract['calls']['chequeConfig']>) => getRequest('chequeConfig', args),
+  ripeRewardsConfig: (...args: ExtractArgs<Contract['calls']['ripeRewardsConfig']>) =>
+    getRequest('ripeRewardsConfig', args),
+  securitySigners: (...args: ExtractArgs<Contract['calls']['securitySigners']>) => getRequest('securitySigners', args),
+  whitelistedCreators: (...args: ExtractArgs<Contract['calls']['whitelistedCreators']>) =>
+    getRequest('whitelistedCreators', args),
 }
 
 export type SDK = {
@@ -382,6 +413,15 @@ export type SDK = {
   managerConfig: (...args: ExtractArgs<Contract['calls']['managerConfig']>) => Promise<CallReturn<'managerConfig'>>
   payeeConfig: (...args: ExtractArgs<Contract['calls']['payeeConfig']>) => Promise<CallReturn<'payeeConfig'>>
   chequeConfig: (...args: ExtractArgs<Contract['calls']['chequeConfig']>) => Promise<CallReturn<'chequeConfig'>>
+  ripeRewardsConfig: (
+    ...args: ExtractArgs<Contract['calls']['ripeRewardsConfig']>
+  ) => Promise<CallReturn<'ripeRewardsConfig'>>
+  securitySigners: (
+    ...args: ExtractArgs<Contract['calls']['securitySigners']>
+  ) => Promise<CallReturn<'securitySigners'>>
+  whitelistedCreators: (
+    ...args: ExtractArgs<Contract['calls']['whitelistedCreators']>
+  ) => Promise<CallReturn<'whitelistedCreators'>>
 }
 
 export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
@@ -399,6 +439,12 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.payeeConfig(...args)) as Promise<CallReturn<'payeeConfig'>>,
     chequeConfig: (...args: ExtractArgs<Contract['calls']['chequeConfig']>) =>
       singleQuery(publicClient!, call.chequeConfig(...args)) as Promise<CallReturn<'chequeConfig'>>,
+    ripeRewardsConfig: (...args: ExtractArgs<Contract['calls']['ripeRewardsConfig']>) =>
+      singleQuery(publicClient!, call.ripeRewardsConfig(...args)) as Promise<CallReturn<'ripeRewardsConfig'>>,
+    securitySigners: (...args: ExtractArgs<Contract['calls']['securitySigners']>) =>
+      singleQuery(publicClient!, call.securitySigners(...args)) as Promise<CallReturn<'securitySigners'>>,
+    whitelistedCreators: (...args: ExtractArgs<Contract['calls']['whitelistedCreators']>) =>
+      singleQuery(publicClient!, call.whitelistedCreators(...args)) as Promise<CallReturn<'whitelistedCreators'>>,
 
     // Mutations
   }

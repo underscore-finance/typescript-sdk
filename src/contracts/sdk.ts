@@ -25,6 +25,7 @@ import * as EarnVault from './EarnVault.js'
 import * as EarnVaultAgent from './EarnVaultAgent.js'
 import * as EarnVaultAgentSigHelper from './EarnVaultAgentSigHelper.js'
 import * as Euler from './Euler.js'
+import * as ExtraFi from './ExtraFi.js'
 import * as Fluid from './Fluid.js'
 import * as FortyAcres from './FortyAcres.js'
 import * as Hatchery from './Hatchery.js'
@@ -61,6 +62,7 @@ import * as UndyHq from './UndyHq.js'
 import * as UndyRewardsLego from './UndyRewardsLego.js'
 import * as UndyUsd from './UndyUsd.js'
 import * as UndyUsds from './UndyUsds.js'
+import * as UndyVirtual from './UndyVirtual.js'
 import * as UniswapV2 from './UniswapV2.js'
 import * as UniswapV3 from './UniswapV3.js'
 import * as UserWallet from './UserWallet.js'
@@ -93,6 +95,7 @@ export type SDK = {
   EarnVaultAgent: EarnVaultAgent.SDK
   EarnVaultAgentSigHelper: EarnVaultAgentSigHelper.SDK
   Euler: Euler.SDK
+  ExtraFi: ExtraFi.SDK
   Fluid: Fluid.SDK
   FortyAcres: FortyAcres.SDK
   Hatchery: Hatchery.SDK
@@ -129,6 +132,7 @@ export type SDK = {
   UndyRewardsLego: UndyRewardsLego.SDK
   UndyUsd: UndyUsd.SDK
   UndyUsds: UndyUsds.SDK
+  UndyVirtual: UndyVirtual.SDK
   UniswapV2: UniswapV2.SDK
   UniswapV3: UniswapV3.SDK
   UserWallet: (address: `0x${string}`) => UserWallet.SDK
@@ -163,6 +167,7 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     EarnVaultAgent: EarnVaultAgent.toSdk(publicClient, walletClient),
     EarnVaultAgentSigHelper: EarnVaultAgentSigHelper.toSdk(publicClient, walletClient),
     Euler: Euler.toSdk(publicClient, walletClient),
+    ExtraFi: ExtraFi.toSdk(publicClient, walletClient),
     Fluid: Fluid.toSdk(publicClient, walletClient),
     FortyAcres: FortyAcres.toSdk(publicClient, walletClient),
     Hatchery: Hatchery.toSdk(publicClient, walletClient),
@@ -199,6 +204,7 @@ export default function createSdk(publicClient?: PublicClient, walletClient?: Wa
     UndyRewardsLego: UndyRewardsLego.toSdk(publicClient, walletClient),
     UndyUsd: UndyUsd.toSdk(publicClient, walletClient),
     UndyUsds: UndyUsds.toSdk(publicClient, walletClient),
+    UndyVirtual: UndyVirtual.toSdk(publicClient, walletClient),
     UniswapV2: UniswapV2.toSdk(publicClient, walletClient),
     UniswapV3: UniswapV3.toSdk(publicClient, walletClient),
     UserWallet: (address: `0x${string}`) => UserWallet.toSdk(address, publicClient, walletClient),

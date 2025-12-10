@@ -1285,6 +1285,127 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
+    name: 'getBorrowRate',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtAmount',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getVaultTokenAmounts',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_isCollateralAsset',
+        type: 'bool',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getUnderlyingAmounts',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_isCollateralAsset',
+        type: 'bool',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getGreenAmounts',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     name: 'RIPE_REGISTRY',
     inputs: [],
     outputs: [
@@ -1351,7 +1472,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xCCE531215D9841E3D69b1Db4e31e1005331DAe4c'
+export const deployAddress: Address | undefined = '0xA2Af78612C7C6C7Ec2650d14896B7FeaE6a37e1D'
 
 export type Contract = {
   calls: {
@@ -1446,6 +1567,14 @@ export type Contract = {
       ripeVaultId: bigint,
       legoId: bigint,
     ) => Promise<boolean>
+    getBorrowRate: (levgVault: `0x${string}`) => Promise<bigint>
+    getDebtAmount: (levgVault: `0x${string}`) => Promise<bigint>
+    getVaultTokenAmounts: (levgVault: `0x${string}`, isCollateralAsset: boolean) => Promise<[bigint, bigint]>
+    getUnderlyingAmounts: (
+      levgVault: `0x${string}`,
+      isCollateralAsset: boolean,
+    ) => Promise<[bigint, bigint, bigint, bigint]>
+    getGreenAmounts: (levgVault: `0x${string}`) => Promise<[bigint, bigint, bigint, bigint]>
     RIPE_REGISTRY: () => Promise<`0x${string}`>
     GREEN_TOKEN: () => Promise<`0x${string}`>
     SAVINGS_GREEN: () => Promise<`0x${string}`>
@@ -1535,6 +1664,13 @@ export const call: CallType = {
     getRequest('getVaultBookAndDeleverage', args),
   isValidVaultToken: (...args: ExtractArgs<Contract['calls']['isValidVaultToken']>) =>
     getRequest('isValidVaultToken', args),
+  getBorrowRate: (...args: ExtractArgs<Contract['calls']['getBorrowRate']>) => getRequest('getBorrowRate', args),
+  getDebtAmount: (...args: ExtractArgs<Contract['calls']['getDebtAmount']>) => getRequest('getDebtAmount', args),
+  getVaultTokenAmounts: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmounts']>) =>
+    getRequest('getVaultTokenAmounts', args),
+  getUnderlyingAmounts: (...args: ExtractArgs<Contract['calls']['getUnderlyingAmounts']>) =>
+    getRequest('getUnderlyingAmounts', args),
+  getGreenAmounts: (...args: ExtractArgs<Contract['calls']['getGreenAmounts']>) => getRequest('getGreenAmounts', args),
   RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => getRequest('RIPE_REGISTRY', args),
   GREEN_TOKEN: (...args: ExtractArgs<Contract['calls']['GREEN_TOKEN']>) => getRequest('GREEN_TOKEN', args),
   SAVINGS_GREEN: (...args: ExtractArgs<Contract['calls']['SAVINGS_GREEN']>) => getRequest('SAVINGS_GREEN', args),
@@ -1573,6 +1709,17 @@ export type SDK = {
   isValidVaultToken: (
     ...args: ExtractArgs<Contract['calls']['isValidVaultToken']>
   ) => Promise<CallReturn<'isValidVaultToken'>>
+  getBorrowRate: (...args: ExtractArgs<Contract['calls']['getBorrowRate']>) => Promise<CallReturn<'getBorrowRate'>>
+  getDebtAmount: (...args: ExtractArgs<Contract['calls']['getDebtAmount']>) => Promise<CallReturn<'getDebtAmount'>>
+  getVaultTokenAmounts: (
+    ...args: ExtractArgs<Contract['calls']['getVaultTokenAmounts']>
+  ) => Promise<CallReturn<'getVaultTokenAmounts'>>
+  getUnderlyingAmounts: (
+    ...args: ExtractArgs<Contract['calls']['getUnderlyingAmounts']>
+  ) => Promise<CallReturn<'getUnderlyingAmounts'>>
+  getGreenAmounts: (
+    ...args: ExtractArgs<Contract['calls']['getGreenAmounts']>
+  ) => Promise<CallReturn<'getGreenAmounts'>>
   RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => Promise<CallReturn<'RIPE_REGISTRY'>>
   GREEN_TOKEN: (...args: ExtractArgs<Contract['calls']['GREEN_TOKEN']>) => Promise<CallReturn<'GREEN_TOKEN'>>
   SAVINGS_GREEN: (...args: ExtractArgs<Contract['calls']['SAVINGS_GREEN']>) => Promise<CallReturn<'SAVINGS_GREEN'>>
@@ -1616,6 +1763,16 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       >,
     isValidVaultToken: (...args: ExtractArgs<Contract['calls']['isValidVaultToken']>) =>
       singleQuery(publicClient!, call.isValidVaultToken(...args)) as Promise<CallReturn<'isValidVaultToken'>>,
+    getBorrowRate: (...args: ExtractArgs<Contract['calls']['getBorrowRate']>) =>
+      singleQuery(publicClient!, call.getBorrowRate(...args)) as Promise<CallReturn<'getBorrowRate'>>,
+    getDebtAmount: (...args: ExtractArgs<Contract['calls']['getDebtAmount']>) =>
+      singleQuery(publicClient!, call.getDebtAmount(...args)) as Promise<CallReturn<'getDebtAmount'>>,
+    getVaultTokenAmounts: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmounts']>) =>
+      singleQuery(publicClient!, call.getVaultTokenAmounts(...args)) as Promise<CallReturn<'getVaultTokenAmounts'>>,
+    getUnderlyingAmounts: (...args: ExtractArgs<Contract['calls']['getUnderlyingAmounts']>) =>
+      singleQuery(publicClient!, call.getUnderlyingAmounts(...args)) as Promise<CallReturn<'getUnderlyingAmounts'>>,
+    getGreenAmounts: (...args: ExtractArgs<Contract['calls']['getGreenAmounts']>) =>
+      singleQuery(publicClient!, call.getGreenAmounts(...args)) as Promise<CallReturn<'getGreenAmounts'>>,
     RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) =>
       singleQuery(publicClient!, call.RIPE_REGISTRY(...args)) as Promise<CallReturn<'RIPE_REGISTRY'>>,
     GREEN_TOKEN: (...args: ExtractArgs<Contract['calls']['GREEN_TOKEN']>) =>

@@ -518,6 +518,50 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'setRipeRewardsConfig',
+    inputs: [
+      {
+        name: '_config',
+        type: 'tuple',
+        components: [
+          {
+            name: 'stakeRatio',
+            type: 'uint256',
+          },
+          {
+            name: 'lockDuration',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getRipeRewardsConfig',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'stakeRatio',
+            type: 'uint256',
+          },
+          {
+            name: 'lockDuration',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'setAgentConfig',
     inputs: [
       {
@@ -855,6 +899,23 @@ export const abi = [
     outputs: [],
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'canPerformSecurityAction',
+    inputs: [
+      {
+        name: '_signer',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'function',
     name: 'setCreatorWhitelist',
@@ -869,6 +930,23 @@ export const abi = [
       },
     ],
     outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'creatorWhitelist',
+    inputs: [
+      {
+        name: '_creator',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
   },
   {
     stateMutability: 'nonpayable',
@@ -1113,6 +1191,28 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
+    name: 'ripeRewardsConfig',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          {
+            name: 'stakeRatio',
+            type: 'uint256',
+          },
+          {
+            name: 'lockDuration',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     name: 'assetConfig',
     inputs: [
       {
@@ -1215,40 +1315,6 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'creatorWhitelist',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'canPerformSecurityAction',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
     name: 'isLockedSigner',
     inputs: [
       {
@@ -1260,6 +1326,98 @@ export const abi = [
       {
         name: '',
         type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'securitySigners',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'indexOfSecuritySigner',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'numSecuritySigners',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'whitelistedCreators',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'indexOfWhitelistedCreator',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'numWhitelistedCreators',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
       },
     ],
   },
@@ -1280,7 +1438,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x89c8A842CD9428024294cB6a52c28D5EB23e2cBE'
+export const deployAddress: Address | undefined = '0x489205626b29e2Aa8e0d6f52C01C7786513CddB6'
 
 export type Contract = {
   calls: {
@@ -1328,6 +1486,7 @@ export type Contract = {
     }>
     getDepositRewardsAsset: () => Promise<`0x${string}`>
     getLootClaimCoolOffPeriod: () => Promise<bigint>
+    getRipeRewardsConfig: () => Promise<{ stakeRatio: bigint; lockDuration: bigint }>
     getSwapFee: (tokenIn: `0x${string}`, tokenOut: `0x${string}`) => Promise<bigint>
     getRewardsFee: (asset: `0x${string}`) => Promise<bigint>
     getProfitCalcConfig: (
@@ -1357,6 +1516,8 @@ export type Contract = {
       bonusRatio: bigint
       bonusAsset: `0x${string}`
     }>
+    canPerformSecurityAction: (signer: `0x${string}`) => Promise<boolean>
+    creatorWhitelist: (creator: `0x${string}`) => Promise<boolean>
     userWalletConfig: () => Promise<{
       walletTemplate: `0x${string}`
       configTemplate: `0x${string}`
@@ -1393,6 +1554,7 @@ export type Contract = {
       expensiveDelayBlocks: bigint
       defaultExpiryBlocks: bigint
     }>
+    ripeRewardsConfig: () => Promise<{ stakeRatio: bigint; lockDuration: bigint }>
     assetConfig: (
       arg0: `0x${string}`,
     ) => Promise<{
@@ -1408,9 +1570,13 @@ export type Contract = {
       }
     }>
     isStablecoin: (arg0: `0x${string}`) => Promise<boolean>
-    creatorWhitelist: (arg0: `0x${string}`) => Promise<boolean>
-    canPerformSecurityAction: (arg0: `0x${string}`) => Promise<boolean>
     isLockedSigner: (arg0: `0x${string}`) => Promise<boolean>
+    securitySigners: (arg0: bigint) => Promise<`0x${string}`>
+    indexOfSecuritySigner: (arg0: `0x${string}`) => Promise<bigint>
+    numSecuritySigners: () => Promise<bigint>
+    whitelistedCreators: (arg0: bigint) => Promise<`0x${string}`>
+    indexOfWhitelistedCreator: (arg0: `0x${string}`) => Promise<bigint>
+    numWhitelistedCreators: () => Promise<bigint>
   }
   mutations: {
     pause: (shouldPause: boolean) => Promise<void>
@@ -1451,6 +1617,7 @@ export type Contract = {
       expensiveDelayBlocks: bigint
       defaultExpiryBlocks: bigint
     }) => Promise<void>
+    setRipeRewardsConfig: (config: { stakeRatio: bigint; lockDuration: bigint }) => Promise<void>
     setAgentConfig: (config: { startingAgent: `0x${string}`; startingAgentActivationLength: bigint }) => Promise<void>
     setStarterAgent: (agent: `0x${string}`) => Promise<void>
     setAssetConfig: (
@@ -1549,6 +1716,8 @@ export const call: CallType = {
     getRequest('getDepositRewardsAsset', args),
   getLootClaimCoolOffPeriod: (...args: ExtractArgs<Contract['calls']['getLootClaimCoolOffPeriod']>) =>
     getRequest('getLootClaimCoolOffPeriod', args),
+  getRipeRewardsConfig: (...args: ExtractArgs<Contract['calls']['getRipeRewardsConfig']>) =>
+    getRequest('getRipeRewardsConfig', args),
   getSwapFee: (...args: ExtractArgs<Contract['calls']['getSwapFee']>) => getRequest('getSwapFee', args),
   getRewardsFee: (...args: ExtractArgs<Contract['calls']['getRewardsFee']>) => getRequest('getRewardsFee', args),
   getProfitCalcConfig: (...args: ExtractArgs<Contract['calls']['getProfitCalcConfig']>) =>
@@ -1557,19 +1726,32 @@ export const call: CallType = {
     getRequest('getAssetUsdValueConfig', args),
   getLootDistroConfig: (...args: ExtractArgs<Contract['calls']['getLootDistroConfig']>) =>
     getRequest('getLootDistroConfig', args),
+  canPerformSecurityAction: (...args: ExtractArgs<Contract['calls']['canPerformSecurityAction']>) =>
+    getRequest('canPerformSecurityAction', args),
+  creatorWhitelist: (...args: ExtractArgs<Contract['calls']['creatorWhitelist']>) =>
+    getRequest('creatorWhitelist', args),
   userWalletConfig: (...args: ExtractArgs<Contract['calls']['userWalletConfig']>) =>
     getRequest('userWalletConfig', args),
   agentConfig: (...args: ExtractArgs<Contract['calls']['agentConfig']>) => getRequest('agentConfig', args),
   managerConfig: (...args: ExtractArgs<Contract['calls']['managerConfig']>) => getRequest('managerConfig', args),
   payeeConfig: (...args: ExtractArgs<Contract['calls']['payeeConfig']>) => getRequest('payeeConfig', args),
   chequeConfig: (...args: ExtractArgs<Contract['calls']['chequeConfig']>) => getRequest('chequeConfig', args),
+  ripeRewardsConfig: (...args: ExtractArgs<Contract['calls']['ripeRewardsConfig']>) =>
+    getRequest('ripeRewardsConfig', args),
   assetConfig: (...args: ExtractArgs<Contract['calls']['assetConfig']>) => getRequest('assetConfig', args),
   isStablecoin: (...args: ExtractArgs<Contract['calls']['isStablecoin']>) => getRequest('isStablecoin', args),
-  creatorWhitelist: (...args: ExtractArgs<Contract['calls']['creatorWhitelist']>) =>
-    getRequest('creatorWhitelist', args),
-  canPerformSecurityAction: (...args: ExtractArgs<Contract['calls']['canPerformSecurityAction']>) =>
-    getRequest('canPerformSecurityAction', args),
   isLockedSigner: (...args: ExtractArgs<Contract['calls']['isLockedSigner']>) => getRequest('isLockedSigner', args),
+  securitySigners: (...args: ExtractArgs<Contract['calls']['securitySigners']>) => getRequest('securitySigners', args),
+  indexOfSecuritySigner: (...args: ExtractArgs<Contract['calls']['indexOfSecuritySigner']>) =>
+    getRequest('indexOfSecuritySigner', args),
+  numSecuritySigners: (...args: ExtractArgs<Contract['calls']['numSecuritySigners']>) =>
+    getRequest('numSecuritySigners', args),
+  whitelistedCreators: (...args: ExtractArgs<Contract['calls']['whitelistedCreators']>) =>
+    getRequest('whitelistedCreators', args),
+  indexOfWhitelistedCreator: (...args: ExtractArgs<Contract['calls']['indexOfWhitelistedCreator']>) =>
+    getRequest('indexOfWhitelistedCreator', args),
+  numWhitelistedCreators: (...args: ExtractArgs<Contract['calls']['numWhitelistedCreators']>) =>
+    getRequest('numWhitelistedCreators', args),
 }
 
 export type Mutations = keyof Contract['mutations']
@@ -1599,6 +1781,7 @@ export const mutation: {
   setManagerConfig: getMutation('setManagerConfig'),
   setPayeeConfig: getMutation('setPayeeConfig'),
   setChequeConfig: getMutation('setChequeConfig'),
+  setRipeRewardsConfig: getMutation('setRipeRewardsConfig'),
   setAgentConfig: getMutation('setAgentConfig'),
   setStarterAgent: getMutation('setStarterAgent'),
   setAssetConfig: getMutation('setAssetConfig'),
@@ -1624,6 +1807,9 @@ export type SDK = {
   getLootClaimCoolOffPeriod: (
     ...args: ExtractArgs<Contract['calls']['getLootClaimCoolOffPeriod']>
   ) => Promise<CallReturn<'getLootClaimCoolOffPeriod'>>
+  getRipeRewardsConfig: (
+    ...args: ExtractArgs<Contract['calls']['getRipeRewardsConfig']>
+  ) => Promise<CallReturn<'getRipeRewardsConfig'>>
   getSwapFee: (...args: ExtractArgs<Contract['calls']['getSwapFee']>) => Promise<CallReturn<'getSwapFee'>>
   getRewardsFee: (...args: ExtractArgs<Contract['calls']['getRewardsFee']>) => Promise<CallReturn<'getRewardsFee'>>
   getProfitCalcConfig: (
@@ -1635,6 +1821,12 @@ export type SDK = {
   getLootDistroConfig: (
     ...args: ExtractArgs<Contract['calls']['getLootDistroConfig']>
   ) => Promise<CallReturn<'getLootDistroConfig'>>
+  canPerformSecurityAction: (
+    ...args: ExtractArgs<Contract['calls']['canPerformSecurityAction']>
+  ) => Promise<CallReturn<'canPerformSecurityAction'>>
+  creatorWhitelist: (
+    ...args: ExtractArgs<Contract['calls']['creatorWhitelist']>
+  ) => Promise<CallReturn<'creatorWhitelist'>>
   userWalletConfig: (
     ...args: ExtractArgs<Contract['calls']['userWalletConfig']>
   ) => Promise<CallReturn<'userWalletConfig'>>
@@ -1642,15 +1834,30 @@ export type SDK = {
   managerConfig: (...args: ExtractArgs<Contract['calls']['managerConfig']>) => Promise<CallReturn<'managerConfig'>>
   payeeConfig: (...args: ExtractArgs<Contract['calls']['payeeConfig']>) => Promise<CallReturn<'payeeConfig'>>
   chequeConfig: (...args: ExtractArgs<Contract['calls']['chequeConfig']>) => Promise<CallReturn<'chequeConfig'>>
+  ripeRewardsConfig: (
+    ...args: ExtractArgs<Contract['calls']['ripeRewardsConfig']>
+  ) => Promise<CallReturn<'ripeRewardsConfig'>>
   assetConfig: (...args: ExtractArgs<Contract['calls']['assetConfig']>) => Promise<CallReturn<'assetConfig'>>
   isStablecoin: (...args: ExtractArgs<Contract['calls']['isStablecoin']>) => Promise<CallReturn<'isStablecoin'>>
-  creatorWhitelist: (
-    ...args: ExtractArgs<Contract['calls']['creatorWhitelist']>
-  ) => Promise<CallReturn<'creatorWhitelist'>>
-  canPerformSecurityAction: (
-    ...args: ExtractArgs<Contract['calls']['canPerformSecurityAction']>
-  ) => Promise<CallReturn<'canPerformSecurityAction'>>
   isLockedSigner: (...args: ExtractArgs<Contract['calls']['isLockedSigner']>) => Promise<CallReturn<'isLockedSigner'>>
+  securitySigners: (
+    ...args: ExtractArgs<Contract['calls']['securitySigners']>
+  ) => Promise<CallReturn<'securitySigners'>>
+  indexOfSecuritySigner: (
+    ...args: ExtractArgs<Contract['calls']['indexOfSecuritySigner']>
+  ) => Promise<CallReturn<'indexOfSecuritySigner'>>
+  numSecuritySigners: (
+    ...args: ExtractArgs<Contract['calls']['numSecuritySigners']>
+  ) => Promise<CallReturn<'numSecuritySigners'>>
+  whitelistedCreators: (
+    ...args: ExtractArgs<Contract['calls']['whitelistedCreators']>
+  ) => Promise<CallReturn<'whitelistedCreators'>>
+  indexOfWhitelistedCreator: (
+    ...args: ExtractArgs<Contract['calls']['indexOfWhitelistedCreator']>
+  ) => Promise<CallReturn<'indexOfWhitelistedCreator'>>
+  numWhitelistedCreators: (
+    ...args: ExtractArgs<Contract['calls']['numWhitelistedCreators']>
+  ) => Promise<CallReturn<'numWhitelistedCreators'>>
   pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => Promise<Address>
   recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) => Promise<Address>
   recoverFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverFundsMany']>) => Promise<Address>
@@ -1658,6 +1865,7 @@ export type SDK = {
   setManagerConfig: (...args: ExtractArgs<Contract['mutations']['setManagerConfig']>) => Promise<Address>
   setPayeeConfig: (...args: ExtractArgs<Contract['mutations']['setPayeeConfig']>) => Promise<Address>
   setChequeConfig: (...args: ExtractArgs<Contract['mutations']['setChequeConfig']>) => Promise<Address>
+  setRipeRewardsConfig: (...args: ExtractArgs<Contract['mutations']['setRipeRewardsConfig']>) => Promise<Address>
   setAgentConfig: (...args: ExtractArgs<Contract['mutations']['setAgentConfig']>) => Promise<Address>
   setStarterAgent: (...args: ExtractArgs<Contract['mutations']['setStarterAgent']>) => Promise<Address>
   setAssetConfig: (...args: ExtractArgs<Contract['mutations']['setAssetConfig']>) => Promise<Address>
@@ -1692,6 +1900,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.getLootClaimCoolOffPeriod(...args)) as Promise<
         CallReturn<'getLootClaimCoolOffPeriod'>
       >,
+    getRipeRewardsConfig: (...args: ExtractArgs<Contract['calls']['getRipeRewardsConfig']>) =>
+      singleQuery(publicClient!, call.getRipeRewardsConfig(...args)) as Promise<CallReturn<'getRipeRewardsConfig'>>,
     getSwapFee: (...args: ExtractArgs<Contract['calls']['getSwapFee']>) =>
       singleQuery(publicClient!, call.getSwapFee(...args)) as Promise<CallReturn<'getSwapFee'>>,
     getRewardsFee: (...args: ExtractArgs<Contract['calls']['getRewardsFee']>) =>
@@ -1702,6 +1912,12 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.getAssetUsdValueConfig(...args)) as Promise<CallReturn<'getAssetUsdValueConfig'>>,
     getLootDistroConfig: (...args: ExtractArgs<Contract['calls']['getLootDistroConfig']>) =>
       singleQuery(publicClient!, call.getLootDistroConfig(...args)) as Promise<CallReturn<'getLootDistroConfig'>>,
+    canPerformSecurityAction: (...args: ExtractArgs<Contract['calls']['canPerformSecurityAction']>) =>
+      singleQuery(publicClient!, call.canPerformSecurityAction(...args)) as Promise<
+        CallReturn<'canPerformSecurityAction'>
+      >,
+    creatorWhitelist: (...args: ExtractArgs<Contract['calls']['creatorWhitelist']>) =>
+      singleQuery(publicClient!, call.creatorWhitelist(...args)) as Promise<CallReturn<'creatorWhitelist'>>,
     userWalletConfig: (...args: ExtractArgs<Contract['calls']['userWalletConfig']>) =>
       singleQuery(publicClient!, call.userWalletConfig(...args)) as Promise<CallReturn<'userWalletConfig'>>,
     agentConfig: (...args: ExtractArgs<Contract['calls']['agentConfig']>) =>
@@ -1712,18 +1928,28 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.payeeConfig(...args)) as Promise<CallReturn<'payeeConfig'>>,
     chequeConfig: (...args: ExtractArgs<Contract['calls']['chequeConfig']>) =>
       singleQuery(publicClient!, call.chequeConfig(...args)) as Promise<CallReturn<'chequeConfig'>>,
+    ripeRewardsConfig: (...args: ExtractArgs<Contract['calls']['ripeRewardsConfig']>) =>
+      singleQuery(publicClient!, call.ripeRewardsConfig(...args)) as Promise<CallReturn<'ripeRewardsConfig'>>,
     assetConfig: (...args: ExtractArgs<Contract['calls']['assetConfig']>) =>
       singleQuery(publicClient!, call.assetConfig(...args)) as Promise<CallReturn<'assetConfig'>>,
     isStablecoin: (...args: ExtractArgs<Contract['calls']['isStablecoin']>) =>
       singleQuery(publicClient!, call.isStablecoin(...args)) as Promise<CallReturn<'isStablecoin'>>,
-    creatorWhitelist: (...args: ExtractArgs<Contract['calls']['creatorWhitelist']>) =>
-      singleQuery(publicClient!, call.creatorWhitelist(...args)) as Promise<CallReturn<'creatorWhitelist'>>,
-    canPerformSecurityAction: (...args: ExtractArgs<Contract['calls']['canPerformSecurityAction']>) =>
-      singleQuery(publicClient!, call.canPerformSecurityAction(...args)) as Promise<
-        CallReturn<'canPerformSecurityAction'>
-      >,
     isLockedSigner: (...args: ExtractArgs<Contract['calls']['isLockedSigner']>) =>
       singleQuery(publicClient!, call.isLockedSigner(...args)) as Promise<CallReturn<'isLockedSigner'>>,
+    securitySigners: (...args: ExtractArgs<Contract['calls']['securitySigners']>) =>
+      singleQuery(publicClient!, call.securitySigners(...args)) as Promise<CallReturn<'securitySigners'>>,
+    indexOfSecuritySigner: (...args: ExtractArgs<Contract['calls']['indexOfSecuritySigner']>) =>
+      singleQuery(publicClient!, call.indexOfSecuritySigner(...args)) as Promise<CallReturn<'indexOfSecuritySigner'>>,
+    numSecuritySigners: (...args: ExtractArgs<Contract['calls']['numSecuritySigners']>) =>
+      singleQuery(publicClient!, call.numSecuritySigners(...args)) as Promise<CallReturn<'numSecuritySigners'>>,
+    whitelistedCreators: (...args: ExtractArgs<Contract['calls']['whitelistedCreators']>) =>
+      singleQuery(publicClient!, call.whitelistedCreators(...args)) as Promise<CallReturn<'whitelistedCreators'>>,
+    indexOfWhitelistedCreator: (...args: ExtractArgs<Contract['calls']['indexOfWhitelistedCreator']>) =>
+      singleQuery(publicClient!, call.indexOfWhitelistedCreator(...args)) as Promise<
+        CallReturn<'indexOfWhitelistedCreator'>
+      >,
+    numWhitelistedCreators: (...args: ExtractArgs<Contract['calls']['numWhitelistedCreators']>) =>
+      singleQuery(publicClient!, call.numWhitelistedCreators(...args)) as Promise<CallReturn<'numWhitelistedCreators'>>,
 
     // Mutations
     pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => mutate(walletClient!, mutation.pause)(...args),
@@ -1739,6 +1965,8 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       mutate(walletClient!, mutation.setPayeeConfig)(...args),
     setChequeConfig: (...args: ExtractArgs<Contract['mutations']['setChequeConfig']>) =>
       mutate(walletClient!, mutation.setChequeConfig)(...args),
+    setRipeRewardsConfig: (...args: ExtractArgs<Contract['mutations']['setRipeRewardsConfig']>) =>
+      mutate(walletClient!, mutation.setRipeRewardsConfig)(...args),
     setAgentConfig: (...args: ExtractArgs<Contract['mutations']['setAgentConfig']>) =>
       mutate(walletClient!, mutation.setAgentConfig)(...args),
     setStarterAgent: (...args: ExtractArgs<Contract['mutations']['setStarterAgent']>) =>
