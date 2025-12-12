@@ -1,6 +1,6 @@
 {
   "name": "@underscore-finance/sdk",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "description": "SDK for interacting with Underscore Finance Smart Contracts with TypeScript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,8 @@
   "scripts": {
     "build": "tsc",
     "codegen": "dappql && prettier --write .",
-    "ship": "npm run build && npm publish --access public && bump patch --commit --push",
+    "ship": "npm run build && npm run ship:no-build",
+    "ship:no-build": "npm publish --access public && bump patch --commit --push",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
