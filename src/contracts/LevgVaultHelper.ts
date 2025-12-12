@@ -1406,6 +1406,40 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
+    name: 'getTrueMaxBorrowAmountForVault',
+    inputs: [
+      {
+        name: '_vault',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getMaxBorrowAmountForVault',
+    inputs: [
+      {
+        name: '_vault',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     name: 'RIPE_REGISTRY',
     inputs: [],
     outputs: [
@@ -1472,7 +1506,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xA2Af78612C7C6C7Ec2650d14896B7FeaE6a37e1D'
+export const deployAddress: Address | undefined = '0xB6B6F77e064574747324541924486f8437de8338'
 
 export type Contract = {
   calls: {
@@ -1575,6 +1609,8 @@ export type Contract = {
       isCollateralAsset: boolean,
     ) => Promise<[bigint, bigint, bigint, bigint]>
     getGreenAmounts: (levgVault: `0x${string}`) => Promise<[bigint, bigint, bigint, bigint]>
+    getTrueMaxBorrowAmountForVault: (vault: `0x${string}`) => Promise<bigint>
+    getMaxBorrowAmountForVault: (vault: `0x${string}`) => Promise<bigint>
     RIPE_REGISTRY: () => Promise<`0x${string}`>
     GREEN_TOKEN: () => Promise<`0x${string}`>
     SAVINGS_GREEN: () => Promise<`0x${string}`>
@@ -1671,6 +1707,10 @@ export const call: CallType = {
   getUnderlyingAmounts: (...args: ExtractArgs<Contract['calls']['getUnderlyingAmounts']>) =>
     getRequest('getUnderlyingAmounts', args),
   getGreenAmounts: (...args: ExtractArgs<Contract['calls']['getGreenAmounts']>) => getRequest('getGreenAmounts', args),
+  getTrueMaxBorrowAmountForVault: (...args: ExtractArgs<Contract['calls']['getTrueMaxBorrowAmountForVault']>) =>
+    getRequest('getTrueMaxBorrowAmountForVault', args),
+  getMaxBorrowAmountForVault: (...args: ExtractArgs<Contract['calls']['getMaxBorrowAmountForVault']>) =>
+    getRequest('getMaxBorrowAmountForVault', args),
   RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => getRequest('RIPE_REGISTRY', args),
   GREEN_TOKEN: (...args: ExtractArgs<Contract['calls']['GREEN_TOKEN']>) => getRequest('GREEN_TOKEN', args),
   SAVINGS_GREEN: (...args: ExtractArgs<Contract['calls']['SAVINGS_GREEN']>) => getRequest('SAVINGS_GREEN', args),
@@ -1720,6 +1760,12 @@ export type SDK = {
   getGreenAmounts: (
     ...args: ExtractArgs<Contract['calls']['getGreenAmounts']>
   ) => Promise<CallReturn<'getGreenAmounts'>>
+  getTrueMaxBorrowAmountForVault: (
+    ...args: ExtractArgs<Contract['calls']['getTrueMaxBorrowAmountForVault']>
+  ) => Promise<CallReturn<'getTrueMaxBorrowAmountForVault'>>
+  getMaxBorrowAmountForVault: (
+    ...args: ExtractArgs<Contract['calls']['getMaxBorrowAmountForVault']>
+  ) => Promise<CallReturn<'getMaxBorrowAmountForVault'>>
   RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => Promise<CallReturn<'RIPE_REGISTRY'>>
   GREEN_TOKEN: (...args: ExtractArgs<Contract['calls']['GREEN_TOKEN']>) => Promise<CallReturn<'GREEN_TOKEN'>>
   SAVINGS_GREEN: (...args: ExtractArgs<Contract['calls']['SAVINGS_GREEN']>) => Promise<CallReturn<'SAVINGS_GREEN'>>
@@ -1773,6 +1819,14 @@ export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient):
       singleQuery(publicClient!, call.getUnderlyingAmounts(...args)) as Promise<CallReturn<'getUnderlyingAmounts'>>,
     getGreenAmounts: (...args: ExtractArgs<Contract['calls']['getGreenAmounts']>) =>
       singleQuery(publicClient!, call.getGreenAmounts(...args)) as Promise<CallReturn<'getGreenAmounts'>>,
+    getTrueMaxBorrowAmountForVault: (...args: ExtractArgs<Contract['calls']['getTrueMaxBorrowAmountForVault']>) =>
+      singleQuery(publicClient!, call.getTrueMaxBorrowAmountForVault(...args)) as Promise<
+        CallReturn<'getTrueMaxBorrowAmountForVault'>
+      >,
+    getMaxBorrowAmountForVault: (...args: ExtractArgs<Contract['calls']['getMaxBorrowAmountForVault']>) =>
+      singleQuery(publicClient!, call.getMaxBorrowAmountForVault(...args)) as Promise<
+        CallReturn<'getMaxBorrowAmountForVault'>
+      >,
     RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) =>
       singleQuery(publicClient!, call.RIPE_REGISTRY(...args)) as Promise<CallReturn<'RIPE_REGISTRY'>>,
     GREEN_TOKEN: (...args: ExtractArgs<Contract['calls']['GREEN_TOKEN']>) =>
