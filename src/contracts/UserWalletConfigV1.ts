@@ -3,8 +3,16 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery, mutate } from '@dappql/async'
-import { PublicClient, WalletClient } from 'viem'
+import { singleQuery, mutate, AddressResolverFunction } from '@dappql/async'
+import {
+  encodeEventTopics,
+  parseEventLogs,
+  ParseEventLogsReturnType,
+  Log,
+  RpcLog,
+  PublicClient,
+  WalletClient,
+} from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
@@ -4766,9 +4774,52 @@ export const mutation: {
   setMigrator: getMutation('setMigrator'),
 }
 
+export type ParsedEvent<T extends keyof Contract['events']> = {
+  event: RpcLog | Log
+  parsed: ParseEventLogsReturnType<typeof abi, T>
+}
+
+export function parseEvents<T extends keyof Contract['events']>(
+  eventName: T,
+  events: (RpcLog | Log)[],
+): ParsedEvent<T>[] {
+  return events.map((event) => {
+    return {
+      event,
+      parsed: parseEventLogs({
+        abi,
+        eventName,
+        logs: [event],
+      }),
+    }
+  })
+}
+
+export function getEventTopic<T extends keyof Contract['events']>(eventName: T): Address {
+  return encodeEventTopics({ abi, eventName })[0] as Address
+}
+
 export type SDK = {
   deployAddress: Address | undefined
   abi: typeof abi
+  events: {
+    EjectionModeSet: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'EjectionModeSet'>[] }
+    FrozenSet: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'FrozenSet'>[] }
+    NftRecovered: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'NftRecovered'>[] }
+    OwnershipChangeInitiated: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'OwnershipChangeInitiated'>[]
+    }
+    OwnershipChangeConfirmed: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'OwnershipChangeConfirmed'>[]
+    }
+    OwnershipChangeCancelled: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'OwnershipChangeCancelled'>[]
+    }
+    OwnershipTimeLockSet: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'OwnershipTimeLockSet'>[] }
+  }
   hasPendingOwnerChange: (
     ...args: ExtractArgs<Contract['calls']['hasPendingOwnerChange']>
   ) => Promise<CallReturn<'hasPendingOwnerChange'>>
@@ -4911,246 +4962,357 @@ export type SDK = {
   setMigrator: (...args: ExtractArgs<Contract['mutations']['setMigrator']>) => Promise<Address>
 }
 
-export function toSdk(deployAddress: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  deployAddress: Address,
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
+    events: {
+      EjectionModeSet: {
+        topic: getEventTopic('EjectionModeSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('EjectionModeSet', events),
+      },
+      FrozenSet: {
+        topic: getEventTopic('FrozenSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('FrozenSet', events),
+      },
+      NftRecovered: {
+        topic: getEventTopic('NftRecovered'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('NftRecovered', events),
+      },
+      OwnershipChangeInitiated: {
+        topic: getEventTopic('OwnershipChangeInitiated'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('OwnershipChangeInitiated', events),
+      },
+      OwnershipChangeConfirmed: {
+        topic: getEventTopic('OwnershipChangeConfirmed'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('OwnershipChangeConfirmed', events),
+      },
+      OwnershipChangeCancelled: {
+        topic: getEventTopic('OwnershipChangeCancelled'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('OwnershipChangeCancelled', events),
+      },
+      OwnershipTimeLockSet: {
+        topic: getEventTopic('OwnershipTimeLockSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('OwnershipTimeLockSet', events),
+      },
+    },
     // Queries
     hasPendingOwnerChange: (...args: ExtractArgs<Contract['calls']['hasPendingOwnerChange']>) =>
-      singleQuery(publicClient!, call.hasPendingOwnerChange(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.hasPendingOwnerChange(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'hasPendingOwnerChange'>
       >,
     owner: (...args: ExtractArgs<Contract['calls']['owner']>) =>
-      singleQuery(publicClient!, call.owner(...args).at(deployAddress)) as Promise<CallReturn<'owner'>>,
+      singleQuery(publicClient!, call.owner(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'owner'>
+      >,
     ownershipTimeLock: (...args: ExtractArgs<Contract['calls']['ownershipTimeLock']>) =>
-      singleQuery(publicClient!, call.ownershipTimeLock(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.ownershipTimeLock(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'ownershipTimeLock'>
       >,
     pendingOwner: (...args: ExtractArgs<Contract['calls']['pendingOwner']>) =>
-      singleQuery(publicClient!, call.pendingOwner(...args).at(deployAddress)) as Promise<CallReturn<'pendingOwner'>>,
+      singleQuery(publicClient!, call.pendingOwner(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'pendingOwner'>
+      >,
     MIN_OWNERSHIP_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MIN_OWNERSHIP_TIMELOCK']>) =>
-      singleQuery(publicClient!, call.MIN_OWNERSHIP_TIMELOCK(...args).at(deployAddress)) as Promise<
-        CallReturn<'MIN_OWNERSHIP_TIMELOCK'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.MIN_OWNERSHIP_TIMELOCK(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'MIN_OWNERSHIP_TIMELOCK'>>,
     MAX_OWNERSHIP_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MAX_OWNERSHIP_TIMELOCK']>) =>
-      singleQuery(publicClient!, call.MAX_OWNERSHIP_TIMELOCK(...args).at(deployAddress)) as Promise<
-        CallReturn<'MAX_OWNERSHIP_TIMELOCK'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.MAX_OWNERSHIP_TIMELOCK(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'MAX_OWNERSHIP_TIMELOCK'>>,
     apiVersion: (...args: ExtractArgs<Contract['calls']['apiVersion']>) =>
-      singleQuery(publicClient!, call.apiVersion(...args).at(deployAddress)) as Promise<CallReturn<'apiVersion'>>,
+      singleQuery(publicClient!, call.apiVersion(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'apiVersion'>
+      >,
     checkSignerPermissionsAndGetBundle: (
       ...args: ExtractArgs<Contract['calls']['checkSignerPermissionsAndGetBundle']>
     ) =>
-      singleQuery(publicClient!, call.checkSignerPermissionsAndGetBundle(...args).at(deployAddress)) as Promise<
-        CallReturn<'checkSignerPermissionsAndGetBundle'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.checkSignerPermissionsAndGetBundle(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'checkSignerPermissionsAndGetBundle'>>,
     getTrialFundsInfo: (...args: ExtractArgs<Contract['calls']['getTrialFundsInfo']>) =>
-      singleQuery(publicClient!, call.getTrialFundsInfo(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.getTrialFundsInfo(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'getTrialFundsInfo'>
       >,
     getActionDataBundle: (...args: ExtractArgs<Contract['calls']['getActionDataBundle']>) =>
-      singleQuery(publicClient!, call.getActionDataBundle(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.getActionDataBundle(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'getActionDataBundle'>
       >,
     wallet: (...args: ExtractArgs<Contract['calls']['wallet']>) =>
-      singleQuery(publicClient!, call.wallet(...args).at(deployAddress)) as Promise<CallReturn<'wallet'>>,
+      singleQuery(publicClient!, call.wallet(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'wallet'>
+      >,
     kernel: (...args: ExtractArgs<Contract['calls']['kernel']>) =>
-      singleQuery(publicClient!, call.kernel(...args).at(deployAddress)) as Promise<CallReturn<'kernel'>>,
+      singleQuery(publicClient!, call.kernel(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'kernel'>
+      >,
     sentinel: (...args: ExtractArgs<Contract['calls']['sentinel']>) =>
-      singleQuery(publicClient!, call.sentinel(...args).at(deployAddress)) as Promise<CallReturn<'sentinel'>>,
+      singleQuery(publicClient!, call.sentinel(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'sentinel'>
+      >,
     highCommand: (...args: ExtractArgs<Contract['calls']['highCommand']>) =>
-      singleQuery(publicClient!, call.highCommand(...args).at(deployAddress)) as Promise<CallReturn<'highCommand'>>,
+      singleQuery(publicClient!, call.highCommand(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'highCommand'>
+      >,
     paymaster: (...args: ExtractArgs<Contract['calls']['paymaster']>) =>
-      singleQuery(publicClient!, call.paymaster(...args).at(deployAddress)) as Promise<CallReturn<'paymaster'>>,
+      singleQuery(publicClient!, call.paymaster(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'paymaster'>
+      >,
     chequeBook: (...args: ExtractArgs<Contract['calls']['chequeBook']>) =>
-      singleQuery(publicClient!, call.chequeBook(...args).at(deployAddress)) as Promise<CallReturn<'chequeBook'>>,
+      singleQuery(publicClient!, call.chequeBook(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'chequeBook'>
+      >,
     migrator: (...args: ExtractArgs<Contract['calls']['migrator']>) =>
-      singleQuery(publicClient!, call.migrator(...args).at(deployAddress)) as Promise<CallReturn<'migrator'>>,
+      singleQuery(publicClient!, call.migrator(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'migrator'>
+      >,
     trialFundsAsset: (...args: ExtractArgs<Contract['calls']['trialFundsAsset']>) =>
-      singleQuery(publicClient!, call.trialFundsAsset(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.trialFundsAsset(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'trialFundsAsset'>
       >,
     trialFundsAmount: (...args: ExtractArgs<Contract['calls']['trialFundsAmount']>) =>
-      singleQuery(publicClient!, call.trialFundsAmount(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.trialFundsAmount(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'trialFundsAmount'>
       >,
     managerSettings: (...args: ExtractArgs<Contract['calls']['managerSettings']>) =>
-      singleQuery(publicClient!, call.managerSettings(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.managerSettings(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'managerSettings'>
       >,
     managerPeriodData: (...args: ExtractArgs<Contract['calls']['managerPeriodData']>) =>
-      singleQuery(publicClient!, call.managerPeriodData(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.managerPeriodData(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'managerPeriodData'>
       >,
     managers: (...args: ExtractArgs<Contract['calls']['managers']>) =>
-      singleQuery(publicClient!, call.managers(...args).at(deployAddress)) as Promise<CallReturn<'managers'>>,
+      singleQuery(publicClient!, call.managers(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'managers'>
+      >,
     indexOfManager: (...args: ExtractArgs<Contract['calls']['indexOfManager']>) =>
-      singleQuery(publicClient!, call.indexOfManager(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.indexOfManager(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'indexOfManager'>
       >,
     numManagers: (...args: ExtractArgs<Contract['calls']['numManagers']>) =>
-      singleQuery(publicClient!, call.numManagers(...args).at(deployAddress)) as Promise<CallReturn<'numManagers'>>,
+      singleQuery(publicClient!, call.numManagers(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'numManagers'>
+      >,
     payeeSettings: (...args: ExtractArgs<Contract['calls']['payeeSettings']>) =>
-      singleQuery(publicClient!, call.payeeSettings(...args).at(deployAddress)) as Promise<CallReturn<'payeeSettings'>>,
+      singleQuery(publicClient!, call.payeeSettings(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'payeeSettings'>
+      >,
     payeePeriodData: (...args: ExtractArgs<Contract['calls']['payeePeriodData']>) =>
-      singleQuery(publicClient!, call.payeePeriodData(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.payeePeriodData(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'payeePeriodData'>
       >,
     payees: (...args: ExtractArgs<Contract['calls']['payees']>) =>
-      singleQuery(publicClient!, call.payees(...args).at(deployAddress)) as Promise<CallReturn<'payees'>>,
+      singleQuery(publicClient!, call.payees(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'payees'>
+      >,
     indexOfPayee: (...args: ExtractArgs<Contract['calls']['indexOfPayee']>) =>
-      singleQuery(publicClient!, call.indexOfPayee(...args).at(deployAddress)) as Promise<CallReturn<'indexOfPayee'>>,
+      singleQuery(publicClient!, call.indexOfPayee(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'indexOfPayee'>
+      >,
     numPayees: (...args: ExtractArgs<Contract['calls']['numPayees']>) =>
-      singleQuery(publicClient!, call.numPayees(...args).at(deployAddress)) as Promise<CallReturn<'numPayees'>>,
+      singleQuery(publicClient!, call.numPayees(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'numPayees'>
+      >,
     pendingPayees: (...args: ExtractArgs<Contract['calls']['pendingPayees']>) =>
-      singleQuery(publicClient!, call.pendingPayees(...args).at(deployAddress)) as Promise<CallReturn<'pendingPayees'>>,
+      singleQuery(publicClient!, call.pendingPayees(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'pendingPayees'>
+      >,
     whitelistAddr: (...args: ExtractArgs<Contract['calls']['whitelistAddr']>) =>
-      singleQuery(publicClient!, call.whitelistAddr(...args).at(deployAddress)) as Promise<CallReturn<'whitelistAddr'>>,
+      singleQuery(publicClient!, call.whitelistAddr(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'whitelistAddr'>
+      >,
     indexOfWhitelist: (...args: ExtractArgs<Contract['calls']['indexOfWhitelist']>) =>
-      singleQuery(publicClient!, call.indexOfWhitelist(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.indexOfWhitelist(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'indexOfWhitelist'>
       >,
     numWhitelisted: (...args: ExtractArgs<Contract['calls']['numWhitelisted']>) =>
-      singleQuery(publicClient!, call.numWhitelisted(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.numWhitelisted(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'numWhitelisted'>
       >,
     pendingWhitelist: (...args: ExtractArgs<Contract['calls']['pendingWhitelist']>) =>
-      singleQuery(publicClient!, call.pendingWhitelist(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.pendingWhitelist(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'pendingWhitelist'>
       >,
     cheques: (...args: ExtractArgs<Contract['calls']['cheques']>) =>
-      singleQuery(publicClient!, call.cheques(...args).at(deployAddress)) as Promise<CallReturn<'cheques'>>,
+      singleQuery(publicClient!, call.cheques(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'cheques'>
+      >,
     chequeSettings: (...args: ExtractArgs<Contract['calls']['chequeSettings']>) =>
-      singleQuery(publicClient!, call.chequeSettings(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.chequeSettings(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'chequeSettings'>
       >,
     chequePeriodData: (...args: ExtractArgs<Contract['calls']['chequePeriodData']>) =>
-      singleQuery(publicClient!, call.chequePeriodData(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.chequePeriodData(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'chequePeriodData'>
       >,
     numActiveCheques: (...args: ExtractArgs<Contract['calls']['numActiveCheques']>) =>
-      singleQuery(publicClient!, call.numActiveCheques(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.numActiveCheques(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'numActiveCheques'>
       >,
     globalManagerSettings: (...args: ExtractArgs<Contract['calls']['globalManagerSettings']>) =>
-      singleQuery(publicClient!, call.globalManagerSettings(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.globalManagerSettings(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'globalManagerSettings'>
       >,
     globalPayeeSettings: (...args: ExtractArgs<Contract['calls']['globalPayeeSettings']>) =>
-      singleQuery(publicClient!, call.globalPayeeSettings(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.globalPayeeSettings(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'globalPayeeSettings'>
       >,
     timeLock: (...args: ExtractArgs<Contract['calls']['timeLock']>) =>
-      singleQuery(publicClient!, call.timeLock(...args).at(deployAddress)) as Promise<CallReturn<'timeLock'>>,
+      singleQuery(publicClient!, call.timeLock(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'timeLock'>
+      >,
     isFrozen: (...args: ExtractArgs<Contract['calls']['isFrozen']>) =>
-      singleQuery(publicClient!, call.isFrozen(...args).at(deployAddress)) as Promise<CallReturn<'isFrozen'>>,
+      singleQuery(publicClient!, call.isFrozen(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'isFrozen'>
+      >,
     inEjectMode: (...args: ExtractArgs<Contract['calls']['inEjectMode']>) =>
-      singleQuery(publicClient!, call.inEjectMode(...args).at(deployAddress)) as Promise<CallReturn<'inEjectMode'>>,
+      singleQuery(publicClient!, call.inEjectMode(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'inEjectMode'>
+      >,
     groupId: (...args: ExtractArgs<Contract['calls']['groupId']>) =>
-      singleQuery(publicClient!, call.groupId(...args).at(deployAddress)) as Promise<CallReturn<'groupId'>>,
+      singleQuery(publicClient!, call.groupId(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'groupId'>
+      >,
     startingAgent: (...args: ExtractArgs<Contract['calls']['startingAgent']>) =>
-      singleQuery(publicClient!, call.startingAgent(...args).at(deployAddress)) as Promise<CallReturn<'startingAgent'>>,
+      singleQuery(publicClient!, call.startingAgent(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'startingAgent'>
+      >,
     didSetWallet: (...args: ExtractArgs<Contract['calls']['didSetWallet']>) =>
-      singleQuery(publicClient!, call.didSetWallet(...args).at(deployAddress)) as Promise<CallReturn<'didSetWallet'>>,
+      singleQuery(publicClient!, call.didSetWallet(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'didSetWallet'>
+      >,
     UNDY_HQ: (...args: ExtractArgs<Contract['calls']['UNDY_HQ']>) =>
-      singleQuery(publicClient!, call.UNDY_HQ(...args).at(deployAddress)) as Promise<CallReturn<'UNDY_HQ'>>,
+      singleQuery(publicClient!, call.UNDY_HQ(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'UNDY_HQ'>
+      >,
     WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) =>
-      singleQuery(publicClient!, call.WETH(...args).at(deployAddress)) as Promise<CallReturn<'WETH'>>,
+      singleQuery(publicClient!, call.WETH(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'WETH'>
+      >,
     ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) =>
-      singleQuery(publicClient!, call.ETH(...args).at(deployAddress)) as Promise<CallReturn<'ETH'>>,
+      singleQuery(publicClient!, call.ETH(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'ETH'>
+      >,
     MIN_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MIN_TIMELOCK']>) =>
-      singleQuery(publicClient!, call.MIN_TIMELOCK(...args).at(deployAddress)) as Promise<CallReturn<'MIN_TIMELOCK'>>,
+      singleQuery(publicClient!, call.MIN_TIMELOCK(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'MIN_TIMELOCK'>
+      >,
     MAX_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MAX_TIMELOCK']>) =>
-      singleQuery(publicClient!, call.MAX_TIMELOCK(...args).at(deployAddress)) as Promise<CallReturn<'MAX_TIMELOCK'>>,
+      singleQuery(publicClient!, call.MAX_TIMELOCK(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'MAX_TIMELOCK'>
+      >,
 
     // Mutations
     changeOwnership: (...args: ExtractArgs<Contract['mutations']['changeOwnership']>) =>
-      mutate(walletClient!, mutation.changeOwnership, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.changeOwnership, { address: deployAddress, addressResolver })(...args),
     confirmOwnershipChange: (...args: ExtractArgs<Contract['mutations']['confirmOwnershipChange']>) =>
-      mutate(walletClient!, mutation.confirmOwnershipChange, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.confirmOwnershipChange, { address: deployAddress, addressResolver })(...args),
     cancelOwnershipChange: (...args: ExtractArgs<Contract['mutations']['cancelOwnershipChange']>) =>
-      mutate(walletClient!, mutation.cancelOwnershipChange, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.cancelOwnershipChange, { address: deployAddress, addressResolver })(...args),
     setOwnershipTimeLock: (...args: ExtractArgs<Contract['mutations']['setOwnershipTimeLock']>) =>
-      mutate(walletClient!, mutation.setOwnershipTimeLock, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.setOwnershipTimeLock, { address: deployAddress, addressResolver })(...args),
     setWallet: (...args: ExtractArgs<Contract['mutations']['setWallet']>) =>
-      mutate(walletClient!, mutation.setWallet, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.setWallet, { address: deployAddress, addressResolver })(...args),
     checkManagerUsdLimitsAndUpdateData: (
       ...args: ExtractArgs<Contract['mutations']['checkManagerUsdLimitsAndUpdateData']>
-    ) => mutate(walletClient!, mutation.checkManagerUsdLimitsAndUpdateData, { address: deployAddress })(...args),
+    ) =>
+      mutate(walletClient!, mutation.checkManagerUsdLimitsAndUpdateData, { address: deployAddress, addressResolver })(
+        ...args,
+      ),
     checkRecipientLimitsAndUpdateData: (
       ...args: ExtractArgs<Contract['mutations']['checkRecipientLimitsAndUpdateData']>
-    ) => mutate(walletClient!, mutation.checkRecipientLimitsAndUpdateData, { address: deployAddress })(...args),
+    ) =>
+      mutate(walletClient!, mutation.checkRecipientLimitsAndUpdateData, { address: deployAddress, addressResolver })(
+        ...args,
+      ),
     validateCheque: (...args: ExtractArgs<Contract['mutations']['validateCheque']>) =>
-      mutate(walletClient!, mutation.validateCheque, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.validateCheque, { address: deployAddress, addressResolver })(...args),
     addPendingWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['addPendingWhitelistAddr']>) =>
-      mutate(walletClient!, mutation.addPendingWhitelistAddr, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.addPendingWhitelistAddr, { address: deployAddress, addressResolver })(...args),
     cancelPendingWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['cancelPendingWhitelistAddr']>) =>
-      mutate(walletClient!, mutation.cancelPendingWhitelistAddr, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.cancelPendingWhitelistAddr, { address: deployAddress, addressResolver })(...args),
     confirmWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['confirmWhitelistAddr']>) =>
-      mutate(walletClient!, mutation.confirmWhitelistAddr, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.confirmWhitelistAddr, { address: deployAddress, addressResolver })(...args),
     addWhitelistAddrViaMigrator: (...args: ExtractArgs<Contract['mutations']['addWhitelistAddrViaMigrator']>) =>
-      mutate(walletClient!, mutation.addWhitelistAddrViaMigrator, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.addWhitelistAddrViaMigrator, { address: deployAddress, addressResolver })(...args),
     removeWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['removeWhitelistAddr']>) =>
-      mutate(walletClient!, mutation.removeWhitelistAddr, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.removeWhitelistAddr, { address: deployAddress, addressResolver })(...args),
     addManager: (...args: ExtractArgs<Contract['mutations']['addManager']>) =>
-      mutate(walletClient!, mutation.addManager, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.addManager, { address: deployAddress, addressResolver })(...args),
     updateManager: (...args: ExtractArgs<Contract['mutations']['updateManager']>) =>
-      mutate(walletClient!, mutation.updateManager, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.updateManager, { address: deployAddress, addressResolver })(...args),
     removeManager: (...args: ExtractArgs<Contract['mutations']['removeManager']>) =>
-      mutate(walletClient!, mutation.removeManager, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.removeManager, { address: deployAddress, addressResolver })(...args),
     setGlobalManagerSettings: (...args: ExtractArgs<Contract['mutations']['setGlobalManagerSettings']>) =>
-      mutate(walletClient!, mutation.setGlobalManagerSettings, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.setGlobalManagerSettings, { address: deployAddress, addressResolver })(...args),
     addPayee: (...args: ExtractArgs<Contract['mutations']['addPayee']>) =>
-      mutate(walletClient!, mutation.addPayee, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.addPayee, { address: deployAddress, addressResolver })(...args),
     updatePayee: (...args: ExtractArgs<Contract['mutations']['updatePayee']>) =>
-      mutate(walletClient!, mutation.updatePayee, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.updatePayee, { address: deployAddress, addressResolver })(...args),
     removePayee: (...args: ExtractArgs<Contract['mutations']['removePayee']>) =>
-      mutate(walletClient!, mutation.removePayee, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.removePayee, { address: deployAddress, addressResolver })(...args),
     setGlobalPayeeSettings: (...args: ExtractArgs<Contract['mutations']['setGlobalPayeeSettings']>) =>
-      mutate(walletClient!, mutation.setGlobalPayeeSettings, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.setGlobalPayeeSettings, { address: deployAddress, addressResolver })(...args),
     addPendingPayee: (...args: ExtractArgs<Contract['mutations']['addPendingPayee']>) =>
-      mutate(walletClient!, mutation.addPendingPayee, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.addPendingPayee, { address: deployAddress, addressResolver })(...args),
     confirmPendingPayee: (...args: ExtractArgs<Contract['mutations']['confirmPendingPayee']>) =>
-      mutate(walletClient!, mutation.confirmPendingPayee, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.confirmPendingPayee, { address: deployAddress, addressResolver })(...args),
     cancelPendingPayee: (...args: ExtractArgs<Contract['mutations']['cancelPendingPayee']>) =>
-      mutate(walletClient!, mutation.cancelPendingPayee, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.cancelPendingPayee, { address: deployAddress, addressResolver })(...args),
     createCheque: (...args: ExtractArgs<Contract['mutations']['createCheque']>) =>
-      mutate(walletClient!, mutation.createCheque, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.createCheque, { address: deployAddress, addressResolver })(...args),
     cancelCheque: (...args: ExtractArgs<Contract['mutations']['cancelCheque']>) =>
-      mutate(walletClient!, mutation.cancelCheque, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.cancelCheque, { address: deployAddress, addressResolver })(...args),
     setChequeSettings: (...args: ExtractArgs<Contract['mutations']['setChequeSettings']>) =>
-      mutate(walletClient!, mutation.setChequeSettings, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.setChequeSettings, { address: deployAddress, addressResolver })(...args),
     updateAssetData: (...args: ExtractArgs<Contract['mutations']['updateAssetData']>) =>
-      mutate(walletClient!, mutation.updateAssetData, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.updateAssetData, { address: deployAddress, addressResolver })(...args),
     updateAllAssetData: (...args: ExtractArgs<Contract['mutations']['updateAllAssetData']>) =>
-      mutate(walletClient!, mutation.updateAllAssetData, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.updateAllAssetData, { address: deployAddress, addressResolver })(...args),
     removeTrialFunds: (...args: ExtractArgs<Contract['mutations']['removeTrialFunds']>) =>
-      mutate(walletClient!, mutation.removeTrialFunds, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.removeTrialFunds, { address: deployAddress, addressResolver })(...args),
     migrateFunds: (...args: ExtractArgs<Contract['mutations']['migrateFunds']>) =>
-      mutate(walletClient!, mutation.migrateFunds, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.migrateFunds, { address: deployAddress, addressResolver })(...args),
     preparePayment: (...args: ExtractArgs<Contract['mutations']['preparePayment']>) =>
-      mutate(walletClient!, mutation.preparePayment, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.preparePayment, { address: deployAddress, addressResolver })(...args),
     deregisterAsset: (...args: ExtractArgs<Contract['mutations']['deregisterAsset']>) =>
-      mutate(walletClient!, mutation.deregisterAsset, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.deregisterAsset, { address: deployAddress, addressResolver })(...args),
     recoverNft: (...args: ExtractArgs<Contract['mutations']['recoverNft']>) =>
-      mutate(walletClient!, mutation.recoverNft, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.recoverNft, { address: deployAddress, addressResolver })(...args),
     setFrozen: (...args: ExtractArgs<Contract['mutations']['setFrozen']>) =>
-      mutate(walletClient!, mutation.setFrozen, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.setFrozen, { address: deployAddress, addressResolver })(...args),
     setEjectionMode: (...args: ExtractArgs<Contract['mutations']['setEjectionMode']>) =>
-      mutate(walletClient!, mutation.setEjectionMode, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.setEjectionMode, { address: deployAddress, addressResolver })(...args),
     setLegoAccessForAction: (...args: ExtractArgs<Contract['mutations']['setLegoAccessForAction']>) =>
-      mutate(walletClient!, mutation.setLegoAccessForAction, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.setLegoAccessForAction, { address: deployAddress, addressResolver })(...args),
     setKernel: (...args: ExtractArgs<Contract['mutations']['setKernel']>) =>
-      mutate(walletClient!, mutation.setKernel, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.setKernel, { address: deployAddress, addressResolver })(...args),
     setSentinel: (...args: ExtractArgs<Contract['mutations']['setSentinel']>) =>
-      mutate(walletClient!, mutation.setSentinel, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.setSentinel, { address: deployAddress, addressResolver })(...args),
     setHighCommand: (...args: ExtractArgs<Contract['mutations']['setHighCommand']>) =>
-      mutate(walletClient!, mutation.setHighCommand, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.setHighCommand, { address: deployAddress, addressResolver })(...args),
     setPaymaster: (...args: ExtractArgs<Contract['mutations']['setPaymaster']>) =>
-      mutate(walletClient!, mutation.setPaymaster, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.setPaymaster, { address: deployAddress, addressResolver })(...args),
     setChequeBook: (...args: ExtractArgs<Contract['mutations']['setChequeBook']>) =>
-      mutate(walletClient!, mutation.setChequeBook, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.setChequeBook, { address: deployAddress, addressResolver })(...args),
     setMigrator: (...args: ExtractArgs<Contract['mutations']['setMigrator']>) =>
-      mutate(walletClient!, mutation.setMigrator, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.setMigrator, { address: deployAddress, addressResolver })(...args),
   }
 }

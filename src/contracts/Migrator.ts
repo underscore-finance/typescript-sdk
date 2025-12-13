@@ -3,8 +3,16 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery, mutate } from '@dappql/async'
-import { PublicClient, WalletClient } from 'viem'
+import { singleQuery, mutate, AddressResolverFunction } from '@dappql/async'
+import {
+  encodeEventTopics,
+  parseEventLogs,
+  ParseEventLogsReturnType,
+  Log,
+  RpcLog,
+  PublicClient,
+  WalletClient,
+} from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
@@ -412,9 +420,38 @@ export const mutation: {
   cloneConfig: getMutation('cloneConfig'),
 }
 
+export type ParsedEvent<T extends keyof Contract['events']> = {
+  event: RpcLog | Log
+  parsed: ParseEventLogsReturnType<typeof abi, T>
+}
+
+export function parseEvents<T extends keyof Contract['events']>(
+  eventName: T,
+  events: (RpcLog | Log)[],
+): ParsedEvent<T>[] {
+  return events.map((event) => {
+    return {
+      event,
+      parsed: parseEventLogs({
+        abi,
+        eventName,
+        logs: [event],
+      }),
+    }
+  })
+}
+
+export function getEventTopic<T extends keyof Contract['events']>(eventName: T): Address {
+  return encodeEventTopics({ abi, eventName })[0] as Address
+}
+
 export type SDK = {
   deployAddress: Address | undefined
   abi: typeof abi
+  events: {
+    FundsMigrated: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'FundsMigrated'>[] }
+    ConfigCloned: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'ConfigCloned'>[] }
+  }
   canMigrateFundsToNewWallet: (
     ...args: ExtractArgs<Contract['calls']['canMigrateFundsToNewWallet']>
   ) => Promise<CallReturn<'canMigrateFundsToNewWallet'>>
@@ -430,30 +467,47 @@ export type SDK = {
   cloneConfig: (...args: ExtractArgs<Contract['mutations']['cloneConfig']>) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
+    events: {
+      FundsMigrated: {
+        topic: getEventTopic('FundsMigrated'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('FundsMigrated', events),
+      },
+      ConfigCloned: {
+        topic: getEventTopic('ConfigCloned'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('ConfigCloned', events),
+      },
+    },
     // Queries
     canMigrateFundsToNewWallet: (...args: ExtractArgs<Contract['calls']['canMigrateFundsToNewWallet']>) =>
-      singleQuery(publicClient!, call.canMigrateFundsToNewWallet(...args)) as Promise<
+      singleQuery(publicClient!, call.canMigrateFundsToNewWallet(...args), {}, addressResolver) as Promise<
         CallReturn<'canMigrateFundsToNewWallet'>
       >,
     canCopyWalletConfig: (...args: ExtractArgs<Contract['calls']['canCopyWalletConfig']>) =>
-      singleQuery(publicClient!, call.canCopyWalletConfig(...args)) as Promise<CallReturn<'canCopyWalletConfig'>>,
+      singleQuery(publicClient!, call.canCopyWalletConfig(...args), {}, addressResolver) as Promise<
+        CallReturn<'canCopyWalletConfig'>
+      >,
     getMigrationConfigBundle: (...args: ExtractArgs<Contract['calls']['getMigrationConfigBundle']>) =>
-      singleQuery(publicClient!, call.getMigrationConfigBundle(...args)) as Promise<
+      singleQuery(publicClient!, call.getMigrationConfigBundle(...args), {}, addressResolver) as Promise<
         CallReturn<'getMigrationConfigBundle'>
       >,
     UNDY_HQ: (...args: ExtractArgs<Contract['calls']['UNDY_HQ']>) =>
-      singleQuery(publicClient!, call.UNDY_HQ(...args)) as Promise<CallReturn<'UNDY_HQ'>>,
+      singleQuery(publicClient!, call.UNDY_HQ(...args), {}, addressResolver) as Promise<CallReturn<'UNDY_HQ'>>,
 
     // Mutations
     migrateAll: (...args: ExtractArgs<Contract['mutations']['migrateAll']>) =>
-      mutate(walletClient!, mutation.migrateAll)(...args),
+      mutate(walletClient!, mutation.migrateAll, { addressResolver })(...args),
     migrateFunds: (...args: ExtractArgs<Contract['mutations']['migrateFunds']>) =>
-      mutate(walletClient!, mutation.migrateFunds)(...args),
+      mutate(walletClient!, mutation.migrateFunds, { addressResolver })(...args),
     cloneConfig: (...args: ExtractArgs<Contract['mutations']['cloneConfig']>) =>
-      mutate(walletClient!, mutation.cloneConfig)(...args),
+      mutate(walletClient!, mutation.cloneConfig, { addressResolver })(...args),
   }
 }

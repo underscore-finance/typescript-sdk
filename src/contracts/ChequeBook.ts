@@ -3,8 +3,16 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery, mutate } from '@dappql/async'
-import { PublicClient, WalletClient } from 'viem'
+import { singleQuery, mutate, AddressResolverFunction } from '@dappql/async'
+import {
+  encodeEventTopics,
+  parseEventLogs,
+  ParseEventLogsReturnType,
+  Log,
+  RpcLog,
+  PublicClient,
+  WalletClient,
+} from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
@@ -1729,9 +1737,42 @@ export const mutation: {
   setChequeSettings: getMutation('setChequeSettings'),
 }
 
+export type ParsedEvent<T extends keyof Contract['events']> = {
+  event: RpcLog | Log
+  parsed: ParseEventLogsReturnType<typeof abi, T>
+}
+
+export function parseEvents<T extends keyof Contract['events']>(
+  eventName: T,
+  events: (RpcLog | Log)[],
+): ParsedEvent<T>[] {
+  return events.map((event) => {
+    return {
+      event,
+      parsed: parseEventLogs({
+        abi,
+        eventName,
+        logs: [event],
+      }),
+    }
+  })
+}
+
+export function getEventTopic<T extends keyof Contract['events']>(eventName: T): Address {
+  return encodeEventTopics({ abi, eventName })[0] as Address
+}
+
 export type SDK = {
   deployAddress: Address | undefined
   abi: typeof abi
+  events: {
+    ChequeCreated: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'ChequeCreated'>[] }
+    ChequeCancelled: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'ChequeCancelled'>[] }
+    ChequeSettingsModified: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'ChequeSettingsModified'>[]
+    }
+  }
   canCreateCheque: (
     ...args: ExtractArgs<Contract['calls']['canCreateCheque']>
   ) => Promise<CallReturn<'canCreateCheque'>>
@@ -1768,44 +1809,79 @@ export type SDK = {
   setChequeSettings: (...args: ExtractArgs<Contract['mutations']['setChequeSettings']>) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
+    events: {
+      ChequeCreated: {
+        topic: getEventTopic('ChequeCreated'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('ChequeCreated', events),
+      },
+      ChequeCancelled: {
+        topic: getEventTopic('ChequeCancelled'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('ChequeCancelled', events),
+      },
+      ChequeSettingsModified: {
+        topic: getEventTopic('ChequeSettingsModified'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('ChequeSettingsModified', events),
+      },
+    },
     // Queries
     canCreateCheque: (...args: ExtractArgs<Contract['calls']['canCreateCheque']>) =>
-      singleQuery(publicClient!, call.canCreateCheque(...args)) as Promise<CallReturn<'canCreateCheque'>>,
+      singleQuery(publicClient!, call.canCreateCheque(...args), {}, addressResolver) as Promise<
+        CallReturn<'canCreateCheque'>
+      >,
     isValidNewCheque: (...args: ExtractArgs<Contract['calls']['isValidNewCheque']>) =>
-      singleQuery(publicClient!, call.isValidNewCheque(...args)) as Promise<CallReturn<'isValidNewCheque'>>,
+      singleQuery(publicClient!, call.isValidNewCheque(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidNewCheque'>
+      >,
     isValidChequeSettings: (...args: ExtractArgs<Contract['calls']['isValidChequeSettings']>) =>
-      singleQuery(publicClient!, call.isValidChequeSettings(...args)) as Promise<CallReturn<'isValidChequeSettings'>>,
+      singleQuery(publicClient!, call.isValidChequeSettings(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidChequeSettings'>
+      >,
     getChequeConfig: (...args: ExtractArgs<Contract['calls']['getChequeConfig']>) =>
-      singleQuery(publicClient!, call.getChequeConfig(...args)) as Promise<CallReturn<'getChequeConfig'>>,
+      singleQuery(publicClient!, call.getChequeConfig(...args), {}, addressResolver) as Promise<
+        CallReturn<'getChequeConfig'>
+      >,
     createDefaultChequeSettings: (...args: ExtractArgs<Contract['calls']['createDefaultChequeSettings']>) =>
-      singleQuery(publicClient!, call.createDefaultChequeSettings(...args)) as Promise<
+      singleQuery(publicClient!, call.createDefaultChequeSettings(...args), {}, addressResolver) as Promise<
         CallReturn<'createDefaultChequeSettings'>
       >,
     UNDY_HQ: (...args: ExtractArgs<Contract['calls']['UNDY_HQ']>) =>
-      singleQuery(publicClient!, call.UNDY_HQ(...args)) as Promise<CallReturn<'UNDY_HQ'>>,
+      singleQuery(publicClient!, call.UNDY_HQ(...args), {}, addressResolver) as Promise<CallReturn<'UNDY_HQ'>>,
     MIN_CHEQUE_PERIOD: (...args: ExtractArgs<Contract['calls']['MIN_CHEQUE_PERIOD']>) =>
-      singleQuery(publicClient!, call.MIN_CHEQUE_PERIOD(...args)) as Promise<CallReturn<'MIN_CHEQUE_PERIOD'>>,
+      singleQuery(publicClient!, call.MIN_CHEQUE_PERIOD(...args), {}, addressResolver) as Promise<
+        CallReturn<'MIN_CHEQUE_PERIOD'>
+      >,
     MAX_CHEQUE_PERIOD: (...args: ExtractArgs<Contract['calls']['MAX_CHEQUE_PERIOD']>) =>
-      singleQuery(publicClient!, call.MAX_CHEQUE_PERIOD(...args)) as Promise<CallReturn<'MAX_CHEQUE_PERIOD'>>,
+      singleQuery(publicClient!, call.MAX_CHEQUE_PERIOD(...args), {}, addressResolver) as Promise<
+        CallReturn<'MAX_CHEQUE_PERIOD'>
+      >,
     MIN_EXPENSIVE_CHEQUE_DELAY: (...args: ExtractArgs<Contract['calls']['MIN_EXPENSIVE_CHEQUE_DELAY']>) =>
-      singleQuery(publicClient!, call.MIN_EXPENSIVE_CHEQUE_DELAY(...args)) as Promise<
+      singleQuery(publicClient!, call.MIN_EXPENSIVE_CHEQUE_DELAY(...args), {}, addressResolver) as Promise<
         CallReturn<'MIN_EXPENSIVE_CHEQUE_DELAY'>
       >,
     MAX_UNLOCK_BLOCKS: (...args: ExtractArgs<Contract['calls']['MAX_UNLOCK_BLOCKS']>) =>
-      singleQuery(publicClient!, call.MAX_UNLOCK_BLOCKS(...args)) as Promise<CallReturn<'MAX_UNLOCK_BLOCKS'>>,
+      singleQuery(publicClient!, call.MAX_UNLOCK_BLOCKS(...args), {}, addressResolver) as Promise<
+        CallReturn<'MAX_UNLOCK_BLOCKS'>
+      >,
     MAX_EXPIRY_BLOCKS: (...args: ExtractArgs<Contract['calls']['MAX_EXPIRY_BLOCKS']>) =>
-      singleQuery(publicClient!, call.MAX_EXPIRY_BLOCKS(...args)) as Promise<CallReturn<'MAX_EXPIRY_BLOCKS'>>,
+      singleQuery(publicClient!, call.MAX_EXPIRY_BLOCKS(...args), {}, addressResolver) as Promise<
+        CallReturn<'MAX_EXPIRY_BLOCKS'>
+      >,
 
     // Mutations
     createCheque: (...args: ExtractArgs<Contract['mutations']['createCheque']>) =>
-      mutate(walletClient!, mutation.createCheque)(...args),
+      mutate(walletClient!, mutation.createCheque, { addressResolver })(...args),
     cancelCheque: (...args: ExtractArgs<Contract['mutations']['cancelCheque']>) =>
-      mutate(walletClient!, mutation.cancelCheque)(...args),
+      mutate(walletClient!, mutation.cancelCheque, { addressResolver })(...args),
     setChequeSettings: (...args: ExtractArgs<Contract['mutations']['setChequeSettings']>) =>
-      mutate(walletClient!, mutation.setChequeSettings)(...args),
+      mutate(walletClient!, mutation.setChequeSettings, { addressResolver })(...args),
   }
 }

@@ -3,8 +3,16 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery, mutate } from '@dappql/async'
-import { PublicClient, WalletClient } from 'viem'
+import { singleQuery, mutate, AddressResolverFunction } from '@dappql/async'
+import {
+  encodeEventTopics,
+  parseEventLogs,
+  ParseEventLogsReturnType,
+  Log,
+  RpcLog,
+  PublicClient,
+  WalletClient,
+} from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
@@ -1387,9 +1395,50 @@ export const mutation: {
   incrementNonce: getMutation('incrementNonce'),
 }
 
+export type ParsedEvent<T extends keyof Contract['events']> = {
+  event: RpcLog | Log
+  parsed: ParseEventLogsReturnType<typeof abi, T>
+}
+
+export function parseEvents<T extends keyof Contract['events']>(
+  eventName: T,
+  events: (RpcLog | Log)[],
+): ParsedEvent<T>[] {
+  return events.map((event) => {
+    return {
+      event,
+      parsed: parseEventLogs({
+        abi,
+        eventName,
+        logs: [event],
+      }),
+    }
+  })
+}
+
+export function getEventTopic<T extends keyof Contract['events']>(eventName: T): Address {
+  return encodeEventTopics({ abi, eventName })[0] as Address
+}
+
 export type SDK = {
   deployAddress: Address | undefined
   abi: typeof abi
+  events: {
+    NonceIncremented: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'NonceIncremented'>[] }
+    OwnershipChangeInitiated: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'OwnershipChangeInitiated'>[]
+    }
+    OwnershipChangeConfirmed: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'OwnershipChangeConfirmed'>[]
+    }
+    OwnershipChangeCancelled: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'OwnershipChangeCancelled'>[]
+    }
+    OwnershipTimeLockSet: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'OwnershipTimeLockSet'>[] }
+  }
   hasPendingOwnerChange: (
     ...args: ExtractArgs<Contract['calls']['hasPendingOwnerChange']>
   ) => Promise<CallReturn<'hasPendingOwnerChange'>>
@@ -1419,50 +1468,89 @@ export type SDK = {
   incrementNonce: (...args: ExtractArgs<Contract['mutations']['incrementNonce']>) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
+    events: {
+      NonceIncremented: {
+        topic: getEventTopic('NonceIncremented'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('NonceIncremented', events),
+      },
+      OwnershipChangeInitiated: {
+        topic: getEventTopic('OwnershipChangeInitiated'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('OwnershipChangeInitiated', events),
+      },
+      OwnershipChangeConfirmed: {
+        topic: getEventTopic('OwnershipChangeConfirmed'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('OwnershipChangeConfirmed', events),
+      },
+      OwnershipChangeCancelled: {
+        topic: getEventTopic('OwnershipChangeCancelled'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('OwnershipChangeCancelled', events),
+      },
+      OwnershipTimeLockSet: {
+        topic: getEventTopic('OwnershipTimeLockSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('OwnershipTimeLockSet', events),
+      },
+    },
     // Queries
     hasPendingOwnerChange: (...args: ExtractArgs<Contract['calls']['hasPendingOwnerChange']>) =>
-      singleQuery(publicClient!, call.hasPendingOwnerChange(...args)) as Promise<CallReturn<'hasPendingOwnerChange'>>,
+      singleQuery(publicClient!, call.hasPendingOwnerChange(...args), {}, addressResolver) as Promise<
+        CallReturn<'hasPendingOwnerChange'>
+      >,
     owner: (...args: ExtractArgs<Contract['calls']['owner']>) =>
-      singleQuery(publicClient!, call.owner(...args)) as Promise<CallReturn<'owner'>>,
+      singleQuery(publicClient!, call.owner(...args), {}, addressResolver) as Promise<CallReturn<'owner'>>,
     ownershipTimeLock: (...args: ExtractArgs<Contract['calls']['ownershipTimeLock']>) =>
-      singleQuery(publicClient!, call.ownershipTimeLock(...args)) as Promise<CallReturn<'ownershipTimeLock'>>,
+      singleQuery(publicClient!, call.ownershipTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'ownershipTimeLock'>
+      >,
     pendingOwner: (...args: ExtractArgs<Contract['calls']['pendingOwner']>) =>
-      singleQuery(publicClient!, call.pendingOwner(...args)) as Promise<CallReturn<'pendingOwner'>>,
+      singleQuery(publicClient!, call.pendingOwner(...args), {}, addressResolver) as Promise<
+        CallReturn<'pendingOwner'>
+      >,
     MIN_OWNERSHIP_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MIN_OWNERSHIP_TIMELOCK']>) =>
-      singleQuery(publicClient!, call.MIN_OWNERSHIP_TIMELOCK(...args)) as Promise<CallReturn<'MIN_OWNERSHIP_TIMELOCK'>>,
+      singleQuery(publicClient!, call.MIN_OWNERSHIP_TIMELOCK(...args), {}, addressResolver) as Promise<
+        CallReturn<'MIN_OWNERSHIP_TIMELOCK'>
+      >,
     MAX_OWNERSHIP_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MAX_OWNERSHIP_TIMELOCK']>) =>
-      singleQuery(publicClient!, call.MAX_OWNERSHIP_TIMELOCK(...args)) as Promise<CallReturn<'MAX_OWNERSHIP_TIMELOCK'>>,
+      singleQuery(publicClient!, call.MAX_OWNERSHIP_TIMELOCK(...args), {}, addressResolver) as Promise<
+        CallReturn<'MAX_OWNERSHIP_TIMELOCK'>
+      >,
     getNonce: (...args: ExtractArgs<Contract['calls']['getNonce']>) =>
-      singleQuery(publicClient!, call.getNonce(...args)) as Promise<CallReturn<'getNonce'>>,
+      singleQuery(publicClient!, call.getNonce(...args), {}, addressResolver) as Promise<CallReturn<'getNonce'>>,
     groupId: (...args: ExtractArgs<Contract['calls']['groupId']>) =>
-      singleQuery(publicClient!, call.groupId(...args)) as Promise<CallReturn<'groupId'>>,
+      singleQuery(publicClient!, call.groupId(...args), {}, addressResolver) as Promise<CallReturn<'groupId'>>,
     currentNonce: (...args: ExtractArgs<Contract['calls']['currentNonce']>) =>
-      singleQuery(publicClient!, call.currentNonce(...args)) as Promise<CallReturn<'currentNonce'>>,
+      singleQuery(publicClient!, call.currentNonce(...args), {}, addressResolver) as Promise<
+        CallReturn<'currentNonce'>
+      >,
 
     // Mutations
     changeOwnership: (...args: ExtractArgs<Contract['mutations']['changeOwnership']>) =>
-      mutate(walletClient!, mutation.changeOwnership)(...args),
+      mutate(walletClient!, mutation.changeOwnership, { addressResolver })(...args),
     confirmOwnershipChange: (...args: ExtractArgs<Contract['mutations']['confirmOwnershipChange']>) =>
-      mutate(walletClient!, mutation.confirmOwnershipChange)(...args),
+      mutate(walletClient!, mutation.confirmOwnershipChange, { addressResolver })(...args),
     cancelOwnershipChange: (...args: ExtractArgs<Contract['mutations']['cancelOwnershipChange']>) =>
-      mutate(walletClient!, mutation.cancelOwnershipChange)(...args),
+      mutate(walletClient!, mutation.cancelOwnershipChange, { addressResolver })(...args),
     setOwnershipTimeLock: (...args: ExtractArgs<Contract['mutations']['setOwnershipTimeLock']>) =>
-      mutate(walletClient!, mutation.setOwnershipTimeLock)(...args),
+      mutate(walletClient!, mutation.setOwnershipTimeLock, { addressResolver })(...args),
     depositForYield: (...args: ExtractArgs<Contract['mutations']['depositForYield']>) =>
-      mutate(walletClient!, mutation.depositForYield)(...args),
+      mutate(walletClient!, mutation.depositForYield, { addressResolver })(...args),
     withdrawFromYield: (...args: ExtractArgs<Contract['mutations']['withdrawFromYield']>) =>
-      mutate(walletClient!, mutation.withdrawFromYield)(...args),
+      mutate(walletClient!, mutation.withdrawFromYield, { addressResolver })(...args),
     swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) =>
-      mutate(walletClient!, mutation.swapTokens)(...args),
+      mutate(walletClient!, mutation.swapTokens, { addressResolver })(...args),
     claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) =>
-      mutate(walletClient!, mutation.claimIncentives)(...args),
+      mutate(walletClient!, mutation.claimIncentives, { addressResolver })(...args),
     performBatchActions: (...args: ExtractArgs<Contract['mutations']['performBatchActions']>) =>
-      mutate(walletClient!, mutation.performBatchActions)(...args),
+      mutate(walletClient!, mutation.performBatchActions, { addressResolver })(...args),
     incrementNonce: (...args: ExtractArgs<Contract['mutations']['incrementNonce']>) =>
-      mutate(walletClient!, mutation.incrementNonce)(...args),
+      mutate(walletClient!, mutation.incrementNonce, { addressResolver })(...args),
   }
 }

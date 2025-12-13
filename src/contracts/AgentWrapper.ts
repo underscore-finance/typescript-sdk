@@ -3,8 +3,16 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery, mutate } from '@dappql/async'
-import { PublicClient, WalletClient } from 'viem'
+import { singleQuery, mutate, AddressResolverFunction } from '@dappql/async'
+import {
+  encodeEventTopics,
+  parseEventLogs,
+  ParseEventLogsReturnType,
+  Log,
+  RpcLog,
+  PublicClient,
+  WalletClient,
+} from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
@@ -3517,9 +3525,37 @@ export const mutation: {
   removeSender: getMutation('removeSender'),
 }
 
+export type ParsedEvent<T extends keyof Contract['events']> = {
+  event: RpcLog | Log
+  parsed: ParseEventLogsReturnType<typeof abi, T>
+}
+
+export function parseEvents<T extends keyof Contract['events']>(
+  eventName: T,
+  events: (RpcLog | Log)[],
+): ParsedEvent<T>[] {
+  return events.map((event) => {
+    return {
+      event,
+      parsed: parseEventLogs({
+        abi,
+        eventName,
+        logs: [event],
+      }),
+    }
+  })
+}
+
+export function getEventTopic<T extends keyof Contract['events']>(eventName: T): Address {
+  return encodeEventTopics({ abi, eventName })[0] as Address
+}
+
 export type SDK = {
   deployAddress: Address | undefined
   abi: typeof abi
+  events: {
+    AgentAction: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'AgentAction'>[] }
+  }
   isSender: (...args: ExtractArgs<Contract['calls']['isSender']>) => Promise<CallReturn<'isSender'>>
   groupId: (...args: ExtractArgs<Contract['calls']['groupId']>) => Promise<CallReturn<'groupId'>>
   senders: (...args: ExtractArgs<Contract['calls']['senders']>) => Promise<CallReturn<'senders'>>
@@ -3553,61 +3589,75 @@ export type SDK = {
   removeSender: (...args: ExtractArgs<Contract['mutations']['removeSender']>) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
+    events: {
+      AgentAction: {
+        topic: getEventTopic('AgentAction'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('AgentAction', events),
+      },
+    },
     // Queries
     isSender: (...args: ExtractArgs<Contract['calls']['isSender']>) =>
-      singleQuery(publicClient!, call.isSender(...args)) as Promise<CallReturn<'isSender'>>,
+      singleQuery(publicClient!, call.isSender(...args), {}, addressResolver) as Promise<CallReturn<'isSender'>>,
     groupId: (...args: ExtractArgs<Contract['calls']['groupId']>) =>
-      singleQuery(publicClient!, call.groupId(...args)) as Promise<CallReturn<'groupId'>>,
+      singleQuery(publicClient!, call.groupId(...args), {}, addressResolver) as Promise<CallReturn<'groupId'>>,
     senders: (...args: ExtractArgs<Contract['calls']['senders']>) =>
-      singleQuery(publicClient!, call.senders(...args)) as Promise<CallReturn<'senders'>>,
+      singleQuery(publicClient!, call.senders(...args), {}, addressResolver) as Promise<CallReturn<'senders'>>,
     indexOfSender: (...args: ExtractArgs<Contract['calls']['indexOfSender']>) =>
-      singleQuery(publicClient!, call.indexOfSender(...args)) as Promise<CallReturn<'indexOfSender'>>,
+      singleQuery(publicClient!, call.indexOfSender(...args), {}, addressResolver) as Promise<
+        CallReturn<'indexOfSender'>
+      >,
     numSenders: (...args: ExtractArgs<Contract['calls']['numSenders']>) =>
-      singleQuery(publicClient!, call.numSenders(...args)) as Promise<CallReturn<'numSenders'>>,
+      singleQuery(publicClient!, call.numSenders(...args), {}, addressResolver) as Promise<CallReturn<'numSenders'>>,
 
     // Mutations
     transferFunds: (...args: ExtractArgs<Contract['mutations']['transferFunds']>) =>
-      mutate(walletClient!, mutation.transferFunds)(...args),
+      mutate(walletClient!, mutation.transferFunds, { addressResolver })(...args),
     depositForYield: (...args: ExtractArgs<Contract['mutations']['depositForYield']>) =>
-      mutate(walletClient!, mutation.depositForYield)(...args),
+      mutate(walletClient!, mutation.depositForYield, { addressResolver })(...args),
     withdrawFromYield: (...args: ExtractArgs<Contract['mutations']['withdrawFromYield']>) =>
-      mutate(walletClient!, mutation.withdrawFromYield)(...args),
+      mutate(walletClient!, mutation.withdrawFromYield, { addressResolver })(...args),
     rebalanceYieldPosition: (...args: ExtractArgs<Contract['mutations']['rebalanceYieldPosition']>) =>
-      mutate(walletClient!, mutation.rebalanceYieldPosition)(...args),
+      mutate(walletClient!, mutation.rebalanceYieldPosition, { addressResolver })(...args),
     swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) =>
-      mutate(walletClient!, mutation.swapTokens)(...args),
+      mutate(walletClient!, mutation.swapTokens, { addressResolver })(...args),
     mintOrRedeemAsset: (...args: ExtractArgs<Contract['mutations']['mintOrRedeemAsset']>) =>
-      mutate(walletClient!, mutation.mintOrRedeemAsset)(...args),
+      mutate(walletClient!, mutation.mintOrRedeemAsset, { addressResolver })(...args),
     confirmMintOrRedeemAsset: (...args: ExtractArgs<Contract['mutations']['confirmMintOrRedeemAsset']>) =>
-      mutate(walletClient!, mutation.confirmMintOrRedeemAsset)(...args),
+      mutate(walletClient!, mutation.confirmMintOrRedeemAsset, { addressResolver })(...args),
     addCollateral: (...args: ExtractArgs<Contract['mutations']['addCollateral']>) =>
-      mutate(walletClient!, mutation.addCollateral)(...args),
+      mutate(walletClient!, mutation.addCollateral, { addressResolver })(...args),
     removeCollateral: (...args: ExtractArgs<Contract['mutations']['removeCollateral']>) =>
-      mutate(walletClient!, mutation.removeCollateral)(...args),
-    borrow: (...args: ExtractArgs<Contract['mutations']['borrow']>) => mutate(walletClient!, mutation.borrow)(...args),
+      mutate(walletClient!, mutation.removeCollateral, { addressResolver })(...args),
+    borrow: (...args: ExtractArgs<Contract['mutations']['borrow']>) =>
+      mutate(walletClient!, mutation.borrow, { addressResolver })(...args),
     repayDebt: (...args: ExtractArgs<Contract['mutations']['repayDebt']>) =>
-      mutate(walletClient!, mutation.repayDebt)(...args),
+      mutate(walletClient!, mutation.repayDebt, { addressResolver })(...args),
     claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) =>
-      mutate(walletClient!, mutation.claimIncentives)(...args),
+      mutate(walletClient!, mutation.claimIncentives, { addressResolver })(...args),
     convertWethToEth: (...args: ExtractArgs<Contract['mutations']['convertWethToEth']>) =>
-      mutate(walletClient!, mutation.convertWethToEth)(...args),
+      mutate(walletClient!, mutation.convertWethToEth, { addressResolver })(...args),
     convertEthToWeth: (...args: ExtractArgs<Contract['mutations']['convertEthToWeth']>) =>
-      mutate(walletClient!, mutation.convertEthToWeth)(...args),
+      mutate(walletClient!, mutation.convertEthToWeth, { addressResolver })(...args),
     addLiquidity: (...args: ExtractArgs<Contract['mutations']['addLiquidity']>) =>
-      mutate(walletClient!, mutation.addLiquidity)(...args),
+      mutate(walletClient!, mutation.addLiquidity, { addressResolver })(...args),
     removeLiquidity: (...args: ExtractArgs<Contract['mutations']['removeLiquidity']>) =>
-      mutate(walletClient!, mutation.removeLiquidity)(...args),
+      mutate(walletClient!, mutation.removeLiquidity, { addressResolver })(...args),
     addLiquidityConcentrated: (...args: ExtractArgs<Contract['mutations']['addLiquidityConcentrated']>) =>
-      mutate(walletClient!, mutation.addLiquidityConcentrated)(...args),
+      mutate(walletClient!, mutation.addLiquidityConcentrated, { addressResolver })(...args),
     removeLiquidityConcentrated: (...args: ExtractArgs<Contract['mutations']['removeLiquidityConcentrated']>) =>
-      mutate(walletClient!, mutation.removeLiquidityConcentrated)(...args),
+      mutate(walletClient!, mutation.removeLiquidityConcentrated, { addressResolver })(...args),
     addSender: (...args: ExtractArgs<Contract['mutations']['addSender']>) =>
-      mutate(walletClient!, mutation.addSender)(...args),
+      mutate(walletClient!, mutation.addSender, { addressResolver })(...args),
     removeSender: (...args: ExtractArgs<Contract['mutations']['removeSender']>) =>
-      mutate(walletClient!, mutation.removeSender)(...args),
+      mutate(walletClient!, mutation.removeSender, { addressResolver })(...args),
   }
 }

@@ -3,7 +3,7 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery } from '@dappql/async'
+import { singleQuery, AddressResolverFunction } from '@dappql/async'
 import { PublicClient, WalletClient } from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
@@ -2819,29 +2819,42 @@ export type SDK = {
   ) => Promise<CallReturn<'isValidChequeAndGetData'>>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
     // Queries
     canSignerPerformAction: (...args: ExtractArgs<Contract['calls']['canSignerPerformAction']>) =>
-      singleQuery(publicClient!, call.canSignerPerformAction(...args)) as Promise<CallReturn<'canSignerPerformAction'>>,
+      singleQuery(publicClient!, call.canSignerPerformAction(...args), {}, addressResolver) as Promise<
+        CallReturn<'canSignerPerformAction'>
+      >,
     canSignerPerformActionWithConfig: (...args: ExtractArgs<Contract['calls']['canSignerPerformActionWithConfig']>) =>
-      singleQuery(publicClient!, call.canSignerPerformActionWithConfig(...args)) as Promise<
+      singleQuery(publicClient!, call.canSignerPerformActionWithConfig(...args), {}, addressResolver) as Promise<
         CallReturn<'canSignerPerformActionWithConfig'>
       >,
     canManagerFinishTx: (...args: ExtractArgs<Contract['calls']['canManagerFinishTx']>) =>
-      singleQuery(publicClient!, call.canManagerFinishTx(...args)) as Promise<CallReturn<'canManagerFinishTx'>>,
+      singleQuery(publicClient!, call.canManagerFinishTx(...args), {}, addressResolver) as Promise<
+        CallReturn<'canManagerFinishTx'>
+      >,
     checkManagerLimitsPostTx: (...args: ExtractArgs<Contract['calls']['checkManagerLimitsPostTx']>) =>
-      singleQuery(publicClient!, call.checkManagerLimitsPostTx(...args)) as Promise<
+      singleQuery(publicClient!, call.checkManagerLimitsPostTx(...args), {}, addressResolver) as Promise<
         CallReturn<'checkManagerLimitsPostTx'>
       >,
     isValidPayee: (...args: ExtractArgs<Contract['calls']['isValidPayee']>) =>
-      singleQuery(publicClient!, call.isValidPayee(...args)) as Promise<CallReturn<'isValidPayee'>>,
+      singleQuery(publicClient!, call.isValidPayee(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidPayee'>
+      >,
     isValidPayeeAndGetData: (...args: ExtractArgs<Contract['calls']['isValidPayeeAndGetData']>) =>
-      singleQuery(publicClient!, call.isValidPayeeAndGetData(...args)) as Promise<CallReturn<'isValidPayeeAndGetData'>>,
+      singleQuery(publicClient!, call.isValidPayeeAndGetData(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidPayeeAndGetData'>
+      >,
     isValidChequeAndGetData: (...args: ExtractArgs<Contract['calls']['isValidChequeAndGetData']>) =>
-      singleQuery(publicClient!, call.isValidChequeAndGetData(...args)) as Promise<
+      singleQuery(publicClient!, call.isValidChequeAndGetData(...args), {}, addressResolver) as Promise<
         CallReturn<'isValidChequeAndGetData'>
       >,
 

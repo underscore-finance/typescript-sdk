@@ -3,8 +3,16 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery, mutate } from '@dappql/async'
-import { PublicClient, WalletClient } from 'viem'
+import { singleQuery, mutate, AddressResolverFunction } from '@dappql/async'
+import {
+  encodeEventTopics,
+  parseEventLogs,
+  ParseEventLogsReturnType,
+  Log,
+  RpcLog,
+  PublicClient,
+  WalletClient,
+} from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
@@ -399,9 +407,38 @@ export const mutation: {
   permit: getMutation('permit'),
 }
 
+export type ParsedEvent<T extends keyof Contract['events']> = {
+  event: RpcLog | Log
+  parsed: ParseEventLogsReturnType<typeof abi, T>
+}
+
+export function parseEvents<T extends keyof Contract['events']>(
+  eventName: T,
+  events: (RpcLog | Log)[],
+): ParsedEvent<T>[] {
+  return events.map((event) => {
+    return {
+      event,
+      parsed: parseEventLogs({
+        abi,
+        eventName,
+        logs: [event],
+      }),
+    }
+  })
+}
+
+export function getEventTopic<T extends keyof Contract['events']>(eventName: T): Address {
+  return encodeEventTopics({ abi, eventName })[0] as Address
+}
+
 export type SDK = {
   deployAddress: Address | undefined
   abi: typeof abi
+  events: {
+    Transfer: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'Transfer'>[] }
+    Approval: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'Approval'>[] }
+  }
   name: (...args: ExtractArgs<Contract['calls']['name']>) => Promise<CallReturn<'name'>>
   symbol: (...args: ExtractArgs<Contract['calls']['symbol']>) => Promise<CallReturn<'symbol'>>
   decimals: (...args: ExtractArgs<Contract['calls']['decimals']>) => Promise<CallReturn<'decimals'>>
@@ -418,38 +455,68 @@ export type SDK = {
   permit: (...args: ExtractArgs<Contract['mutations']['permit']>) => Promise<Address>
 }
 
-export function toSdk(deployAddress: Address, publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  deployAddress: Address,
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
+    events: {
+      Transfer: {
+        topic: getEventTopic('Transfer'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('Transfer', events),
+      },
+      Approval: {
+        topic: getEventTopic('Approval'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('Approval', events),
+      },
+    },
     // Queries
     name: (...args: ExtractArgs<Contract['calls']['name']>) =>
-      singleQuery(publicClient!, call.name(...args).at(deployAddress)) as Promise<CallReturn<'name'>>,
+      singleQuery(publicClient!, call.name(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'name'>
+      >,
     symbol: (...args: ExtractArgs<Contract['calls']['symbol']>) =>
-      singleQuery(publicClient!, call.symbol(...args).at(deployAddress)) as Promise<CallReturn<'symbol'>>,
+      singleQuery(publicClient!, call.symbol(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'symbol'>
+      >,
     decimals: (...args: ExtractArgs<Contract['calls']['decimals']>) =>
-      singleQuery(publicClient!, call.decimals(...args).at(deployAddress)) as Promise<CallReturn<'decimals'>>,
+      singleQuery(publicClient!, call.decimals(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'decimals'>
+      >,
     totalSupply: (...args: ExtractArgs<Contract['calls']['totalSupply']>) =>
-      singleQuery(publicClient!, call.totalSupply(...args).at(deployAddress)) as Promise<CallReturn<'totalSupply'>>,
+      singleQuery(publicClient!, call.totalSupply(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'totalSupply'>
+      >,
     balanceOf: (...args: ExtractArgs<Contract['calls']['balanceOf']>) =>
-      singleQuery(publicClient!, call.balanceOf(...args).at(deployAddress)) as Promise<CallReturn<'balanceOf'>>,
+      singleQuery(publicClient!, call.balanceOf(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'balanceOf'>
+      >,
     allowance: (...args: ExtractArgs<Contract['calls']['allowance']>) =>
-      singleQuery(publicClient!, call.allowance(...args).at(deployAddress)) as Promise<CallReturn<'allowance'>>,
+      singleQuery(publicClient!, call.allowance(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'allowance'>
+      >,
     nonces: (...args: ExtractArgs<Contract['calls']['nonces']>) =>
-      singleQuery(publicClient!, call.nonces(...args).at(deployAddress)) as Promise<CallReturn<'nonces'>>,
+      singleQuery(publicClient!, call.nonces(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'nonces'>
+      >,
     DOMAIN_SEPARATOR: (...args: ExtractArgs<Contract['calls']['DOMAIN_SEPARATOR']>) =>
-      singleQuery(publicClient!, call.DOMAIN_SEPARATOR(...args).at(deployAddress)) as Promise<
+      singleQuery(publicClient!, call.DOMAIN_SEPARATOR(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'DOMAIN_SEPARATOR'>
       >,
 
     // Mutations
     transfer: (...args: ExtractArgs<Contract['mutations']['transfer']>) =>
-      mutate(walletClient!, mutation.transfer, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.transfer, { address: deployAddress, addressResolver })(...args),
     transferFrom: (...args: ExtractArgs<Contract['mutations']['transferFrom']>) =>
-      mutate(walletClient!, mutation.transferFrom, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.transferFrom, { address: deployAddress, addressResolver })(...args),
     approve: (...args: ExtractArgs<Contract['mutations']['approve']>) =>
-      mutate(walletClient!, mutation.approve, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.approve, { address: deployAddress, addressResolver })(...args),
     permit: (...args: ExtractArgs<Contract['mutations']['permit']>) =>
-      mutate(walletClient!, mutation.permit, { address: deployAddress })(...args),
+      mutate(walletClient!, mutation.permit, { address: deployAddress, addressResolver })(...args),
   }
 }

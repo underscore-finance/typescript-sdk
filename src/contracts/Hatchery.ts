@@ -3,8 +3,16 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery, mutate } from '@dappql/async'
-import { PublicClient, WalletClient } from 'viem'
+import { singleQuery, mutate, AddressResolverFunction } from '@dappql/async'
+import {
+  encodeEventTopics,
+  parseEventLogs,
+  ParseEventLogsReturnType,
+  Log,
+  RpcLog,
+  PublicClient,
+  WalletClient,
+} from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
@@ -535,9 +543,45 @@ export const mutation: {
   createUserWallet: getMutation('createUserWallet'),
 }
 
+export type ParsedEvent<T extends keyof Contract['events']> = {
+  event: RpcLog | Log
+  parsed: ParseEventLogsReturnType<typeof abi, T>
+}
+
+export function parseEvents<T extends keyof Contract['events']>(
+  eventName: T,
+  events: (RpcLog | Log)[],
+): ParsedEvent<T>[] {
+  return events.map((event) => {
+    return {
+      event,
+      parsed: parseEventLogs({
+        abi,
+        eventName,
+        logs: [event],
+      }),
+    }
+  })
+}
+
+export function getEventTopic<T extends keyof Contract['events']>(eventName: T): Address {
+  return encodeEventTopics({ abi, eventName })[0] as Address
+}
+
 export type SDK = {
   deployAddress: Address | undefined
   abi: typeof abi
+  events: {
+    UserWalletCreated: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'UserWalletCreated'>[] }
+    DepartmentPauseModified: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'DepartmentPauseModified'>[]
+    }
+    DepartmentFundsRecovered: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'DepartmentFundsRecovered'>[]
+    }
+  }
   getAddys: (...args: ExtractArgs<Contract['calls']['getAddys']>) => Promise<CallReturn<'getAddys'>>
   getUndyHq: (...args: ExtractArgs<Contract['calls']['getUndyHq']>) => Promise<CallReturn<'getUndyHq'>>
   canMintUndy: (...args: ExtractArgs<Contract['calls']['canMintUndy']>) => Promise<CallReturn<'canMintUndy'>>
@@ -553,37 +597,57 @@ export type SDK = {
   createUserWallet: (...args: ExtractArgs<Contract['mutations']['createUserWallet']>) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
+    events: {
+      UserWalletCreated: {
+        topic: getEventTopic('UserWalletCreated'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('UserWalletCreated', events),
+      },
+      DepartmentPauseModified: {
+        topic: getEventTopic('DepartmentPauseModified'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('DepartmentPauseModified', events),
+      },
+      DepartmentFundsRecovered: {
+        topic: getEventTopic('DepartmentFundsRecovered'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('DepartmentFundsRecovered', events),
+      },
+    },
     // Queries
     getAddys: (...args: ExtractArgs<Contract['calls']['getAddys']>) =>
-      singleQuery(publicClient!, call.getAddys(...args)) as Promise<CallReturn<'getAddys'>>,
+      singleQuery(publicClient!, call.getAddys(...args), {}, addressResolver) as Promise<CallReturn<'getAddys'>>,
     getUndyHq: (...args: ExtractArgs<Contract['calls']['getUndyHq']>) =>
-      singleQuery(publicClient!, call.getUndyHq(...args)) as Promise<CallReturn<'getUndyHq'>>,
+      singleQuery(publicClient!, call.getUndyHq(...args), {}, addressResolver) as Promise<CallReturn<'getUndyHq'>>,
     canMintUndy: (...args: ExtractArgs<Contract['calls']['canMintUndy']>) =>
-      singleQuery(publicClient!, call.canMintUndy(...args)) as Promise<CallReturn<'canMintUndy'>>,
+      singleQuery(publicClient!, call.canMintUndy(...args), {}, addressResolver) as Promise<CallReturn<'canMintUndy'>>,
     isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) =>
-      singleQuery(publicClient!, call.isPaused(...args)) as Promise<CallReturn<'isPaused'>>,
+      singleQuery(publicClient!, call.isPaused(...args), {}, addressResolver) as Promise<CallReturn<'isPaused'>>,
     doesWalletStillHaveTrialFundsWithAddys: (
       ...args: ExtractArgs<Contract['calls']['doesWalletStillHaveTrialFundsWithAddys']>
     ) =>
-      singleQuery(publicClient!, call.doesWalletStillHaveTrialFundsWithAddys(...args)) as Promise<
+      singleQuery(publicClient!, call.doesWalletStillHaveTrialFundsWithAddys(...args), {}, addressResolver) as Promise<
         CallReturn<'doesWalletStillHaveTrialFundsWithAddys'>
       >,
     WETH: (...args: ExtractArgs<Contract['calls']['WETH']>) =>
-      singleQuery(publicClient!, call.WETH(...args)) as Promise<CallReturn<'WETH'>>,
+      singleQuery(publicClient!, call.WETH(...args), {}, addressResolver) as Promise<CallReturn<'WETH'>>,
     ETH: (...args: ExtractArgs<Contract['calls']['ETH']>) =>
-      singleQuery(publicClient!, call.ETH(...args)) as Promise<CallReturn<'ETH'>>,
+      singleQuery(publicClient!, call.ETH(...args), {}, addressResolver) as Promise<CallReturn<'ETH'>>,
 
     // Mutations
-    pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => mutate(walletClient!, mutation.pause)(...args),
+    pause: (...args: ExtractArgs<Contract['mutations']['pause']>) =>
+      mutate(walletClient!, mutation.pause, { addressResolver })(...args),
     recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) =>
-      mutate(walletClient!, mutation.recoverFunds)(...args),
+      mutate(walletClient!, mutation.recoverFunds, { addressResolver })(...args),
     recoverFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverFundsMany']>) =>
-      mutate(walletClient!, mutation.recoverFundsMany)(...args),
+      mutate(walletClient!, mutation.recoverFundsMany, { addressResolver })(...args),
     createUserWallet: (...args: ExtractArgs<Contract['mutations']['createUserWallet']>) =>
-      mutate(walletClient!, mutation.createUserWallet)(...args),
+      mutate(walletClient!, mutation.createUserWallet, { addressResolver })(...args),
   }
 }

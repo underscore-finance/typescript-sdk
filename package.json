@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "build": "tsc",
-    "codegen": "dappql && prettier --write .",
+    "prettier": "prettier --write .",
+    "codegen": "dappql && npm run prettier",
     "ship": "npm run build && npm run ship:no-build",
     "ship:no-build": "npm publish --access public && bump patch --commit --push",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -30,8 +31,8 @@
     "version-bump-prompt": "^6.1.0"
   },
   "dependencies": {
-    "@dappql/async": "^1.0.3",
-    "dappql": "^2.0.34",
+    "@dappql/async": "^1.0.5",
+    "dappql": "^2.0.36",
     "viem": "^2.23.7"
   }
 }

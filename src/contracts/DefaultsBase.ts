@@ -3,7 +3,7 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery } from '@dappql/async'
+import { singleQuery, AddressResolverFunction } from '@dappql/async'
 import { PublicClient, WalletClient } from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
@@ -424,27 +424,44 @@ export type SDK = {
   ) => Promise<CallReturn<'whitelistedCreators'>>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
     // Queries
     userWalletConfig: (...args: ExtractArgs<Contract['calls']['userWalletConfig']>) =>
-      singleQuery(publicClient!, call.userWalletConfig(...args)) as Promise<CallReturn<'userWalletConfig'>>,
+      singleQuery(publicClient!, call.userWalletConfig(...args), {}, addressResolver) as Promise<
+        CallReturn<'userWalletConfig'>
+      >,
     agentConfig: (...args: ExtractArgs<Contract['calls']['agentConfig']>) =>
-      singleQuery(publicClient!, call.agentConfig(...args)) as Promise<CallReturn<'agentConfig'>>,
+      singleQuery(publicClient!, call.agentConfig(...args), {}, addressResolver) as Promise<CallReturn<'agentConfig'>>,
     managerConfig: (...args: ExtractArgs<Contract['calls']['managerConfig']>) =>
-      singleQuery(publicClient!, call.managerConfig(...args)) as Promise<CallReturn<'managerConfig'>>,
+      singleQuery(publicClient!, call.managerConfig(...args), {}, addressResolver) as Promise<
+        CallReturn<'managerConfig'>
+      >,
     payeeConfig: (...args: ExtractArgs<Contract['calls']['payeeConfig']>) =>
-      singleQuery(publicClient!, call.payeeConfig(...args)) as Promise<CallReturn<'payeeConfig'>>,
+      singleQuery(publicClient!, call.payeeConfig(...args), {}, addressResolver) as Promise<CallReturn<'payeeConfig'>>,
     chequeConfig: (...args: ExtractArgs<Contract['calls']['chequeConfig']>) =>
-      singleQuery(publicClient!, call.chequeConfig(...args)) as Promise<CallReturn<'chequeConfig'>>,
+      singleQuery(publicClient!, call.chequeConfig(...args), {}, addressResolver) as Promise<
+        CallReturn<'chequeConfig'>
+      >,
     ripeRewardsConfig: (...args: ExtractArgs<Contract['calls']['ripeRewardsConfig']>) =>
-      singleQuery(publicClient!, call.ripeRewardsConfig(...args)) as Promise<CallReturn<'ripeRewardsConfig'>>,
+      singleQuery(publicClient!, call.ripeRewardsConfig(...args), {}, addressResolver) as Promise<
+        CallReturn<'ripeRewardsConfig'>
+      >,
     securitySigners: (...args: ExtractArgs<Contract['calls']['securitySigners']>) =>
-      singleQuery(publicClient!, call.securitySigners(...args)) as Promise<CallReturn<'securitySigners'>>,
+      singleQuery(publicClient!, call.securitySigners(...args), {}, addressResolver) as Promise<
+        CallReturn<'securitySigners'>
+      >,
     whitelistedCreators: (...args: ExtractArgs<Contract['calls']['whitelistedCreators']>) =>
-      singleQuery(publicClient!, call.whitelistedCreators(...args)) as Promise<CallReturn<'whitelistedCreators'>>,
+      singleQuery(publicClient!, call.whitelistedCreators(...args), {}, addressResolver) as Promise<
+        CallReturn<'whitelistedCreators'>
+      >,
 
     // Mutations
   }

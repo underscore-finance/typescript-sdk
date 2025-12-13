@@ -3,8 +3,16 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery, mutate } from '@dappql/async'
-import { PublicClient, WalletClient } from 'viem'
+import { singleQuery, mutate, AddressResolverFunction } from '@dappql/async'
+import {
+  encodeEventTopics,
+  parseEventLogs,
+  ParseEventLogsReturnType,
+  Log,
+  RpcLog,
+  PublicClient,
+  WalletClient,
+} from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
@@ -1921,9 +1929,81 @@ export const mutation: {
   setBlacklist: getMutation('setBlacklist'),
 }
 
+export type ParsedEvent<T extends keyof Contract['events']> = {
+  event: RpcLog | Log
+  parsed: ParseEventLogsReturnType<typeof abi, T>
+}
+
+export function parseEvents<T extends keyof Contract['events']>(
+  eventName: T,
+  events: (RpcLog | Log)[],
+): ParsedEvent<T>[] {
+  return events.map((event) => {
+    return {
+      event,
+      parsed: parseEventLogs({
+        abi,
+        eventName,
+        logs: [event],
+      }),
+    }
+  })
+}
+
+export function getEventTopic<T extends keyof Contract['events']>(eventName: T): Address {
+  return encodeEventTopics({ abi, eventName })[0] as Address
+}
+
 export type SDK = {
   deployAddress: Address | undefined
   abi: typeof abi
+  events: {
+    GovChangeTimeLockModified: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovChangeTimeLockModified'>[]
+    }
+    RegistryTimeLockModified: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'RegistryTimeLockModified'>[]
+    }
+    GovChangeStarted: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovChangeStarted'>[] }
+    GovChangeConfirmed: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovChangeConfirmed'>[] }
+    GovChangeCancelled: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovChangeCancelled'>[] }
+    GovRelinquished: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovRelinquished'>[] }
+    UndyHqSetupFinished: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'UndyHqSetupFinished'>[] }
+    DepartmentPauseModified: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'DepartmentPauseModified'>[]
+    }
+    DepartmentFundsRecovered: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'DepartmentFundsRecovered'>[]
+    }
+    NewAddressPending: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'NewAddressPending'>[] }
+    NewAddressConfirmed: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'NewAddressConfirmed'>[] }
+    NewAddressCancelled: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'NewAddressCancelled'>[] }
+    AddressUpdatePending: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'AddressUpdatePending'>[] }
+    AddressUpdateConfirmed: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'AddressUpdateConfirmed'>[]
+    }
+    AddressUpdateCancelled: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'AddressUpdateCancelled'>[]
+    }
+    AddressDisablePending: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'AddressDisablePending'>[]
+    }
+    AddressDisableConfirmed: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'AddressDisableConfirmed'>[]
+    }
+    AddressDisableCancelled: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'AddressDisableCancelled'>[]
+    }
+  }
   getUndyHqFromGov: (
     ...args: ExtractArgs<Contract['calls']['getUndyHqFromGov']>
   ) => Promise<CallReturn<'getUndyHqFromGov'>>
@@ -2042,133 +2122,257 @@ export type SDK = {
   setBlacklist: (...args: ExtractArgs<Contract['mutations']['setBlacklist']>) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
+    events: {
+      GovChangeTimeLockModified: {
+        topic: getEventTopic('GovChangeTimeLockModified'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovChangeTimeLockModified', events),
+      },
+      RegistryTimeLockModified: {
+        topic: getEventTopic('RegistryTimeLockModified'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('RegistryTimeLockModified', events),
+      },
+      GovChangeStarted: {
+        topic: getEventTopic('GovChangeStarted'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovChangeStarted', events),
+      },
+      GovChangeConfirmed: {
+        topic: getEventTopic('GovChangeConfirmed'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovChangeConfirmed', events),
+      },
+      GovChangeCancelled: {
+        topic: getEventTopic('GovChangeCancelled'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovChangeCancelled', events),
+      },
+      GovRelinquished: {
+        topic: getEventTopic('GovRelinquished'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovRelinquished', events),
+      },
+      UndyHqSetupFinished: {
+        topic: getEventTopic('UndyHqSetupFinished'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('UndyHqSetupFinished', events),
+      },
+      DepartmentPauseModified: {
+        topic: getEventTopic('DepartmentPauseModified'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('DepartmentPauseModified', events),
+      },
+      DepartmentFundsRecovered: {
+        topic: getEventTopic('DepartmentFundsRecovered'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('DepartmentFundsRecovered', events),
+      },
+      NewAddressPending: {
+        topic: getEventTopic('NewAddressPending'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('NewAddressPending', events),
+      },
+      NewAddressConfirmed: {
+        topic: getEventTopic('NewAddressConfirmed'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('NewAddressConfirmed', events),
+      },
+      NewAddressCancelled: {
+        topic: getEventTopic('NewAddressCancelled'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('NewAddressCancelled', events),
+      },
+      AddressUpdatePending: {
+        topic: getEventTopic('AddressUpdatePending'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('AddressUpdatePending', events),
+      },
+      AddressUpdateConfirmed: {
+        topic: getEventTopic('AddressUpdateConfirmed'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('AddressUpdateConfirmed', events),
+      },
+      AddressUpdateCancelled: {
+        topic: getEventTopic('AddressUpdateCancelled'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('AddressUpdateCancelled', events),
+      },
+      AddressDisablePending: {
+        topic: getEventTopic('AddressDisablePending'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('AddressDisablePending', events),
+      },
+      AddressDisableConfirmed: {
+        topic: getEventTopic('AddressDisableConfirmed'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('AddressDisableConfirmed', events),
+      },
+      AddressDisableCancelled: {
+        topic: getEventTopic('AddressDisableCancelled'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('AddressDisableCancelled', events),
+      },
+    },
     // Queries
     getUndyHqFromGov: (...args: ExtractArgs<Contract['calls']['getUndyHqFromGov']>) =>
-      singleQuery(publicClient!, call.getUndyHqFromGov(...args)) as Promise<CallReturn<'getUndyHqFromGov'>>,
+      singleQuery(publicClient!, call.getUndyHqFromGov(...args), {}, addressResolver) as Promise<
+        CallReturn<'getUndyHqFromGov'>
+      >,
     canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) =>
-      singleQuery(publicClient!, call.canGovern(...args)) as Promise<CallReturn<'canGovern'>>,
+      singleQuery(publicClient!, call.canGovern(...args), {}, addressResolver) as Promise<CallReturn<'canGovern'>>,
     getGovernors: (...args: ExtractArgs<Contract['calls']['getGovernors']>) =>
-      singleQuery(publicClient!, call.getGovernors(...args)) as Promise<CallReturn<'getGovernors'>>,
+      singleQuery(publicClient!, call.getGovernors(...args), {}, addressResolver) as Promise<
+        CallReturn<'getGovernors'>
+      >,
     hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
-      singleQuery(publicClient!, call.hasPendingGovChange(...args)) as Promise<CallReturn<'hasPendingGovChange'>>,
+      singleQuery(publicClient!, call.hasPendingGovChange(...args), {}, addressResolver) as Promise<
+        CallReturn<'hasPendingGovChange'>
+      >,
     isValidGovTimeLock: (...args: ExtractArgs<Contract['calls']['isValidGovTimeLock']>) =>
-      singleQuery(publicClient!, call.isValidGovTimeLock(...args)) as Promise<CallReturn<'isValidGovTimeLock'>>,
+      singleQuery(publicClient!, call.isValidGovTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidGovTimeLock'>
+      >,
     minGovChangeTimeLock: (...args: ExtractArgs<Contract['calls']['minGovChangeTimeLock']>) =>
-      singleQuery(publicClient!, call.minGovChangeTimeLock(...args)) as Promise<CallReturn<'minGovChangeTimeLock'>>,
+      singleQuery(publicClient!, call.minGovChangeTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'minGovChangeTimeLock'>
+      >,
     maxGovChangeTimeLock: (...args: ExtractArgs<Contract['calls']['maxGovChangeTimeLock']>) =>
-      singleQuery(publicClient!, call.maxGovChangeTimeLock(...args)) as Promise<CallReturn<'maxGovChangeTimeLock'>>,
+      singleQuery(publicClient!, call.maxGovChangeTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'maxGovChangeTimeLock'>
+      >,
     governance: (...args: ExtractArgs<Contract['calls']['governance']>) =>
-      singleQuery(publicClient!, call.governance(...args)) as Promise<CallReturn<'governance'>>,
+      singleQuery(publicClient!, call.governance(...args), {}, addressResolver) as Promise<CallReturn<'governance'>>,
     pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) =>
-      singleQuery(publicClient!, call.pendingGov(...args)) as Promise<CallReturn<'pendingGov'>>,
+      singleQuery(publicClient!, call.pendingGov(...args), {}, addressResolver) as Promise<CallReturn<'pendingGov'>>,
     numGovChanges: (...args: ExtractArgs<Contract['calls']['numGovChanges']>) =>
-      singleQuery(publicClient!, call.numGovChanges(...args)) as Promise<CallReturn<'numGovChanges'>>,
+      singleQuery(publicClient!, call.numGovChanges(...args), {}, addressResolver) as Promise<
+        CallReturn<'numGovChanges'>
+      >,
     govChangeTimeLock: (...args: ExtractArgs<Contract['calls']['govChangeTimeLock']>) =>
-      singleQuery(publicClient!, call.govChangeTimeLock(...args)) as Promise<CallReturn<'govChangeTimeLock'>>,
+      singleQuery(publicClient!, call.govChangeTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'govChangeTimeLock'>
+      >,
     getRegistryDescription: (...args: ExtractArgs<Contract['calls']['getRegistryDescription']>) =>
-      singleQuery(publicClient!, call.getRegistryDescription(...args)) as Promise<CallReturn<'getRegistryDescription'>>,
+      singleQuery(publicClient!, call.getRegistryDescription(...args), {}, addressResolver) as Promise<
+        CallReturn<'getRegistryDescription'>
+      >,
     isValidNewAddress: (...args: ExtractArgs<Contract['calls']['isValidNewAddress']>) =>
-      singleQuery(publicClient!, call.isValidNewAddress(...args)) as Promise<CallReturn<'isValidNewAddress'>>,
+      singleQuery(publicClient!, call.isValidNewAddress(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidNewAddress'>
+      >,
     isValidAddressUpdate: (...args: ExtractArgs<Contract['calls']['isValidAddressUpdate']>) =>
-      singleQuery(publicClient!, call.isValidAddressUpdate(...args)) as Promise<CallReturn<'isValidAddressUpdate'>>,
+      singleQuery(publicClient!, call.isValidAddressUpdate(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidAddressUpdate'>
+      >,
     isValidAddressDisable: (...args: ExtractArgs<Contract['calls']['isValidAddressDisable']>) =>
-      singleQuery(publicClient!, call.isValidAddressDisable(...args)) as Promise<CallReturn<'isValidAddressDisable'>>,
+      singleQuery(publicClient!, call.isValidAddressDisable(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidAddressDisable'>
+      >,
     isValidRegistryTimeLock: (...args: ExtractArgs<Contract['calls']['isValidRegistryTimeLock']>) =>
-      singleQuery(publicClient!, call.isValidRegistryTimeLock(...args)) as Promise<
+      singleQuery(publicClient!, call.isValidRegistryTimeLock(...args), {}, addressResolver) as Promise<
         CallReturn<'isValidRegistryTimeLock'>
       >,
     minRegistryTimeLock: (...args: ExtractArgs<Contract['calls']['minRegistryTimeLock']>) =>
-      singleQuery(publicClient!, call.minRegistryTimeLock(...args)) as Promise<CallReturn<'minRegistryTimeLock'>>,
+      singleQuery(publicClient!, call.minRegistryTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'minRegistryTimeLock'>
+      >,
     maxRegistryTimeLock: (...args: ExtractArgs<Contract['calls']['maxRegistryTimeLock']>) =>
-      singleQuery(publicClient!, call.maxRegistryTimeLock(...args)) as Promise<CallReturn<'maxRegistryTimeLock'>>,
+      singleQuery(publicClient!, call.maxRegistryTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'maxRegistryTimeLock'>
+      >,
     isValidAddr: (...args: ExtractArgs<Contract['calls']['isValidAddr']>) =>
-      singleQuery(publicClient!, call.isValidAddr(...args)) as Promise<CallReturn<'isValidAddr'>>,
+      singleQuery(publicClient!, call.isValidAddr(...args), {}, addressResolver) as Promise<CallReturn<'isValidAddr'>>,
     isValidRegId: (...args: ExtractArgs<Contract['calls']['isValidRegId']>) =>
-      singleQuery(publicClient!, call.isValidRegId(...args)) as Promise<CallReturn<'isValidRegId'>>,
+      singleQuery(publicClient!, call.isValidRegId(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidRegId'>
+      >,
     getRegId: (...args: ExtractArgs<Contract['calls']['getRegId']>) =>
-      singleQuery(publicClient!, call.getRegId(...args)) as Promise<CallReturn<'getRegId'>>,
+      singleQuery(publicClient!, call.getRegId(...args), {}, addressResolver) as Promise<CallReturn<'getRegId'>>,
     getAddr: (...args: ExtractArgs<Contract['calls']['getAddr']>) =>
-      singleQuery(publicClient!, call.getAddr(...args)) as Promise<CallReturn<'getAddr'>>,
+      singleQuery(publicClient!, call.getAddr(...args), {}, addressResolver) as Promise<CallReturn<'getAddr'>>,
     getAddrInfo: (...args: ExtractArgs<Contract['calls']['getAddrInfo']>) =>
-      singleQuery(publicClient!, call.getAddrInfo(...args)) as Promise<CallReturn<'getAddrInfo'>>,
+      singleQuery(publicClient!, call.getAddrInfo(...args), {}, addressResolver) as Promise<CallReturn<'getAddrInfo'>>,
     getAddrDescription: (...args: ExtractArgs<Contract['calls']['getAddrDescription']>) =>
-      singleQuery(publicClient!, call.getAddrDescription(...args)) as Promise<CallReturn<'getAddrDescription'>>,
+      singleQuery(publicClient!, call.getAddrDescription(...args), {}, addressResolver) as Promise<
+        CallReturn<'getAddrDescription'>
+      >,
     getNumAddrs: (...args: ExtractArgs<Contract['calls']['getNumAddrs']>) =>
-      singleQuery(publicClient!, call.getNumAddrs(...args)) as Promise<CallReturn<'getNumAddrs'>>,
+      singleQuery(publicClient!, call.getNumAddrs(...args), {}, addressResolver) as Promise<CallReturn<'getNumAddrs'>>,
     getLastAddr: (...args: ExtractArgs<Contract['calls']['getLastAddr']>) =>
-      singleQuery(publicClient!, call.getLastAddr(...args)) as Promise<CallReturn<'getLastAddr'>>,
+      singleQuery(publicClient!, call.getLastAddr(...args), {}, addressResolver) as Promise<CallReturn<'getLastAddr'>>,
     getLastRegId: (...args: ExtractArgs<Contract['calls']['getLastRegId']>) =>
-      singleQuery(publicClient!, call.getLastRegId(...args)) as Promise<CallReturn<'getLastRegId'>>,
+      singleQuery(publicClient!, call.getLastRegId(...args), {}, addressResolver) as Promise<
+        CallReturn<'getLastRegId'>
+      >,
     registryChangeTimeLock: (...args: ExtractArgs<Contract['calls']['registryChangeTimeLock']>) =>
-      singleQuery(publicClient!, call.registryChangeTimeLock(...args)) as Promise<CallReturn<'registryChangeTimeLock'>>,
+      singleQuery(publicClient!, call.registryChangeTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'registryChangeTimeLock'>
+      >,
     addrInfo: (...args: ExtractArgs<Contract['calls']['addrInfo']>) =>
-      singleQuery(publicClient!, call.addrInfo(...args)) as Promise<CallReturn<'addrInfo'>>,
+      singleQuery(publicClient!, call.addrInfo(...args), {}, addressResolver) as Promise<CallReturn<'addrInfo'>>,
     addrToRegId: (...args: ExtractArgs<Contract['calls']['addrToRegId']>) =>
-      singleQuery(publicClient!, call.addrToRegId(...args)) as Promise<CallReturn<'addrToRegId'>>,
+      singleQuery(publicClient!, call.addrToRegId(...args), {}, addressResolver) as Promise<CallReturn<'addrToRegId'>>,
     numAddrs: (...args: ExtractArgs<Contract['calls']['numAddrs']>) =>
-      singleQuery(publicClient!, call.numAddrs(...args)) as Promise<CallReturn<'numAddrs'>>,
+      singleQuery(publicClient!, call.numAddrs(...args), {}, addressResolver) as Promise<CallReturn<'numAddrs'>>,
     pendingNewAddr: (...args: ExtractArgs<Contract['calls']['pendingNewAddr']>) =>
-      singleQuery(publicClient!, call.pendingNewAddr(...args)) as Promise<CallReturn<'pendingNewAddr'>>,
+      singleQuery(publicClient!, call.pendingNewAddr(...args), {}, addressResolver) as Promise<
+        CallReturn<'pendingNewAddr'>
+      >,
     pendingAddrUpdate: (...args: ExtractArgs<Contract['calls']['pendingAddrUpdate']>) =>
-      singleQuery(publicClient!, call.pendingAddrUpdate(...args)) as Promise<CallReturn<'pendingAddrUpdate'>>,
+      singleQuery(publicClient!, call.pendingAddrUpdate(...args), {}, addressResolver) as Promise<
+        CallReturn<'pendingAddrUpdate'>
+      >,
     pendingAddrDisable: (...args: ExtractArgs<Contract['calls']['pendingAddrDisable']>) =>
-      singleQuery(publicClient!, call.pendingAddrDisable(...args)) as Promise<CallReturn<'pendingAddrDisable'>>,
+      singleQuery(publicClient!, call.pendingAddrDisable(...args), {}, addressResolver) as Promise<
+        CallReturn<'pendingAddrDisable'>
+      >,
     getAddys: (...args: ExtractArgs<Contract['calls']['getAddys']>) =>
-      singleQuery(publicClient!, call.getAddys(...args)) as Promise<CallReturn<'getAddys'>>,
+      singleQuery(publicClient!, call.getAddys(...args), {}, addressResolver) as Promise<CallReturn<'getAddys'>>,
     getUndyHq: (...args: ExtractArgs<Contract['calls']['getUndyHq']>) =>
-      singleQuery(publicClient!, call.getUndyHq(...args)) as Promise<CallReturn<'getUndyHq'>>,
+      singleQuery(publicClient!, call.getUndyHq(...args), {}, addressResolver) as Promise<CallReturn<'getUndyHq'>>,
     canMintUndy: (...args: ExtractArgs<Contract['calls']['canMintUndy']>) =>
-      singleQuery(publicClient!, call.canMintUndy(...args)) as Promise<CallReturn<'canMintUndy'>>,
+      singleQuery(publicClient!, call.canMintUndy(...args), {}, addressResolver) as Promise<CallReturn<'canMintUndy'>>,
     isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) =>
-      singleQuery(publicClient!, call.isPaused(...args)) as Promise<CallReturn<'isPaused'>>,
+      singleQuery(publicClient!, call.isPaused(...args), {}, addressResolver) as Promise<CallReturn<'isPaused'>>,
     isSwitchboardAddr: (...args: ExtractArgs<Contract['calls']['isSwitchboardAddr']>) =>
-      singleQuery(publicClient!, call.isSwitchboardAddr(...args)) as Promise<CallReturn<'isSwitchboardAddr'>>,
+      singleQuery(publicClient!, call.isSwitchboardAddr(...args), {}, addressResolver) as Promise<
+        CallReturn<'isSwitchboardAddr'>
+      >,
 
     // Mutations
     startGovernanceChange: (...args: ExtractArgs<Contract['mutations']['startGovernanceChange']>) =>
-      mutate(walletClient!, mutation.startGovernanceChange)(...args),
+      mutate(walletClient!, mutation.startGovernanceChange, { addressResolver })(...args),
     confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) =>
-      mutate(walletClient!, mutation.confirmGovernanceChange)(...args),
+      mutate(walletClient!, mutation.confirmGovernanceChange, { addressResolver })(...args),
     cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) =>
-      mutate(walletClient!, mutation.cancelGovernanceChange)(...args),
+      mutate(walletClient!, mutation.cancelGovernanceChange, { addressResolver })(...args),
     relinquishGov: (...args: ExtractArgs<Contract['mutations']['relinquishGov']>) =>
-      mutate(walletClient!, mutation.relinquishGov)(...args),
+      mutate(walletClient!, mutation.relinquishGov, { addressResolver })(...args),
     setGovTimeLock: (...args: ExtractArgs<Contract['mutations']['setGovTimeLock']>) =>
-      mutate(walletClient!, mutation.setGovTimeLock)(...args),
+      mutate(walletClient!, mutation.setGovTimeLock, { addressResolver })(...args),
     finishUndyHqSetup: (...args: ExtractArgs<Contract['mutations']['finishUndyHqSetup']>) =>
-      mutate(walletClient!, mutation.finishUndyHqSetup)(...args),
+      mutate(walletClient!, mutation.finishUndyHqSetup, { addressResolver })(...args),
     setRegistryTimeLock: (...args: ExtractArgs<Contract['mutations']['setRegistryTimeLock']>) =>
-      mutate(walletClient!, mutation.setRegistryTimeLock)(...args),
+      mutate(walletClient!, mutation.setRegistryTimeLock, { addressResolver })(...args),
     setRegistryTimeLockAfterSetup: (...args: ExtractArgs<Contract['mutations']['setRegistryTimeLockAfterSetup']>) =>
-      mutate(walletClient!, mutation.setRegistryTimeLockAfterSetup)(...args),
-    pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => mutate(walletClient!, mutation.pause)(...args),
+      mutate(walletClient!, mutation.setRegistryTimeLockAfterSetup, { addressResolver })(...args),
+    pause: (...args: ExtractArgs<Contract['mutations']['pause']>) =>
+      mutate(walletClient!, mutation.pause, { addressResolver })(...args),
     recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) =>
-      mutate(walletClient!, mutation.recoverFunds)(...args),
+      mutate(walletClient!, mutation.recoverFunds, { addressResolver })(...args),
     recoverFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverFundsMany']>) =>
-      mutate(walletClient!, mutation.recoverFundsMany)(...args),
+      mutate(walletClient!, mutation.recoverFundsMany, { addressResolver })(...args),
     startAddNewAddressToRegistry: (...args: ExtractArgs<Contract['mutations']['startAddNewAddressToRegistry']>) =>
-      mutate(walletClient!, mutation.startAddNewAddressToRegistry)(...args),
+      mutate(walletClient!, mutation.startAddNewAddressToRegistry, { addressResolver })(...args),
     confirmNewAddressToRegistry: (...args: ExtractArgs<Contract['mutations']['confirmNewAddressToRegistry']>) =>
-      mutate(walletClient!, mutation.confirmNewAddressToRegistry)(...args),
+      mutate(walletClient!, mutation.confirmNewAddressToRegistry, { addressResolver })(...args),
     cancelNewAddressToRegistry: (...args: ExtractArgs<Contract['mutations']['cancelNewAddressToRegistry']>) =>
-      mutate(walletClient!, mutation.cancelNewAddressToRegistry)(...args),
+      mutate(walletClient!, mutation.cancelNewAddressToRegistry, { addressResolver })(...args),
     startAddressUpdateToRegistry: (...args: ExtractArgs<Contract['mutations']['startAddressUpdateToRegistry']>) =>
-      mutate(walletClient!, mutation.startAddressUpdateToRegistry)(...args),
+      mutate(walletClient!, mutation.startAddressUpdateToRegistry, { addressResolver })(...args),
     confirmAddressUpdateToRegistry: (...args: ExtractArgs<Contract['mutations']['confirmAddressUpdateToRegistry']>) =>
-      mutate(walletClient!, mutation.confirmAddressUpdateToRegistry)(...args),
+      mutate(walletClient!, mutation.confirmAddressUpdateToRegistry, { addressResolver })(...args),
     cancelAddressUpdateToRegistry: (...args: ExtractArgs<Contract['mutations']['cancelAddressUpdateToRegistry']>) =>
-      mutate(walletClient!, mutation.cancelAddressUpdateToRegistry)(...args),
+      mutate(walletClient!, mutation.cancelAddressUpdateToRegistry, { addressResolver })(...args),
     startAddressDisableInRegistry: (...args: ExtractArgs<Contract['mutations']['startAddressDisableInRegistry']>) =>
-      mutate(walletClient!, mutation.startAddressDisableInRegistry)(...args),
+      mutate(walletClient!, mutation.startAddressDisableInRegistry, { addressResolver })(...args),
     confirmAddressDisableInRegistry: (...args: ExtractArgs<Contract['mutations']['confirmAddressDisableInRegistry']>) =>
-      mutate(walletClient!, mutation.confirmAddressDisableInRegistry)(...args),
+      mutate(walletClient!, mutation.confirmAddressDisableInRegistry, { addressResolver })(...args),
     cancelAddressDisableInRegistry: (...args: ExtractArgs<Contract['mutations']['cancelAddressDisableInRegistry']>) =>
-      mutate(walletClient!, mutation.cancelAddressDisableInRegistry)(...args),
+      mutate(walletClient!, mutation.cancelAddressDisableInRegistry, { addressResolver })(...args),
     setBlacklist: (...args: ExtractArgs<Contract['mutations']['setBlacklist']>) =>
-      mutate(walletClient!, mutation.setBlacklist)(...args),
+      mutate(walletClient!, mutation.setBlacklist, { addressResolver })(...args),
   }
 }

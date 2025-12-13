@@ -1,3 +1,4 @@
+import { AddressResolverFunction } from '@dappql/async'
 import { Address, PublicClient } from 'viem'
 
 import { LegoTools } from './contracts/index.js'
@@ -15,11 +16,12 @@ export async function getSwapInstructionsAmountOut(
     slippage: bigint
     includeLegoIds?: bigint[]
   },
+  addressResolver?: AddressResolverFunction,
 ) {
   const { tokenIn, tokenOut, amountIn, slippage, includeLegoIds } = payload
 
   const instructions = await publicClient.simulateContract({
-    address: LegoTools.deployAddress!,
+    address: addressResolver ? addressResolver('LegoTools') : LegoTools.deployAddress!,
     abi: LegoTools.abi,
     functionName: 'getRoutesAndSwapInstructionsAmountOut',
     args: [tokenIn, tokenOut, amountIn, slippage, includeLegoIds ?? []],
@@ -38,11 +40,12 @@ export async function getSwapInstructionsAmountIn(
     slippage: bigint
     includeLegoIds?: bigint[]
   },
+  addressResolver?: AddressResolverFunction,
 ) {
   const { tokenIn, tokenOut, amountOut, amountInAvailable, slippage, includeLegoIds } = payload
 
   const instructions = await publicClient.simulateContract({
-    address: LegoTools.deployAddress!,
+    address: addressResolver ? addressResolver('LegoTools') : LegoTools.deployAddress!,
     abi: LegoTools.abi,
     functionName: 'getRoutesAndSwapInstructionsAmountIn',
     args: [tokenIn, tokenOut, amountOut, amountInAvailable, slippage, includeLegoIds ?? []],

@@ -3,8 +3,16 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery, mutate } from '@dappql/async'
-import { PublicClient, WalletClient } from 'viem'
+import { singleQuery, mutate, AddressResolverFunction } from '@dappql/async'
+import {
+  encodeEventTopics,
+  parseEventLogs,
+  ParseEventLogsReturnType,
+  Log,
+  RpcLog,
+  PublicClient,
+  WalletClient,
+} from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
@@ -511,9 +519,46 @@ export const mutation: {
   removeWhitelistAddr: getMutation('removeWhitelistAddr'),
 }
 
+export type ParsedEvent<T extends keyof Contract['events']> = {
+  event: RpcLog | Log
+  parsed: ParseEventLogsReturnType<typeof abi, T>
+}
+
+export function parseEvents<T extends keyof Contract['events']>(
+  eventName: T,
+  events: (RpcLog | Log)[],
+): ParsedEvent<T>[] {
+  return events.map((event) => {
+    return {
+      event,
+      parsed: parseEventLogs({
+        abi,
+        eventName,
+        logs: [event],
+      }),
+    }
+  })
+}
+
+export function getEventTopic<T extends keyof Contract['events']>(eventName: T): Address {
+  return encodeEventTopics({ abi, eventName })[0] as Address
+}
+
 export type SDK = {
   deployAddress: Address | undefined
   abi: typeof abi
+  events: {
+    WhitelistAddrPending: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'WhitelistAddrPending'>[] }
+    WhitelistAddrConfirmed: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'WhitelistAddrConfirmed'>[]
+    }
+    WhitelistAddrCancelled: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'WhitelistAddrCancelled'>[]
+    }
+    WhitelistAddrRemoved: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'WhitelistAddrRemoved'>[] }
+  }
   canManageWhitelist: (
     ...args: ExtractArgs<Contract['calls']['canManageWhitelist']>
   ) => Promise<CallReturn<'canManageWhitelist'>>
@@ -529,26 +574,53 @@ export type SDK = {
   removeWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['removeWhitelistAddr']>) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
+    events: {
+      WhitelistAddrPending: {
+        topic: getEventTopic('WhitelistAddrPending'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('WhitelistAddrPending', events),
+      },
+      WhitelistAddrConfirmed: {
+        topic: getEventTopic('WhitelistAddrConfirmed'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('WhitelistAddrConfirmed', events),
+      },
+      WhitelistAddrCancelled: {
+        topic: getEventTopic('WhitelistAddrCancelled'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('WhitelistAddrCancelled', events),
+      },
+      WhitelistAddrRemoved: {
+        topic: getEventTopic('WhitelistAddrRemoved'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('WhitelistAddrRemoved', events),
+      },
+    },
     // Queries
     canManageWhitelist: (...args: ExtractArgs<Contract['calls']['canManageWhitelist']>) =>
-      singleQuery(publicClient!, call.canManageWhitelist(...args)) as Promise<CallReturn<'canManageWhitelist'>>,
+      singleQuery(publicClient!, call.canManageWhitelist(...args), {}, addressResolver) as Promise<
+        CallReturn<'canManageWhitelist'>
+      >,
     getWhitelistConfig: (...args: ExtractArgs<Contract['calls']['getWhitelistConfig']>) =>
-      singleQuery(publicClient!, call.getWhitelistConfig(...args)) as Promise<CallReturn<'getWhitelistConfig'>>,
+      singleQuery(publicClient!, call.getWhitelistConfig(...args), {}, addressResolver) as Promise<
+        CallReturn<'getWhitelistConfig'>
+      >,
     UNDY_HQ: (...args: ExtractArgs<Contract['calls']['UNDY_HQ']>) =>
-      singleQuery(publicClient!, call.UNDY_HQ(...args)) as Promise<CallReturn<'UNDY_HQ'>>,
+      singleQuery(publicClient!, call.UNDY_HQ(...args), {}, addressResolver) as Promise<CallReturn<'UNDY_HQ'>>,
 
     // Mutations
     addPendingWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['addPendingWhitelistAddr']>) =>
-      mutate(walletClient!, mutation.addPendingWhitelistAddr)(...args),
+      mutate(walletClient!, mutation.addPendingWhitelistAddr, { addressResolver })(...args),
     confirmWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['confirmWhitelistAddr']>) =>
-      mutate(walletClient!, mutation.confirmWhitelistAddr)(...args),
+      mutate(walletClient!, mutation.confirmWhitelistAddr, { addressResolver })(...args),
     cancelPendingWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['cancelPendingWhitelistAddr']>) =>
-      mutate(walletClient!, mutation.cancelPendingWhitelistAddr)(...args),
+      mutate(walletClient!, mutation.cancelPendingWhitelistAddr, { addressResolver })(...args),
     removeWhitelistAddr: (...args: ExtractArgs<Contract['mutations']['removeWhitelistAddr']>) =>
-      mutate(walletClient!, mutation.removeWhitelistAddr)(...args),
+      mutate(walletClient!, mutation.removeWhitelistAddr, { addressResolver })(...args),
   }
 }

@@ -3,7 +3,7 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery } from '@dappql/async'
+import { singleQuery, AddressResolverFunction } from '@dappql/async'
 import { PublicClient, WalletClient } from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
@@ -1772,69 +1772,129 @@ export type SDK = {
   USDC: (...args: ExtractArgs<Contract['calls']['USDC']>) => Promise<CallReturn<'USDC'>>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  deployAddress: Address,
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
     // Queries
     getAddys: (...args: ExtractArgs<Contract['calls']['getAddys']>) =>
-      singleQuery(publicClient!, call.getAddys(...args)) as Promise<CallReturn<'getAddys'>>,
+      singleQuery(publicClient!, call.getAddys(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'getAddys'>
+      >,
     getUndyHq: (...args: ExtractArgs<Contract['calls']['getUndyHq']>) =>
-      singleQuery(publicClient!, call.getUndyHq(...args)) as Promise<CallReturn<'getUndyHq'>>,
+      singleQuery(publicClient!, call.getUndyHq(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'getUndyHq'>
+      >,
     getSwappableUsdcAmount: (...args: ExtractArgs<Contract['calls']['getSwappableUsdcAmount']>) =>
-      singleQuery(publicClient!, call.getSwappableUsdcAmount(...args)) as Promise<CallReturn<'getSwappableUsdcAmount'>>,
+      singleQuery(
+        publicClient!,
+        call.getSwappableUsdcAmount(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getSwappableUsdcAmount'>>,
     getMaxBorrowAmount: (...args: ExtractArgs<Contract['calls']['getMaxBorrowAmount']>) =>
-      singleQuery(publicClient!, call.getMaxBorrowAmount(...args)) as Promise<CallReturn<'getMaxBorrowAmount'>>,
+      singleQuery(publicClient!, call.getMaxBorrowAmount(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'getMaxBorrowAmount'>
+      >,
     performPostSwapValidation: (...args: ExtractArgs<Contract['calls']['performPostSwapValidation']>) =>
-      singleQuery(publicClient!, call.performPostSwapValidation(...args)) as Promise<
-        CallReturn<'performPostSwapValidation'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.performPostSwapValidation(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'performPostSwapValidation'>>,
     getTotalAssetsForUsdcVault: (...args: ExtractArgs<Contract['calls']['getTotalAssetsForUsdcVault']>) =>
-      singleQuery(publicClient!, call.getTotalAssetsForUsdcVault(...args)) as Promise<
-        CallReturn<'getTotalAssetsForUsdcVault'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getTotalAssetsForUsdcVault(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getTotalAssetsForUsdcVault'>>,
     getTotalAssetsForNonUsdcVault: (...args: ExtractArgs<Contract['calls']['getTotalAssetsForNonUsdcVault']>) =>
-      singleQuery(publicClient!, call.getTotalAssetsForNonUsdcVault(...args)) as Promise<
-        CallReturn<'getTotalAssetsForNonUsdcVault'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getTotalAssetsForNonUsdcVault(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getTotalAssetsForNonUsdcVault'>>,
     getCollateralBalance: (...args: ExtractArgs<Contract['calls']['getCollateralBalance']>) =>
-      singleQuery(publicClient!, call.getCollateralBalance(...args)) as Promise<CallReturn<'getCollateralBalance'>>,
+      singleQuery(publicClient!, call.getCollateralBalance(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'getCollateralBalance'>
+      >,
     isSupportedAssetInVault: (...args: ExtractArgs<Contract['calls']['isSupportedAssetInVault']>) =>
-      singleQuery(publicClient!, call.isSupportedAssetInVault(...args)) as Promise<
-        CallReturn<'isSupportedAssetInVault'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.isSupportedAssetInVault(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'isSupportedAssetInVault'>>,
     getVaultBookAndDeleverage: (...args: ExtractArgs<Contract['calls']['getVaultBookAndDeleverage']>) =>
-      singleQuery(publicClient!, call.getVaultBookAndDeleverage(...args)) as Promise<
-        CallReturn<'getVaultBookAndDeleverage'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getVaultBookAndDeleverage(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getVaultBookAndDeleverage'>>,
     isValidVaultToken: (...args: ExtractArgs<Contract['calls']['isValidVaultToken']>) =>
-      singleQuery(publicClient!, call.isValidVaultToken(...args)) as Promise<CallReturn<'isValidVaultToken'>>,
+      singleQuery(publicClient!, call.isValidVaultToken(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'isValidVaultToken'>
+      >,
     getBorrowRate: (...args: ExtractArgs<Contract['calls']['getBorrowRate']>) =>
-      singleQuery(publicClient!, call.getBorrowRate(...args)) as Promise<CallReturn<'getBorrowRate'>>,
+      singleQuery(publicClient!, call.getBorrowRate(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'getBorrowRate'>
+      >,
     getDebtAmount: (...args: ExtractArgs<Contract['calls']['getDebtAmount']>) =>
-      singleQuery(publicClient!, call.getDebtAmount(...args)) as Promise<CallReturn<'getDebtAmount'>>,
+      singleQuery(publicClient!, call.getDebtAmount(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'getDebtAmount'>
+      >,
     getVaultTokenAmounts: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmounts']>) =>
-      singleQuery(publicClient!, call.getVaultTokenAmounts(...args)) as Promise<CallReturn<'getVaultTokenAmounts'>>,
+      singleQuery(publicClient!, call.getVaultTokenAmounts(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'getVaultTokenAmounts'>
+      >,
     getUnderlyingAmounts: (...args: ExtractArgs<Contract['calls']['getUnderlyingAmounts']>) =>
-      singleQuery(publicClient!, call.getUnderlyingAmounts(...args)) as Promise<CallReturn<'getUnderlyingAmounts'>>,
+      singleQuery(publicClient!, call.getUnderlyingAmounts(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'getUnderlyingAmounts'>
+      >,
     getGreenAmounts: (...args: ExtractArgs<Contract['calls']['getGreenAmounts']>) =>
-      singleQuery(publicClient!, call.getGreenAmounts(...args)) as Promise<CallReturn<'getGreenAmounts'>>,
+      singleQuery(publicClient!, call.getGreenAmounts(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'getGreenAmounts'>
+      >,
     getTrueMaxBorrowAmountForVault: (...args: ExtractArgs<Contract['calls']['getTrueMaxBorrowAmountForVault']>) =>
-      singleQuery(publicClient!, call.getTrueMaxBorrowAmountForVault(...args)) as Promise<
-        CallReturn<'getTrueMaxBorrowAmountForVault'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getTrueMaxBorrowAmountForVault(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getTrueMaxBorrowAmountForVault'>>,
     getMaxBorrowAmountForVault: (...args: ExtractArgs<Contract['calls']['getMaxBorrowAmountForVault']>) =>
-      singleQuery(publicClient!, call.getMaxBorrowAmountForVault(...args)) as Promise<
-        CallReturn<'getMaxBorrowAmountForVault'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getMaxBorrowAmountForVault(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getMaxBorrowAmountForVault'>>,
     RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) =>
-      singleQuery(publicClient!, call.RIPE_REGISTRY(...args)) as Promise<CallReturn<'RIPE_REGISTRY'>>,
+      singleQuery(publicClient!, call.RIPE_REGISTRY(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'RIPE_REGISTRY'>
+      >,
     GREEN_TOKEN: (...args: ExtractArgs<Contract['calls']['GREEN_TOKEN']>) =>
-      singleQuery(publicClient!, call.GREEN_TOKEN(...args)) as Promise<CallReturn<'GREEN_TOKEN'>>,
+      singleQuery(publicClient!, call.GREEN_TOKEN(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'GREEN_TOKEN'>
+      >,
     SAVINGS_GREEN: (...args: ExtractArgs<Contract['calls']['SAVINGS_GREEN']>) =>
-      singleQuery(publicClient!, call.SAVINGS_GREEN(...args)) as Promise<CallReturn<'SAVINGS_GREEN'>>,
+      singleQuery(publicClient!, call.SAVINGS_GREEN(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'SAVINGS_GREEN'>
+      >,
     USDC: (...args: ExtractArgs<Contract['calls']['USDC']>) =>
-      singleQuery(publicClient!, call.USDC(...args)) as Promise<CallReturn<'USDC'>>,
+      singleQuery(publicClient!, call.USDC(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'USDC'>
+      >,
 
     // Mutations
   }

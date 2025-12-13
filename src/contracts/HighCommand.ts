@@ -3,8 +3,16 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery, mutate } from '@dappql/async'
-import { PublicClient, WalletClient } from 'viem'
+import { singleQuery, mutate, AddressResolverFunction } from '@dappql/async'
+import {
+  encodeEventTopics,
+  parseEventLogs,
+  ParseEventLogsReturnType,
+  Log,
+  RpcLog,
+  PublicClient,
+  WalletClient,
+} from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
@@ -2836,9 +2844,49 @@ export const mutation: {
   setGlobalManagerSettings: getMutation('setGlobalManagerSettings'),
 }
 
+export type ParsedEvent<T extends keyof Contract['events']> = {
+  event: RpcLog | Log
+  parsed: ParseEventLogsReturnType<typeof abi, T>
+}
+
+export function parseEvents<T extends keyof Contract['events']>(
+  eventName: T,
+  events: (RpcLog | Log)[],
+): ParsedEvent<T>[] {
+  return events.map((event) => {
+    return {
+      event,
+      parsed: parseEventLogs({
+        abi,
+        eventName,
+        logs: [event],
+      }),
+    }
+  })
+}
+
+export function getEventTopic<T extends keyof Contract['events']>(eventName: T): Address {
+  return encodeEventTopics({ abi, eventName })[0] as Address
+}
+
 export type SDK = {
   deployAddress: Address | undefined
   abi: typeof abi
+  events: {
+    GlobalManagerSettingsModified: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GlobalManagerSettingsModified'>[]
+    }
+    ManagerSettingsModified: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'ManagerSettingsModified'>[]
+    }
+    ManagerRemoved: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'ManagerRemoved'>[] }
+    ManagerActivationLengthAdjusted: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'ManagerActivationLengthAdjusted'>[]
+    }
+  }
   isValidNewManager: (
     ...args: ExtractArgs<Contract['calls']['isValidNewManager']>
   ) => Promise<CallReturn<'isValidNewManager'>>
@@ -2884,58 +2932,93 @@ export type SDK = {
   ) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
+    events: {
+      GlobalManagerSettingsModified: {
+        topic: getEventTopic('GlobalManagerSettingsModified'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GlobalManagerSettingsModified', events),
+      },
+      ManagerSettingsModified: {
+        topic: getEventTopic('ManagerSettingsModified'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('ManagerSettingsModified', events),
+      },
+      ManagerRemoved: {
+        topic: getEventTopic('ManagerRemoved'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('ManagerRemoved', events),
+      },
+      ManagerActivationLengthAdjusted: {
+        topic: getEventTopic('ManagerActivationLengthAdjusted'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('ManagerActivationLengthAdjusted', events),
+      },
+    },
     // Queries
     isValidNewManager: (...args: ExtractArgs<Contract['calls']['isValidNewManager']>) =>
-      singleQuery(publicClient!, call.isValidNewManager(...args)) as Promise<CallReturn<'isValidNewManager'>>,
+      singleQuery(publicClient!, call.isValidNewManager(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidNewManager'>
+      >,
     validateManagerOnUpdate: (...args: ExtractArgs<Contract['calls']['validateManagerOnUpdate']>) =>
-      singleQuery(publicClient!, call.validateManagerOnUpdate(...args)) as Promise<
+      singleQuery(publicClient!, call.validateManagerOnUpdate(...args), {}, addressResolver) as Promise<
         CallReturn<'validateManagerOnUpdate'>
       >,
     validateGlobalManagerSettings: (...args: ExtractArgs<Contract['calls']['validateGlobalManagerSettings']>) =>
-      singleQuery(publicClient!, call.validateGlobalManagerSettings(...args)) as Promise<
+      singleQuery(publicClient!, call.validateGlobalManagerSettings(...args), {}, addressResolver) as Promise<
         CallReturn<'validateGlobalManagerSettings'>
       >,
     createDefaultGlobalManagerSettings: (
       ...args: ExtractArgs<Contract['calls']['createDefaultGlobalManagerSettings']>
     ) =>
-      singleQuery(publicClient!, call.createDefaultGlobalManagerSettings(...args)) as Promise<
+      singleQuery(publicClient!, call.createDefaultGlobalManagerSettings(...args), {}, addressResolver) as Promise<
         CallReturn<'createDefaultGlobalManagerSettings'>
       >,
     createStarterAgentSettings: (...args: ExtractArgs<Contract['calls']['createStarterAgentSettings']>) =>
-      singleQuery(publicClient!, call.createStarterAgentSettings(...args)) as Promise<
+      singleQuery(publicClient!, call.createStarterAgentSettings(...args), {}, addressResolver) as Promise<
         CallReturn<'createStarterAgentSettings'>
       >,
     getManagerSettingsBundle: (...args: ExtractArgs<Contract['calls']['getManagerSettingsBundle']>) =>
-      singleQuery(publicClient!, call.getManagerSettingsBundle(...args)) as Promise<
+      singleQuery(publicClient!, call.getManagerSettingsBundle(...args), {}, addressResolver) as Promise<
         CallReturn<'getManagerSettingsBundle'>
       >,
     UNDY_HQ: (...args: ExtractArgs<Contract['calls']['UNDY_HQ']>) =>
-      singleQuery(publicClient!, call.UNDY_HQ(...args)) as Promise<CallReturn<'UNDY_HQ'>>,
+      singleQuery(publicClient!, call.UNDY_HQ(...args), {}, addressResolver) as Promise<CallReturn<'UNDY_HQ'>>,
     MIN_MANAGER_PERIOD: (...args: ExtractArgs<Contract['calls']['MIN_MANAGER_PERIOD']>) =>
-      singleQuery(publicClient!, call.MIN_MANAGER_PERIOD(...args)) as Promise<CallReturn<'MIN_MANAGER_PERIOD'>>,
+      singleQuery(publicClient!, call.MIN_MANAGER_PERIOD(...args), {}, addressResolver) as Promise<
+        CallReturn<'MIN_MANAGER_PERIOD'>
+      >,
     MAX_MANAGER_PERIOD: (...args: ExtractArgs<Contract['calls']['MAX_MANAGER_PERIOD']>) =>
-      singleQuery(publicClient!, call.MAX_MANAGER_PERIOD(...args)) as Promise<CallReturn<'MAX_MANAGER_PERIOD'>>,
+      singleQuery(publicClient!, call.MAX_MANAGER_PERIOD(...args), {}, addressResolver) as Promise<
+        CallReturn<'MAX_MANAGER_PERIOD'>
+      >,
     MAX_START_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_START_DELAY']>) =>
-      singleQuery(publicClient!, call.MAX_START_DELAY(...args)) as Promise<CallReturn<'MAX_START_DELAY'>>,
+      singleQuery(publicClient!, call.MAX_START_DELAY(...args), {}, addressResolver) as Promise<
+        CallReturn<'MAX_START_DELAY'>
+      >,
     MIN_ACTIVATION_LENGTH: (...args: ExtractArgs<Contract['calls']['MIN_ACTIVATION_LENGTH']>) =>
-      singleQuery(publicClient!, call.MIN_ACTIVATION_LENGTH(...args)) as Promise<CallReturn<'MIN_ACTIVATION_LENGTH'>>,
+      singleQuery(publicClient!, call.MIN_ACTIVATION_LENGTH(...args), {}, addressResolver) as Promise<
+        CallReturn<'MIN_ACTIVATION_LENGTH'>
+      >,
     MAX_ACTIVATION_LENGTH: (...args: ExtractArgs<Contract['calls']['MAX_ACTIVATION_LENGTH']>) =>
-      singleQuery(publicClient!, call.MAX_ACTIVATION_LENGTH(...args)) as Promise<CallReturn<'MAX_ACTIVATION_LENGTH'>>,
+      singleQuery(publicClient!, call.MAX_ACTIVATION_LENGTH(...args), {}, addressResolver) as Promise<
+        CallReturn<'MAX_ACTIVATION_LENGTH'>
+      >,
 
     // Mutations
     addManager: (...args: ExtractArgs<Contract['mutations']['addManager']>) =>
-      mutate(walletClient!, mutation.addManager)(...args),
+      mutate(walletClient!, mutation.addManager, { addressResolver })(...args),
     updateManager: (...args: ExtractArgs<Contract['mutations']['updateManager']>) =>
-      mutate(walletClient!, mutation.updateManager)(...args),
+      mutate(walletClient!, mutation.updateManager, { addressResolver })(...args),
     removeManager: (...args: ExtractArgs<Contract['mutations']['removeManager']>) =>
-      mutate(walletClient!, mutation.removeManager)(...args),
+      mutate(walletClient!, mutation.removeManager, { addressResolver })(...args),
     adjustManagerActivationLength: (...args: ExtractArgs<Contract['mutations']['adjustManagerActivationLength']>) =>
-      mutate(walletClient!, mutation.adjustManagerActivationLength)(...args),
+      mutate(walletClient!, mutation.adjustManagerActivationLength, { addressResolver })(...args),
     setGlobalManagerSettings: (...args: ExtractArgs<Contract['mutations']['setGlobalManagerSettings']>) =>
-      mutate(walletClient!, mutation.setGlobalManagerSettings)(...args),
+      mutate(walletClient!, mutation.setGlobalManagerSettings, { addressResolver })(...args),
   }
 }

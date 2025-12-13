@@ -3,8 +3,16 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery, mutate } from '@dappql/async'
-import { PublicClient, WalletClient } from 'viem'
+import { singleQuery, mutate, AddressResolverFunction } from '@dappql/async'
+import {
+  encodeEventTopics,
+  parseEventLogs,
+  ParseEventLogsReturnType,
+  Log,
+  RpcLog,
+  PublicClient,
+  WalletClient,
+} from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
@@ -4150,9 +4158,104 @@ export const mutation: {
   setApprovedVaultTokens: getMutation('setApprovedVaultTokens'),
 }
 
+export type ParsedEvent<T extends keyof Contract['events']> = {
+  event: RpcLog | Log
+  parsed: ParseEventLogsReturnType<typeof abi, T>
+}
+
+export function parseEvents<T extends keyof Contract['events']>(
+  eventName: T,
+  events: (RpcLog | Log)[],
+): ParsedEvent<T>[] {
+  return events.map((event) => {
+    return {
+      event,
+      parsed: parseEventLogs({
+        abi,
+        eventName,
+        logs: [event],
+      }),
+    }
+  })
+}
+
+export function getEventTopic<T extends keyof Contract['events']>(eventName: T): Address {
+  return encodeEventTopics({ abi, eventName })[0] as Address
+}
+
 export type SDK = {
   deployAddress: Address | undefined
   abi: typeof abi
+  events: {
+    CanDepositSet: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'CanDepositSet'>[] }
+    CanWithdrawSet: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'CanWithdrawSet'>[] }
+    MaxDepositAmountSet: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'MaxDepositAmountSet'>[] }
+    VaultOpsFrozenSet: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'VaultOpsFrozenSet'>[] }
+    RedemptionBufferSet: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'RedemptionBufferSet'>[] }
+    MinYieldWithdrawAmountSet: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'MinYieldWithdrawAmountSet'>[]
+    }
+    PerformanceFeeSet: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'PerformanceFeeSet'>[] }
+    DefaultTargetVaultTokenSet: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'DefaultTargetVaultTokenSet'>[]
+    }
+    ShouldAutoDepositSet: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'ShouldAutoDepositSet'>[] }
+    IsLeveragedVaultSet: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'IsLeveragedVaultSet'>[] }
+    ApprovedVaultTokenSet: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'ApprovedVaultTokenSet'>[]
+    }
+    VaultTokenAdded: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'VaultTokenAdded'>[] }
+    VaultTokenRemoved: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'VaultTokenRemoved'>[] }
+    AssetVaultTokenAdded: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'AssetVaultTokenAdded'>[] }
+    AssetVaultTokenRemoved: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'AssetVaultTokenRemoved'>[]
+    }
+    ShouldEnforceAllowlistSet: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'ShouldEnforceAllowlistSet'>[]
+    }
+    AllowlistSet: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'AllowlistSet'>[] }
+    GovChangeTimeLockModified: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovChangeTimeLockModified'>[]
+    }
+    RegistryTimeLockModified: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'RegistryTimeLockModified'>[]
+    }
+    GovChangeStarted: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovChangeStarted'>[] }
+    GovChangeConfirmed: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovChangeConfirmed'>[] }
+    GovChangeCancelled: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovChangeCancelled'>[] }
+    GovRelinquished: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovRelinquished'>[] }
+    UndyHqSetupFinished: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'UndyHqSetupFinished'>[] }
+    DepartmentPauseModified: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'DepartmentPauseModified'>[]
+    }
+    DepartmentFundsRecovered: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'DepartmentFundsRecovered'>[]
+    }
+    NewAddressPending: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'NewAddressPending'>[] }
+    NewAddressConfirmed: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'NewAddressConfirmed'>[] }
+    NewAddressCancelled: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'NewAddressCancelled'>[] }
+    AddressDisablePending: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'AddressDisablePending'>[]
+    }
+    AddressDisableConfirmed: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'AddressDisableConfirmed'>[]
+    }
+    AddressDisableCancelled: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'AddressDisableCancelled'>[]
+    }
+  }
   getUndyHqFromGov: (
     ...args: ExtractArgs<Contract['calls']['getUndyHqFromGov']>
   ) => Promise<CallReturn<'getUndyHqFromGov'>>
@@ -4393,267 +4496,499 @@ export type SDK = {
   setApprovedVaultTokens: (...args: ExtractArgs<Contract['mutations']['setApprovedVaultTokens']>) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
+    events: {
+      CanDepositSet: {
+        topic: getEventTopic('CanDepositSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('CanDepositSet', events),
+      },
+      CanWithdrawSet: {
+        topic: getEventTopic('CanWithdrawSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('CanWithdrawSet', events),
+      },
+      MaxDepositAmountSet: {
+        topic: getEventTopic('MaxDepositAmountSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('MaxDepositAmountSet', events),
+      },
+      VaultOpsFrozenSet: {
+        topic: getEventTopic('VaultOpsFrozenSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('VaultOpsFrozenSet', events),
+      },
+      RedemptionBufferSet: {
+        topic: getEventTopic('RedemptionBufferSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('RedemptionBufferSet', events),
+      },
+      MinYieldWithdrawAmountSet: {
+        topic: getEventTopic('MinYieldWithdrawAmountSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('MinYieldWithdrawAmountSet', events),
+      },
+      PerformanceFeeSet: {
+        topic: getEventTopic('PerformanceFeeSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('PerformanceFeeSet', events),
+      },
+      DefaultTargetVaultTokenSet: {
+        topic: getEventTopic('DefaultTargetVaultTokenSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('DefaultTargetVaultTokenSet', events),
+      },
+      ShouldAutoDepositSet: {
+        topic: getEventTopic('ShouldAutoDepositSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('ShouldAutoDepositSet', events),
+      },
+      IsLeveragedVaultSet: {
+        topic: getEventTopic('IsLeveragedVaultSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('IsLeveragedVaultSet', events),
+      },
+      ApprovedVaultTokenSet: {
+        topic: getEventTopic('ApprovedVaultTokenSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('ApprovedVaultTokenSet', events),
+      },
+      VaultTokenAdded: {
+        topic: getEventTopic('VaultTokenAdded'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('VaultTokenAdded', events),
+      },
+      VaultTokenRemoved: {
+        topic: getEventTopic('VaultTokenRemoved'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('VaultTokenRemoved', events),
+      },
+      AssetVaultTokenAdded: {
+        topic: getEventTopic('AssetVaultTokenAdded'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('AssetVaultTokenAdded', events),
+      },
+      AssetVaultTokenRemoved: {
+        topic: getEventTopic('AssetVaultTokenRemoved'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('AssetVaultTokenRemoved', events),
+      },
+      ShouldEnforceAllowlistSet: {
+        topic: getEventTopic('ShouldEnforceAllowlistSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('ShouldEnforceAllowlistSet', events),
+      },
+      AllowlistSet: {
+        topic: getEventTopic('AllowlistSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('AllowlistSet', events),
+      },
+      GovChangeTimeLockModified: {
+        topic: getEventTopic('GovChangeTimeLockModified'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovChangeTimeLockModified', events),
+      },
+      RegistryTimeLockModified: {
+        topic: getEventTopic('RegistryTimeLockModified'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('RegistryTimeLockModified', events),
+      },
+      GovChangeStarted: {
+        topic: getEventTopic('GovChangeStarted'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovChangeStarted', events),
+      },
+      GovChangeConfirmed: {
+        topic: getEventTopic('GovChangeConfirmed'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovChangeConfirmed', events),
+      },
+      GovChangeCancelled: {
+        topic: getEventTopic('GovChangeCancelled'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovChangeCancelled', events),
+      },
+      GovRelinquished: {
+        topic: getEventTopic('GovRelinquished'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovRelinquished', events),
+      },
+      UndyHqSetupFinished: {
+        topic: getEventTopic('UndyHqSetupFinished'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('UndyHqSetupFinished', events),
+      },
+      DepartmentPauseModified: {
+        topic: getEventTopic('DepartmentPauseModified'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('DepartmentPauseModified', events),
+      },
+      DepartmentFundsRecovered: {
+        topic: getEventTopic('DepartmentFundsRecovered'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('DepartmentFundsRecovered', events),
+      },
+      NewAddressPending: {
+        topic: getEventTopic('NewAddressPending'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('NewAddressPending', events),
+      },
+      NewAddressConfirmed: {
+        topic: getEventTopic('NewAddressConfirmed'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('NewAddressConfirmed', events),
+      },
+      NewAddressCancelled: {
+        topic: getEventTopic('NewAddressCancelled'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('NewAddressCancelled', events),
+      },
+      AddressDisablePending: {
+        topic: getEventTopic('AddressDisablePending'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('AddressDisablePending', events),
+      },
+      AddressDisableConfirmed: {
+        topic: getEventTopic('AddressDisableConfirmed'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('AddressDisableConfirmed', events),
+      },
+      AddressDisableCancelled: {
+        topic: getEventTopic('AddressDisableCancelled'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('AddressDisableCancelled', events),
+      },
+    },
     // Queries
     getUndyHqFromGov: (...args: ExtractArgs<Contract['calls']['getUndyHqFromGov']>) =>
-      singleQuery(publicClient!, call.getUndyHqFromGov(...args)) as Promise<CallReturn<'getUndyHqFromGov'>>,
+      singleQuery(publicClient!, call.getUndyHqFromGov(...args), {}, addressResolver) as Promise<
+        CallReturn<'getUndyHqFromGov'>
+      >,
     canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) =>
-      singleQuery(publicClient!, call.canGovern(...args)) as Promise<CallReturn<'canGovern'>>,
+      singleQuery(publicClient!, call.canGovern(...args), {}, addressResolver) as Promise<CallReturn<'canGovern'>>,
     getGovernors: (...args: ExtractArgs<Contract['calls']['getGovernors']>) =>
-      singleQuery(publicClient!, call.getGovernors(...args)) as Promise<CallReturn<'getGovernors'>>,
+      singleQuery(publicClient!, call.getGovernors(...args), {}, addressResolver) as Promise<
+        CallReturn<'getGovernors'>
+      >,
     hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
-      singleQuery(publicClient!, call.hasPendingGovChange(...args)) as Promise<CallReturn<'hasPendingGovChange'>>,
+      singleQuery(publicClient!, call.hasPendingGovChange(...args), {}, addressResolver) as Promise<
+        CallReturn<'hasPendingGovChange'>
+      >,
     isValidGovTimeLock: (...args: ExtractArgs<Contract['calls']['isValidGovTimeLock']>) =>
-      singleQuery(publicClient!, call.isValidGovTimeLock(...args)) as Promise<CallReturn<'isValidGovTimeLock'>>,
+      singleQuery(publicClient!, call.isValidGovTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidGovTimeLock'>
+      >,
     minGovChangeTimeLock: (...args: ExtractArgs<Contract['calls']['minGovChangeTimeLock']>) =>
-      singleQuery(publicClient!, call.minGovChangeTimeLock(...args)) as Promise<CallReturn<'minGovChangeTimeLock'>>,
+      singleQuery(publicClient!, call.minGovChangeTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'minGovChangeTimeLock'>
+      >,
     maxGovChangeTimeLock: (...args: ExtractArgs<Contract['calls']['maxGovChangeTimeLock']>) =>
-      singleQuery(publicClient!, call.maxGovChangeTimeLock(...args)) as Promise<CallReturn<'maxGovChangeTimeLock'>>,
+      singleQuery(publicClient!, call.maxGovChangeTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'maxGovChangeTimeLock'>
+      >,
     governance: (...args: ExtractArgs<Contract['calls']['governance']>) =>
-      singleQuery(publicClient!, call.governance(...args)) as Promise<CallReturn<'governance'>>,
+      singleQuery(publicClient!, call.governance(...args), {}, addressResolver) as Promise<CallReturn<'governance'>>,
     pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) =>
-      singleQuery(publicClient!, call.pendingGov(...args)) as Promise<CallReturn<'pendingGov'>>,
+      singleQuery(publicClient!, call.pendingGov(...args), {}, addressResolver) as Promise<CallReturn<'pendingGov'>>,
     numGovChanges: (...args: ExtractArgs<Contract['calls']['numGovChanges']>) =>
-      singleQuery(publicClient!, call.numGovChanges(...args)) as Promise<CallReturn<'numGovChanges'>>,
+      singleQuery(publicClient!, call.numGovChanges(...args), {}, addressResolver) as Promise<
+        CallReturn<'numGovChanges'>
+      >,
     govChangeTimeLock: (...args: ExtractArgs<Contract['calls']['govChangeTimeLock']>) =>
-      singleQuery(publicClient!, call.govChangeTimeLock(...args)) as Promise<CallReturn<'govChangeTimeLock'>>,
+      singleQuery(publicClient!, call.govChangeTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'govChangeTimeLock'>
+      >,
     getRegistryDescription: (...args: ExtractArgs<Contract['calls']['getRegistryDescription']>) =>
-      singleQuery(publicClient!, call.getRegistryDescription(...args)) as Promise<CallReturn<'getRegistryDescription'>>,
+      singleQuery(publicClient!, call.getRegistryDescription(...args), {}, addressResolver) as Promise<
+        CallReturn<'getRegistryDescription'>
+      >,
     isValidNewAddress: (...args: ExtractArgs<Contract['calls']['isValidNewAddress']>) =>
-      singleQuery(publicClient!, call.isValidNewAddress(...args)) as Promise<CallReturn<'isValidNewAddress'>>,
+      singleQuery(publicClient!, call.isValidNewAddress(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidNewAddress'>
+      >,
     isValidAddressUpdate: (...args: ExtractArgs<Contract['calls']['isValidAddressUpdate']>) =>
-      singleQuery(publicClient!, call.isValidAddressUpdate(...args)) as Promise<CallReturn<'isValidAddressUpdate'>>,
+      singleQuery(publicClient!, call.isValidAddressUpdate(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidAddressUpdate'>
+      >,
     isValidAddressDisable: (...args: ExtractArgs<Contract['calls']['isValidAddressDisable']>) =>
-      singleQuery(publicClient!, call.isValidAddressDisable(...args)) as Promise<CallReturn<'isValidAddressDisable'>>,
+      singleQuery(publicClient!, call.isValidAddressDisable(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidAddressDisable'>
+      >,
     isValidRegistryTimeLock: (...args: ExtractArgs<Contract['calls']['isValidRegistryTimeLock']>) =>
-      singleQuery(publicClient!, call.isValidRegistryTimeLock(...args)) as Promise<
+      singleQuery(publicClient!, call.isValidRegistryTimeLock(...args), {}, addressResolver) as Promise<
         CallReturn<'isValidRegistryTimeLock'>
       >,
     minRegistryTimeLock: (...args: ExtractArgs<Contract['calls']['minRegistryTimeLock']>) =>
-      singleQuery(publicClient!, call.minRegistryTimeLock(...args)) as Promise<CallReturn<'minRegistryTimeLock'>>,
+      singleQuery(publicClient!, call.minRegistryTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'minRegistryTimeLock'>
+      >,
     maxRegistryTimeLock: (...args: ExtractArgs<Contract['calls']['maxRegistryTimeLock']>) =>
-      singleQuery(publicClient!, call.maxRegistryTimeLock(...args)) as Promise<CallReturn<'maxRegistryTimeLock'>>,
+      singleQuery(publicClient!, call.maxRegistryTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'maxRegistryTimeLock'>
+      >,
     isValidAddr: (...args: ExtractArgs<Contract['calls']['isValidAddr']>) =>
-      singleQuery(publicClient!, call.isValidAddr(...args)) as Promise<CallReturn<'isValidAddr'>>,
+      singleQuery(publicClient!, call.isValidAddr(...args), {}, addressResolver) as Promise<CallReturn<'isValidAddr'>>,
     isValidRegId: (...args: ExtractArgs<Contract['calls']['isValidRegId']>) =>
-      singleQuery(publicClient!, call.isValidRegId(...args)) as Promise<CallReturn<'isValidRegId'>>,
+      singleQuery(publicClient!, call.isValidRegId(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidRegId'>
+      >,
     getRegId: (...args: ExtractArgs<Contract['calls']['getRegId']>) =>
-      singleQuery(publicClient!, call.getRegId(...args)) as Promise<CallReturn<'getRegId'>>,
+      singleQuery(publicClient!, call.getRegId(...args), {}, addressResolver) as Promise<CallReturn<'getRegId'>>,
     getAddr: (...args: ExtractArgs<Contract['calls']['getAddr']>) =>
-      singleQuery(publicClient!, call.getAddr(...args)) as Promise<CallReturn<'getAddr'>>,
+      singleQuery(publicClient!, call.getAddr(...args), {}, addressResolver) as Promise<CallReturn<'getAddr'>>,
     getAddrInfo: (...args: ExtractArgs<Contract['calls']['getAddrInfo']>) =>
-      singleQuery(publicClient!, call.getAddrInfo(...args)) as Promise<CallReturn<'getAddrInfo'>>,
+      singleQuery(publicClient!, call.getAddrInfo(...args), {}, addressResolver) as Promise<CallReturn<'getAddrInfo'>>,
     getAddrDescription: (...args: ExtractArgs<Contract['calls']['getAddrDescription']>) =>
-      singleQuery(publicClient!, call.getAddrDescription(...args)) as Promise<CallReturn<'getAddrDescription'>>,
+      singleQuery(publicClient!, call.getAddrDescription(...args), {}, addressResolver) as Promise<
+        CallReturn<'getAddrDescription'>
+      >,
     getNumAddrs: (...args: ExtractArgs<Contract['calls']['getNumAddrs']>) =>
-      singleQuery(publicClient!, call.getNumAddrs(...args)) as Promise<CallReturn<'getNumAddrs'>>,
+      singleQuery(publicClient!, call.getNumAddrs(...args), {}, addressResolver) as Promise<CallReturn<'getNumAddrs'>>,
     getLastAddr: (...args: ExtractArgs<Contract['calls']['getLastAddr']>) =>
-      singleQuery(publicClient!, call.getLastAddr(...args)) as Promise<CallReturn<'getLastAddr'>>,
+      singleQuery(publicClient!, call.getLastAddr(...args), {}, addressResolver) as Promise<CallReturn<'getLastAddr'>>,
     getLastRegId: (...args: ExtractArgs<Contract['calls']['getLastRegId']>) =>
-      singleQuery(publicClient!, call.getLastRegId(...args)) as Promise<CallReturn<'getLastRegId'>>,
+      singleQuery(publicClient!, call.getLastRegId(...args), {}, addressResolver) as Promise<
+        CallReturn<'getLastRegId'>
+      >,
     registryChangeTimeLock: (...args: ExtractArgs<Contract['calls']['registryChangeTimeLock']>) =>
-      singleQuery(publicClient!, call.registryChangeTimeLock(...args)) as Promise<CallReturn<'registryChangeTimeLock'>>,
+      singleQuery(publicClient!, call.registryChangeTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'registryChangeTimeLock'>
+      >,
     addrInfo: (...args: ExtractArgs<Contract['calls']['addrInfo']>) =>
-      singleQuery(publicClient!, call.addrInfo(...args)) as Promise<CallReturn<'addrInfo'>>,
+      singleQuery(publicClient!, call.addrInfo(...args), {}, addressResolver) as Promise<CallReturn<'addrInfo'>>,
     addrToRegId: (...args: ExtractArgs<Contract['calls']['addrToRegId']>) =>
-      singleQuery(publicClient!, call.addrToRegId(...args)) as Promise<CallReturn<'addrToRegId'>>,
+      singleQuery(publicClient!, call.addrToRegId(...args), {}, addressResolver) as Promise<CallReturn<'addrToRegId'>>,
     numAddrs: (...args: ExtractArgs<Contract['calls']['numAddrs']>) =>
-      singleQuery(publicClient!, call.numAddrs(...args)) as Promise<CallReturn<'numAddrs'>>,
+      singleQuery(publicClient!, call.numAddrs(...args), {}, addressResolver) as Promise<CallReturn<'numAddrs'>>,
     pendingNewAddr: (...args: ExtractArgs<Contract['calls']['pendingNewAddr']>) =>
-      singleQuery(publicClient!, call.pendingNewAddr(...args)) as Promise<CallReturn<'pendingNewAddr'>>,
+      singleQuery(publicClient!, call.pendingNewAddr(...args), {}, addressResolver) as Promise<
+        CallReturn<'pendingNewAddr'>
+      >,
     pendingAddrUpdate: (...args: ExtractArgs<Contract['calls']['pendingAddrUpdate']>) =>
-      singleQuery(publicClient!, call.pendingAddrUpdate(...args)) as Promise<CallReturn<'pendingAddrUpdate'>>,
+      singleQuery(publicClient!, call.pendingAddrUpdate(...args), {}, addressResolver) as Promise<
+        CallReturn<'pendingAddrUpdate'>
+      >,
     pendingAddrDisable: (...args: ExtractArgs<Contract['calls']['pendingAddrDisable']>) =>
-      singleQuery(publicClient!, call.pendingAddrDisable(...args)) as Promise<CallReturn<'pendingAddrDisable'>>,
+      singleQuery(publicClient!, call.pendingAddrDisable(...args), {}, addressResolver) as Promise<
+        CallReturn<'pendingAddrDisable'>
+      >,
     getAddys: (...args: ExtractArgs<Contract['calls']['getAddys']>) =>
-      singleQuery(publicClient!, call.getAddys(...args)) as Promise<CallReturn<'getAddys'>>,
+      singleQuery(publicClient!, call.getAddys(...args), {}, addressResolver) as Promise<CallReturn<'getAddys'>>,
     getUndyHq: (...args: ExtractArgs<Contract['calls']['getUndyHq']>) =>
-      singleQuery(publicClient!, call.getUndyHq(...args)) as Promise<CallReturn<'getUndyHq'>>,
+      singleQuery(publicClient!, call.getUndyHq(...args), {}, addressResolver) as Promise<CallReturn<'getUndyHq'>>,
     canMintUndy: (...args: ExtractArgs<Contract['calls']['canMintUndy']>) =>
-      singleQuery(publicClient!, call.canMintUndy(...args)) as Promise<CallReturn<'canMintUndy'>>,
+      singleQuery(publicClient!, call.canMintUndy(...args), {}, addressResolver) as Promise<CallReturn<'canMintUndy'>>,
     isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) =>
-      singleQuery(publicClient!, call.isPaused(...args)) as Promise<CallReturn<'isPaused'>>,
+      singleQuery(publicClient!, call.isPaused(...args), {}, addressResolver) as Promise<CallReturn<'isPaused'>>,
     isEarnVault: (...args: ExtractArgs<Contract['calls']['isEarnVault']>) =>
-      singleQuery(publicClient!, call.isEarnVault(...args)) as Promise<CallReturn<'isEarnVault'>>,
+      singleQuery(publicClient!, call.isEarnVault(...args), {}, addressResolver) as Promise<CallReturn<'isEarnVault'>>,
     isLeveragedVault: (...args: ExtractArgs<Contract['calls']['isLeveragedVault']>) =>
-      singleQuery(publicClient!, call.isLeveragedVault(...args)) as Promise<CallReturn<'isLeveragedVault'>>,
+      singleQuery(publicClient!, call.isLeveragedVault(...args), {}, addressResolver) as Promise<
+        CallReturn<'isLeveragedVault'>
+      >,
     isBasicEarnVault: (...args: ExtractArgs<Contract['calls']['isBasicEarnVault']>) =>
-      singleQuery(publicClient!, call.isBasicEarnVault(...args)) as Promise<CallReturn<'isBasicEarnVault'>>,
+      singleQuery(publicClient!, call.isBasicEarnVault(...args), {}, addressResolver) as Promise<
+        CallReturn<'isBasicEarnVault'>
+      >,
     hasConfig: (...args: ExtractArgs<Contract['calls']['hasConfig']>) =>
-      singleQuery(publicClient!, call.hasConfig(...args)) as Promise<CallReturn<'hasConfig'>>,
+      singleQuery(publicClient!, call.hasConfig(...args), {}, addressResolver) as Promise<CallReturn<'hasConfig'>>,
     isValidDefaultTargetVaultToken: (...args: ExtractArgs<Contract['calls']['isValidDefaultTargetVaultToken']>) =>
-      singleQuery(publicClient!, call.isValidDefaultTargetVaultToken(...args)) as Promise<
+      singleQuery(publicClient!, call.isValidDefaultTargetVaultToken(...args), {}, addressResolver) as Promise<
         CallReturn<'isValidDefaultTargetVaultToken'>
       >,
     isValidPerformanceFee: (...args: ExtractArgs<Contract['calls']['isValidPerformanceFee']>) =>
-      singleQuery(publicClient!, call.isValidPerformanceFee(...args)) as Promise<CallReturn<'isValidPerformanceFee'>>,
+      singleQuery(publicClient!, call.isValidPerformanceFee(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidPerformanceFee'>
+      >,
     isValidRedemptionBuffer: (...args: ExtractArgs<Contract['calls']['isValidRedemptionBuffer']>) =>
-      singleQuery(publicClient!, call.isValidRedemptionBuffer(...args)) as Promise<
+      singleQuery(publicClient!, call.isValidRedemptionBuffer(...args), {}, addressResolver) as Promise<
         CallReturn<'isValidRedemptionBuffer'>
       >,
     getApprovedVaultTokens: (...args: ExtractArgs<Contract['calls']['getApprovedVaultTokens']>) =>
-      singleQuery(publicClient!, call.getApprovedVaultTokens(...args)) as Promise<CallReturn<'getApprovedVaultTokens'>>,
+      singleQuery(publicClient!, call.getApprovedVaultTokens(...args), {}, addressResolver) as Promise<
+        CallReturn<'getApprovedVaultTokens'>
+      >,
     getAssetVaultTokens: (...args: ExtractArgs<Contract['calls']['getAssetVaultTokens']>) =>
-      singleQuery(publicClient!, call.getAssetVaultTokens(...args)) as Promise<CallReturn<'getAssetVaultTokens'>>,
+      singleQuery(publicClient!, call.getAssetVaultTokens(...args), {}, addressResolver) as Promise<
+        CallReturn<'getAssetVaultTokens'>
+      >,
     getNumApprovedVaultTokens: (...args: ExtractArgs<Contract['calls']['getNumApprovedVaultTokens']>) =>
-      singleQuery(publicClient!, call.getNumApprovedVaultTokens(...args)) as Promise<
+      singleQuery(publicClient!, call.getNumApprovedVaultTokens(...args), {}, addressResolver) as Promise<
         CallReturn<'getNumApprovedVaultTokens'>
       >,
     getNumAssetVaultTokens: (...args: ExtractArgs<Contract['calls']['getNumAssetVaultTokens']>) =>
-      singleQuery(publicClient!, call.getNumAssetVaultTokens(...args)) as Promise<CallReturn<'getNumAssetVaultTokens'>>,
+      singleQuery(publicClient!, call.getNumAssetVaultTokens(...args), {}, addressResolver) as Promise<
+        CallReturn<'getNumAssetVaultTokens'>
+      >,
     isApprovedVaultTokenForAsset: (...args: ExtractArgs<Contract['calls']['isApprovedVaultTokenForAsset']>) =>
-      singleQuery(publicClient!, call.isApprovedVaultTokenForAsset(...args)) as Promise<
+      singleQuery(publicClient!, call.isApprovedVaultTokenForAsset(...args), {}, addressResolver) as Promise<
         CallReturn<'isApprovedVaultTokenForAsset'>
       >,
     canDeposit: (...args: ExtractArgs<Contract['calls']['canDeposit']>) =>
-      singleQuery(publicClient!, call.canDeposit(...args)) as Promise<CallReturn<'canDeposit'>>,
+      singleQuery(publicClient!, call.canDeposit(...args), {}, addressResolver) as Promise<CallReturn<'canDeposit'>>,
     canWithdraw: (...args: ExtractArgs<Contract['calls']['canWithdraw']>) =>
-      singleQuery(publicClient!, call.canWithdraw(...args)) as Promise<CallReturn<'canWithdraw'>>,
+      singleQuery(publicClient!, call.canWithdraw(...args), {}, addressResolver) as Promise<CallReturn<'canWithdraw'>>,
     maxDepositAmount: (...args: ExtractArgs<Contract['calls']['maxDepositAmount']>) =>
-      singleQuery(publicClient!, call.maxDepositAmount(...args)) as Promise<CallReturn<'maxDepositAmount'>>,
+      singleQuery(publicClient!, call.maxDepositAmount(...args), {}, addressResolver) as Promise<
+        CallReturn<'maxDepositAmount'>
+      >,
     isVaultOpsFrozen: (...args: ExtractArgs<Contract['calls']['isVaultOpsFrozen']>) =>
-      singleQuery(publicClient!, call.isVaultOpsFrozen(...args)) as Promise<CallReturn<'isVaultOpsFrozen'>>,
+      singleQuery(publicClient!, call.isVaultOpsFrozen(...args), {}, addressResolver) as Promise<
+        CallReturn<'isVaultOpsFrozen'>
+      >,
     redemptionBuffer: (...args: ExtractArgs<Contract['calls']['redemptionBuffer']>) =>
-      singleQuery(publicClient!, call.redemptionBuffer(...args)) as Promise<CallReturn<'redemptionBuffer'>>,
+      singleQuery(publicClient!, call.redemptionBuffer(...args), {}, addressResolver) as Promise<
+        CallReturn<'redemptionBuffer'>
+      >,
     minYieldWithdrawAmount: (...args: ExtractArgs<Contract['calls']['minYieldWithdrawAmount']>) =>
-      singleQuery(publicClient!, call.minYieldWithdrawAmount(...args)) as Promise<CallReturn<'minYieldWithdrawAmount'>>,
+      singleQuery(publicClient!, call.minYieldWithdrawAmount(...args), {}, addressResolver) as Promise<
+        CallReturn<'minYieldWithdrawAmount'>
+      >,
     redemptionConfig: (...args: ExtractArgs<Contract['calls']['redemptionConfig']>) =>
-      singleQuery(publicClient!, call.redemptionConfig(...args)) as Promise<CallReturn<'redemptionConfig'>>,
+      singleQuery(publicClient!, call.redemptionConfig(...args), {}, addressResolver) as Promise<
+        CallReturn<'redemptionConfig'>
+      >,
     getPerformanceFee: (...args: ExtractArgs<Contract['calls']['getPerformanceFee']>) =>
-      singleQuery(publicClient!, call.getPerformanceFee(...args)) as Promise<CallReturn<'getPerformanceFee'>>,
+      singleQuery(publicClient!, call.getPerformanceFee(...args), {}, addressResolver) as Promise<
+        CallReturn<'getPerformanceFee'>
+      >,
     getDefaultTargetVaultToken: (...args: ExtractArgs<Contract['calls']['getDefaultTargetVaultToken']>) =>
-      singleQuery(publicClient!, call.getDefaultTargetVaultToken(...args)) as Promise<
+      singleQuery(publicClient!, call.getDefaultTargetVaultToken(...args), {}, addressResolver) as Promise<
         CallReturn<'getDefaultTargetVaultToken'>
       >,
     shouldAutoDeposit: (...args: ExtractArgs<Contract['calls']['shouldAutoDeposit']>) =>
-      singleQuery(publicClient!, call.shouldAutoDeposit(...args)) as Promise<CallReturn<'shouldAutoDeposit'>>,
+      singleQuery(publicClient!, call.shouldAutoDeposit(...args), {}, addressResolver) as Promise<
+        CallReturn<'shouldAutoDeposit'>
+      >,
     shouldEnforceAllowlist: (...args: ExtractArgs<Contract['calls']['shouldEnforceAllowlist']>) =>
-      singleQuery(publicClient!, call.shouldEnforceAllowlist(...args)) as Promise<CallReturn<'shouldEnforceAllowlist'>>,
+      singleQuery(publicClient!, call.shouldEnforceAllowlist(...args), {}, addressResolver) as Promise<
+        CallReturn<'shouldEnforceAllowlist'>
+      >,
     isUserAllowed: (...args: ExtractArgs<Contract['calls']['isUserAllowed']>) =>
-      singleQuery(publicClient!, call.isUserAllowed(...args)) as Promise<CallReturn<'isUserAllowed'>>,
+      singleQuery(publicClient!, call.isUserAllowed(...args), {}, addressResolver) as Promise<
+        CallReturn<'isUserAllowed'>
+      >,
     isApprovedVaultTokenByAddr: (...args: ExtractArgs<Contract['calls']['isApprovedVaultTokenByAddr']>) =>
-      singleQuery(publicClient!, call.isApprovedVaultTokenByAddr(...args)) as Promise<
+      singleQuery(publicClient!, call.isApprovedVaultTokenByAddr(...args), {}, addressResolver) as Promise<
         CallReturn<'isApprovedVaultTokenByAddr'>
       >,
     checkVaultApprovals: (...args: ExtractArgs<Contract['calls']['checkVaultApprovals']>) =>
-      singleQuery(publicClient!, call.checkVaultApprovals(...args)) as Promise<CallReturn<'checkVaultApprovals'>>,
+      singleQuery(publicClient!, call.checkVaultApprovals(...args), {}, addressResolver) as Promise<
+        CallReturn<'checkVaultApprovals'>
+      >,
     getVaultConfig: (...args: ExtractArgs<Contract['calls']['getVaultConfig']>) =>
-      singleQuery(publicClient!, call.getVaultConfig(...args)) as Promise<CallReturn<'getVaultConfig'>>,
+      singleQuery(publicClient!, call.getVaultConfig(...args), {}, addressResolver) as Promise<
+        CallReturn<'getVaultConfig'>
+      >,
     getVaultConfigByAddr: (...args: ExtractArgs<Contract['calls']['getVaultConfigByAddr']>) =>
-      singleQuery(publicClient!, call.getVaultConfigByAddr(...args)) as Promise<CallReturn<'getVaultConfigByAddr'>>,
+      singleQuery(publicClient!, call.getVaultConfigByAddr(...args), {}, addressResolver) as Promise<
+        CallReturn<'getVaultConfigByAddr'>
+      >,
     getVaultActionDataBundle: (...args: ExtractArgs<Contract['calls']['getVaultActionDataBundle']>) =>
-      singleQuery(publicClient!, call.getVaultActionDataBundle(...args)) as Promise<
+      singleQuery(publicClient!, call.getVaultActionDataBundle(...args), {}, addressResolver) as Promise<
         CallReturn<'getVaultActionDataBundle'>
       >,
     getVaultActionDataWithFrozenStatus: (
       ...args: ExtractArgs<Contract['calls']['getVaultActionDataWithFrozenStatus']>
     ) =>
-      singleQuery(publicClient!, call.getVaultActionDataWithFrozenStatus(...args)) as Promise<
+      singleQuery(publicClient!, call.getVaultActionDataWithFrozenStatus(...args), {}, addressResolver) as Promise<
         CallReturn<'getVaultActionDataWithFrozenStatus'>
       >,
     getLegoDataFromVaultToken: (...args: ExtractArgs<Contract['calls']['getLegoDataFromVaultToken']>) =>
-      singleQuery(publicClient!, call.getLegoDataFromVaultToken(...args)) as Promise<
+      singleQuery(publicClient!, call.getLegoDataFromVaultToken(...args), {}, addressResolver) as Promise<
         CallReturn<'getLegoDataFromVaultToken'>
       >,
     getLegoAddrFromVaultToken: (...args: ExtractArgs<Contract['calls']['getLegoAddrFromVaultToken']>) =>
-      singleQuery(publicClient!, call.getLegoAddrFromVaultToken(...args)) as Promise<
+      singleQuery(publicClient!, call.getLegoAddrFromVaultToken(...args), {}, addressResolver) as Promise<
         CallReturn<'getLegoAddrFromVaultToken'>
       >,
     getDepositConfig: (...args: ExtractArgs<Contract['calls']['getDepositConfig']>) =>
-      singleQuery(publicClient!, call.getDepositConfig(...args)) as Promise<CallReturn<'getDepositConfig'>>,
+      singleQuery(publicClient!, call.getDepositConfig(...args), {}, addressResolver) as Promise<
+        CallReturn<'getDepositConfig'>
+      >,
     canUserDeposit: (...args: ExtractArgs<Contract['calls']['canUserDeposit']>) =>
-      singleQuery(publicClient!, call.canUserDeposit(...args)) as Promise<CallReturn<'canUserDeposit'>>,
+      singleQuery(publicClient!, call.canUserDeposit(...args), {}, addressResolver) as Promise<
+        CallReturn<'canUserDeposit'>
+      >,
     vaultConfigs: (...args: ExtractArgs<Contract['calls']['vaultConfigs']>) =>
-      singleQuery(publicClient!, call.vaultConfigs(...args)) as Promise<CallReturn<'vaultConfigs'>>,
+      singleQuery(publicClient!, call.vaultConfigs(...args), {}, addressResolver) as Promise<
+        CallReturn<'vaultConfigs'>
+      >,
     isApprovedVaultToken: (...args: ExtractArgs<Contract['calls']['isApprovedVaultToken']>) =>
-      singleQuery(publicClient!, call.isApprovedVaultToken(...args)) as Promise<CallReturn<'isApprovedVaultToken'>>,
+      singleQuery(publicClient!, call.isApprovedVaultToken(...args), {}, addressResolver) as Promise<
+        CallReturn<'isApprovedVaultToken'>
+      >,
     approvedVaultTokens: (...args: ExtractArgs<Contract['calls']['approvedVaultTokens']>) =>
-      singleQuery(publicClient!, call.approvedVaultTokens(...args)) as Promise<CallReturn<'approvedVaultTokens'>>,
+      singleQuery(publicClient!, call.approvedVaultTokens(...args), {}, addressResolver) as Promise<
+        CallReturn<'approvedVaultTokens'>
+      >,
     indexOfApprovedVaultToken: (...args: ExtractArgs<Contract['calls']['indexOfApprovedVaultToken']>) =>
-      singleQuery(publicClient!, call.indexOfApprovedVaultToken(...args)) as Promise<
+      singleQuery(publicClient!, call.indexOfApprovedVaultToken(...args), {}, addressResolver) as Promise<
         CallReturn<'indexOfApprovedVaultToken'>
       >,
     numApprovedVaultTokens: (...args: ExtractArgs<Contract['calls']['numApprovedVaultTokens']>) =>
-      singleQuery(publicClient!, call.numApprovedVaultTokens(...args)) as Promise<CallReturn<'numApprovedVaultTokens'>>,
+      singleQuery(publicClient!, call.numApprovedVaultTokens(...args), {}, addressResolver) as Promise<
+        CallReturn<'numApprovedVaultTokens'>
+      >,
     assetVaultTokens: (...args: ExtractArgs<Contract['calls']['assetVaultTokens']>) =>
-      singleQuery(publicClient!, call.assetVaultTokens(...args)) as Promise<CallReturn<'assetVaultTokens'>>,
+      singleQuery(publicClient!, call.assetVaultTokens(...args), {}, addressResolver) as Promise<
+        CallReturn<'assetVaultTokens'>
+      >,
     indexOfAssetVaultToken: (...args: ExtractArgs<Contract['calls']['indexOfAssetVaultToken']>) =>
-      singleQuery(publicClient!, call.indexOfAssetVaultToken(...args)) as Promise<CallReturn<'indexOfAssetVaultToken'>>,
+      singleQuery(publicClient!, call.indexOfAssetVaultToken(...args), {}, addressResolver) as Promise<
+        CallReturn<'indexOfAssetVaultToken'>
+      >,
     numAssetVaultTokens: (...args: ExtractArgs<Contract['calls']['numAssetVaultTokens']>) =>
-      singleQuery(publicClient!, call.numAssetVaultTokens(...args)) as Promise<CallReturn<'numAssetVaultTokens'>>,
+      singleQuery(publicClient!, call.numAssetVaultTokens(...args), {}, addressResolver) as Promise<
+        CallReturn<'numAssetVaultTokens'>
+      >,
     assetVaultTokenRefCount: (...args: ExtractArgs<Contract['calls']['assetVaultTokenRefCount']>) =>
-      singleQuery(publicClient!, call.assetVaultTokenRefCount(...args)) as Promise<
+      singleQuery(publicClient!, call.assetVaultTokenRefCount(...args), {}, addressResolver) as Promise<
         CallReturn<'assetVaultTokenRefCount'>
       >,
     isAllowed: (...args: ExtractArgs<Contract['calls']['isAllowed']>) =>
-      singleQuery(publicClient!, call.isAllowed(...args)) as Promise<CallReturn<'isAllowed'>>,
+      singleQuery(publicClient!, call.isAllowed(...args), {}, addressResolver) as Promise<CallReturn<'isAllowed'>>,
 
     // Mutations
     startGovernanceChange: (...args: ExtractArgs<Contract['mutations']['startGovernanceChange']>) =>
-      mutate(walletClient!, mutation.startGovernanceChange)(...args),
+      mutate(walletClient!, mutation.startGovernanceChange, { addressResolver })(...args),
     confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) =>
-      mutate(walletClient!, mutation.confirmGovernanceChange)(...args),
+      mutate(walletClient!, mutation.confirmGovernanceChange, { addressResolver })(...args),
     cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) =>
-      mutate(walletClient!, mutation.cancelGovernanceChange)(...args),
+      mutate(walletClient!, mutation.cancelGovernanceChange, { addressResolver })(...args),
     relinquishGov: (...args: ExtractArgs<Contract['mutations']['relinquishGov']>) =>
-      mutate(walletClient!, mutation.relinquishGov)(...args),
+      mutate(walletClient!, mutation.relinquishGov, { addressResolver })(...args),
     setGovTimeLock: (...args: ExtractArgs<Contract['mutations']['setGovTimeLock']>) =>
-      mutate(walletClient!, mutation.setGovTimeLock)(...args),
+      mutate(walletClient!, mutation.setGovTimeLock, { addressResolver })(...args),
     finishUndyHqSetup: (...args: ExtractArgs<Contract['mutations']['finishUndyHqSetup']>) =>
-      mutate(walletClient!, mutation.finishUndyHqSetup)(...args),
+      mutate(walletClient!, mutation.finishUndyHqSetup, { addressResolver })(...args),
     setRegistryTimeLock: (...args: ExtractArgs<Contract['mutations']['setRegistryTimeLock']>) =>
-      mutate(walletClient!, mutation.setRegistryTimeLock)(...args),
+      mutate(walletClient!, mutation.setRegistryTimeLock, { addressResolver })(...args),
     setRegistryTimeLockAfterSetup: (...args: ExtractArgs<Contract['mutations']['setRegistryTimeLockAfterSetup']>) =>
-      mutate(walletClient!, mutation.setRegistryTimeLockAfterSetup)(...args),
-    pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => mutate(walletClient!, mutation.pause)(...args),
+      mutate(walletClient!, mutation.setRegistryTimeLockAfterSetup, { addressResolver })(...args),
+    pause: (...args: ExtractArgs<Contract['mutations']['pause']>) =>
+      mutate(walletClient!, mutation.pause, { addressResolver })(...args),
     recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) =>
-      mutate(walletClient!, mutation.recoverFunds)(...args),
+      mutate(walletClient!, mutation.recoverFunds, { addressResolver })(...args),
     recoverFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverFundsMany']>) =>
-      mutate(walletClient!, mutation.recoverFundsMany)(...args),
+      mutate(walletClient!, mutation.recoverFundsMany, { addressResolver })(...args),
     startAddNewAddressToRegistry: (...args: ExtractArgs<Contract['mutations']['startAddNewAddressToRegistry']>) =>
-      mutate(walletClient!, mutation.startAddNewAddressToRegistry)(...args),
+      mutate(walletClient!, mutation.startAddNewAddressToRegistry, { addressResolver })(...args),
     confirmNewAddressToRegistry: (...args: ExtractArgs<Contract['mutations']['confirmNewAddressToRegistry']>) =>
-      mutate(walletClient!, mutation.confirmNewAddressToRegistry)(...args),
+      mutate(walletClient!, mutation.confirmNewAddressToRegistry, { addressResolver })(...args),
     cancelNewAddressToRegistry: (...args: ExtractArgs<Contract['mutations']['cancelNewAddressToRegistry']>) =>
-      mutate(walletClient!, mutation.cancelNewAddressToRegistry)(...args),
+      mutate(walletClient!, mutation.cancelNewAddressToRegistry, { addressResolver })(...args),
     startAddressDisableInRegistry: (...args: ExtractArgs<Contract['mutations']['startAddressDisableInRegistry']>) =>
-      mutate(walletClient!, mutation.startAddressDisableInRegistry)(...args),
+      mutate(walletClient!, mutation.startAddressDisableInRegistry, { addressResolver })(...args),
     confirmAddressDisableInRegistry: (...args: ExtractArgs<Contract['mutations']['confirmAddressDisableInRegistry']>) =>
-      mutate(walletClient!, mutation.confirmAddressDisableInRegistry)(...args),
+      mutate(walletClient!, mutation.confirmAddressDisableInRegistry, { addressResolver })(...args),
     cancelAddressDisableInRegistry: (...args: ExtractArgs<Contract['mutations']['cancelAddressDisableInRegistry']>) =>
-      mutate(walletClient!, mutation.cancelAddressDisableInRegistry)(...args),
+      mutate(walletClient!, mutation.cancelAddressDisableInRegistry, { addressResolver })(...args),
     setCanDeposit: (...args: ExtractArgs<Contract['mutations']['setCanDeposit']>) =>
-      mutate(walletClient!, mutation.setCanDeposit)(...args),
+      mutate(walletClient!, mutation.setCanDeposit, { addressResolver })(...args),
     setCanWithdraw: (...args: ExtractArgs<Contract['mutations']['setCanWithdraw']>) =>
-      mutate(walletClient!, mutation.setCanWithdraw)(...args),
+      mutate(walletClient!, mutation.setCanWithdraw, { addressResolver })(...args),
     setMaxDepositAmount: (...args: ExtractArgs<Contract['mutations']['setMaxDepositAmount']>) =>
-      mutate(walletClient!, mutation.setMaxDepositAmount)(...args),
+      mutate(walletClient!, mutation.setMaxDepositAmount, { addressResolver })(...args),
     setVaultOpsFrozen: (...args: ExtractArgs<Contract['mutations']['setVaultOpsFrozen']>) =>
-      mutate(walletClient!, mutation.setVaultOpsFrozen)(...args),
+      mutate(walletClient!, mutation.setVaultOpsFrozen, { addressResolver })(...args),
     setShouldAutoDeposit: (...args: ExtractArgs<Contract['mutations']['setShouldAutoDeposit']>) =>
-      mutate(walletClient!, mutation.setShouldAutoDeposit)(...args),
+      mutate(walletClient!, mutation.setShouldAutoDeposit, { addressResolver })(...args),
     setMinYieldWithdrawAmount: (...args: ExtractArgs<Contract['mutations']['setMinYieldWithdrawAmount']>) =>
-      mutate(walletClient!, mutation.setMinYieldWithdrawAmount)(...args),
+      mutate(walletClient!, mutation.setMinYieldWithdrawAmount, { addressResolver })(...args),
     setIsLeveragedVault: (...args: ExtractArgs<Contract['mutations']['setIsLeveragedVault']>) =>
-      mutate(walletClient!, mutation.setIsLeveragedVault)(...args),
+      mutate(walletClient!, mutation.setIsLeveragedVault, { addressResolver })(...args),
     setShouldEnforceAllowlist: (...args: ExtractArgs<Contract['mutations']['setShouldEnforceAllowlist']>) =>
-      mutate(walletClient!, mutation.setShouldEnforceAllowlist)(...args),
+      mutate(walletClient!, mutation.setShouldEnforceAllowlist, { addressResolver })(...args),
     setAllowed: (...args: ExtractArgs<Contract['mutations']['setAllowed']>) =>
-      mutate(walletClient!, mutation.setAllowed)(...args),
+      mutate(walletClient!, mutation.setAllowed, { addressResolver })(...args),
     setAllowedBatch: (...args: ExtractArgs<Contract['mutations']['setAllowedBatch']>) =>
-      mutate(walletClient!, mutation.setAllowedBatch)(...args),
+      mutate(walletClient!, mutation.setAllowedBatch, { addressResolver })(...args),
     setDefaultTargetVaultToken: (...args: ExtractArgs<Contract['mutations']['setDefaultTargetVaultToken']>) =>
-      mutate(walletClient!, mutation.setDefaultTargetVaultToken)(...args),
+      mutate(walletClient!, mutation.setDefaultTargetVaultToken, { addressResolver })(...args),
     setPerformanceFee: (...args: ExtractArgs<Contract['mutations']['setPerformanceFee']>) =>
-      mutate(walletClient!, mutation.setPerformanceFee)(...args),
+      mutate(walletClient!, mutation.setPerformanceFee, { addressResolver })(...args),
     setRedemptionBuffer: (...args: ExtractArgs<Contract['mutations']['setRedemptionBuffer']>) =>
-      mutate(walletClient!, mutation.setRedemptionBuffer)(...args),
+      mutate(walletClient!, mutation.setRedemptionBuffer, { addressResolver })(...args),
     setApprovedVaultToken: (...args: ExtractArgs<Contract['mutations']['setApprovedVaultToken']>) =>
-      mutate(walletClient!, mutation.setApprovedVaultToken)(...args),
+      mutate(walletClient!, mutation.setApprovedVaultToken, { addressResolver })(...args),
     setApprovedVaultTokens: (...args: ExtractArgs<Contract['mutations']['setApprovedVaultTokens']>) =>
-      mutate(walletClient!, mutation.setApprovedVaultTokens)(...args),
+      mutate(walletClient!, mutation.setApprovedVaultTokens, { addressResolver })(...args),
   }
 }

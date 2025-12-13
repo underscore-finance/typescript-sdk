@@ -3,7 +3,7 @@ import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 const Manifest = require('../underscore-protocol/migration_history/base-mainnet/v1.1/current-manifest.json')
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { '40Acres': FortyAcres, Yo, Tokemak, ...rest } = Manifest.contracts
+const { LevgVaultHelper, '40Acres': FortyAcres, Yo, Tokemak, ...rest } = Manifest.contracts
 export default {
   name: 'Underscore Finance',
   description: 'Underscore Finance',
@@ -310,6 +310,10 @@ export default {
     LevgVault: {
       isTemplate: true,
       address: '0x936c3C493Dc45D0f4D2FA36C7640f3BCABd64B4B',
+    },
+    LevgVaultHelper: {
+      ...LevgVaultHelper,
+      isTemplate: true,
     },
   },
 }

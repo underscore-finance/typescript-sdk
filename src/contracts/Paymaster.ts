@@ -3,8 +3,16 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery, mutate } from '@dappql/async'
-import { PublicClient, WalletClient } from 'viem'
+import { singleQuery, mutate, AddressResolverFunction } from '@dappql/async'
+import {
+  encodeEventTopics,
+  parseEventLogs,
+  ParseEventLogsReturnType,
+  Log,
+  RpcLog,
+  PublicClient,
+  WalletClient,
+} from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
@@ -2363,9 +2371,52 @@ export const mutation: {
   cancelPendingPayee: getMutation('cancelPendingPayee'),
 }
 
+export type ParsedEvent<T extends keyof Contract['events']> = {
+  event: RpcLog | Log
+  parsed: ParseEventLogsReturnType<typeof abi, T>
+}
+
+export function parseEvents<T extends keyof Contract['events']>(
+  eventName: T,
+  events: (RpcLog | Log)[],
+): ParsedEvent<T>[] {
+  return events.map((event) => {
+    return {
+      event,
+      parsed: parseEventLogs({
+        abi,
+        eventName,
+        logs: [event],
+      }),
+    }
+  })
+}
+
+export function getEventTopic<T extends keyof Contract['events']>(eventName: T): Address {
+  return encodeEventTopics({ abi, eventName })[0] as Address
+}
+
 export type SDK = {
   deployAddress: Address | undefined
   abi: typeof abi
+  events: {
+    PayeeAdded: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'PayeeAdded'>[] }
+    PayeeUpdated: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'PayeeUpdated'>[] }
+    PayeeRemoved: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'PayeeRemoved'>[] }
+    GlobalPayeeSettingsModified: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GlobalPayeeSettingsModified'>[]
+    }
+    PayeePending: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'PayeePending'>[] }
+    PayeePendingConfirmed: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'PayeePendingConfirmed'>[]
+    }
+    PayeePendingCancelled: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'PayeePendingCancelled'>[]
+    }
+  }
   isValidNewPayee: (
     ...args: ExtractArgs<Contract['calls']['isValidNewPayee']>
   ) => Promise<CallReturn<'isValidNewPayee'>>
@@ -2407,54 +2458,107 @@ export type SDK = {
   cancelPendingPayee: (...args: ExtractArgs<Contract['mutations']['cancelPendingPayee']>) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
+    events: {
+      PayeeAdded: {
+        topic: getEventTopic('PayeeAdded'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('PayeeAdded', events),
+      },
+      PayeeUpdated: {
+        topic: getEventTopic('PayeeUpdated'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('PayeeUpdated', events),
+      },
+      PayeeRemoved: {
+        topic: getEventTopic('PayeeRemoved'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('PayeeRemoved', events),
+      },
+      GlobalPayeeSettingsModified: {
+        topic: getEventTopic('GlobalPayeeSettingsModified'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GlobalPayeeSettingsModified', events),
+      },
+      PayeePending: {
+        topic: getEventTopic('PayeePending'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('PayeePending', events),
+      },
+      PayeePendingConfirmed: {
+        topic: getEventTopic('PayeePendingConfirmed'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('PayeePendingConfirmed', events),
+      },
+      PayeePendingCancelled: {
+        topic: getEventTopic('PayeePendingCancelled'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('PayeePendingCancelled', events),
+      },
+    },
     // Queries
     isValidNewPayee: (...args: ExtractArgs<Contract['calls']['isValidNewPayee']>) =>
-      singleQuery(publicClient!, call.isValidNewPayee(...args)) as Promise<CallReturn<'isValidNewPayee'>>,
+      singleQuery(publicClient!, call.isValidNewPayee(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidNewPayee'>
+      >,
     isValidPayeeUpdate: (...args: ExtractArgs<Contract['calls']['isValidPayeeUpdate']>) =>
-      singleQuery(publicClient!, call.isValidPayeeUpdate(...args)) as Promise<CallReturn<'isValidPayeeUpdate'>>,
+      singleQuery(publicClient!, call.isValidPayeeUpdate(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidPayeeUpdate'>
+      >,
     canAddPendingPayee: (...args: ExtractArgs<Contract['calls']['canAddPendingPayee']>) =>
-      singleQuery(publicClient!, call.canAddPendingPayee(...args)) as Promise<CallReturn<'canAddPendingPayee'>>,
+      singleQuery(publicClient!, call.canAddPendingPayee(...args), {}, addressResolver) as Promise<
+        CallReturn<'canAddPendingPayee'>
+      >,
     isValidGlobalPayeeSettings: (...args: ExtractArgs<Contract['calls']['isValidGlobalPayeeSettings']>) =>
-      singleQuery(publicClient!, call.isValidGlobalPayeeSettings(...args)) as Promise<
+      singleQuery(publicClient!, call.isValidGlobalPayeeSettings(...args), {}, addressResolver) as Promise<
         CallReturn<'isValidGlobalPayeeSettings'>
       >,
     getPayeeConfig: (...args: ExtractArgs<Contract['calls']['getPayeeConfig']>) =>
-      singleQuery(publicClient!, call.getPayeeConfig(...args)) as Promise<CallReturn<'getPayeeConfig'>>,
+      singleQuery(publicClient!, call.getPayeeConfig(...args), {}, addressResolver) as Promise<
+        CallReturn<'getPayeeConfig'>
+      >,
     createDefaultGlobalPayeeSettings: (...args: ExtractArgs<Contract['calls']['createDefaultGlobalPayeeSettings']>) =>
-      singleQuery(publicClient!, call.createDefaultGlobalPayeeSettings(...args)) as Promise<
+      singleQuery(publicClient!, call.createDefaultGlobalPayeeSettings(...args), {}, addressResolver) as Promise<
         CallReturn<'createDefaultGlobalPayeeSettings'>
       >,
     UNDY_HQ: (...args: ExtractArgs<Contract['calls']['UNDY_HQ']>) =>
-      singleQuery(publicClient!, call.UNDY_HQ(...args)) as Promise<CallReturn<'UNDY_HQ'>>,
+      singleQuery(publicClient!, call.UNDY_HQ(...args), {}, addressResolver) as Promise<CallReturn<'UNDY_HQ'>>,
     MIN_PAYEE_PERIOD: (...args: ExtractArgs<Contract['calls']['MIN_PAYEE_PERIOD']>) =>
-      singleQuery(publicClient!, call.MIN_PAYEE_PERIOD(...args)) as Promise<CallReturn<'MIN_PAYEE_PERIOD'>>,
+      singleQuery(publicClient!, call.MIN_PAYEE_PERIOD(...args), {}, addressResolver) as Promise<
+        CallReturn<'MIN_PAYEE_PERIOD'>
+      >,
     MAX_PAYEE_PERIOD: (...args: ExtractArgs<Contract['calls']['MAX_PAYEE_PERIOD']>) =>
-      singleQuery(publicClient!, call.MAX_PAYEE_PERIOD(...args)) as Promise<CallReturn<'MAX_PAYEE_PERIOD'>>,
+      singleQuery(publicClient!, call.MAX_PAYEE_PERIOD(...args), {}, addressResolver) as Promise<
+        CallReturn<'MAX_PAYEE_PERIOD'>
+      >,
     MIN_ACTIVATION_LENGTH: (...args: ExtractArgs<Contract['calls']['MIN_ACTIVATION_LENGTH']>) =>
-      singleQuery(publicClient!, call.MIN_ACTIVATION_LENGTH(...args)) as Promise<CallReturn<'MIN_ACTIVATION_LENGTH'>>,
+      singleQuery(publicClient!, call.MIN_ACTIVATION_LENGTH(...args), {}, addressResolver) as Promise<
+        CallReturn<'MIN_ACTIVATION_LENGTH'>
+      >,
     MAX_ACTIVATION_LENGTH: (...args: ExtractArgs<Contract['calls']['MAX_ACTIVATION_LENGTH']>) =>
-      singleQuery(publicClient!, call.MAX_ACTIVATION_LENGTH(...args)) as Promise<CallReturn<'MAX_ACTIVATION_LENGTH'>>,
+      singleQuery(publicClient!, call.MAX_ACTIVATION_LENGTH(...args), {}, addressResolver) as Promise<
+        CallReturn<'MAX_ACTIVATION_LENGTH'>
+      >,
     MAX_START_DELAY: (...args: ExtractArgs<Contract['calls']['MAX_START_DELAY']>) =>
-      singleQuery(publicClient!, call.MAX_START_DELAY(...args)) as Promise<CallReturn<'MAX_START_DELAY'>>,
+      singleQuery(publicClient!, call.MAX_START_DELAY(...args), {}, addressResolver) as Promise<
+        CallReturn<'MAX_START_DELAY'>
+      >,
 
     // Mutations
     setGlobalPayeeSettings: (...args: ExtractArgs<Contract['mutations']['setGlobalPayeeSettings']>) =>
-      mutate(walletClient!, mutation.setGlobalPayeeSettings)(...args),
+      mutate(walletClient!, mutation.setGlobalPayeeSettings, { addressResolver })(...args),
     addPayee: (...args: ExtractArgs<Contract['mutations']['addPayee']>) =>
-      mutate(walletClient!, mutation.addPayee)(...args),
+      mutate(walletClient!, mutation.addPayee, { addressResolver })(...args),
     updatePayee: (...args: ExtractArgs<Contract['mutations']['updatePayee']>) =>
-      mutate(walletClient!, mutation.updatePayee)(...args),
+      mutate(walletClient!, mutation.updatePayee, { addressResolver })(...args),
     removePayee: (...args: ExtractArgs<Contract['mutations']['removePayee']>) =>
-      mutate(walletClient!, mutation.removePayee)(...args),
+      mutate(walletClient!, mutation.removePayee, { addressResolver })(...args),
     addPendingPayee: (...args: ExtractArgs<Contract['mutations']['addPendingPayee']>) =>
-      mutate(walletClient!, mutation.addPendingPayee)(...args),
+      mutate(walletClient!, mutation.addPendingPayee, { addressResolver })(...args),
     confirmPendingPayee: (...args: ExtractArgs<Contract['mutations']['confirmPendingPayee']>) =>
-      mutate(walletClient!, mutation.confirmPendingPayee)(...args),
+      mutate(walletClient!, mutation.confirmPendingPayee, { addressResolver })(...args),
     cancelPendingPayee: (...args: ExtractArgs<Contract['mutations']['cancelPendingPayee']>) =>
-      mutate(walletClient!, mutation.cancelPendingPayee)(...args),
+      mutate(walletClient!, mutation.cancelPendingPayee, { addressResolver })(...args),
   }
 }

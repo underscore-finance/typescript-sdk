@@ -3,7 +3,7 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { mutate } from '@dappql/async'
+import { mutate, AddressResolverFunction } from '@dappql/async'
 import { PublicClient, WalletClient } from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
@@ -102,14 +102,19 @@ export type SDK = {
   convertVaultToken: (...args: ExtractArgs<Contract['mutations']['convertVaultToken']>) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
     // Queries
 
     // Mutations
     convertVaultToken: (...args: ExtractArgs<Contract['mutations']['convertVaultToken']>) =>
-      mutate(walletClient!, mutation.convertVaultToken)(...args),
+      mutate(walletClient!, mutation.convertVaultToken, { addressResolver })(...args),
   }
 }

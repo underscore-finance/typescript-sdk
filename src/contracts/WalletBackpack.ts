@@ -3,8 +3,16 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery, mutate } from '@dappql/async'
-import { PublicClient, WalletClient } from 'viem'
+import { singleQuery, mutate, AddressResolverFunction } from '@dappql/async'
+import {
+  encodeEventTopics,
+  parseEventLogs,
+  ParseEventLogsReturnType,
+  Log,
+  RpcLog,
+  PublicClient,
+  WalletClient,
+} from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
@@ -1600,9 +1608,67 @@ export const mutation: {
   cancelPendingMigrator: getMutation('cancelPendingMigrator'),
 }
 
+export type ParsedEvent<T extends keyof Contract['events']> = {
+  event: RpcLog | Log
+  parsed: ParseEventLogsReturnType<typeof abi, T>
+}
+
+export function parseEvents<T extends keyof Contract['events']>(
+  eventName: T,
+  events: (RpcLog | Log)[],
+): ParsedEvent<T>[] {
+  return events.map((event) => {
+    return {
+      event,
+      parsed: parseEventLogs({
+        abi,
+        eventName,
+        logs: [event],
+      }),
+    }
+  })
+}
+
+export function getEventTopic<T extends keyof Contract['events']>(eventName: T): Address {
+  return encodeEventTopics({ abi, eventName })[0] as Address
+}
+
 export type SDK = {
   deployAddress: Address | undefined
   abi: typeof abi
+  events: {
+    PendingBackpackItemAdded: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'PendingBackpackItemAdded'>[]
+    }
+    BackpackItemConfirmed: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'BackpackItemConfirmed'>[]
+    }
+    PendingBackpackItemCancelled: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'PendingBackpackItemCancelled'>[]
+    }
+    GovChangeTimeLockModified: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovChangeTimeLockModified'>[]
+    }
+    ExpirationSet: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'ExpirationSet'>[] }
+    ActionTimeLockSet: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'ActionTimeLockSet'>[] }
+    GovChangeStarted: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovChangeStarted'>[] }
+    GovChangeConfirmed: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovChangeConfirmed'>[] }
+    GovChangeCancelled: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovChangeCancelled'>[] }
+    GovRelinquished: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovRelinquished'>[] }
+    UndyHqSetupFinished: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'UndyHqSetupFinished'>[] }
+    DepartmentPauseModified: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'DepartmentPauseModified'>[]
+    }
+    DepartmentFundsRecovered: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'DepartmentFundsRecovered'>[]
+    }
+  }
   getUndyHqFromGov: (
     ...args: ExtractArgs<Contract['calls']['getUndyHqFromGov']>
   ) => Promise<CallReturn<'getUndyHqFromGov'>>
@@ -1706,145 +1772,239 @@ export type SDK = {
   cancelPendingMigrator: (...args: ExtractArgs<Contract['mutations']['cancelPendingMigrator']>) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
+    events: {
+      PendingBackpackItemAdded: {
+        topic: getEventTopic('PendingBackpackItemAdded'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('PendingBackpackItemAdded', events),
+      },
+      BackpackItemConfirmed: {
+        topic: getEventTopic('BackpackItemConfirmed'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('BackpackItemConfirmed', events),
+      },
+      PendingBackpackItemCancelled: {
+        topic: getEventTopic('PendingBackpackItemCancelled'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('PendingBackpackItemCancelled', events),
+      },
+      GovChangeTimeLockModified: {
+        topic: getEventTopic('GovChangeTimeLockModified'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovChangeTimeLockModified', events),
+      },
+      ExpirationSet: {
+        topic: getEventTopic('ExpirationSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('ExpirationSet', events),
+      },
+      ActionTimeLockSet: {
+        topic: getEventTopic('ActionTimeLockSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('ActionTimeLockSet', events),
+      },
+      GovChangeStarted: {
+        topic: getEventTopic('GovChangeStarted'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovChangeStarted', events),
+      },
+      GovChangeConfirmed: {
+        topic: getEventTopic('GovChangeConfirmed'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovChangeConfirmed', events),
+      },
+      GovChangeCancelled: {
+        topic: getEventTopic('GovChangeCancelled'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovChangeCancelled', events),
+      },
+      GovRelinquished: {
+        topic: getEventTopic('GovRelinquished'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovRelinquished', events),
+      },
+      UndyHqSetupFinished: {
+        topic: getEventTopic('UndyHqSetupFinished'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('UndyHqSetupFinished', events),
+      },
+      DepartmentPauseModified: {
+        topic: getEventTopic('DepartmentPauseModified'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('DepartmentPauseModified', events),
+      },
+      DepartmentFundsRecovered: {
+        topic: getEventTopic('DepartmentFundsRecovered'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('DepartmentFundsRecovered', events),
+      },
+    },
     // Queries
     getUndyHqFromGov: (...args: ExtractArgs<Contract['calls']['getUndyHqFromGov']>) =>
-      singleQuery(publicClient!, call.getUndyHqFromGov(...args)) as Promise<CallReturn<'getUndyHqFromGov'>>,
+      singleQuery(publicClient!, call.getUndyHqFromGov(...args), {}, addressResolver) as Promise<
+        CallReturn<'getUndyHqFromGov'>
+      >,
     canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) =>
-      singleQuery(publicClient!, call.canGovern(...args)) as Promise<CallReturn<'canGovern'>>,
+      singleQuery(publicClient!, call.canGovern(...args), {}, addressResolver) as Promise<CallReturn<'canGovern'>>,
     getGovernors: (...args: ExtractArgs<Contract['calls']['getGovernors']>) =>
-      singleQuery(publicClient!, call.getGovernors(...args)) as Promise<CallReturn<'getGovernors'>>,
+      singleQuery(publicClient!, call.getGovernors(...args), {}, addressResolver) as Promise<
+        CallReturn<'getGovernors'>
+      >,
     hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
-      singleQuery(publicClient!, call.hasPendingGovChange(...args)) as Promise<CallReturn<'hasPendingGovChange'>>,
+      singleQuery(publicClient!, call.hasPendingGovChange(...args), {}, addressResolver) as Promise<
+        CallReturn<'hasPendingGovChange'>
+      >,
     isValidGovTimeLock: (...args: ExtractArgs<Contract['calls']['isValidGovTimeLock']>) =>
-      singleQuery(publicClient!, call.isValidGovTimeLock(...args)) as Promise<CallReturn<'isValidGovTimeLock'>>,
+      singleQuery(publicClient!, call.isValidGovTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidGovTimeLock'>
+      >,
     minGovChangeTimeLock: (...args: ExtractArgs<Contract['calls']['minGovChangeTimeLock']>) =>
-      singleQuery(publicClient!, call.minGovChangeTimeLock(...args)) as Promise<CallReturn<'minGovChangeTimeLock'>>,
+      singleQuery(publicClient!, call.minGovChangeTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'minGovChangeTimeLock'>
+      >,
     maxGovChangeTimeLock: (...args: ExtractArgs<Contract['calls']['maxGovChangeTimeLock']>) =>
-      singleQuery(publicClient!, call.maxGovChangeTimeLock(...args)) as Promise<CallReturn<'maxGovChangeTimeLock'>>,
+      singleQuery(publicClient!, call.maxGovChangeTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'maxGovChangeTimeLock'>
+      >,
     governance: (...args: ExtractArgs<Contract['calls']['governance']>) =>
-      singleQuery(publicClient!, call.governance(...args)) as Promise<CallReturn<'governance'>>,
+      singleQuery(publicClient!, call.governance(...args), {}, addressResolver) as Promise<CallReturn<'governance'>>,
     pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) =>
-      singleQuery(publicClient!, call.pendingGov(...args)) as Promise<CallReturn<'pendingGov'>>,
+      singleQuery(publicClient!, call.pendingGov(...args), {}, addressResolver) as Promise<CallReturn<'pendingGov'>>,
     numGovChanges: (...args: ExtractArgs<Contract['calls']['numGovChanges']>) =>
-      singleQuery(publicClient!, call.numGovChanges(...args)) as Promise<CallReturn<'numGovChanges'>>,
+      singleQuery(publicClient!, call.numGovChanges(...args), {}, addressResolver) as Promise<
+        CallReturn<'numGovChanges'>
+      >,
     govChangeTimeLock: (...args: ExtractArgs<Contract['calls']['govChangeTimeLock']>) =>
-      singleQuery(publicClient!, call.govChangeTimeLock(...args)) as Promise<CallReturn<'govChangeTimeLock'>>,
+      singleQuery(publicClient!, call.govChangeTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'govChangeTimeLock'>
+      >,
     getAddys: (...args: ExtractArgs<Contract['calls']['getAddys']>) =>
-      singleQuery(publicClient!, call.getAddys(...args)) as Promise<CallReturn<'getAddys'>>,
+      singleQuery(publicClient!, call.getAddys(...args), {}, addressResolver) as Promise<CallReturn<'getAddys'>>,
     getUndyHq: (...args: ExtractArgs<Contract['calls']['getUndyHq']>) =>
-      singleQuery(publicClient!, call.getUndyHq(...args)) as Promise<CallReturn<'getUndyHq'>>,
+      singleQuery(publicClient!, call.getUndyHq(...args), {}, addressResolver) as Promise<CallReturn<'getUndyHq'>>,
     canMintUndy: (...args: ExtractArgs<Contract['calls']['canMintUndy']>) =>
-      singleQuery(publicClient!, call.canMintUndy(...args)) as Promise<CallReturn<'canMintUndy'>>,
+      singleQuery(publicClient!, call.canMintUndy(...args), {}, addressResolver) as Promise<CallReturn<'canMintUndy'>>,
     isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) =>
-      singleQuery(publicClient!, call.isPaused(...args)) as Promise<CallReturn<'isPaused'>>,
+      singleQuery(publicClient!, call.isPaused(...args), {}, addressResolver) as Promise<CallReturn<'isPaused'>>,
     canConfirmAction: (...args: ExtractArgs<Contract['calls']['canConfirmAction']>) =>
-      singleQuery(publicClient!, call.canConfirmAction(...args)) as Promise<CallReturn<'canConfirmAction'>>,
+      singleQuery(publicClient!, call.canConfirmAction(...args), {}, addressResolver) as Promise<
+        CallReturn<'canConfirmAction'>
+      >,
     isExpired: (...args: ExtractArgs<Contract['calls']['isExpired']>) =>
-      singleQuery(publicClient!, call.isExpired(...args)) as Promise<CallReturn<'isExpired'>>,
+      singleQuery(publicClient!, call.isExpired(...args), {}, addressResolver) as Promise<CallReturn<'isExpired'>>,
     hasPendingAction: (...args: ExtractArgs<Contract['calls']['hasPendingAction']>) =>
-      singleQuery(publicClient!, call.hasPendingAction(...args)) as Promise<CallReturn<'hasPendingAction'>>,
+      singleQuery(publicClient!, call.hasPendingAction(...args), {}, addressResolver) as Promise<
+        CallReturn<'hasPendingAction'>
+      >,
     getActionConfirmationBlock: (...args: ExtractArgs<Contract['calls']['getActionConfirmationBlock']>) =>
-      singleQuery(publicClient!, call.getActionConfirmationBlock(...args)) as Promise<
+      singleQuery(publicClient!, call.getActionConfirmationBlock(...args), {}, addressResolver) as Promise<
         CallReturn<'getActionConfirmationBlock'>
       >,
     isValidActionTimeLock: (...args: ExtractArgs<Contract['calls']['isValidActionTimeLock']>) =>
-      singleQuery(publicClient!, call.isValidActionTimeLock(...args)) as Promise<CallReturn<'isValidActionTimeLock'>>,
+      singleQuery(publicClient!, call.isValidActionTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidActionTimeLock'>
+      >,
     minActionTimeLock: (...args: ExtractArgs<Contract['calls']['minActionTimeLock']>) =>
-      singleQuery(publicClient!, call.minActionTimeLock(...args)) as Promise<CallReturn<'minActionTimeLock'>>,
+      singleQuery(publicClient!, call.minActionTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'minActionTimeLock'>
+      >,
     maxActionTimeLock: (...args: ExtractArgs<Contract['calls']['maxActionTimeLock']>) =>
-      singleQuery(publicClient!, call.maxActionTimeLock(...args)) as Promise<CallReturn<'maxActionTimeLock'>>,
+      singleQuery(publicClient!, call.maxActionTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'maxActionTimeLock'>
+      >,
     pendingActions: (...args: ExtractArgs<Contract['calls']['pendingActions']>) =>
-      singleQuery(publicClient!, call.pendingActions(...args)) as Promise<CallReturn<'pendingActions'>>,
+      singleQuery(publicClient!, call.pendingActions(...args), {}, addressResolver) as Promise<
+        CallReturn<'pendingActions'>
+      >,
     actionId: (...args: ExtractArgs<Contract['calls']['actionId']>) =>
-      singleQuery(publicClient!, call.actionId(...args)) as Promise<CallReturn<'actionId'>>,
+      singleQuery(publicClient!, call.actionId(...args), {}, addressResolver) as Promise<CallReturn<'actionId'>>,
     actionTimeLock: (...args: ExtractArgs<Contract['calls']['actionTimeLock']>) =>
-      singleQuery(publicClient!, call.actionTimeLock(...args)) as Promise<CallReturn<'actionTimeLock'>>,
+      singleQuery(publicClient!, call.actionTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'actionTimeLock'>
+      >,
     expiration: (...args: ExtractArgs<Contract['calls']['expiration']>) =>
-      singleQuery(publicClient!, call.expiration(...args)) as Promise<CallReturn<'expiration'>>,
+      singleQuery(publicClient!, call.expiration(...args), {}, addressResolver) as Promise<CallReturn<'expiration'>>,
     canAddBackpackItem: (...args: ExtractArgs<Contract['calls']['canAddBackpackItem']>) =>
-      singleQuery(publicClient!, call.canAddBackpackItem(...args)) as Promise<CallReturn<'canAddBackpackItem'>>,
+      singleQuery(publicClient!, call.canAddBackpackItem(...args), {}, addressResolver) as Promise<
+        CallReturn<'canAddBackpackItem'>
+      >,
     isRegisteredBackpackItem: (...args: ExtractArgs<Contract['calls']['isRegisteredBackpackItem']>) =>
-      singleQuery(publicClient!, call.isRegisteredBackpackItem(...args)) as Promise<
+      singleQuery(publicClient!, call.isRegisteredBackpackItem(...args), {}, addressResolver) as Promise<
         CallReturn<'isRegisteredBackpackItem'>
       >,
     kernel: (...args: ExtractArgs<Contract['calls']['kernel']>) =>
-      singleQuery(publicClient!, call.kernel(...args)) as Promise<CallReturn<'kernel'>>,
+      singleQuery(publicClient!, call.kernel(...args), {}, addressResolver) as Promise<CallReturn<'kernel'>>,
     sentinel: (...args: ExtractArgs<Contract['calls']['sentinel']>) =>
-      singleQuery(publicClient!, call.sentinel(...args)) as Promise<CallReturn<'sentinel'>>,
+      singleQuery(publicClient!, call.sentinel(...args), {}, addressResolver) as Promise<CallReturn<'sentinel'>>,
     highCommand: (...args: ExtractArgs<Contract['calls']['highCommand']>) =>
-      singleQuery(publicClient!, call.highCommand(...args)) as Promise<CallReturn<'highCommand'>>,
+      singleQuery(publicClient!, call.highCommand(...args), {}, addressResolver) as Promise<CallReturn<'highCommand'>>,
     paymaster: (...args: ExtractArgs<Contract['calls']['paymaster']>) =>
-      singleQuery(publicClient!, call.paymaster(...args)) as Promise<CallReturn<'paymaster'>>,
+      singleQuery(publicClient!, call.paymaster(...args), {}, addressResolver) as Promise<CallReturn<'paymaster'>>,
     chequeBook: (...args: ExtractArgs<Contract['calls']['chequeBook']>) =>
-      singleQuery(publicClient!, call.chequeBook(...args)) as Promise<CallReturn<'chequeBook'>>,
+      singleQuery(publicClient!, call.chequeBook(...args), {}, addressResolver) as Promise<CallReturn<'chequeBook'>>,
     migrator: (...args: ExtractArgs<Contract['calls']['migrator']>) =>
-      singleQuery(publicClient!, call.migrator(...args)) as Promise<CallReturn<'migrator'>>,
+      singleQuery(publicClient!, call.migrator(...args), {}, addressResolver) as Promise<CallReturn<'migrator'>>,
     pendingUpdates: (...args: ExtractArgs<Contract['calls']['pendingUpdates']>) =>
-      singleQuery(publicClient!, call.pendingUpdates(...args)) as Promise<CallReturn<'pendingUpdates'>>,
+      singleQuery(publicClient!, call.pendingUpdates(...args), {}, addressResolver) as Promise<
+        CallReturn<'pendingUpdates'>
+      >,
 
     // Mutations
     startGovernanceChange: (...args: ExtractArgs<Contract['mutations']['startGovernanceChange']>) =>
-      mutate(walletClient!, mutation.startGovernanceChange)(...args),
+      mutate(walletClient!, mutation.startGovernanceChange, { addressResolver })(...args),
     confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) =>
-      mutate(walletClient!, mutation.confirmGovernanceChange)(...args),
+      mutate(walletClient!, mutation.confirmGovernanceChange, { addressResolver })(...args),
     cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) =>
-      mutate(walletClient!, mutation.cancelGovernanceChange)(...args),
+      mutate(walletClient!, mutation.cancelGovernanceChange, { addressResolver })(...args),
     relinquishGov: (...args: ExtractArgs<Contract['mutations']['relinquishGov']>) =>
-      mutate(walletClient!, mutation.relinquishGov)(...args),
+      mutate(walletClient!, mutation.relinquishGov, { addressResolver })(...args),
     setGovTimeLock: (...args: ExtractArgs<Contract['mutations']['setGovTimeLock']>) =>
-      mutate(walletClient!, mutation.setGovTimeLock)(...args),
+      mutate(walletClient!, mutation.setGovTimeLock, { addressResolver })(...args),
     finishUndyHqSetup: (...args: ExtractArgs<Contract['mutations']['finishUndyHqSetup']>) =>
-      mutate(walletClient!, mutation.finishUndyHqSetup)(...args),
-    pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => mutate(walletClient!, mutation.pause)(...args),
+      mutate(walletClient!, mutation.finishUndyHqSetup, { addressResolver })(...args),
+    pause: (...args: ExtractArgs<Contract['mutations']['pause']>) =>
+      mutate(walletClient!, mutation.pause, { addressResolver })(...args),
     recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) =>
-      mutate(walletClient!, mutation.recoverFunds)(...args),
+      mutate(walletClient!, mutation.recoverFunds, { addressResolver })(...args),
     recoverFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverFundsMany']>) =>
-      mutate(walletClient!, mutation.recoverFundsMany)(...args),
+      mutate(walletClient!, mutation.recoverFundsMany, { addressResolver })(...args),
     setActionTimeLock: (...args: ExtractArgs<Contract['mutations']['setActionTimeLock']>) =>
-      mutate(walletClient!, mutation.setActionTimeLock)(...args),
+      mutate(walletClient!, mutation.setActionTimeLock, { addressResolver })(...args),
     setExpiration: (...args: ExtractArgs<Contract['mutations']['setExpiration']>) =>
-      mutate(walletClient!, mutation.setExpiration)(...args),
+      mutate(walletClient!, mutation.setExpiration, { addressResolver })(...args),
     setActionTimeLockAfterSetup: (...args: ExtractArgs<Contract['mutations']['setActionTimeLockAfterSetup']>) =>
-      mutate(walletClient!, mutation.setActionTimeLockAfterSetup)(...args),
+      mutate(walletClient!, mutation.setActionTimeLockAfterSetup, { addressResolver })(...args),
     addPendingKernel: (...args: ExtractArgs<Contract['mutations']['addPendingKernel']>) =>
-      mutate(walletClient!, mutation.addPendingKernel)(...args),
+      mutate(walletClient!, mutation.addPendingKernel, { addressResolver })(...args),
     addPendingSentinel: (...args: ExtractArgs<Contract['mutations']['addPendingSentinel']>) =>
-      mutate(walletClient!, mutation.addPendingSentinel)(...args),
+      mutate(walletClient!, mutation.addPendingSentinel, { addressResolver })(...args),
     addPendingHighCommand: (...args: ExtractArgs<Contract['mutations']['addPendingHighCommand']>) =>
-      mutate(walletClient!, mutation.addPendingHighCommand)(...args),
+      mutate(walletClient!, mutation.addPendingHighCommand, { addressResolver })(...args),
     addPendingPaymaster: (...args: ExtractArgs<Contract['mutations']['addPendingPaymaster']>) =>
-      mutate(walletClient!, mutation.addPendingPaymaster)(...args),
+      mutate(walletClient!, mutation.addPendingPaymaster, { addressResolver })(...args),
     addPendingChequeBook: (...args: ExtractArgs<Contract['mutations']['addPendingChequeBook']>) =>
-      mutate(walletClient!, mutation.addPendingChequeBook)(...args),
+      mutate(walletClient!, mutation.addPendingChequeBook, { addressResolver })(...args),
     addPendingMigrator: (...args: ExtractArgs<Contract['mutations']['addPendingMigrator']>) =>
-      mutate(walletClient!, mutation.addPendingMigrator)(...args),
+      mutate(walletClient!, mutation.addPendingMigrator, { addressResolver })(...args),
     confirmPendingKernel: (...args: ExtractArgs<Contract['mutations']['confirmPendingKernel']>) =>
-      mutate(walletClient!, mutation.confirmPendingKernel)(...args),
+      mutate(walletClient!, mutation.confirmPendingKernel, { addressResolver })(...args),
     confirmPendingSentinel: (...args: ExtractArgs<Contract['mutations']['confirmPendingSentinel']>) =>
-      mutate(walletClient!, mutation.confirmPendingSentinel)(...args),
+      mutate(walletClient!, mutation.confirmPendingSentinel, { addressResolver })(...args),
     confirmPendingHighCommand: (...args: ExtractArgs<Contract['mutations']['confirmPendingHighCommand']>) =>
-      mutate(walletClient!, mutation.confirmPendingHighCommand)(...args),
+      mutate(walletClient!, mutation.confirmPendingHighCommand, { addressResolver })(...args),
     confirmPendingPaymaster: (...args: ExtractArgs<Contract['mutations']['confirmPendingPaymaster']>) =>
-      mutate(walletClient!, mutation.confirmPendingPaymaster)(...args),
+      mutate(walletClient!, mutation.confirmPendingPaymaster, { addressResolver })(...args),
     confirmPendingChequeBook: (...args: ExtractArgs<Contract['mutations']['confirmPendingChequeBook']>) =>
-      mutate(walletClient!, mutation.confirmPendingChequeBook)(...args),
+      mutate(walletClient!, mutation.confirmPendingChequeBook, { addressResolver })(...args),
     confirmPendingMigrator: (...args: ExtractArgs<Contract['mutations']['confirmPendingMigrator']>) =>
-      mutate(walletClient!, mutation.confirmPendingMigrator)(...args),
+      mutate(walletClient!, mutation.confirmPendingMigrator, { addressResolver })(...args),
     cancelPendingKernel: (...args: ExtractArgs<Contract['mutations']['cancelPendingKernel']>) =>
-      mutate(walletClient!, mutation.cancelPendingKernel)(...args),
+      mutate(walletClient!, mutation.cancelPendingKernel, { addressResolver })(...args),
     cancelPendingSentinel: (...args: ExtractArgs<Contract['mutations']['cancelPendingSentinel']>) =>
-      mutate(walletClient!, mutation.cancelPendingSentinel)(...args),
+      mutate(walletClient!, mutation.cancelPendingSentinel, { addressResolver })(...args),
     cancelPendingHighCommand: (...args: ExtractArgs<Contract['mutations']['cancelPendingHighCommand']>) =>
-      mutate(walletClient!, mutation.cancelPendingHighCommand)(...args),
+      mutate(walletClient!, mutation.cancelPendingHighCommand, { addressResolver })(...args),
     cancelPendingPaymaster: (...args: ExtractArgs<Contract['mutations']['cancelPendingPaymaster']>) =>
-      mutate(walletClient!, mutation.cancelPendingPaymaster)(...args),
+      mutate(walletClient!, mutation.cancelPendingPaymaster, { addressResolver })(...args),
     cancelPendingChequeBook: (...args: ExtractArgs<Contract['mutations']['cancelPendingChequeBook']>) =>
-      mutate(walletClient!, mutation.cancelPendingChequeBook)(...args),
+      mutate(walletClient!, mutation.cancelPendingChequeBook, { addressResolver })(...args),
     cancelPendingMigrator: (...args: ExtractArgs<Contract['mutations']['cancelPendingMigrator']>) =>
-      mutate(walletClient!, mutation.cancelPendingMigrator)(...args),
+      mutate(walletClient!, mutation.cancelPendingMigrator, { addressResolver })(...args),
   }
 }

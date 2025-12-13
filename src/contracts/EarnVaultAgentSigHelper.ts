@@ -3,7 +3,7 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery } from '@dappql/async'
+import { singleQuery, AddressResolverFunction } from '@dappql/async'
 import { PublicClient, WalletClient } from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
@@ -1315,23 +1315,36 @@ export type SDK = {
   ) => Promise<CallReturn<'getBatchActionsHash'>>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
     // Queries
     getDepositForYieldHash: (...args: ExtractArgs<Contract['calls']['getDepositForYieldHash']>) =>
-      singleQuery(publicClient!, call.getDepositForYieldHash(...args)) as Promise<CallReturn<'getDepositForYieldHash'>>,
+      singleQuery(publicClient!, call.getDepositForYieldHash(...args), {}, addressResolver) as Promise<
+        CallReturn<'getDepositForYieldHash'>
+      >,
     getWithdrawFromYieldHash: (...args: ExtractArgs<Contract['calls']['getWithdrawFromYieldHash']>) =>
-      singleQuery(publicClient!, call.getWithdrawFromYieldHash(...args)) as Promise<
+      singleQuery(publicClient!, call.getWithdrawFromYieldHash(...args), {}, addressResolver) as Promise<
         CallReturn<'getWithdrawFromYieldHash'>
       >,
     getSwapTokensHash: (...args: ExtractArgs<Contract['calls']['getSwapTokensHash']>) =>
-      singleQuery(publicClient!, call.getSwapTokensHash(...args)) as Promise<CallReturn<'getSwapTokensHash'>>,
+      singleQuery(publicClient!, call.getSwapTokensHash(...args), {}, addressResolver) as Promise<
+        CallReturn<'getSwapTokensHash'>
+      >,
     getClaimIncentivesHash: (...args: ExtractArgs<Contract['calls']['getClaimIncentivesHash']>) =>
-      singleQuery(publicClient!, call.getClaimIncentivesHash(...args)) as Promise<CallReturn<'getClaimIncentivesHash'>>,
+      singleQuery(publicClient!, call.getClaimIncentivesHash(...args), {}, addressResolver) as Promise<
+        CallReturn<'getClaimIncentivesHash'>
+      >,
     getBatchActionsHash: (...args: ExtractArgs<Contract['calls']['getBatchActionsHash']>) =>
-      singleQuery(publicClient!, call.getBatchActionsHash(...args)) as Promise<CallReturn<'getBatchActionsHash'>>,
+      singleQuery(publicClient!, call.getBatchActionsHash(...args), {}, addressResolver) as Promise<
+        CallReturn<'getBatchActionsHash'>
+      >,
 
     // Mutations
   }

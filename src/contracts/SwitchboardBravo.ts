@@ -3,8 +3,16 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery, mutate } from '@dappql/async'
-import { PublicClient, WalletClient } from 'viem'
+import { singleQuery, mutate, AddressResolverFunction } from '@dappql/async'
+import {
+  encodeEventTopics,
+  parseEventLogs,
+  ParseEventLogsReturnType,
+  Log,
+  RpcLog,
+  PublicClient,
+  WalletClient,
+} from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
@@ -2013,9 +2021,95 @@ export const mutation: {
   cancelPendingAction: getMutation('cancelPendingAction'),
 }
 
+export type ParsedEvent<T extends keyof Contract['events']> = {
+  event: RpcLog | Log
+  parsed: ParseEventLogsReturnType<typeof abi, T>
+}
+
+export function parseEvents<T extends keyof Contract['events']>(
+  eventName: T,
+  events: (RpcLog | Log)[],
+): ParsedEvent<T>[] {
+  return events.map((event) => {
+    return {
+      event,
+      parsed: parseEventLogs({
+        abi,
+        eventName,
+        logs: [event],
+      }),
+    }
+  })
+}
+
+export function getEventTopic<T extends keyof Contract['events']>(eventName: T): Address {
+  return encodeEventTopics({ abi, eventName })[0] as Address
+}
+
 export type SDK = {
   deployAddress: Address | undefined
   abi: typeof abi
+  events: {
+    PendingRecoverFundsAction: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'PendingRecoverFundsAction'>[]
+    }
+    PendingRecoverFundsManyAction: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'PendingRecoverFundsManyAction'>[]
+    }
+    PendingRecoverNftAction: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'PendingRecoverNftAction'>[]
+    }
+    PendingLootAdjustAction: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'PendingLootAdjustAction'>[]
+    }
+    PendingRecoverDepositRewardsAction: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'PendingRecoverDepositRewardsAction'>[]
+    }
+    AssetDataUpdated: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'AssetDataUpdated'>[] }
+    AllAssetDataUpdated: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'AllAssetDataUpdated'>[] }
+    PendingSetEjectionModeAction: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'PendingSetEjectionModeAction'>[]
+    }
+    PauseExecuted: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'PauseExecuted'>[] }
+    RecoverFundsExecuted: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'RecoverFundsExecuted'>[] }
+    RecoverFundsManyExecuted: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'RecoverFundsManyExecuted'>[]
+    }
+    RecoverNftExecuted: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'RecoverNftExecuted'>[] }
+    DepositPointsUpdated: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'DepositPointsUpdated'>[] }
+    LootClaimedForUser: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'LootClaimedForUser'>[] }
+    LootClaimedForManyUsers: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'LootClaimedForManyUsers'>[]
+    }
+    LootAdjusted: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'LootAdjusted'>[] }
+    RecoverDepositRewardsExecuted: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'RecoverDepositRewardsExecuted'>[]
+    }
+    SetEjectionModeExecuted: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'SetEjectionModeExecuted'>[]
+    }
+    GovChangeTimeLockModified: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovChangeTimeLockModified'>[]
+    }
+    ExpirationSet: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'ExpirationSet'>[] }
+    ActionTimeLockSet: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'ActionTimeLockSet'>[] }
+    GovChangeStarted: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovChangeStarted'>[] }
+    GovChangeConfirmed: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovChangeConfirmed'>[] }
+    GovChangeCancelled: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovChangeCancelled'>[] }
+    GovRelinquished: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'GovRelinquished'>[] }
+    UndyHqSetupFinished: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'UndyHqSetupFinished'>[] }
+  }
   getAddys: (...args: ExtractArgs<Contract['calls']['getAddys']>) => Promise<CallReturn<'getAddys'>>
   getUndyHq: (...args: ExtractArgs<Contract['calls']['getUndyHq']>) => Promise<CallReturn<'getUndyHq'>>
   getUndyHqFromGov: (
@@ -2113,137 +2207,281 @@ export type SDK = {
   cancelPendingAction: (...args: ExtractArgs<Contract['mutations']['cancelPendingAction']>) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
+    events: {
+      PendingRecoverFundsAction: {
+        topic: getEventTopic('PendingRecoverFundsAction'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('PendingRecoverFundsAction', events),
+      },
+      PendingRecoverFundsManyAction: {
+        topic: getEventTopic('PendingRecoverFundsManyAction'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('PendingRecoverFundsManyAction', events),
+      },
+      PendingRecoverNftAction: {
+        topic: getEventTopic('PendingRecoverNftAction'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('PendingRecoverNftAction', events),
+      },
+      PendingLootAdjustAction: {
+        topic: getEventTopic('PendingLootAdjustAction'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('PendingLootAdjustAction', events),
+      },
+      PendingRecoverDepositRewardsAction: {
+        topic: getEventTopic('PendingRecoverDepositRewardsAction'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('PendingRecoverDepositRewardsAction', events),
+      },
+      AssetDataUpdated: {
+        topic: getEventTopic('AssetDataUpdated'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('AssetDataUpdated', events),
+      },
+      AllAssetDataUpdated: {
+        topic: getEventTopic('AllAssetDataUpdated'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('AllAssetDataUpdated', events),
+      },
+      PendingSetEjectionModeAction: {
+        topic: getEventTopic('PendingSetEjectionModeAction'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('PendingSetEjectionModeAction', events),
+      },
+      PauseExecuted: {
+        topic: getEventTopic('PauseExecuted'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('PauseExecuted', events),
+      },
+      RecoverFundsExecuted: {
+        topic: getEventTopic('RecoverFundsExecuted'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('RecoverFundsExecuted', events),
+      },
+      RecoverFundsManyExecuted: {
+        topic: getEventTopic('RecoverFundsManyExecuted'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('RecoverFundsManyExecuted', events),
+      },
+      RecoverNftExecuted: {
+        topic: getEventTopic('RecoverNftExecuted'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('RecoverNftExecuted', events),
+      },
+      DepositPointsUpdated: {
+        topic: getEventTopic('DepositPointsUpdated'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('DepositPointsUpdated', events),
+      },
+      LootClaimedForUser: {
+        topic: getEventTopic('LootClaimedForUser'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('LootClaimedForUser', events),
+      },
+      LootClaimedForManyUsers: {
+        topic: getEventTopic('LootClaimedForManyUsers'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('LootClaimedForManyUsers', events),
+      },
+      LootAdjusted: {
+        topic: getEventTopic('LootAdjusted'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('LootAdjusted', events),
+      },
+      RecoverDepositRewardsExecuted: {
+        topic: getEventTopic('RecoverDepositRewardsExecuted'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('RecoverDepositRewardsExecuted', events),
+      },
+      SetEjectionModeExecuted: {
+        topic: getEventTopic('SetEjectionModeExecuted'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('SetEjectionModeExecuted', events),
+      },
+      GovChangeTimeLockModified: {
+        topic: getEventTopic('GovChangeTimeLockModified'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovChangeTimeLockModified', events),
+      },
+      ExpirationSet: {
+        topic: getEventTopic('ExpirationSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('ExpirationSet', events),
+      },
+      ActionTimeLockSet: {
+        topic: getEventTopic('ActionTimeLockSet'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('ActionTimeLockSet', events),
+      },
+      GovChangeStarted: {
+        topic: getEventTopic('GovChangeStarted'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovChangeStarted', events),
+      },
+      GovChangeConfirmed: {
+        topic: getEventTopic('GovChangeConfirmed'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovChangeConfirmed', events),
+      },
+      GovChangeCancelled: {
+        topic: getEventTopic('GovChangeCancelled'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovChangeCancelled', events),
+      },
+      GovRelinquished: {
+        topic: getEventTopic('GovRelinquished'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('GovRelinquished', events),
+      },
+      UndyHqSetupFinished: {
+        topic: getEventTopic('UndyHqSetupFinished'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('UndyHqSetupFinished', events),
+      },
+    },
     // Queries
     getAddys: (...args: ExtractArgs<Contract['calls']['getAddys']>) =>
-      singleQuery(publicClient!, call.getAddys(...args)) as Promise<CallReturn<'getAddys'>>,
+      singleQuery(publicClient!, call.getAddys(...args), {}, addressResolver) as Promise<CallReturn<'getAddys'>>,
     getUndyHq: (...args: ExtractArgs<Contract['calls']['getUndyHq']>) =>
-      singleQuery(publicClient!, call.getUndyHq(...args)) as Promise<CallReturn<'getUndyHq'>>,
+      singleQuery(publicClient!, call.getUndyHq(...args), {}, addressResolver) as Promise<CallReturn<'getUndyHq'>>,
     getUndyHqFromGov: (...args: ExtractArgs<Contract['calls']['getUndyHqFromGov']>) =>
-      singleQuery(publicClient!, call.getUndyHqFromGov(...args)) as Promise<CallReturn<'getUndyHqFromGov'>>,
+      singleQuery(publicClient!, call.getUndyHqFromGov(...args), {}, addressResolver) as Promise<
+        CallReturn<'getUndyHqFromGov'>
+      >,
     canGovern: (...args: ExtractArgs<Contract['calls']['canGovern']>) =>
-      singleQuery(publicClient!, call.canGovern(...args)) as Promise<CallReturn<'canGovern'>>,
+      singleQuery(publicClient!, call.canGovern(...args), {}, addressResolver) as Promise<CallReturn<'canGovern'>>,
     getGovernors: (...args: ExtractArgs<Contract['calls']['getGovernors']>) =>
-      singleQuery(publicClient!, call.getGovernors(...args)) as Promise<CallReturn<'getGovernors'>>,
+      singleQuery(publicClient!, call.getGovernors(...args), {}, addressResolver) as Promise<
+        CallReturn<'getGovernors'>
+      >,
     hasPendingGovChange: (...args: ExtractArgs<Contract['calls']['hasPendingGovChange']>) =>
-      singleQuery(publicClient!, call.hasPendingGovChange(...args)) as Promise<CallReturn<'hasPendingGovChange'>>,
+      singleQuery(publicClient!, call.hasPendingGovChange(...args), {}, addressResolver) as Promise<
+        CallReturn<'hasPendingGovChange'>
+      >,
     isValidGovTimeLock: (...args: ExtractArgs<Contract['calls']['isValidGovTimeLock']>) =>
-      singleQuery(publicClient!, call.isValidGovTimeLock(...args)) as Promise<CallReturn<'isValidGovTimeLock'>>,
+      singleQuery(publicClient!, call.isValidGovTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidGovTimeLock'>
+      >,
     minGovChangeTimeLock: (...args: ExtractArgs<Contract['calls']['minGovChangeTimeLock']>) =>
-      singleQuery(publicClient!, call.minGovChangeTimeLock(...args)) as Promise<CallReturn<'minGovChangeTimeLock'>>,
+      singleQuery(publicClient!, call.minGovChangeTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'minGovChangeTimeLock'>
+      >,
     maxGovChangeTimeLock: (...args: ExtractArgs<Contract['calls']['maxGovChangeTimeLock']>) =>
-      singleQuery(publicClient!, call.maxGovChangeTimeLock(...args)) as Promise<CallReturn<'maxGovChangeTimeLock'>>,
+      singleQuery(publicClient!, call.maxGovChangeTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'maxGovChangeTimeLock'>
+      >,
     governance: (...args: ExtractArgs<Contract['calls']['governance']>) =>
-      singleQuery(publicClient!, call.governance(...args)) as Promise<CallReturn<'governance'>>,
+      singleQuery(publicClient!, call.governance(...args), {}, addressResolver) as Promise<CallReturn<'governance'>>,
     pendingGov: (...args: ExtractArgs<Contract['calls']['pendingGov']>) =>
-      singleQuery(publicClient!, call.pendingGov(...args)) as Promise<CallReturn<'pendingGov'>>,
+      singleQuery(publicClient!, call.pendingGov(...args), {}, addressResolver) as Promise<CallReturn<'pendingGov'>>,
     numGovChanges: (...args: ExtractArgs<Contract['calls']['numGovChanges']>) =>
-      singleQuery(publicClient!, call.numGovChanges(...args)) as Promise<CallReturn<'numGovChanges'>>,
+      singleQuery(publicClient!, call.numGovChanges(...args), {}, addressResolver) as Promise<
+        CallReturn<'numGovChanges'>
+      >,
     govChangeTimeLock: (...args: ExtractArgs<Contract['calls']['govChangeTimeLock']>) =>
-      singleQuery(publicClient!, call.govChangeTimeLock(...args)) as Promise<CallReturn<'govChangeTimeLock'>>,
+      singleQuery(publicClient!, call.govChangeTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'govChangeTimeLock'>
+      >,
     canConfirmAction: (...args: ExtractArgs<Contract['calls']['canConfirmAction']>) =>
-      singleQuery(publicClient!, call.canConfirmAction(...args)) as Promise<CallReturn<'canConfirmAction'>>,
+      singleQuery(publicClient!, call.canConfirmAction(...args), {}, addressResolver) as Promise<
+        CallReturn<'canConfirmAction'>
+      >,
     isExpired: (...args: ExtractArgs<Contract['calls']['isExpired']>) =>
-      singleQuery(publicClient!, call.isExpired(...args)) as Promise<CallReturn<'isExpired'>>,
+      singleQuery(publicClient!, call.isExpired(...args), {}, addressResolver) as Promise<CallReturn<'isExpired'>>,
     hasPendingAction: (...args: ExtractArgs<Contract['calls']['hasPendingAction']>) =>
-      singleQuery(publicClient!, call.hasPendingAction(...args)) as Promise<CallReturn<'hasPendingAction'>>,
+      singleQuery(publicClient!, call.hasPendingAction(...args), {}, addressResolver) as Promise<
+        CallReturn<'hasPendingAction'>
+      >,
     getActionConfirmationBlock: (...args: ExtractArgs<Contract['calls']['getActionConfirmationBlock']>) =>
-      singleQuery(publicClient!, call.getActionConfirmationBlock(...args)) as Promise<
+      singleQuery(publicClient!, call.getActionConfirmationBlock(...args), {}, addressResolver) as Promise<
         CallReturn<'getActionConfirmationBlock'>
       >,
     isValidActionTimeLock: (...args: ExtractArgs<Contract['calls']['isValidActionTimeLock']>) =>
-      singleQuery(publicClient!, call.isValidActionTimeLock(...args)) as Promise<CallReturn<'isValidActionTimeLock'>>,
+      singleQuery(publicClient!, call.isValidActionTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'isValidActionTimeLock'>
+      >,
     minActionTimeLock: (...args: ExtractArgs<Contract['calls']['minActionTimeLock']>) =>
-      singleQuery(publicClient!, call.minActionTimeLock(...args)) as Promise<CallReturn<'minActionTimeLock'>>,
+      singleQuery(publicClient!, call.minActionTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'minActionTimeLock'>
+      >,
     maxActionTimeLock: (...args: ExtractArgs<Contract['calls']['maxActionTimeLock']>) =>
-      singleQuery(publicClient!, call.maxActionTimeLock(...args)) as Promise<CallReturn<'maxActionTimeLock'>>,
+      singleQuery(publicClient!, call.maxActionTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'maxActionTimeLock'>
+      >,
     pendingActions: (...args: ExtractArgs<Contract['calls']['pendingActions']>) =>
-      singleQuery(publicClient!, call.pendingActions(...args)) as Promise<CallReturn<'pendingActions'>>,
+      singleQuery(publicClient!, call.pendingActions(...args), {}, addressResolver) as Promise<
+        CallReturn<'pendingActions'>
+      >,
     actionId: (...args: ExtractArgs<Contract['calls']['actionId']>) =>
-      singleQuery(publicClient!, call.actionId(...args)) as Promise<CallReturn<'actionId'>>,
+      singleQuery(publicClient!, call.actionId(...args), {}, addressResolver) as Promise<CallReturn<'actionId'>>,
     actionTimeLock: (...args: ExtractArgs<Contract['calls']['actionTimeLock']>) =>
-      singleQuery(publicClient!, call.actionTimeLock(...args)) as Promise<CallReturn<'actionTimeLock'>>,
+      singleQuery(publicClient!, call.actionTimeLock(...args), {}, addressResolver) as Promise<
+        CallReturn<'actionTimeLock'>
+      >,
     expiration: (...args: ExtractArgs<Contract['calls']['expiration']>) =>
-      singleQuery(publicClient!, call.expiration(...args)) as Promise<CallReturn<'expiration'>>,
+      singleQuery(publicClient!, call.expiration(...args), {}, addressResolver) as Promise<CallReturn<'expiration'>>,
     actionType: (...args: ExtractArgs<Contract['calls']['actionType']>) =>
-      singleQuery(publicClient!, call.actionType(...args)) as Promise<CallReturn<'actionType'>>,
+      singleQuery(publicClient!, call.actionType(...args), {}, addressResolver) as Promise<CallReturn<'actionType'>>,
     pendingPauseActions: (...args: ExtractArgs<Contract['calls']['pendingPauseActions']>) =>
-      singleQuery(publicClient!, call.pendingPauseActions(...args)) as Promise<CallReturn<'pendingPauseActions'>>,
+      singleQuery(publicClient!, call.pendingPauseActions(...args), {}, addressResolver) as Promise<
+        CallReturn<'pendingPauseActions'>
+      >,
     pendingRecoverFundsActions: (...args: ExtractArgs<Contract['calls']['pendingRecoverFundsActions']>) =>
-      singleQuery(publicClient!, call.pendingRecoverFundsActions(...args)) as Promise<
+      singleQuery(publicClient!, call.pendingRecoverFundsActions(...args), {}, addressResolver) as Promise<
         CallReturn<'pendingRecoverFundsActions'>
       >,
     pendingRecoverFundsManyActions: (...args: ExtractArgs<Contract['calls']['pendingRecoverFundsManyActions']>) =>
-      singleQuery(publicClient!, call.pendingRecoverFundsManyActions(...args)) as Promise<
+      singleQuery(publicClient!, call.pendingRecoverFundsManyActions(...args), {}, addressResolver) as Promise<
         CallReturn<'pendingRecoverFundsManyActions'>
       >,
     pendingRecoverNftActions: (...args: ExtractArgs<Contract['calls']['pendingRecoverNftActions']>) =>
-      singleQuery(publicClient!, call.pendingRecoverNftActions(...args)) as Promise<
+      singleQuery(publicClient!, call.pendingRecoverNftActions(...args), {}, addressResolver) as Promise<
         CallReturn<'pendingRecoverNftActions'>
       >,
     pendingLootAdjustActions: (...args: ExtractArgs<Contract['calls']['pendingLootAdjustActions']>) =>
-      singleQuery(publicClient!, call.pendingLootAdjustActions(...args)) as Promise<
+      singleQuery(publicClient!, call.pendingLootAdjustActions(...args), {}, addressResolver) as Promise<
         CallReturn<'pendingLootAdjustActions'>
       >,
     pendingRecoverDepositRewardsActions: (
       ...args: ExtractArgs<Contract['calls']['pendingRecoverDepositRewardsActions']>
     ) =>
-      singleQuery(publicClient!, call.pendingRecoverDepositRewardsActions(...args)) as Promise<
+      singleQuery(publicClient!, call.pendingRecoverDepositRewardsActions(...args), {}, addressResolver) as Promise<
         CallReturn<'pendingRecoverDepositRewardsActions'>
       >,
     pendingSetEjectionModeActions: (...args: ExtractArgs<Contract['calls']['pendingSetEjectionModeActions']>) =>
-      singleQuery(publicClient!, call.pendingSetEjectionModeActions(...args)) as Promise<
+      singleQuery(publicClient!, call.pendingSetEjectionModeActions(...args), {}, addressResolver) as Promise<
         CallReturn<'pendingSetEjectionModeActions'>
       >,
 
     // Mutations
     startGovernanceChange: (...args: ExtractArgs<Contract['mutations']['startGovernanceChange']>) =>
-      mutate(walletClient!, mutation.startGovernanceChange)(...args),
+      mutate(walletClient!, mutation.startGovernanceChange, { addressResolver })(...args),
     confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) =>
-      mutate(walletClient!, mutation.confirmGovernanceChange)(...args),
+      mutate(walletClient!, mutation.confirmGovernanceChange, { addressResolver })(...args),
     cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) =>
-      mutate(walletClient!, mutation.cancelGovernanceChange)(...args),
+      mutate(walletClient!, mutation.cancelGovernanceChange, { addressResolver })(...args),
     relinquishGov: (...args: ExtractArgs<Contract['mutations']['relinquishGov']>) =>
-      mutate(walletClient!, mutation.relinquishGov)(...args),
+      mutate(walletClient!, mutation.relinquishGov, { addressResolver })(...args),
     setGovTimeLock: (...args: ExtractArgs<Contract['mutations']['setGovTimeLock']>) =>
-      mutate(walletClient!, mutation.setGovTimeLock)(...args),
+      mutate(walletClient!, mutation.setGovTimeLock, { addressResolver })(...args),
     finishUndyHqSetup: (...args: ExtractArgs<Contract['mutations']['finishUndyHqSetup']>) =>
-      mutate(walletClient!, mutation.finishUndyHqSetup)(...args),
+      mutate(walletClient!, mutation.finishUndyHqSetup, { addressResolver })(...args),
     setActionTimeLock: (...args: ExtractArgs<Contract['mutations']['setActionTimeLock']>) =>
-      mutate(walletClient!, mutation.setActionTimeLock)(...args),
+      mutate(walletClient!, mutation.setActionTimeLock, { addressResolver })(...args),
     setExpiration: (...args: ExtractArgs<Contract['mutations']['setExpiration']>) =>
-      mutate(walletClient!, mutation.setExpiration)(...args),
+      mutate(walletClient!, mutation.setExpiration, { addressResolver })(...args),
     setActionTimeLockAfterSetup: (...args: ExtractArgs<Contract['mutations']['setActionTimeLockAfterSetup']>) =>
-      mutate(walletClient!, mutation.setActionTimeLockAfterSetup)(...args),
-    pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => mutate(walletClient!, mutation.pause)(...args),
+      mutate(walletClient!, mutation.setActionTimeLockAfterSetup, { addressResolver })(...args),
+    pause: (...args: ExtractArgs<Contract['mutations']['pause']>) =>
+      mutate(walletClient!, mutation.pause, { addressResolver })(...args),
     recoverFunds: (...args: ExtractArgs<Contract['mutations']['recoverFunds']>) =>
-      mutate(walletClient!, mutation.recoverFunds)(...args),
+      mutate(walletClient!, mutation.recoverFunds, { addressResolver })(...args),
     recoverFundsMany: (...args: ExtractArgs<Contract['mutations']['recoverFundsMany']>) =>
-      mutate(walletClient!, mutation.recoverFundsMany)(...args),
+      mutate(walletClient!, mutation.recoverFundsMany, { addressResolver })(...args),
     recoverNft: (...args: ExtractArgs<Contract['mutations']['recoverNft']>) =>
-      mutate(walletClient!, mutation.recoverNft)(...args),
+      mutate(walletClient!, mutation.recoverNft, { addressResolver })(...args),
     claimLootForUser: (...args: ExtractArgs<Contract['mutations']['claimLootForUser']>) =>
-      mutate(walletClient!, mutation.claimLootForUser)(...args),
+      mutate(walletClient!, mutation.claimLootForUser, { addressResolver })(...args),
     claimLootForManyUsers: (...args: ExtractArgs<Contract['mutations']['claimLootForManyUsers']>) =>
-      mutate(walletClient!, mutation.claimLootForManyUsers)(...args),
+      mutate(walletClient!, mutation.claimLootForManyUsers, { addressResolver })(...args),
     adjustLoot: (...args: ExtractArgs<Contract['mutations']['adjustLoot']>) =>
-      mutate(walletClient!, mutation.adjustLoot)(...args),
+      mutate(walletClient!, mutation.adjustLoot, { addressResolver })(...args),
     recoverDepositRewards: (...args: ExtractArgs<Contract['mutations']['recoverDepositRewards']>) =>
-      mutate(walletClient!, mutation.recoverDepositRewards)(...args),
+      mutate(walletClient!, mutation.recoverDepositRewards, { addressResolver })(...args),
     updateDepositPoints: (...args: ExtractArgs<Contract['mutations']['updateDepositPoints']>) =>
-      mutate(walletClient!, mutation.updateDepositPoints)(...args),
+      mutate(walletClient!, mutation.updateDepositPoints, { addressResolver })(...args),
     updateAssetData: (...args: ExtractArgs<Contract['mutations']['updateAssetData']>) =>
-      mutate(walletClient!, mutation.updateAssetData)(...args),
+      mutate(walletClient!, mutation.updateAssetData, { addressResolver })(...args),
     updateAllAssetData: (...args: ExtractArgs<Contract['mutations']['updateAllAssetData']>) =>
-      mutate(walletClient!, mutation.updateAllAssetData)(...args),
+      mutate(walletClient!, mutation.updateAllAssetData, { addressResolver })(...args),
     setEjectionMode: (...args: ExtractArgs<Contract['mutations']['setEjectionMode']>) =>
-      mutate(walletClient!, mutation.setEjectionMode)(...args),
+      mutate(walletClient!, mutation.setEjectionMode, { addressResolver })(...args),
     executePendingAction: (...args: ExtractArgs<Contract['mutations']['executePendingAction']>) =>
-      mutate(walletClient!, mutation.executePendingAction)(...args),
+      mutate(walletClient!, mutation.executePendingAction, { addressResolver })(...args),
     cancelPendingAction: (...args: ExtractArgs<Contract['mutations']['cancelPendingAction']>) =>
-      mutate(walletClient!, mutation.cancelPendingAction)(...args),
+      mutate(walletClient!, mutation.cancelPendingAction, { addressResolver })(...args),
   }
 }

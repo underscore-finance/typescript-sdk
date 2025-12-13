@@ -3,8 +3,16 @@
 /* eslint-disable */
 /* @ts-nocheck */
 
-import { singleQuery, mutate } from '@dappql/async'
-import { PublicClient, WalletClient } from 'viem'
+import { singleQuery, mutate, AddressResolverFunction } from '@dappql/async'
+import {
+  encodeEventTopics,
+  parseEventLogs,
+  ParseEventLogsReturnType,
+  Log,
+  RpcLog,
+  PublicClient,
+  WalletClient,
+} from 'viem'
 
 type ExtractArgs<T> = T extends (...args: infer P) => any ? P : never
 type Address = `0x${string}`
@@ -2381,9 +2389,54 @@ export const mutation: {
   sweepLeftovers: getMutation('sweepLeftovers'),
 }
 
+export type ParsedEvent<T extends keyof Contract['events']> = {
+  event: RpcLog | Log
+  parsed: ParseEventLogsReturnType<typeof abi, T>
+}
+
+export function parseEvents<T extends keyof Contract['events']>(
+  eventName: T,
+  events: (RpcLog | Log)[],
+): ParsedEvent<T>[] {
+  return events.map((event) => {
+    return {
+      event,
+      parsed: parseEventLogs({
+        abi,
+        eventName,
+        logs: [event],
+      }),
+    }
+  })
+}
+
+export function getEventTopic<T extends keyof Contract['events']>(eventName: T): Address {
+  return encodeEventTopics({ abi, eventName })[0] as Address
+}
+
 export type SDK = {
   deployAddress: Address | undefined
   abi: typeof abi
+  events: {
+    Deposit: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'Deposit'>[] }
+    Withdraw: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'Withdraw'>[] }
+    LeftoversSwept: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'LeftoversSwept'>[] }
+    Transfer: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'Transfer'>[] }
+    Approval: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'Approval'>[] }
+    BlacklistModified: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'BlacklistModified'>[] }
+    TokenPauseModified: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'TokenPauseModified'>[] }
+    EarnVaultDeposit: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'EarnVaultDeposit'>[] }
+    EarnVaultWithdrawal: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'EarnVaultWithdrawal'>[] }
+    EarnVaultSwap: { topic: Address; parse: (events: (RpcLog | Log)[]) => ParsedEvent<'EarnVaultSwap'>[] }
+    EarnVaultRewardsClaim: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'EarnVaultRewardsClaim'>[]
+    }
+    PerformanceFeesClaimed: {
+      topic: Address
+      parse: (events: (RpcLog | Log)[]) => ParsedEvent<'PerformanceFeesClaimed'>[]
+    }
+  }
   name: (...args: ExtractArgs<Contract['calls']['name']>) => Promise<CallReturn<'name'>>
   symbol: (...args: ExtractArgs<Contract['calls']['symbol']>) => Promise<CallReturn<'symbol'>>
   decimals: (...args: ExtractArgs<Contract['calls']['decimals']>) => Promise<CallReturn<'decimals'>>
@@ -2469,139 +2522,228 @@ export type SDK = {
   sweepLeftovers: (...args: ExtractArgs<Contract['mutations']['sweepLeftovers']>) => Promise<Address>
 }
 
-export function toSdk(publicClient?: PublicClient, walletClient?: WalletClient): SDK {
+export function toSdk(
+  publicClient?: PublicClient,
+  walletClient?: WalletClient,
+  addressResolver?: AddressResolverFunction,
+): SDK {
   return {
     deployAddress,
     abi,
+
+    events: {
+      Deposit: { topic: getEventTopic('Deposit'), parse: (events: (RpcLog | Log)[]) => parseEvents('Deposit', events) },
+      Withdraw: {
+        topic: getEventTopic('Withdraw'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('Withdraw', events),
+      },
+      LeftoversSwept: {
+        topic: getEventTopic('LeftoversSwept'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('LeftoversSwept', events),
+      },
+      Transfer: {
+        topic: getEventTopic('Transfer'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('Transfer', events),
+      },
+      Approval: {
+        topic: getEventTopic('Approval'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('Approval', events),
+      },
+      BlacklistModified: {
+        topic: getEventTopic('BlacklistModified'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('BlacklistModified', events),
+      },
+      TokenPauseModified: {
+        topic: getEventTopic('TokenPauseModified'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('TokenPauseModified', events),
+      },
+      EarnVaultDeposit: {
+        topic: getEventTopic('EarnVaultDeposit'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('EarnVaultDeposit', events),
+      },
+      EarnVaultWithdrawal: {
+        topic: getEventTopic('EarnVaultWithdrawal'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('EarnVaultWithdrawal', events),
+      },
+      EarnVaultSwap: {
+        topic: getEventTopic('EarnVaultSwap'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('EarnVaultSwap', events),
+      },
+      EarnVaultRewardsClaim: {
+        topic: getEventTopic('EarnVaultRewardsClaim'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('EarnVaultRewardsClaim', events),
+      },
+      PerformanceFeesClaimed: {
+        topic: getEventTopic('PerformanceFeesClaimed'),
+        parse: (events: (RpcLog | Log)[]) => parseEvents('PerformanceFeesClaimed', events),
+      },
+    },
     // Queries
     name: (...args: ExtractArgs<Contract['calls']['name']>) =>
-      singleQuery(publicClient!, call.name(...args)) as Promise<CallReturn<'name'>>,
+      singleQuery(publicClient!, call.name(...args), {}, addressResolver) as Promise<CallReturn<'name'>>,
     symbol: (...args: ExtractArgs<Contract['calls']['symbol']>) =>
-      singleQuery(publicClient!, call.symbol(...args)) as Promise<CallReturn<'symbol'>>,
+      singleQuery(publicClient!, call.symbol(...args), {}, addressResolver) as Promise<CallReturn<'symbol'>>,
     decimals: (...args: ExtractArgs<Contract['calls']['decimals']>) =>
-      singleQuery(publicClient!, call.decimals(...args)) as Promise<CallReturn<'decimals'>>,
+      singleQuery(publicClient!, call.decimals(...args), {}, addressResolver) as Promise<CallReturn<'decimals'>>,
     DOMAIN_SEPARATOR: (...args: ExtractArgs<Contract['calls']['DOMAIN_SEPARATOR']>) =>
-      singleQuery(publicClient!, call.DOMAIN_SEPARATOR(...args)) as Promise<CallReturn<'DOMAIN_SEPARATOR'>>,
+      singleQuery(publicClient!, call.DOMAIN_SEPARATOR(...args), {}, addressResolver) as Promise<
+        CallReturn<'DOMAIN_SEPARATOR'>
+      >,
     undyHq: (...args: ExtractArgs<Contract['calls']['undyHq']>) =>
-      singleQuery(publicClient!, call.undyHq(...args)) as Promise<CallReturn<'undyHq'>>,
+      singleQuery(publicClient!, call.undyHq(...args), {}, addressResolver) as Promise<CallReturn<'undyHq'>>,
     blacklisted: (...args: ExtractArgs<Contract['calls']['blacklisted']>) =>
-      singleQuery(publicClient!, call.blacklisted(...args)) as Promise<CallReturn<'blacklisted'>>,
+      singleQuery(publicClient!, call.blacklisted(...args), {}, addressResolver) as Promise<CallReturn<'blacklisted'>>,
     isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) =>
-      singleQuery(publicClient!, call.isPaused(...args)) as Promise<CallReturn<'isPaused'>>,
+      singleQuery(publicClient!, call.isPaused(...args), {}, addressResolver) as Promise<CallReturn<'isPaused'>>,
     balanceOf: (...args: ExtractArgs<Contract['calls']['balanceOf']>) =>
-      singleQuery(publicClient!, call.balanceOf(...args)) as Promise<CallReturn<'balanceOf'>>,
+      singleQuery(publicClient!, call.balanceOf(...args), {}, addressResolver) as Promise<CallReturn<'balanceOf'>>,
     allowance: (...args: ExtractArgs<Contract['calls']['allowance']>) =>
-      singleQuery(publicClient!, call.allowance(...args)) as Promise<CallReturn<'allowance'>>,
+      singleQuery(publicClient!, call.allowance(...args), {}, addressResolver) as Promise<CallReturn<'allowance'>>,
     totalSupply: (...args: ExtractArgs<Contract['calls']['totalSupply']>) =>
-      singleQuery(publicClient!, call.totalSupply(...args)) as Promise<CallReturn<'totalSupply'>>,
+      singleQuery(publicClient!, call.totalSupply(...args), {}, addressResolver) as Promise<CallReturn<'totalSupply'>>,
     TOKEN_NAME: (...args: ExtractArgs<Contract['calls']['TOKEN_NAME']>) =>
-      singleQuery(publicClient!, call.TOKEN_NAME(...args)) as Promise<CallReturn<'TOKEN_NAME'>>,
+      singleQuery(publicClient!, call.TOKEN_NAME(...args), {}, addressResolver) as Promise<CallReturn<'TOKEN_NAME'>>,
     TOKEN_SYMBOL: (...args: ExtractArgs<Contract['calls']['TOKEN_SYMBOL']>) =>
-      singleQuery(publicClient!, call.TOKEN_SYMBOL(...args)) as Promise<CallReturn<'TOKEN_SYMBOL'>>,
+      singleQuery(publicClient!, call.TOKEN_SYMBOL(...args), {}, addressResolver) as Promise<
+        CallReturn<'TOKEN_SYMBOL'>
+      >,
     TOKEN_DECIMALS: (...args: ExtractArgs<Contract['calls']['TOKEN_DECIMALS']>) =>
-      singleQuery(publicClient!, call.TOKEN_DECIMALS(...args)) as Promise<CallReturn<'TOKEN_DECIMALS'>>,
+      singleQuery(publicClient!, call.TOKEN_DECIMALS(...args), {}, addressResolver) as Promise<
+        CallReturn<'TOKEN_DECIMALS'>
+      >,
     VERSION: (...args: ExtractArgs<Contract['calls']['VERSION']>) =>
-      singleQuery(publicClient!, call.VERSION(...args)) as Promise<CallReturn<'VERSION'>>,
+      singleQuery(publicClient!, call.VERSION(...args), {}, addressResolver) as Promise<CallReturn<'VERSION'>>,
     nonces: (...args: ExtractArgs<Contract['calls']['nonces']>) =>
-      singleQuery(publicClient!, call.nonces(...args)) as Promise<CallReturn<'nonces'>>,
+      singleQuery(publicClient!, call.nonces(...args), {}, addressResolver) as Promise<CallReturn<'nonces'>>,
     getClaimablePerformanceFees: (...args: ExtractArgs<Contract['calls']['getClaimablePerformanceFees']>) =>
-      singleQuery(publicClient!, call.getClaimablePerformanceFees(...args)) as Promise<
+      singleQuery(publicClient!, call.getClaimablePerformanceFees(...args), {}, addressResolver) as Promise<
         CallReturn<'getClaimablePerformanceFees'>
       >,
     lastUnderlyingBal: (...args: ExtractArgs<Contract['calls']['lastUnderlyingBal']>) =>
-      singleQuery(publicClient!, call.lastUnderlyingBal(...args)) as Promise<CallReturn<'lastUnderlyingBal'>>,
+      singleQuery(publicClient!, call.lastUnderlyingBal(...args), {}, addressResolver) as Promise<
+        CallReturn<'lastUnderlyingBal'>
+      >,
     pendingYieldRealized: (...args: ExtractArgs<Contract['calls']['pendingYieldRealized']>) =>
-      singleQuery(publicClient!, call.pendingYieldRealized(...args)) as Promise<CallReturn<'pendingYieldRealized'>>,
+      singleQuery(publicClient!, call.pendingYieldRealized(...args), {}, addressResolver) as Promise<
+        CallReturn<'pendingYieldRealized'>
+      >,
     vaultToLegoId: (...args: ExtractArgs<Contract['calls']['vaultToLegoId']>) =>
-      singleQuery(publicClient!, call.vaultToLegoId(...args)) as Promise<CallReturn<'vaultToLegoId'>>,
+      singleQuery(publicClient!, call.vaultToLegoId(...args), {}, addressResolver) as Promise<
+        CallReturn<'vaultToLegoId'>
+      >,
     assets: (...args: ExtractArgs<Contract['calls']['assets']>) =>
-      singleQuery(publicClient!, call.assets(...args)) as Promise<CallReturn<'assets'>>,
+      singleQuery(publicClient!, call.assets(...args), {}, addressResolver) as Promise<CallReturn<'assets'>>,
     indexOfAsset: (...args: ExtractArgs<Contract['calls']['indexOfAsset']>) =>
-      singleQuery(publicClient!, call.indexOfAsset(...args)) as Promise<CallReturn<'indexOfAsset'>>,
+      singleQuery(publicClient!, call.indexOfAsset(...args), {}, addressResolver) as Promise<
+        CallReturn<'indexOfAsset'>
+      >,
     numAssets: (...args: ExtractArgs<Contract['calls']['numAssets']>) =>
-      singleQuery(publicClient!, call.numAssets(...args)) as Promise<CallReturn<'numAssets'>>,
+      singleQuery(publicClient!, call.numAssets(...args), {}, addressResolver) as Promise<CallReturn<'numAssets'>>,
     managers: (...args: ExtractArgs<Contract['calls']['managers']>) =>
-      singleQuery(publicClient!, call.managers(...args)) as Promise<CallReturn<'managers'>>,
+      singleQuery(publicClient!, call.managers(...args), {}, addressResolver) as Promise<CallReturn<'managers'>>,
     indexOfManager: (...args: ExtractArgs<Contract['calls']['indexOfManager']>) =>
-      singleQuery(publicClient!, call.indexOfManager(...args)) as Promise<CallReturn<'indexOfManager'>>,
+      singleQuery(publicClient!, call.indexOfManager(...args), {}, addressResolver) as Promise<
+        CallReturn<'indexOfManager'>
+      >,
     numManagers: (...args: ExtractArgs<Contract['calls']['numManagers']>) =>
-      singleQuery(publicClient!, call.numManagers(...args)) as Promise<CallReturn<'numManagers'>>,
+      singleQuery(publicClient!, call.numManagers(...args), {}, addressResolver) as Promise<CallReturn<'numManagers'>>,
     asset: (...args: ExtractArgs<Contract['calls']['asset']>) =>
-      singleQuery(publicClient!, call.asset(...args)) as Promise<CallReturn<'asset'>>,
+      singleQuery(publicClient!, call.asset(...args), {}, addressResolver) as Promise<CallReturn<'asset'>>,
     totalAssets: (...args: ExtractArgs<Contract['calls']['totalAssets']>) =>
-      singleQuery(publicClient!, call.totalAssets(...args)) as Promise<CallReturn<'totalAssets'>>,
+      singleQuery(publicClient!, call.totalAssets(...args), {}, addressResolver) as Promise<CallReturn<'totalAssets'>>,
     getTotalAssets: (...args: ExtractArgs<Contract['calls']['getTotalAssets']>) =>
-      singleQuery(publicClient!, call.getTotalAssets(...args)) as Promise<CallReturn<'getTotalAssets'>>,
+      singleQuery(publicClient!, call.getTotalAssets(...args), {}, addressResolver) as Promise<
+        CallReturn<'getTotalAssets'>
+      >,
     maxDeposit: (...args: ExtractArgs<Contract['calls']['maxDeposit']>) =>
-      singleQuery(publicClient!, call.maxDeposit(...args)) as Promise<CallReturn<'maxDeposit'>>,
+      singleQuery(publicClient!, call.maxDeposit(...args), {}, addressResolver) as Promise<CallReturn<'maxDeposit'>>,
     previewDeposit: (...args: ExtractArgs<Contract['calls']['previewDeposit']>) =>
-      singleQuery(publicClient!, call.previewDeposit(...args)) as Promise<CallReturn<'previewDeposit'>>,
+      singleQuery(publicClient!, call.previewDeposit(...args), {}, addressResolver) as Promise<
+        CallReturn<'previewDeposit'>
+      >,
     maxMint: (...args: ExtractArgs<Contract['calls']['maxMint']>) =>
-      singleQuery(publicClient!, call.maxMint(...args)) as Promise<CallReturn<'maxMint'>>,
+      singleQuery(publicClient!, call.maxMint(...args), {}, addressResolver) as Promise<CallReturn<'maxMint'>>,
     previewMint: (...args: ExtractArgs<Contract['calls']['previewMint']>) =>
-      singleQuery(publicClient!, call.previewMint(...args)) as Promise<CallReturn<'previewMint'>>,
+      singleQuery(publicClient!, call.previewMint(...args), {}, addressResolver) as Promise<CallReturn<'previewMint'>>,
     maxWithdraw: (...args: ExtractArgs<Contract['calls']['maxWithdraw']>) =>
-      singleQuery(publicClient!, call.maxWithdraw(...args)) as Promise<CallReturn<'maxWithdraw'>>,
+      singleQuery(publicClient!, call.maxWithdraw(...args), {}, addressResolver) as Promise<CallReturn<'maxWithdraw'>>,
     previewWithdraw: (...args: ExtractArgs<Contract['calls']['previewWithdraw']>) =>
-      singleQuery(publicClient!, call.previewWithdraw(...args)) as Promise<CallReturn<'previewWithdraw'>>,
+      singleQuery(publicClient!, call.previewWithdraw(...args), {}, addressResolver) as Promise<
+        CallReturn<'previewWithdraw'>
+      >,
     maxRedeem: (...args: ExtractArgs<Contract['calls']['maxRedeem']>) =>
-      singleQuery(publicClient!, call.maxRedeem(...args)) as Promise<CallReturn<'maxRedeem'>>,
+      singleQuery(publicClient!, call.maxRedeem(...args), {}, addressResolver) as Promise<CallReturn<'maxRedeem'>>,
     previewRedeem: (...args: ExtractArgs<Contract['calls']['previewRedeem']>) =>
-      singleQuery(publicClient!, call.previewRedeem(...args)) as Promise<CallReturn<'previewRedeem'>>,
+      singleQuery(publicClient!, call.previewRedeem(...args), {}, addressResolver) as Promise<
+        CallReturn<'previewRedeem'>
+      >,
     convertToShares: (...args: ExtractArgs<Contract['calls']['convertToShares']>) =>
-      singleQuery(publicClient!, call.convertToShares(...args)) as Promise<CallReturn<'convertToShares'>>,
+      singleQuery(publicClient!, call.convertToShares(...args), {}, addressResolver) as Promise<
+        CallReturn<'convertToShares'>
+      >,
     convertToSharesSafe: (...args: ExtractArgs<Contract['calls']['convertToSharesSafe']>) =>
-      singleQuery(publicClient!, call.convertToSharesSafe(...args)) as Promise<CallReturn<'convertToSharesSafe'>>,
+      singleQuery(publicClient!, call.convertToSharesSafe(...args), {}, addressResolver) as Promise<
+        CallReturn<'convertToSharesSafe'>
+      >,
     convertToAssets: (...args: ExtractArgs<Contract['calls']['convertToAssets']>) =>
-      singleQuery(publicClient!, call.convertToAssets(...args)) as Promise<CallReturn<'convertToAssets'>>,
+      singleQuery(publicClient!, call.convertToAssets(...args), {}, addressResolver) as Promise<
+        CallReturn<'convertToAssets'>
+      >,
     convertToAssetsSafe: (...args: ExtractArgs<Contract['calls']['convertToAssetsSafe']>) =>
-      singleQuery(publicClient!, call.convertToAssetsSafe(...args)) as Promise<CallReturn<'convertToAssetsSafe'>>,
+      singleQuery(publicClient!, call.convertToAssetsSafe(...args), {}, addressResolver) as Promise<
+        CallReturn<'convertToAssetsSafe'>
+      >,
 
     // Mutations
     transfer: (...args: ExtractArgs<Contract['mutations']['transfer']>) =>
-      mutate(walletClient!, mutation.transfer)(...args),
+      mutate(walletClient!, mutation.transfer, { addressResolver })(...args),
     transferFrom: (...args: ExtractArgs<Contract['mutations']['transferFrom']>) =>
-      mutate(walletClient!, mutation.transferFrom)(...args),
+      mutate(walletClient!, mutation.transferFrom, { addressResolver })(...args),
     approve: (...args: ExtractArgs<Contract['mutations']['approve']>) =>
-      mutate(walletClient!, mutation.approve)(...args),
+      mutate(walletClient!, mutation.approve, { addressResolver })(...args),
     increaseAllowance: (...args: ExtractArgs<Contract['mutations']['increaseAllowance']>) =>
-      mutate(walletClient!, mutation.increaseAllowance)(...args),
+      mutate(walletClient!, mutation.increaseAllowance, { addressResolver })(...args),
     decreaseAllowance: (...args: ExtractArgs<Contract['mutations']['decreaseAllowance']>) =>
-      mutate(walletClient!, mutation.decreaseAllowance)(...args),
-    burn: (...args: ExtractArgs<Contract['mutations']['burn']>) => mutate(walletClient!, mutation.burn)(...args),
-    permit: (...args: ExtractArgs<Contract['mutations']['permit']>) => mutate(walletClient!, mutation.permit)(...args),
+      mutate(walletClient!, mutation.decreaseAllowance, { addressResolver })(...args),
+    burn: (...args: ExtractArgs<Contract['mutations']['burn']>) =>
+      mutate(walletClient!, mutation.burn, { addressResolver })(...args),
+    permit: (...args: ExtractArgs<Contract['mutations']['permit']>) =>
+      mutate(walletClient!, mutation.permit, { addressResolver })(...args),
     setBlacklist: (...args: ExtractArgs<Contract['mutations']['setBlacklist']>) =>
-      mutate(walletClient!, mutation.setBlacklist)(...args),
+      mutate(walletClient!, mutation.setBlacklist, { addressResolver })(...args),
     burnBlacklistTokens: (...args: ExtractArgs<Contract['mutations']['burnBlacklistTokens']>) =>
-      mutate(walletClient!, mutation.burnBlacklistTokens)(...args),
-    pause: (...args: ExtractArgs<Contract['mutations']['pause']>) => mutate(walletClient!, mutation.pause)(...args),
+      mutate(walletClient!, mutation.burnBlacklistTokens, { addressResolver })(...args),
+    pause: (...args: ExtractArgs<Contract['mutations']['pause']>) =>
+      mutate(walletClient!, mutation.pause, { addressResolver })(...args),
     depositForYield: (...args: ExtractArgs<Contract['mutations']['depositForYield']>) =>
-      mutate(walletClient!, mutation.depositForYield)(...args),
+      mutate(walletClient!, mutation.depositForYield, { addressResolver })(...args),
     withdrawFromYield: (...args: ExtractArgs<Contract['mutations']['withdrawFromYield']>) =>
-      mutate(walletClient!, mutation.withdrawFromYield)(...args),
+      mutate(walletClient!, mutation.withdrawFromYield, { addressResolver })(...args),
     swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) =>
-      mutate(walletClient!, mutation.swapTokens)(...args),
+      mutate(walletClient!, mutation.swapTokens, { addressResolver })(...args),
     claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) =>
-      mutate(walletClient!, mutation.claimIncentives)(...args),
+      mutate(walletClient!, mutation.claimIncentives, { addressResolver })(...args),
     claimPerformanceFees: (...args: ExtractArgs<Contract['mutations']['claimPerformanceFees']>) =>
-      mutate(walletClient!, mutation.claimPerformanceFees)(...args),
+      mutate(walletClient!, mutation.claimPerformanceFees, { addressResolver })(...args),
     updateYieldPosition: (...args: ExtractArgs<Contract['mutations']['updateYieldPosition']>) =>
-      mutate(walletClient!, mutation.updateYieldPosition)(...args),
+      mutate(walletClient!, mutation.updateYieldPosition, { addressResolver })(...args),
     addManager: (...args: ExtractArgs<Contract['mutations']['addManager']>) =>
-      mutate(walletClient!, mutation.addManager)(...args),
+      mutate(walletClient!, mutation.addManager, { addressResolver })(...args),
     removeManager: (...args: ExtractArgs<Contract['mutations']['removeManager']>) =>
-      mutate(walletClient!, mutation.removeManager)(...args),
+      mutate(walletClient!, mutation.removeManager, { addressResolver })(...args),
     deposit: (...args: ExtractArgs<Contract['mutations']['deposit']>) =>
-      mutate(walletClient!, mutation.deposit)(...args),
+      mutate(walletClient!, mutation.deposit, { addressResolver })(...args),
     depositWithMinAmountOut: (...args: ExtractArgs<Contract['mutations']['depositWithMinAmountOut']>) =>
-      mutate(walletClient!, mutation.depositWithMinAmountOut)(...args),
-    mint: (...args: ExtractArgs<Contract['mutations']['mint']>) => mutate(walletClient!, mutation.mint)(...args),
+      mutate(walletClient!, mutation.depositWithMinAmountOut, { addressResolver })(...args),
+    mint: (...args: ExtractArgs<Contract['mutations']['mint']>) =>
+      mutate(walletClient!, mutation.mint, { addressResolver })(...args),
     withdraw: (...args: ExtractArgs<Contract['mutations']['withdraw']>) =>
-      mutate(walletClient!, mutation.withdraw)(...args),
-    redeem: (...args: ExtractArgs<Contract['mutations']['redeem']>) => mutate(walletClient!, mutation.redeem)(...args),
+      mutate(walletClient!, mutation.withdraw, { addressResolver })(...args),
+    redeem: (...args: ExtractArgs<Contract['mutations']['redeem']>) =>
+      mutate(walletClient!, mutation.redeem, { addressResolver })(...args),
     redeemWithMinAmountOut: (...args: ExtractArgs<Contract['mutations']['redeemWithMinAmountOut']>) =>
-      mutate(walletClient!, mutation.redeemWithMinAmountOut)(...args),
+      mutate(walletClient!, mutation.redeemWithMinAmountOut, { addressResolver })(...args),
     sweepLeftovers: (...args: ExtractArgs<Contract['mutations']['sweepLeftovers']>) =>
-      mutate(walletClient!, mutation.sweepLeftovers)(...args),
+      mutate(walletClient!, mutation.sweepLeftovers, { addressResolver })(...args),
   }
 }
