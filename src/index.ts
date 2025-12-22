@@ -115,7 +115,7 @@ class Underscore {
     }
   }
 
-  addressResolver(name: string) {
+  addressResolver = (name: string) => {
     return this.addresses[name as ContractsNames]!
   }
 
