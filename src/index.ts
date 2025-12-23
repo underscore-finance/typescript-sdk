@@ -21,6 +21,7 @@ export const DEPARTMENT_IDS = {
   WALLET_BACKPACK: 8n,
   BILLING: 9n,
   VAULT_REGISTRY: 10n,
+  HELPERS: 11n,
 }
 
 export const LEGOS_IDS = {
@@ -42,6 +43,11 @@ export const LEGOS_IDS = {
   AVANTIS: 16n,
   SKY_PSM: 17n,
   EXTRA_FI: 18n,
+}
+
+export const HELPERS_IDS = {
+  LEGO_TOOLS: 1n,
+  LEVG_VAULT_TOOLS: 2n,
 }
 
 export type UnderscoreConfig = {
@@ -80,6 +86,7 @@ class Underscore {
         WalletBackpack: contracts.UndyHq.call.getAddr(DEPARTMENT_IDS.WALLET_BACKPACK),
         Billing: contracts.UndyHq.call.getAddr(DEPARTMENT_IDS.BILLING),
         VaultRegistry: contracts.UndyHq.call.getAddr(DEPARTMENT_IDS.VAULT_REGISTRY),
+        Helpers: contracts.UndyHq.call.getAddr(DEPARTMENT_IDS.HELPERS),
       }
     })
     const children = await this.multicall((contracts) => {
@@ -106,6 +113,9 @@ class Underscore {
         SwitchboardAlpha: contracts.Switchboard.call.getAddr(1n).at(departments.Switchboard),
         SwitchboardBravo: contracts.Switchboard.call.getAddr(2n).at(departments.Switchboard),
         SwitchboardCharlie: contracts.Switchboard.call.getAddr(3n).at(departments.Switchboard),
+
+        LegoTools: contracts.Helpers.call.getAddr(1n).at(departments.Helpers),
+        LevgVaultTools: contracts.Helpers.call.getAddr(2n).at(departments.Helpers),
       }
     })
 

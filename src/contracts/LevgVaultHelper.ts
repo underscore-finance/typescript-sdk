@@ -1285,161 +1285,6 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'getBorrowRate',
-    inputs: [
-      {
-        name: '_levgVault',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getDebtAmount',
-    inputs: [
-      {
-        name: '_levgVault',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getVaultTokenAmounts',
-    inputs: [
-      {
-        name: '_levgVault',
-        type: 'address',
-      },
-      {
-        name: '_isCollateralAsset',
-        type: 'bool',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getUnderlyingAmounts',
-    inputs: [
-      {
-        name: '_levgVault',
-        type: 'address',
-      },
-      {
-        name: '_isCollateralAsset',
-        type: 'bool',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getGreenAmounts',
-    inputs: [
-      {
-        name: '_levgVault',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getTrueMaxBorrowAmountForVault',
-    inputs: [
-      {
-        name: '_vault',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'getMaxBorrowAmountForVault',
-    inputs: [
-      {
-        name: '_vault',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
     name: 'RIPE_REGISTRY',
     inputs: [],
     outputs: [
@@ -1506,7 +1351,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xB6B6F77e064574747324541924486f8437de8338'
+export const deployAddress: Address | undefined = '0x19e0c1d2272545De38C6D2A3dF3476E4b9e48328'
 
 export type Contract = {
   calls: {
@@ -1601,16 +1446,6 @@ export type Contract = {
       ripeVaultId: bigint,
       legoId: bigint,
     ) => Promise<boolean>
-    getBorrowRate: (levgVault: `0x${string}`) => Promise<bigint>
-    getDebtAmount: (levgVault: `0x${string}`) => Promise<bigint>
-    getVaultTokenAmounts: (levgVault: `0x${string}`, isCollateralAsset: boolean) => Promise<[bigint, bigint]>
-    getUnderlyingAmounts: (
-      levgVault: `0x${string}`,
-      isCollateralAsset: boolean,
-    ) => Promise<[bigint, bigint, bigint, bigint]>
-    getGreenAmounts: (levgVault: `0x${string}`) => Promise<[bigint, bigint, bigint, bigint]>
-    getTrueMaxBorrowAmountForVault: (vault: `0x${string}`) => Promise<bigint>
-    getMaxBorrowAmountForVault: (vault: `0x${string}`) => Promise<bigint>
     RIPE_REGISTRY: () => Promise<`0x${string}`>
     GREEN_TOKEN: () => Promise<`0x${string}`>
     SAVINGS_GREEN: () => Promise<`0x${string}`>
@@ -1700,17 +1535,6 @@ export const call: CallType = {
     getRequest('getVaultBookAndDeleverage', args),
   isValidVaultToken: (...args: ExtractArgs<Contract['calls']['isValidVaultToken']>) =>
     getRequest('isValidVaultToken', args),
-  getBorrowRate: (...args: ExtractArgs<Contract['calls']['getBorrowRate']>) => getRequest('getBorrowRate', args),
-  getDebtAmount: (...args: ExtractArgs<Contract['calls']['getDebtAmount']>) => getRequest('getDebtAmount', args),
-  getVaultTokenAmounts: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmounts']>) =>
-    getRequest('getVaultTokenAmounts', args),
-  getUnderlyingAmounts: (...args: ExtractArgs<Contract['calls']['getUnderlyingAmounts']>) =>
-    getRequest('getUnderlyingAmounts', args),
-  getGreenAmounts: (...args: ExtractArgs<Contract['calls']['getGreenAmounts']>) => getRequest('getGreenAmounts', args),
-  getTrueMaxBorrowAmountForVault: (...args: ExtractArgs<Contract['calls']['getTrueMaxBorrowAmountForVault']>) =>
-    getRequest('getTrueMaxBorrowAmountForVault', args),
-  getMaxBorrowAmountForVault: (...args: ExtractArgs<Contract['calls']['getMaxBorrowAmountForVault']>) =>
-    getRequest('getMaxBorrowAmountForVault', args),
   RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => getRequest('RIPE_REGISTRY', args),
   GREEN_TOKEN: (...args: ExtractArgs<Contract['calls']['GREEN_TOKEN']>) => getRequest('GREEN_TOKEN', args),
   SAVINGS_GREEN: (...args: ExtractArgs<Contract['calls']['SAVINGS_GREEN']>) => getRequest('SAVINGS_GREEN', args),
@@ -1749,23 +1573,6 @@ export type SDK = {
   isValidVaultToken: (
     ...args: ExtractArgs<Contract['calls']['isValidVaultToken']>
   ) => Promise<CallReturn<'isValidVaultToken'>>
-  getBorrowRate: (...args: ExtractArgs<Contract['calls']['getBorrowRate']>) => Promise<CallReturn<'getBorrowRate'>>
-  getDebtAmount: (...args: ExtractArgs<Contract['calls']['getDebtAmount']>) => Promise<CallReturn<'getDebtAmount'>>
-  getVaultTokenAmounts: (
-    ...args: ExtractArgs<Contract['calls']['getVaultTokenAmounts']>
-  ) => Promise<CallReturn<'getVaultTokenAmounts'>>
-  getUnderlyingAmounts: (
-    ...args: ExtractArgs<Contract['calls']['getUnderlyingAmounts']>
-  ) => Promise<CallReturn<'getUnderlyingAmounts'>>
-  getGreenAmounts: (
-    ...args: ExtractArgs<Contract['calls']['getGreenAmounts']>
-  ) => Promise<CallReturn<'getGreenAmounts'>>
-  getTrueMaxBorrowAmountForVault: (
-    ...args: ExtractArgs<Contract['calls']['getTrueMaxBorrowAmountForVault']>
-  ) => Promise<CallReturn<'getTrueMaxBorrowAmountForVault'>>
-  getMaxBorrowAmountForVault: (
-    ...args: ExtractArgs<Contract['calls']['getMaxBorrowAmountForVault']>
-  ) => Promise<CallReturn<'getMaxBorrowAmountForVault'>>
   RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => Promise<CallReturn<'RIPE_REGISTRY'>>
   GREEN_TOKEN: (...args: ExtractArgs<Contract['calls']['GREEN_TOKEN']>) => Promise<CallReturn<'GREEN_TOKEN'>>
   SAVINGS_GREEN: (...args: ExtractArgs<Contract['calls']['SAVINGS_GREEN']>) => Promise<CallReturn<'SAVINGS_GREEN'>>
@@ -1845,40 +1652,6 @@ export function toSdk(
       singleQuery(publicClient!, call.isValidVaultToken(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'isValidVaultToken'>
       >,
-    getBorrowRate: (...args: ExtractArgs<Contract['calls']['getBorrowRate']>) =>
-      singleQuery(publicClient!, call.getBorrowRate(...args).at(deployAddress), {}, addressResolver) as Promise<
-        CallReturn<'getBorrowRate'>
-      >,
-    getDebtAmount: (...args: ExtractArgs<Contract['calls']['getDebtAmount']>) =>
-      singleQuery(publicClient!, call.getDebtAmount(...args).at(deployAddress), {}, addressResolver) as Promise<
-        CallReturn<'getDebtAmount'>
-      >,
-    getVaultTokenAmounts: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmounts']>) =>
-      singleQuery(publicClient!, call.getVaultTokenAmounts(...args).at(deployAddress), {}, addressResolver) as Promise<
-        CallReturn<'getVaultTokenAmounts'>
-      >,
-    getUnderlyingAmounts: (...args: ExtractArgs<Contract['calls']['getUnderlyingAmounts']>) =>
-      singleQuery(publicClient!, call.getUnderlyingAmounts(...args).at(deployAddress), {}, addressResolver) as Promise<
-        CallReturn<'getUnderlyingAmounts'>
-      >,
-    getGreenAmounts: (...args: ExtractArgs<Contract['calls']['getGreenAmounts']>) =>
-      singleQuery(publicClient!, call.getGreenAmounts(...args).at(deployAddress), {}, addressResolver) as Promise<
-        CallReturn<'getGreenAmounts'>
-      >,
-    getTrueMaxBorrowAmountForVault: (...args: ExtractArgs<Contract['calls']['getTrueMaxBorrowAmountForVault']>) =>
-      singleQuery(
-        publicClient!,
-        call.getTrueMaxBorrowAmountForVault(...args).at(deployAddress),
-        {},
-        addressResolver,
-      ) as Promise<CallReturn<'getTrueMaxBorrowAmountForVault'>>,
-    getMaxBorrowAmountForVault: (...args: ExtractArgs<Contract['calls']['getMaxBorrowAmountForVault']>) =>
-      singleQuery(
-        publicClient!,
-        call.getMaxBorrowAmountForVault(...args).at(deployAddress),
-        {},
-        addressResolver,
-      ) as Promise<CallReturn<'getMaxBorrowAmountForVault'>>,
     RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) =>
       singleQuery(publicClient!, call.RIPE_REGISTRY(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'RIPE_REGISTRY'>

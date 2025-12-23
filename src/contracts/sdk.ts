@@ -30,6 +30,7 @@ import * as ExtraFi from './ExtraFi.js'
 import * as Fluid from './Fluid.js'
 import * as FortyAcres from './FortyAcres.js'
 import * as Hatchery from './Hatchery.js'
+import * as Helpers from './Helpers.js'
 import * as HighCommand from './HighCommand.js'
 import * as Kernel from './Kernel.js'
 import * as Ledger from './Ledger.js'
@@ -37,6 +38,7 @@ import * as LegoBook from './LegoBook.js'
 import * as LegoTools from './LegoTools.js'
 import * as LevgVault from './LevgVault.js'
 import * as LevgVaultHelper from './LevgVaultHelper.js'
+import * as LevgVaultTools from './LevgVaultTools.js'
 import * as LootDistributor from './LootDistributor.js'
 import * as Migrator from './Migrator.js'
 import * as MissionControl from './MissionControl.js'
@@ -100,6 +102,7 @@ export type SDK = {
   Fluid: Fluid.SDK
   FortyAcres: FortyAcres.SDK
   Hatchery: Hatchery.SDK
+  Helpers: Helpers.SDK
   HighCommand: HighCommand.SDK
   Kernel: Kernel.SDK
   Ledger: Ledger.SDK
@@ -107,6 +110,7 @@ export type SDK = {
   LegoTools: LegoTools.SDK
   LevgVault: (address: `0x${string}`) => LevgVault.SDK
   LevgVaultHelper: (address: `0x${string}`) => LevgVaultHelper.SDK
+  LevgVaultTools: LevgVaultTools.SDK
   LootDistributor: LootDistributor.SDK
   Migrator: Migrator.SDK
   MissionControl: MissionControl.SDK
@@ -176,6 +180,7 @@ export default function createSdk(
     Fluid: Fluid.toSdk(publicClient, walletClient, addressResolver),
     FortyAcres: FortyAcres.toSdk(publicClient, walletClient, addressResolver),
     Hatchery: Hatchery.toSdk(publicClient, walletClient, addressResolver),
+    Helpers: Helpers.toSdk(publicClient, walletClient, addressResolver),
     HighCommand: HighCommand.toSdk(publicClient, walletClient, addressResolver),
     Kernel: Kernel.toSdk(publicClient, walletClient, addressResolver),
     Ledger: Ledger.toSdk(publicClient, walletClient, addressResolver),
@@ -184,6 +189,7 @@ export default function createSdk(
     LevgVault: (address: `0x${string}`) => LevgVault.toSdk(address, publicClient, walletClient, addressResolver),
     LevgVaultHelper: (address: `0x${string}`) =>
       LevgVaultHelper.toSdk(address, publicClient, walletClient, addressResolver),
+    LevgVaultTools: LevgVaultTools.toSdk(publicClient, walletClient, addressResolver),
     LootDistributor: LootDistributor.toSdk(publicClient, walletClient, addressResolver),
     Migrator: Migrator.toSdk(publicClient, walletClient, addressResolver),
     MissionControl: MissionControl.toSdk(publicClient, walletClient, addressResolver),

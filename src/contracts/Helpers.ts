@@ -1373,7 +1373,7 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'isLegoAddr',
+    name: 'isHelpersAddr',
     inputs: [
       {
         name: '_addr',
@@ -1557,7 +1557,7 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_initialGov',
+        name: '_tempGov',
         type: 'address',
       },
       {
@@ -1573,7 +1573,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x0f149c37714201400A279A31B7E2057cB1491153'
+export const deployAddress: Address | undefined = '0x1980529E3FcC76393F70B538F62e499c27701EBa'
 
 export type Contract = {
   calls: {
@@ -1636,7 +1636,7 @@ export type Contract = {
     getUndyHq: () => Promise<`0x${string}`>
     canMintUndy: () => Promise<boolean>
     isPaused: () => Promise<boolean>
-    isLegoAddr: (addr: `0x${string}`) => Promise<boolean>
+    isHelpersAddr: (addr: `0x${string}`) => Promise<boolean>
   }
   mutations: {
     startGovernanceChange: (newGov: `0x${string}`) => Promise<void>
@@ -1743,7 +1743,7 @@ export type Contract = {
 
 export type Calls = keyof Contract['calls']
 export type Request<M extends Calls> = {
-  contractName: 'LegoBook'
+  contractName: 'Helpers'
   method: M
   args: ExtractArgs<Contract['calls'][M]>
   address: Address | undefined
@@ -1771,7 +1771,7 @@ function getRequest<M extends Calls>(
   const defaultValue = typeof contractAddressOrOptions === 'string' ? undefined : contractAddressOrOptions?.defaultValue
 
   const call = {
-    contractName: 'LegoBook' as const,
+    contractName: 'Helpers' as const,
     method,
     args,
     address,
@@ -1856,13 +1856,13 @@ export const call: CallType = {
   getUndyHq: (...args: ExtractArgs<Contract['calls']['getUndyHq']>) => getRequest('getUndyHq', args),
   canMintUndy: (...args: ExtractArgs<Contract['calls']['canMintUndy']>) => getRequest('canMintUndy', args),
   isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) => getRequest('isPaused', args),
-  isLegoAddr: (...args: ExtractArgs<Contract['calls']['isLegoAddr']>) => getRequest('isLegoAddr', args),
+  isHelpersAddr: (...args: ExtractArgs<Contract['calls']['isHelpersAddr']>) => getRequest('isHelpersAddr', args),
 }
 
 export type Mutations = keyof Contract['mutations']
 function getMutation<M extends Mutations>(functionName: M) {
   return {
-    contractName: 'LegoBook' as const,
+    contractName: 'Helpers' as const,
     functionName,
     deployAddress,
     argsType: undefined as ExtractArgs<Contract['mutations'][M]> | undefined,
@@ -1872,7 +1872,7 @@ function getMutation<M extends Mutations>(functionName: M) {
 
 export const mutation: {
   [K in Mutations]: {
-    contractName: 'LegoBook'
+    contractName: 'Helpers'
     deployAddress: Address | undefined
     getAbi: () => typeof abi
     functionName: K
@@ -2048,7 +2048,7 @@ export type SDK = {
   getUndyHq: (...args: ExtractArgs<Contract['calls']['getUndyHq']>) => Promise<CallReturn<'getUndyHq'>>
   canMintUndy: (...args: ExtractArgs<Contract['calls']['canMintUndy']>) => Promise<CallReturn<'canMintUndy'>>
   isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) => Promise<CallReturn<'isPaused'>>
-  isLegoAddr: (...args: ExtractArgs<Contract['calls']['isLegoAddr']>) => Promise<CallReturn<'isLegoAddr'>>
+  isHelpersAddr: (...args: ExtractArgs<Contract['calls']['isHelpersAddr']>) => Promise<CallReturn<'isHelpersAddr'>>
   startGovernanceChange: (...args: ExtractArgs<Contract['mutations']['startGovernanceChange']>) => Promise<Address>
   confirmGovernanceChange: (...args: ExtractArgs<Contract['mutations']['confirmGovernanceChange']>) => Promise<Address>
   cancelGovernanceChange: (...args: ExtractArgs<Contract['mutations']['cancelGovernanceChange']>) => Promise<Address>
@@ -2295,8 +2295,10 @@ export function toSdk(
       singleQuery(publicClient!, call.canMintUndy(...args), {}, addressResolver) as Promise<CallReturn<'canMintUndy'>>,
     isPaused: (...args: ExtractArgs<Contract['calls']['isPaused']>) =>
       singleQuery(publicClient!, call.isPaused(...args), {}, addressResolver) as Promise<CallReturn<'isPaused'>>,
-    isLegoAddr: (...args: ExtractArgs<Contract['calls']['isLegoAddr']>) =>
-      singleQuery(publicClient!, call.isLegoAddr(...args), {}, addressResolver) as Promise<CallReturn<'isLegoAddr'>>,
+    isHelpersAddr: (...args: ExtractArgs<Contract['calls']['isHelpersAddr']>) =>
+      singleQuery(publicClient!, call.isHelpersAddr(...args), {}, addressResolver) as Promise<
+        CallReturn<'isHelpersAddr'>
+      >,
 
     // Mutations
     startGovernanceChange: (...args: ExtractArgs<Contract['mutations']['startGovernanceChange']>) =>
