@@ -869,6 +869,59 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
+    name: 'getSavingsGreenBalances',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getSavingsGreenBalances',
+    inputs: [
+      {
+        name: '_ripeHq',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     name: 'getSwappableUsdcAmount',
     inputs: [
       {
@@ -1295,6 +1348,35 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
+    name: 'getAvailableUsdcFromEndaomentPsm',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getAvailableUsdcFromEndaomentPsm',
+    inputs: [
+      {
+        name: '_ripeHq',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     name: 'getTrueMaxBorrowAmount',
     inputs: [
       {
@@ -1481,7 +1563,7 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_netUserCapital',
+        name: '_totalAssets',
         type: 'uint256',
       },
     ],
@@ -1518,7 +1600,7 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_netUserCapital',
+        name: '_totalAssets',
         type: 'uint256',
       },
       {
@@ -1559,7 +1641,7 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_netUserCapital',
+        name: '_totalAssets',
         type: 'uint256',
       },
       {
@@ -1604,7 +1686,7 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_netUserCapital',
+        name: '_totalAssets',
         type: 'uint256',
       },
       {
@@ -1653,7 +1735,7 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_netUserCapital',
+        name: '_totalAssets',
         type: 'uint256',
       },
       {
@@ -1706,7 +1788,7 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_netUserCapital',
+        name: '_totalAssets',
         type: 'uint256',
       },
       {
@@ -1786,6 +1868,947 @@ export const abi = [
       },
       {
         name: '_creditEngine',
+        type: 'address',
+      },
+      {
+        name: '_ripeHq',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getNetUserDebt',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getNetUserDebt',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_ripeVaultBook',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getNetUserDebt',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_ripeVaultBook',
+        type: 'address',
+      },
+      {
+        name: '_ripeMissionControl',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getNetUserDebt',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_ripeVaultBook',
+        type: 'address',
+      },
+      {
+        name: '_ripeMissionControl',
+        type: 'address',
+      },
+      {
+        name: '_ripeHq',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtToDepositRatio',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtToDepositRatio',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtToDepositRatio',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtToDepositRatio',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultTokenRipeVaultId',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtToDepositRatio',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultTokenRipeVaultId',
+        type: 'uint256',
+      },
+      {
+        name: '_leverageVaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtToDepositRatio',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultTokenRipeVaultId',
+        type: 'uint256',
+      },
+      {
+        name: '_leverageVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_totalAssets',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtToDepositRatio',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultTokenRipeVaultId',
+        type: 'uint256',
+      },
+      {
+        name: '_leverageVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_totalAssets',
+        type: 'uint256',
+      },
+      {
+        name: '_legoBook',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtToDepositRatio',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultTokenRipeVaultId',
+        type: 'uint256',
+      },
+      {
+        name: '_leverageVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_totalAssets',
+        type: 'uint256',
+      },
+      {
+        name: '_legoBook',
+        type: 'address',
+      },
+      {
+        name: '_ripeVaultBook',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtToDepositRatio',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultTokenRipeVaultId',
+        type: 'uint256',
+      },
+      {
+        name: '_leverageVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_totalAssets',
+        type: 'uint256',
+      },
+      {
+        name: '_legoBook',
+        type: 'address',
+      },
+      {
+        name: '_ripeVaultBook',
+        type: 'address',
+      },
+      {
+        name: '_ripeMissionControl',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtToDepositRatio',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultTokenRipeVaultId',
+        type: 'uint256',
+      },
+      {
+        name: '_leverageVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_totalAssets',
+        type: 'uint256',
+      },
+      {
+        name: '_legoBook',
+        type: 'address',
+      },
+      {
+        name: '_ripeVaultBook',
+        type: 'address',
+      },
+      {
+        name: '_ripeMissionControl',
+        type: 'address',
+      },
+      {
+        name: '_ripeHq',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtUtilization',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtUtilization',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtUtilization',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtUtilization',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultTokenRipeVaultId',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtUtilization',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultTokenRipeVaultId',
+        type: 'uint256',
+      },
+      {
+        name: '_leverageVaultToken',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtUtilization',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultTokenRipeVaultId',
+        type: 'uint256',
+      },
+      {
+        name: '_leverageVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_totalAssets',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtUtilization',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultTokenRipeVaultId',
+        type: 'uint256',
+      },
+      {
+        name: '_leverageVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_totalAssets',
+        type: 'uint256',
+      },
+      {
+        name: '_maxDebtRatio',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtUtilization',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultTokenRipeVaultId',
+        type: 'uint256',
+      },
+      {
+        name: '_leverageVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_totalAssets',
+        type: 'uint256',
+      },
+      {
+        name: '_maxDebtRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_legoBook',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtUtilization',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultTokenRipeVaultId',
+        type: 'uint256',
+      },
+      {
+        name: '_leverageVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_totalAssets',
+        type: 'uint256',
+      },
+      {
+        name: '_maxDebtRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_legoBook',
+        type: 'address',
+      },
+      {
+        name: '_ripeVaultBook',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtUtilization',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultTokenRipeVaultId',
+        type: 'uint256',
+      },
+      {
+        name: '_leverageVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_totalAssets',
+        type: 'uint256',
+      },
+      {
+        name: '_maxDebtRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_legoBook',
+        type: 'address',
+      },
+      {
+        name: '_ripeVaultBook',
+        type: 'address',
+      },
+      {
+        name: '_ripeMissionControl',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtUtilization',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_collateralVaultTokenRipeVaultId',
+        type: 'uint256',
+      },
+      {
+        name: '_leverageVaultToken',
+        type: 'address',
+      },
+      {
+        name: '_totalAssets',
+        type: 'uint256',
+      },
+      {
+        name: '_maxDebtRatio',
+        type: 'uint256',
+      },
+      {
+        name: '_legoBook',
+        type: 'address',
+      },
+      {
+        name: '_ripeVaultBook',
+        type: 'address',
+      },
+      {
+        name: '_ripeMissionControl',
+        type: 'address',
+      },
+      {
+        name: '_ripeHq',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtToRipeCollateralRatio',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtToRipeCollateralRatio',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_ripeVaultBook',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtToRipeCollateralRatio',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_ripeVaultBook',
+        type: 'address',
+      },
+      {
+        name: '_ripeMissionControl',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getDebtToRipeCollateralRatio',
+    inputs: [
+      {
+        name: '_levgVault',
+        type: 'address',
+      },
+      {
+        name: '_ripeVaultBook',
+        type: 'address',
+      },
+      {
+        name: '_ripeMissionControl',
         type: 'address',
       },
       {
@@ -2452,7 +3475,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xbCfC93bbF48423fd033af30573afce75bDc6C3f4'
+export const deployAddress: Address | undefined = '0xAb6CB7AfDB4e866dBd92Be00EEb3880946755047'
 
 export type Contract = {
   calls: {
@@ -2513,6 +3536,7 @@ export type Contract = {
       ripeMissionControl?: `0x${string}`,
       ripeHq?: `0x${string}`,
     ) => Promise<bigint>
+    getSavingsGreenBalances: (ripeHq?: `0x${string}`) => Promise<[bigint, bigint, bigint, bigint]>
     getSwappableUsdcAmount: (
       levgVault: `0x${string}`,
       leverageVaultToken?: `0x${string}`,
@@ -2527,6 +3551,7 @@ export type Contract = {
     ) => Promise<bigint>
     getBorrowRate: (levgVault: `0x${string}`, ripeHq?: `0x${string}`) => Promise<bigint>
     getDebtAmount: (levgVault: `0x${string}`, ripeHq?: `0x${string}`) => Promise<bigint>
+    getAvailableUsdcFromEndaomentPsm: (ripeHq?: `0x${string}`) => Promise<bigint>
     getTrueMaxBorrowAmount: (levgVault: `0x${string}`, ripeHq?: `0x${string}`) => Promise<bigint>
     getMaxBorrowAmountByMaxDebtRatio: (
       levgVault: `0x${string}`,
@@ -2534,7 +3559,7 @@ export type Contract = {
       collateralVaultToken?: `0x${string}`,
       collateralVaultTokenRipeVaultId?: bigint,
       leverageVaultToken?: `0x${string}`,
-      netUserCapital?: bigint,
+      totalAssets?: bigint,
       maxDebtRatio?: bigint,
       legoBook?: `0x${string}`,
       ripeVaultBook?: `0x${string}`,
@@ -2544,6 +3569,43 @@ export type Contract = {
     getMaxBorrowAmountByRipeLtv: (
       levgVault: `0x${string}`,
       creditEngine?: `0x${string}`,
+      ripeHq?: `0x${string}`,
+    ) => Promise<bigint>
+    getNetUserDebt: (
+      levgVault: `0x${string}`,
+      ripeVaultBook?: `0x${string}`,
+      ripeMissionControl?: `0x${string}`,
+      ripeHq?: `0x${string}`,
+    ) => Promise<bigint>
+    getDebtToDepositRatio: (
+      levgVault: `0x${string}`,
+      underlyingAsset?: `0x${string}`,
+      collateralVaultToken?: `0x${string}`,
+      collateralVaultTokenRipeVaultId?: bigint,
+      leverageVaultToken?: `0x${string}`,
+      totalAssets?: bigint,
+      legoBook?: `0x${string}`,
+      ripeVaultBook?: `0x${string}`,
+      ripeMissionControl?: `0x${string}`,
+      ripeHq?: `0x${string}`,
+    ) => Promise<bigint>
+    getDebtUtilization: (
+      levgVault: `0x${string}`,
+      underlyingAsset?: `0x${string}`,
+      collateralVaultToken?: `0x${string}`,
+      collateralVaultTokenRipeVaultId?: bigint,
+      leverageVaultToken?: `0x${string}`,
+      totalAssets?: bigint,
+      maxDebtRatio?: bigint,
+      legoBook?: `0x${string}`,
+      ripeVaultBook?: `0x${string}`,
+      ripeMissionControl?: `0x${string}`,
+      ripeHq?: `0x${string}`,
+    ) => Promise<bigint>
+    getDebtToRipeCollateralRatio: (
+      levgVault: `0x${string}`,
+      ripeVaultBook?: `0x${string}`,
+      ripeMissionControl?: `0x${string}`,
       ripeHq?: `0x${string}`,
     ) => Promise<bigint>
     getVaultTokenAmounts: (
@@ -2651,16 +3713,27 @@ export const call: CallType = {
     getRequest('getRipeCollateralBalance', args),
   getUnderlyingGreenAmount: (...args: ExtractArgs<Contract['calls']['getUnderlyingGreenAmount']>) =>
     getRequest('getUnderlyingGreenAmount', args),
+  getSavingsGreenBalances: (...args: ExtractArgs<Contract['calls']['getSavingsGreenBalances']>) =>
+    getRequest('getSavingsGreenBalances', args),
   getSwappableUsdcAmount: (...args: ExtractArgs<Contract['calls']['getSwappableUsdcAmount']>) =>
     getRequest('getSwappableUsdcAmount', args),
   getBorrowRate: (...args: ExtractArgs<Contract['calls']['getBorrowRate']>) => getRequest('getBorrowRate', args),
   getDebtAmount: (...args: ExtractArgs<Contract['calls']['getDebtAmount']>) => getRequest('getDebtAmount', args),
+  getAvailableUsdcFromEndaomentPsm: (...args: ExtractArgs<Contract['calls']['getAvailableUsdcFromEndaomentPsm']>) =>
+    getRequest('getAvailableUsdcFromEndaomentPsm', args),
   getTrueMaxBorrowAmount: (...args: ExtractArgs<Contract['calls']['getTrueMaxBorrowAmount']>) =>
     getRequest('getTrueMaxBorrowAmount', args),
   getMaxBorrowAmountByMaxDebtRatio: (...args: ExtractArgs<Contract['calls']['getMaxBorrowAmountByMaxDebtRatio']>) =>
     getRequest('getMaxBorrowAmountByMaxDebtRatio', args),
   getMaxBorrowAmountByRipeLtv: (...args: ExtractArgs<Contract['calls']['getMaxBorrowAmountByRipeLtv']>) =>
     getRequest('getMaxBorrowAmountByRipeLtv', args),
+  getNetUserDebt: (...args: ExtractArgs<Contract['calls']['getNetUserDebt']>) => getRequest('getNetUserDebt', args),
+  getDebtToDepositRatio: (...args: ExtractArgs<Contract['calls']['getDebtToDepositRatio']>) =>
+    getRequest('getDebtToDepositRatio', args),
+  getDebtUtilization: (...args: ExtractArgs<Contract['calls']['getDebtUtilization']>) =>
+    getRequest('getDebtUtilization', args),
+  getDebtToRipeCollateralRatio: (...args: ExtractArgs<Contract['calls']['getDebtToRipeCollateralRatio']>) =>
+    getRequest('getDebtToRipeCollateralRatio', args),
   getVaultTokenAmounts: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmounts']>) =>
     getRequest('getVaultTokenAmounts', args),
   getUnderlyingAmounts: (...args: ExtractArgs<Contract['calls']['getUnderlyingAmounts']>) =>
@@ -2692,11 +3765,17 @@ export type SDK = {
   getUnderlyingGreenAmount: (
     ...args: ExtractArgs<Contract['calls']['getUnderlyingGreenAmount']>
   ) => Promise<CallReturn<'getUnderlyingGreenAmount'>>
+  getSavingsGreenBalances: (
+    ...args: ExtractArgs<Contract['calls']['getSavingsGreenBalances']>
+  ) => Promise<CallReturn<'getSavingsGreenBalances'>>
   getSwappableUsdcAmount: (
     ...args: ExtractArgs<Contract['calls']['getSwappableUsdcAmount']>
   ) => Promise<CallReturn<'getSwappableUsdcAmount'>>
   getBorrowRate: (...args: ExtractArgs<Contract['calls']['getBorrowRate']>) => Promise<CallReturn<'getBorrowRate'>>
   getDebtAmount: (...args: ExtractArgs<Contract['calls']['getDebtAmount']>) => Promise<CallReturn<'getDebtAmount'>>
+  getAvailableUsdcFromEndaomentPsm: (
+    ...args: ExtractArgs<Contract['calls']['getAvailableUsdcFromEndaomentPsm']>
+  ) => Promise<CallReturn<'getAvailableUsdcFromEndaomentPsm'>>
   getTrueMaxBorrowAmount: (
     ...args: ExtractArgs<Contract['calls']['getTrueMaxBorrowAmount']>
   ) => Promise<CallReturn<'getTrueMaxBorrowAmount'>>
@@ -2706,6 +3785,16 @@ export type SDK = {
   getMaxBorrowAmountByRipeLtv: (
     ...args: ExtractArgs<Contract['calls']['getMaxBorrowAmountByRipeLtv']>
   ) => Promise<CallReturn<'getMaxBorrowAmountByRipeLtv'>>
+  getNetUserDebt: (...args: ExtractArgs<Contract['calls']['getNetUserDebt']>) => Promise<CallReturn<'getNetUserDebt'>>
+  getDebtToDepositRatio: (
+    ...args: ExtractArgs<Contract['calls']['getDebtToDepositRatio']>
+  ) => Promise<CallReturn<'getDebtToDepositRatio'>>
+  getDebtUtilization: (
+    ...args: ExtractArgs<Contract['calls']['getDebtUtilization']>
+  ) => Promise<CallReturn<'getDebtUtilization'>>
+  getDebtToRipeCollateralRatio: (
+    ...args: ExtractArgs<Contract['calls']['getDebtToRipeCollateralRatio']>
+  ) => Promise<CallReturn<'getDebtToRipeCollateralRatio'>>
   getVaultTokenAmounts: (
     ...args: ExtractArgs<Contract['calls']['getVaultTokenAmounts']>
   ) => Promise<CallReturn<'getVaultTokenAmounts'>>
@@ -2755,6 +3844,10 @@ export function toSdk(
       singleQuery(publicClient!, call.getUnderlyingGreenAmount(...args), {}, addressResolver) as Promise<
         CallReturn<'getUnderlyingGreenAmount'>
       >,
+    getSavingsGreenBalances: (...args: ExtractArgs<Contract['calls']['getSavingsGreenBalances']>) =>
+      singleQuery(publicClient!, call.getSavingsGreenBalances(...args), {}, addressResolver) as Promise<
+        CallReturn<'getSavingsGreenBalances'>
+      >,
     getSwappableUsdcAmount: (...args: ExtractArgs<Contract['calls']['getSwappableUsdcAmount']>) =>
       singleQuery(publicClient!, call.getSwappableUsdcAmount(...args), {}, addressResolver) as Promise<
         CallReturn<'getSwappableUsdcAmount'>
@@ -2767,6 +3860,10 @@ export function toSdk(
       singleQuery(publicClient!, call.getDebtAmount(...args), {}, addressResolver) as Promise<
         CallReturn<'getDebtAmount'>
       >,
+    getAvailableUsdcFromEndaomentPsm: (...args: ExtractArgs<Contract['calls']['getAvailableUsdcFromEndaomentPsm']>) =>
+      singleQuery(publicClient!, call.getAvailableUsdcFromEndaomentPsm(...args), {}, addressResolver) as Promise<
+        CallReturn<'getAvailableUsdcFromEndaomentPsm'>
+      >,
     getTrueMaxBorrowAmount: (...args: ExtractArgs<Contract['calls']['getTrueMaxBorrowAmount']>) =>
       singleQuery(publicClient!, call.getTrueMaxBorrowAmount(...args), {}, addressResolver) as Promise<
         CallReturn<'getTrueMaxBorrowAmount'>
@@ -2778,6 +3875,22 @@ export function toSdk(
     getMaxBorrowAmountByRipeLtv: (...args: ExtractArgs<Contract['calls']['getMaxBorrowAmountByRipeLtv']>) =>
       singleQuery(publicClient!, call.getMaxBorrowAmountByRipeLtv(...args), {}, addressResolver) as Promise<
         CallReturn<'getMaxBorrowAmountByRipeLtv'>
+      >,
+    getNetUserDebt: (...args: ExtractArgs<Contract['calls']['getNetUserDebt']>) =>
+      singleQuery(publicClient!, call.getNetUserDebt(...args), {}, addressResolver) as Promise<
+        CallReturn<'getNetUserDebt'>
+      >,
+    getDebtToDepositRatio: (...args: ExtractArgs<Contract['calls']['getDebtToDepositRatio']>) =>
+      singleQuery(publicClient!, call.getDebtToDepositRatio(...args), {}, addressResolver) as Promise<
+        CallReturn<'getDebtToDepositRatio'>
+      >,
+    getDebtUtilization: (...args: ExtractArgs<Contract['calls']['getDebtUtilization']>) =>
+      singleQuery(publicClient!, call.getDebtUtilization(...args), {}, addressResolver) as Promise<
+        CallReturn<'getDebtUtilization'>
+      >,
+    getDebtToRipeCollateralRatio: (...args: ExtractArgs<Contract['calls']['getDebtToRipeCollateralRatio']>) =>
+      singleQuery(publicClient!, call.getDebtToRipeCollateralRatio(...args), {}, addressResolver) as Promise<
+        CallReturn<'getDebtToRipeCollateralRatio'>
       >,
     getVaultTokenAmounts: (...args: ExtractArgs<Contract['calls']['getVaultTokenAmounts']>) =>
       singleQuery(publicClient!, call.getVaultTokenAmounts(...args), {}, addressResolver) as Promise<

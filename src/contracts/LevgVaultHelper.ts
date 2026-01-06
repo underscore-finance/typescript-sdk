@@ -98,16 +98,8 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_currentBalance',
-        type: 'uint256',
-      },
-      {
         name: '_leverageVaultToken',
         type: 'address',
-      },
-      {
-        name: '_leverageVaultTokenLegoId',
-        type: 'uint256',
       },
       {
         name: '_leverageVaultTokenRipeVaultId',
@@ -135,16 +127,8 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_currentBalance',
-        type: 'uint256',
-      },
-      {
         name: '_leverageVaultToken',
         type: 'address',
-      },
-      {
-        name: '_leverageVaultTokenLegoId',
-        type: 'uint256',
       },
       {
         name: '_leverageVaultTokenRipeVaultId',
@@ -176,16 +160,8 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_currentBalance',
-        type: 'uint256',
-      },
-      {
         name: '_leverageVaultToken',
         type: 'address',
-      },
-      {
-        name: '_leverageVaultTokenLegoId',
-        type: 'uint256',
       },
       {
         name: '_leverageVaultTokenRipeVaultId',
@@ -221,16 +197,8 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_currentBalance',
-        type: 'uint256',
-      },
-      {
         name: '_leverageVaultToken',
         type: 'address',
-      },
-      {
-        name: '_leverageVaultTokenLegoId',
-        type: 'uint256',
       },
       {
         name: '_leverageVaultTokenRipeVaultId',
@@ -270,16 +238,8 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_currentBalance',
-        type: 'uint256',
-      },
-      {
         name: '_leverageVaultToken',
         type: 'address',
-      },
-      {
-        name: '_leverageVaultTokenLegoId',
-        type: 'uint256',
       },
       {
         name: '_leverageVaultTokenRipeVaultId',
@@ -327,24 +287,16 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_collateralVaultTokenLegoId',
-        type: 'uint256',
-      },
-      {
         name: '_collateralVaultTokenRipeVaultId',
         type: 'uint256',
       },
       {
-        name: '_netUserCapital',
+        name: '_totalAssets',
         type: 'uint256',
       },
       {
         name: '_maxDebtRatio',
         type: 'uint256',
-      },
-      {
-        name: '_isUsdcVault',
-        type: 'bool',
       },
     ],
     outputs: [
@@ -372,15 +324,11 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_collateralVaultTokenLegoId',
-        type: 'uint256',
-      },
-      {
         name: '_collateralVaultTokenRipeVaultId',
         type: 'uint256',
       },
       {
-        name: '_netUserCapital',
+        name: '_totalAssets',
         type: 'uint256',
       },
       {
@@ -388,10 +336,6 @@ export const abi = [
         type: 'uint256',
       },
       {
-        name: '_isUsdcVault',
-        type: 'bool',
-      },
-      {
         name: '_legoBook',
         type: 'address',
       },
@@ -540,20 +484,12 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_collateralVaultTokenLegoId',
-        type: 'uint256',
-      },
-      {
         name: '_collateralVaultTokenRipeVaultId',
         type: 'uint256',
       },
       {
         name: '_leverageVaultToken',
         type: 'address',
-      },
-      {
-        name: '_leverageVaultTokenLegoId',
-        type: 'uint256',
       },
       {
         name: '_leverageVaultTokenRipeVaultId',
@@ -581,20 +517,12 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_collateralVaultTokenLegoId',
-        type: 'uint256',
-      },
-      {
         name: '_collateralVaultTokenRipeVaultId',
         type: 'uint256',
       },
       {
         name: '_leverageVaultToken',
         type: 'address',
-      },
-      {
-        name: '_leverageVaultTokenLegoId',
-        type: 'uint256',
       },
       {
         name: '_leverageVaultTokenRipeVaultId',
@@ -626,20 +554,12 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_collateralVaultTokenLegoId',
-        type: 'uint256',
-      },
-      {
         name: '_collateralVaultTokenRipeVaultId',
         type: 'uint256',
       },
       {
         name: '_leverageVaultToken',
         type: 'address',
-      },
-      {
-        name: '_leverageVaultTokenLegoId',
-        type: 'uint256',
       },
       {
         name: '_leverageVaultTokenRipeVaultId',
@@ -675,20 +595,12 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_collateralVaultTokenLegoId',
-        type: 'uint256',
-      },
-      {
         name: '_collateralVaultTokenRipeVaultId',
         type: 'uint256',
       },
       {
         name: '_leverageVaultToken',
         type: 'address',
-      },
-      {
-        name: '_leverageVaultTokenLegoId',
-        type: 'uint256',
       },
       {
         name: '_leverageVaultTokenRipeVaultId',
@@ -728,20 +640,12 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_collateralVaultTokenLegoId',
-        type: 'uint256',
-      },
-      {
         name: '_collateralVaultTokenRipeVaultId',
         type: 'uint256',
       },
       {
         name: '_leverageVaultToken',
         type: 'address',
-      },
-      {
-        name: '_leverageVaultTokenLegoId',
-        type: 'uint256',
       },
       {
         name: '_leverageVaultTokenRipeVaultId',
@@ -785,20 +689,12 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_collateralVaultTokenLegoId',
-        type: 'uint256',
-      },
-      {
         name: '_collateralVaultTokenRipeVaultId',
         type: 'uint256',
       },
       {
         name: '_leverageVaultToken',
         type: 'address',
-      },
-      {
-        name: '_leverageVaultTokenLegoId',
-        type: 'uint256',
       },
       {
         name: '_leverageVaultTokenRipeVaultId',
@@ -850,20 +746,12 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_collateralVaultTokenLegoId',
-        type: 'uint256',
-      },
-      {
         name: '_collateralVaultTokenRipeVaultId',
         type: 'uint256',
       },
       {
         name: '_leverageVaultToken',
         type: 'address',
-      },
-      {
-        name: '_leverageVaultTokenLegoId',
-        type: 'uint256',
       },
       {
         name: '_leverageVaultTokenRipeVaultId',
@@ -895,20 +783,12 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_collateralVaultTokenLegoId',
-        type: 'uint256',
-      },
-      {
         name: '_collateralVaultTokenRipeVaultId',
         type: 'uint256',
       },
       {
         name: '_leverageVaultToken',
         type: 'address',
-      },
-      {
-        name: '_leverageVaultTokenLegoId',
-        type: 'uint256',
       },
       {
         name: '_leverageVaultTokenRipeVaultId',
@@ -944,20 +824,12 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_collateralVaultTokenLegoId',
-        type: 'uint256',
-      },
-      {
         name: '_collateralVaultTokenRipeVaultId',
         type: 'uint256',
       },
       {
         name: '_leverageVaultToken',
         type: 'address',
-      },
-      {
-        name: '_leverageVaultTokenLegoId',
-        type: 'uint256',
       },
       {
         name: '_leverageVaultTokenRipeVaultId',
@@ -997,20 +869,12 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_collateralVaultTokenLegoId',
-        type: 'uint256',
-      },
-      {
         name: '_collateralVaultTokenRipeVaultId',
         type: 'uint256',
       },
       {
         name: '_leverageVaultToken',
         type: 'address',
-      },
-      {
-        name: '_leverageVaultTokenLegoId',
-        type: 'uint256',
       },
       {
         name: '_leverageVaultTokenRipeVaultId',
@@ -1054,20 +918,12 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_collateralVaultTokenLegoId',
-        type: 'uint256',
-      },
-      {
         name: '_collateralVaultTokenRipeVaultId',
         type: 'uint256',
       },
       {
         name: '_leverageVaultToken',
         type: 'address',
-      },
-      {
-        name: '_leverageVaultTokenLegoId',
-        type: 'uint256',
       },
       {
         name: '_leverageVaultTokenRipeVaultId',
@@ -1115,20 +971,12 @@ export const abi = [
         type: 'address',
       },
       {
-        name: '_collateralVaultTokenLegoId',
-        type: 'uint256',
-      },
-      {
         name: '_collateralVaultTokenRipeVaultId',
         type: 'uint256',
       },
       {
         name: '_leverageVaultToken',
         type: 'address',
-      },
-      {
-        name: '_leverageVaultTokenLegoId',
-        type: 'uint256',
       },
       {
         name: '_leverageVaultTokenRipeVaultId',
@@ -1285,6 +1133,31 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
+    name: 'isValidRawAssetCollateral',
+    inputs: [
+      {
+        name: '_underlyingAsset',
+        type: 'address',
+      },
+      {
+        name: '_rawAsset',
+        type: 'address',
+      },
+      {
+        name: '_ripeVaultId',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     name: 'RIPE_REGISTRY',
     inputs: [],
     outputs: [
@@ -1351,7 +1224,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x19e0c1d2272545De38C6D2A3dF3476E4b9e48328'
+export const deployAddress: Address | undefined = '0xD69cD617B0C2686a2C8C01d32c487cBb79e082f1'
 
 export type Contract = {
   calls: {
@@ -1373,9 +1246,7 @@ export type Contract = {
     getSwappableUsdcAmount: (
       wallet: `0x${string}`,
       amountIn: bigint,
-      currentBalance: bigint,
       leverageVaultToken: `0x${string}`,
-      leverageVaultTokenLegoId: bigint,
       leverageVaultTokenRipeVaultId: bigint,
       usdc?: `0x${string}`,
       green?: `0x${string}`,
@@ -1386,11 +1257,9 @@ export type Contract = {
       wallet: `0x${string}`,
       underlyingAsset: `0x${string}`,
       collateralVaultToken: `0x${string}`,
-      collateralVaultTokenLegoId: bigint,
       collateralVaultTokenRipeVaultId: bigint,
-      netUserCapital: bigint,
+      totalAssets: bigint,
       maxDebtRatio: bigint,
-      isUsdcVault: boolean,
       legoBook?: `0x${string}`,
     ) => Promise<bigint>
     performPostSwapValidation: (
@@ -1406,10 +1275,8 @@ export type Contract = {
     getTotalAssetsForUsdcVault: (
       wallet: `0x${string}`,
       collateralVaultToken: `0x${string}`,
-      collateralVaultTokenLegoId: bigint,
       collateralVaultTokenRipeVaultId: bigint,
       leverageVaultToken: `0x${string}`,
-      leverageVaultTokenLegoId: bigint,
       leverageVaultTokenRipeVaultId: bigint,
       shouldGetMax?: boolean,
       usdc?: `0x${string}`,
@@ -1421,10 +1288,8 @@ export type Contract = {
       wallet: `0x${string}`,
       underlyingAsset: `0x${string}`,
       collateralVaultToken: `0x${string}`,
-      collateralVaultTokenLegoId: bigint,
       collateralVaultTokenRipeVaultId: bigint,
       leverageVaultToken: `0x${string}`,
-      leverageVaultTokenLegoId: bigint,
       leverageVaultTokenRipeVaultId: bigint,
       shouldGetMax?: boolean,
       usdc?: `0x${string}`,
@@ -1445,6 +1310,11 @@ export type Contract = {
       vaultToken: `0x${string}`,
       ripeVaultId: bigint,
       legoId: bigint,
+    ) => Promise<boolean>
+    isValidRawAssetCollateral: (
+      underlyingAsset: `0x${string}`,
+      rawAsset: `0x${string}`,
+      ripeVaultId: bigint,
     ) => Promise<boolean>
     RIPE_REGISTRY: () => Promise<`0x${string}`>
     GREEN_TOKEN: () => Promise<`0x${string}`>
@@ -1535,6 +1405,8 @@ export const call: CallType = {
     getRequest('getVaultBookAndDeleverage', args),
   isValidVaultToken: (...args: ExtractArgs<Contract['calls']['isValidVaultToken']>) =>
     getRequest('isValidVaultToken', args),
+  isValidRawAssetCollateral: (...args: ExtractArgs<Contract['calls']['isValidRawAssetCollateral']>) =>
+    getRequest('isValidRawAssetCollateral', args),
   RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => getRequest('RIPE_REGISTRY', args),
   GREEN_TOKEN: (...args: ExtractArgs<Contract['calls']['GREEN_TOKEN']>) => getRequest('GREEN_TOKEN', args),
   SAVINGS_GREEN: (...args: ExtractArgs<Contract['calls']['SAVINGS_GREEN']>) => getRequest('SAVINGS_GREEN', args),
@@ -1573,6 +1445,9 @@ export type SDK = {
   isValidVaultToken: (
     ...args: ExtractArgs<Contract['calls']['isValidVaultToken']>
   ) => Promise<CallReturn<'isValidVaultToken'>>
+  isValidRawAssetCollateral: (
+    ...args: ExtractArgs<Contract['calls']['isValidRawAssetCollateral']>
+  ) => Promise<CallReturn<'isValidRawAssetCollateral'>>
   RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) => Promise<CallReturn<'RIPE_REGISTRY'>>
   GREEN_TOKEN: (...args: ExtractArgs<Contract['calls']['GREEN_TOKEN']>) => Promise<CallReturn<'GREEN_TOKEN'>>
   SAVINGS_GREEN: (...args: ExtractArgs<Contract['calls']['SAVINGS_GREEN']>) => Promise<CallReturn<'SAVINGS_GREEN'>>
@@ -1652,6 +1527,13 @@ export function toSdk(
       singleQuery(publicClient!, call.isValidVaultToken(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'isValidVaultToken'>
       >,
+    isValidRawAssetCollateral: (...args: ExtractArgs<Contract['calls']['isValidRawAssetCollateral']>) =>
+      singleQuery(
+        publicClient!,
+        call.isValidRawAssetCollateral(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'isValidRawAssetCollateral'>>,
     RIPE_REGISTRY: (...args: ExtractArgs<Contract['calls']['RIPE_REGISTRY']>) =>
       singleQuery(publicClient!, call.RIPE_REGISTRY(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'RIPE_REGISTRY'>
