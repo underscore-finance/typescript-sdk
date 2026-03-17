@@ -2270,6 +2270,23 @@ export const abi = [
     ],
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getUserDebtAmount',
+    inputs: [
+      {
+        name: '_user',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'function',
     name: 'claimIncentives',
@@ -3412,7 +3429,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x06Df9C710c96500D98f9eca1f838873e1Eb7e17F'
+export const deployAddress: Address | undefined = '0x97F158d6e828513933b59107f1a1b9F49F0270c4'
 
 export type Contract = {
   calls: {
@@ -3501,6 +3518,7 @@ export type Contract = {
     isEligibleForYieldBonus: (asset: `0x${string}`) => Promise<boolean>
     getWithdrawalFees: (vaultToken: `0x${string}`, vaultTokenAmount: bigint) => Promise<bigint>
     canRegisterVaultToken: (asset: `0x${string}`, vaultToken: `0x${string}`) => Promise<boolean>
+    getUserDebtAmount: (user: `0x${string}`) => Promise<bigint>
     hasClaimableRewards: (user: `0x${string}`) => Promise<boolean>
     getAccessForLego: (user: `0x${string}`, action: bigint) => Promise<[`0x${string}`, string, bigint]>
     RIPE_REGISTRY: () => Promise<`0x${string}`>
@@ -3948,6 +3966,8 @@ export const call: CallType = {
     getRequest('getWithdrawalFees', args),
   canRegisterVaultToken: (...args: ExtractArgs<Contract['calls']['canRegisterVaultToken']>) =>
     getRequest('canRegisterVaultToken', args),
+  getUserDebtAmount: (...args: ExtractArgs<Contract['calls']['getUserDebtAmount']>) =>
+    getRequest('getUserDebtAmount', args),
   hasClaimableRewards: (...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>) =>
     getRequest('hasClaimableRewards', args),
   getAccessForLego: (...args: ExtractArgs<Contract['calls']['getAccessForLego']>) =>
@@ -4162,6 +4182,9 @@ export type SDK = {
   canRegisterVaultToken: (
     ...args: ExtractArgs<Contract['calls']['canRegisterVaultToken']>
   ) => Promise<CallReturn<'canRegisterVaultToken'>>
+  getUserDebtAmount: (
+    ...args: ExtractArgs<Contract['calls']['getUserDebtAmount']>
+  ) => Promise<CallReturn<'getUserDebtAmount'>>
   hasClaimableRewards: (
     ...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>
   ) => Promise<CallReturn<'hasClaimableRewards'>>
@@ -4422,6 +4445,10 @@ export function toSdk(
     canRegisterVaultToken: (...args: ExtractArgs<Contract['calls']['canRegisterVaultToken']>) =>
       singleQuery(publicClient!, call.canRegisterVaultToken(...args), {}, addressResolver) as Promise<
         CallReturn<'canRegisterVaultToken'>
+      >,
+    getUserDebtAmount: (...args: ExtractArgs<Contract['calls']['getUserDebtAmount']>) =>
+      singleQuery(publicClient!, call.getUserDebtAmount(...args), {}, addressResolver) as Promise<
+        CallReturn<'getUserDebtAmount'>
       >,
     hasClaimableRewards: (...args: ExtractArgs<Contract['calls']['hasClaimableRewards']>) =>
       singleQuery(publicClient!, call.hasClaimableRewards(...args), {}, addressResolver) as Promise<

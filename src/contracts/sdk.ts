@@ -11,6 +11,7 @@ import * as AeroClassic from './AeroClassic.js'
 import * as AeroSlipstream from './AeroSlipstream.js'
 import * as AgentSenderGeneric from './AgentSenderGeneric.js'
 import * as AgentSenderSpecial from './AgentSenderSpecial.js'
+import * as AgentSenderSpecialSigHelper from './AgentSenderSpecialSigHelper.js'
 import * as AgentWrapper from './AgentWrapper.js'
 import * as AgentWrapperV1 from './AgentWrapperV1.js'
 import * as Appraiser from './Appraiser.js'
@@ -85,6 +86,7 @@ export type SDK = {
   AeroSlipstream: AeroSlipstream.SDK
   AgentSenderGeneric: AgentSenderGeneric.SDK
   AgentSenderSpecial: AgentSenderSpecial.SDK
+  AgentSenderSpecialSigHelper: AgentSenderSpecialSigHelper.SDK
   AgentWrapper: AgentWrapper.SDK
   AgentWrapperV1: AgentWrapperV1.SDK
   Appraiser: Appraiser.SDK
@@ -165,6 +167,7 @@ export default function createSdk(
     AeroSlipstream: AeroSlipstream.toSdk(publicClient, walletClient, addressResolver),
     AgentSenderGeneric: AgentSenderGeneric.toSdk(publicClient, walletClient, addressResolver),
     AgentSenderSpecial: AgentSenderSpecial.toSdk(publicClient, walletClient, addressResolver),
+    AgentSenderSpecialSigHelper: AgentSenderSpecialSigHelper.toSdk(publicClient, walletClient, addressResolver),
     AgentWrapper: AgentWrapper.toSdk(publicClient, walletClient, addressResolver),
     AgentWrapperV1: AgentWrapperV1.toSdk(publicClient, walletClient, addressResolver),
     Appraiser: Appraiser.toSdk(publicClient, walletClient, addressResolver),
