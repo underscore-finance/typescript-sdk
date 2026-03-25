@@ -499,10 +499,6 @@ export const abi = [
         ],
       },
       {
-        name: '_canPayOwner',
-        type: 'bool',
-      },
-      {
         name: '_canPull',
         type: 'bool',
       },
@@ -1625,10 +1621,6 @@ export const abi = [
         ],
       },
       {
-        name: '_canPayOwner',
-        type: 'bool',
-      },
-      {
         name: '_canPull',
         type: 'bool',
       },
@@ -2007,7 +1999,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x80bf71E098Dc328D87456c34675C2B4C10a1AFCb'
+export const deployAddress: Address | undefined = '0xdA73Ea2545b0e7c7Fb32976fEFa70a45D20b8321'
 
 export type Contract = {
   calls: {
@@ -2049,7 +2041,6 @@ export type Contract = {
       txCooldownBlocks: bigint,
       failOnZeroPrice: boolean,
       usdLimits: { perTxCap: bigint; perPeriodCap: bigint; lifetimeCap: bigint },
-      canPayOwner: boolean,
       canPull: boolean,
     ) => Promise<boolean>
     getPayeeConfig: (
@@ -2120,7 +2111,6 @@ export type Contract = {
       txCooldownBlocks: bigint,
       failOnZeroPrice: boolean,
       usdLimits: { perTxCap: bigint; perPeriodCap: bigint; lifetimeCap: bigint },
-      canPayOwner: boolean,
       canPull: boolean,
     ) => Promise<boolean>
     addPayee: (

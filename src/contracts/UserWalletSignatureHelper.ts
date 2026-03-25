@@ -218,6 +218,141 @@ export const abi = [
   {
     stateMutability: 'view',
     type: 'function',
+    name: 'getCreateAndPayChequeHash',
+    inputs: [
+      {
+        name: '_agentSender',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getCreateAndPayChequeHash',
+    inputs: [
+      {
+        name: '_agentSender',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'getCreateAndPayChequeHash',
+    inputs: [
+      {
+        name: '_agentSender',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_nonce',
+        type: 'uint256',
+      },
+      {
+        name: '_expiration',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     name: 'getDepositForYieldHash',
     inputs: [
       {
@@ -5913,7 +6048,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xb200e2c52b7116a60603C8D27276adecBCCd1D91'
+export const deployAddress: Address | undefined = '0xeB92CB0f7E7c8131F683CC521B572E10B88bFFe1'
 
 export type Contract = {
   calls: {
@@ -5923,6 +6058,15 @@ export type Contract = {
       recipient: `0x${string}`,
       asset?: `0x${string}`,
       amount?: bigint,
+      nonce?: bigint,
+      expiration?: bigint,
+    ) => Promise<[`0x${string}`, bigint, bigint]>
+    getCreateAndPayChequeHash: (
+      agentSender: `0x${string}`,
+      userWallet: `0x${string}`,
+      recipient: `0x${string}`,
+      asset: `0x${string}`,
+      amount: bigint,
       nonce?: bigint,
       expiration?: bigint,
     ) => Promise<[`0x${string}`, bigint, bigint]>
@@ -6231,6 +6375,8 @@ type CallType = {
 export const call: CallType = {
   getTransferFundsHash: (...args: ExtractArgs<Contract['calls']['getTransferFundsHash']>) =>
     getRequest('getTransferFundsHash', args),
+  getCreateAndPayChequeHash: (...args: ExtractArgs<Contract['calls']['getCreateAndPayChequeHash']>) =>
+    getRequest('getCreateAndPayChequeHash', args),
   getDepositForYieldHash: (...args: ExtractArgs<Contract['calls']['getDepositForYieldHash']>) =>
     getRequest('getDepositForYieldHash', args),
   getWithdrawFromYieldHash: (...args: ExtractArgs<Contract['calls']['getWithdrawFromYieldHash']>) =>
@@ -6276,6 +6422,9 @@ export type SDK = {
   getTransferFundsHash: (
     ...args: ExtractArgs<Contract['calls']['getTransferFundsHash']>
   ) => Promise<CallReturn<'getTransferFundsHash'>>
+  getCreateAndPayChequeHash: (
+    ...args: ExtractArgs<Contract['calls']['getCreateAndPayChequeHash']>
+  ) => Promise<CallReturn<'getCreateAndPayChequeHash'>>
   getDepositForYieldHash: (
     ...args: ExtractArgs<Contract['calls']['getDepositForYieldHash']>
   ) => Promise<CallReturn<'getDepositForYieldHash'>>
@@ -6346,6 +6495,10 @@ export function toSdk(
     getTransferFundsHash: (...args: ExtractArgs<Contract['calls']['getTransferFundsHash']>) =>
       singleQuery(publicClient!, call.getTransferFundsHash(...args), {}, addressResolver) as Promise<
         CallReturn<'getTransferFundsHash'>
+      >,
+    getCreateAndPayChequeHash: (...args: ExtractArgs<Contract['calls']['getCreateAndPayChequeHash']>) =>
+      singleQuery(publicClient!, call.getCreateAndPayChequeHash(...args), {}, addressResolver) as Promise<
+        CallReturn<'getCreateAndPayChequeHash'>
       >,
     getDepositForYieldHash: (...args: ExtractArgs<Contract['calls']['getDepositForYieldHash']>) =>
       singleQuery(publicClient!, call.getDepositForYieldHash(...args), {}, addressResolver) as Promise<

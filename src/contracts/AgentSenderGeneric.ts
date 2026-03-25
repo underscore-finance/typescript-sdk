@@ -454,6 +454,98 @@ export const abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'createAndPayCheque',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'createAndPayCheque',
+    inputs: [
+      {
+        name: '_agentWrapper',
+        type: 'address',
+      },
+      {
+        name: '_userWallet',
+        type: 'address',
+      },
+      {
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        name: '_sig',
+        type: 'tuple',
+        components: [
+          {
+            name: 'signature',
+            type: 'bytes',
+          },
+          {
+            name: 'nonce',
+            type: 'uint256',
+          },
+          {
+            name: 'expiration',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'depositForYield',
     inputs: [
       {
@@ -5180,7 +5272,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0x459f7612F3DFe7b1d7f10c2D01e68dd9AfeA66E9'
+export const deployAddress: Address | undefined = '0xcC36A56feBB60b304735914649f3669F5102784b'
 
 export type Contract = {
   calls: {
@@ -5205,6 +5297,14 @@ export type Contract = {
       asset?: `0x${string}`,
       amount?: bigint,
       isCheque?: boolean,
+      sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
+    ) => Promise<[bigint, bigint]>
+    createAndPayCheque: (
+      agentWrapper: `0x${string}`,
+      userWallet: `0x${string}`,
+      recipient: `0x${string}`,
+      asset: `0x${string}`,
+      amount: bigint,
       sig?: { signature: `0x${string}`; nonce: bigint; expiration: bigint },
     ) => Promise<[bigint, bigint]>
     depositForYield: (
@@ -5537,6 +5637,7 @@ export const mutation: {
   cancelOwnershipChange: getMutation('cancelOwnershipChange'),
   setOwnershipTimeLock: getMutation('setOwnershipTimeLock'),
   transferFunds: getMutation('transferFunds'),
+  createAndPayCheque: getMutation('createAndPayCheque'),
   depositForYield: getMutation('depositForYield'),
   withdrawFromYield: getMutation('withdrawFromYield'),
   rebalanceYieldPosition: getMutation('rebalanceYieldPosition'),
@@ -5623,6 +5724,7 @@ export type SDK = {
   cancelOwnershipChange: (...args: ExtractArgs<Contract['mutations']['cancelOwnershipChange']>) => Promise<Address>
   setOwnershipTimeLock: (...args: ExtractArgs<Contract['mutations']['setOwnershipTimeLock']>) => Promise<Address>
   transferFunds: (...args: ExtractArgs<Contract['mutations']['transferFunds']>) => Promise<Address>
+  createAndPayCheque: (...args: ExtractArgs<Contract['mutations']['createAndPayCheque']>) => Promise<Address>
   depositForYield: (...args: ExtractArgs<Contract['mutations']['depositForYield']>) => Promise<Address>
   withdrawFromYield: (...args: ExtractArgs<Contract['mutations']['withdrawFromYield']>) => Promise<Address>
   rebalanceYieldPosition: (...args: ExtractArgs<Contract['mutations']['rebalanceYieldPosition']>) => Promise<Address>
@@ -5722,6 +5824,8 @@ export function toSdk(
       mutate(walletClient!, mutation.setOwnershipTimeLock, { addressResolver })(...args),
     transferFunds: (...args: ExtractArgs<Contract['mutations']['transferFunds']>) =>
       mutate(walletClient!, mutation.transferFunds, { addressResolver })(...args),
+    createAndPayCheque: (...args: ExtractArgs<Contract['mutations']['createAndPayCheque']>) =>
+      mutate(walletClient!, mutation.createAndPayCheque, { addressResolver })(...args),
     depositForYield: (...args: ExtractArgs<Contract['mutations']['depositForYield']>) =>
       mutate(walletClient!, mutation.depositForYield, { addressResolver })(...args),
     withdrawFromYield: (...args: ExtractArgs<Contract['mutations']['withdrawFromYield']>) =>

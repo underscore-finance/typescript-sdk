@@ -35,6 +35,9 @@ export default {
     AgentWrapperV1: {
       address: '0x9d3F593380875860cC18F5736373ae4B084Ba2F9',
     },
+    AgentWrapperV2: {
+      address: '0x761fCDFfF8B187901eA11415237632A3F7E0203B',
+    },
     SignatureHelperV1: {
       ...Manifest.contracts.SignatureHelper,
       address: '0x7a938DEd840172e89ef3B90039959E51C1dC6893',

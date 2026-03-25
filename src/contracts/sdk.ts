@@ -14,6 +14,7 @@ import * as AgentSenderSpecial from './AgentSenderSpecial.js'
 import * as AgentSenderSpecialSigHelper from './AgentSenderSpecialSigHelper.js'
 import * as AgentWrapper from './AgentWrapper.js'
 import * as AgentWrapperV1 from './AgentWrapperV1.js'
+import * as AgentWrapperV2 from './AgentWrapperV2.js'
 import * as Appraiser from './Appraiser.js'
 import * as Avantis from './Avantis.js'
 import * as Billing from './Billing.js'
@@ -89,6 +90,7 @@ export type SDK = {
   AgentSenderSpecialSigHelper: AgentSenderSpecialSigHelper.SDK
   AgentWrapper: AgentWrapper.SDK
   AgentWrapperV1: AgentWrapperV1.SDK
+  AgentWrapperV2: AgentWrapperV2.SDK
   Appraiser: Appraiser.SDK
   Avantis: Avantis.SDK
   Billing: Billing.SDK
@@ -170,6 +172,7 @@ export default function createSdk(
     AgentSenderSpecialSigHelper: AgentSenderSpecialSigHelper.toSdk(publicClient, walletClient, addressResolver),
     AgentWrapper: AgentWrapper.toSdk(publicClient, walletClient, addressResolver),
     AgentWrapperV1: AgentWrapperV1.toSdk(publicClient, walletClient, addressResolver),
+    AgentWrapperV2: AgentWrapperV2.toSdk(publicClient, walletClient, addressResolver),
     Appraiser: Appraiser.toSdk(publicClient, walletClient, addressResolver),
     Avantis: Avantis.toSdk(publicClient, walletClient, addressResolver),
     Billing: Billing.toSdk(publicClient, walletClient, addressResolver),

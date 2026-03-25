@@ -282,6 +282,162 @@ export const abi = [
         type: 'bool',
       },
       {
+        name: '_asset',
+        type: 'address',
+      },
+      {
+        name: '_globalManagerSettings',
+        type: 'tuple',
+        components: [
+          {
+            name: 'managerPeriod',
+            type: 'uint256',
+          },
+          {
+            name: 'startDelay',
+            type: 'uint256',
+          },
+          {
+            name: 'activationLength',
+            type: 'uint256',
+          },
+          {
+            name: 'canOwnerManage',
+            type: 'bool',
+          },
+          {
+            name: 'limits',
+            type: 'tuple',
+            components: [
+              {
+                name: 'maxUsdValuePerTx',
+                type: 'uint256',
+              },
+              {
+                name: 'maxUsdValuePerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxUsdValueLifetime',
+                type: 'uint256',
+              },
+              {
+                name: 'maxNumTxsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'txCooldownBlocks',
+                type: 'uint256',
+              },
+              {
+                name: 'failOnZeroPrice',
+                type: 'bool',
+              },
+            ],
+          },
+          {
+            name: 'legoPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canManageYield',
+                type: 'bool',
+              },
+              {
+                name: 'canBuyAndSell',
+                type: 'bool',
+              },
+              {
+                name: 'canManageDebt',
+                type: 'bool',
+              },
+              {
+                name: 'canManageLiq',
+                type: 'bool',
+              },
+              {
+                name: 'canClaimRewards',
+                type: 'bool',
+              },
+              {
+                name: 'onlyApprovedYieldOpps',
+                type: 'bool',
+              },
+              {
+                name: 'allowedLegos',
+                type: 'uint256[]',
+              },
+            ],
+          },
+          {
+            name: 'swapPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'mustHaveUsdValue',
+                type: 'bool',
+              },
+              {
+                name: 'maxNumSwapsPerPeriod',
+                type: 'uint256',
+              },
+              {
+                name: 'maxSlippage',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'whitelistPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canAddPending',
+                type: 'bool',
+              },
+              {
+                name: 'canConfirm',
+                type: 'bool',
+              },
+              {
+                name: 'canCancel',
+                type: 'bool',
+              },
+              {
+                name: 'canRemove',
+                type: 'bool',
+              },
+            ],
+          },
+          {
+            name: 'transferPerms',
+            type: 'tuple',
+            components: [
+              {
+                name: 'canTransfer',
+                type: 'bool',
+              },
+              {
+                name: 'canCreateCheque',
+                type: 'bool',
+              },
+              {
+                name: 'canAddPendingPayee',
+                type: 'bool',
+              },
+              {
+                name: 'allowedPayees',
+                type: 'address[]',
+              },
+            ],
+          },
+          {
+            name: 'allowedAssets',
+            type: 'address[]',
+          },
+        ],
+      },
+      {
         name: '_managerSettings',
         type: 'tuple',
         components: [
@@ -1340,7 +1496,7 @@ export const abi = [
   },
 ] as const
 
-export const deployAddress: Address | undefined = '0xcC939d6b16C6a5f07cde6Bc2bD23cb9B8b7a0Dc9'
+export const deployAddress: Address | undefined = '0x803A4157c34cBF691A232a5f1441Cc1E3c3Cd56A'
 
 export type Contract = {
   calls: {
@@ -1348,6 +1504,39 @@ export type Contract = {
       isCreatorOwner: boolean,
       isCreatorManager: boolean,
       canManagersCreateCheques: boolean,
+      asset: `0x${string}`,
+      globalManagerSettings: {
+        managerPeriod: bigint
+        startDelay: bigint
+        activationLength: bigint
+        canOwnerManage: boolean
+        limits: {
+          maxUsdValuePerTx: bigint
+          maxUsdValuePerPeriod: bigint
+          maxUsdValueLifetime: bigint
+          maxNumTxsPerPeriod: bigint
+          txCooldownBlocks: bigint
+          failOnZeroPrice: boolean
+        }
+        legoPerms: {
+          canManageYield: boolean
+          canBuyAndSell: boolean
+          canManageDebt: boolean
+          canManageLiq: boolean
+          canClaimRewards: boolean
+          onlyApprovedYieldOpps: boolean
+          allowedLegos: bigint[]
+        }
+        swapPerms: { mustHaveUsdValue: boolean; maxNumSwapsPerPeriod: bigint; maxSlippage: bigint }
+        whitelistPerms: { canAddPending: boolean; canConfirm: boolean; canCancel: boolean; canRemove: boolean }
+        transferPerms: {
+          canTransfer: boolean
+          canCreateCheque: boolean
+          canAddPendingPayee: boolean
+          allowedPayees: `0x${string}`[]
+        }
+        allowedAssets: `0x${string}`[]
+      },
       managerSettings: {
         startBlock: bigint
         expiryBlock: bigint
