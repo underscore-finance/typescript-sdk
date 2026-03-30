@@ -6483,6 +6483,7 @@ export type SDK = {
 }
 
 export function toSdk(
+  deployAddress: Address,
   publicClient?: PublicClient,
   walletClient?: WalletClient,
   addressResolver?: AddressResolverFunction,
@@ -6493,89 +6494,128 @@ export function toSdk(
 
     // Queries
     getTransferFundsHash: (...args: ExtractArgs<Contract['calls']['getTransferFundsHash']>) =>
-      singleQuery(publicClient!, call.getTransferFundsHash(...args), {}, addressResolver) as Promise<
+      singleQuery(publicClient!, call.getTransferFundsHash(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'getTransferFundsHash'>
       >,
     getCreateAndPayChequeHash: (...args: ExtractArgs<Contract['calls']['getCreateAndPayChequeHash']>) =>
-      singleQuery(publicClient!, call.getCreateAndPayChequeHash(...args), {}, addressResolver) as Promise<
-        CallReturn<'getCreateAndPayChequeHash'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getCreateAndPayChequeHash(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getCreateAndPayChequeHash'>>,
     getDepositForYieldHash: (...args: ExtractArgs<Contract['calls']['getDepositForYieldHash']>) =>
-      singleQuery(publicClient!, call.getDepositForYieldHash(...args), {}, addressResolver) as Promise<
-        CallReturn<'getDepositForYieldHash'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getDepositForYieldHash(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getDepositForYieldHash'>>,
     getWithdrawFromYieldHash: (...args: ExtractArgs<Contract['calls']['getWithdrawFromYieldHash']>) =>
-      singleQuery(publicClient!, call.getWithdrawFromYieldHash(...args), {}, addressResolver) as Promise<
-        CallReturn<'getWithdrawFromYieldHash'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getWithdrawFromYieldHash(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getWithdrawFromYieldHash'>>,
     getRebalanceYieldPositionHash: (...args: ExtractArgs<Contract['calls']['getRebalanceYieldPositionHash']>) =>
-      singleQuery(publicClient!, call.getRebalanceYieldPositionHash(...args), {}, addressResolver) as Promise<
-        CallReturn<'getRebalanceYieldPositionHash'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getRebalanceYieldPositionHash(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getRebalanceYieldPositionHash'>>,
     getSwapTokensHash: (...args: ExtractArgs<Contract['calls']['getSwapTokensHash']>) =>
-      singleQuery(publicClient!, call.getSwapTokensHash(...args), {}, addressResolver) as Promise<
+      singleQuery(publicClient!, call.getSwapTokensHash(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'getSwapTokensHash'>
       >,
     getMintOrRedeemAssetHash: (...args: ExtractArgs<Contract['calls']['getMintOrRedeemAssetHash']>) =>
-      singleQuery(publicClient!, call.getMintOrRedeemAssetHash(...args), {}, addressResolver) as Promise<
-        CallReturn<'getMintOrRedeemAssetHash'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getMintOrRedeemAssetHash(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getMintOrRedeemAssetHash'>>,
     getConfirmMintOrRedeemAssetHash: (...args: ExtractArgs<Contract['calls']['getConfirmMintOrRedeemAssetHash']>) =>
-      singleQuery(publicClient!, call.getConfirmMintOrRedeemAssetHash(...args), {}, addressResolver) as Promise<
-        CallReturn<'getConfirmMintOrRedeemAssetHash'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getConfirmMintOrRedeemAssetHash(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getConfirmMintOrRedeemAssetHash'>>,
     getAddCollateralHash: (...args: ExtractArgs<Contract['calls']['getAddCollateralHash']>) =>
-      singleQuery(publicClient!, call.getAddCollateralHash(...args), {}, addressResolver) as Promise<
+      singleQuery(publicClient!, call.getAddCollateralHash(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'getAddCollateralHash'>
       >,
     getRemoveCollateralHash: (...args: ExtractArgs<Contract['calls']['getRemoveCollateralHash']>) =>
-      singleQuery(publicClient!, call.getRemoveCollateralHash(...args), {}, addressResolver) as Promise<
-        CallReturn<'getRemoveCollateralHash'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getRemoveCollateralHash(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getRemoveCollateralHash'>>,
     getBorrowHash: (...args: ExtractArgs<Contract['calls']['getBorrowHash']>) =>
-      singleQuery(publicClient!, call.getBorrowHash(...args), {}, addressResolver) as Promise<
+      singleQuery(publicClient!, call.getBorrowHash(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'getBorrowHash'>
       >,
     getRepayDebtHash: (...args: ExtractArgs<Contract['calls']['getRepayDebtHash']>) =>
-      singleQuery(publicClient!, call.getRepayDebtHash(...args), {}, addressResolver) as Promise<
+      singleQuery(publicClient!, call.getRepayDebtHash(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'getRepayDebtHash'>
       >,
     getClaimRewardsHash: (...args: ExtractArgs<Contract['calls']['getClaimRewardsHash']>) =>
-      singleQuery(publicClient!, call.getClaimRewardsHash(...args), {}, addressResolver) as Promise<
+      singleQuery(publicClient!, call.getClaimRewardsHash(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'getClaimRewardsHash'>
       >,
     getConvertWethToEthHash: (...args: ExtractArgs<Contract['calls']['getConvertWethToEthHash']>) =>
-      singleQuery(publicClient!, call.getConvertWethToEthHash(...args), {}, addressResolver) as Promise<
-        CallReturn<'getConvertWethToEthHash'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getConvertWethToEthHash(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getConvertWethToEthHash'>>,
     getConvertEthToWethHash: (...args: ExtractArgs<Contract['calls']['getConvertEthToWethHash']>) =>
-      singleQuery(publicClient!, call.getConvertEthToWethHash(...args), {}, addressResolver) as Promise<
-        CallReturn<'getConvertEthToWethHash'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getConvertEthToWethHash(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getConvertEthToWethHash'>>,
     getAddLiquidityHash: (...args: ExtractArgs<Contract['calls']['getAddLiquidityHash']>) =>
-      singleQuery(publicClient!, call.getAddLiquidityHash(...args), {}, addressResolver) as Promise<
+      singleQuery(publicClient!, call.getAddLiquidityHash(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'getAddLiquidityHash'>
       >,
     getRemoveLiquidityHash: (...args: ExtractArgs<Contract['calls']['getRemoveLiquidityHash']>) =>
-      singleQuery(publicClient!, call.getRemoveLiquidityHash(...args), {}, addressResolver) as Promise<
-        CallReturn<'getRemoveLiquidityHash'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getRemoveLiquidityHash(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getRemoveLiquidityHash'>>,
     getAddLiquidityConcentratedHash: (...args: ExtractArgs<Contract['calls']['getAddLiquidityConcentratedHash']>) =>
-      singleQuery(publicClient!, call.getAddLiquidityConcentratedHash(...args), {}, addressResolver) as Promise<
-        CallReturn<'getAddLiquidityConcentratedHash'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getAddLiquidityConcentratedHash(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getAddLiquidityConcentratedHash'>>,
     getRemoveLiquidityConcentratedHash: (
       ...args: ExtractArgs<Contract['calls']['getRemoveLiquidityConcentratedHash']>
     ) =>
-      singleQuery(publicClient!, call.getRemoveLiquidityConcentratedHash(...args), {}, addressResolver) as Promise<
-        CallReturn<'getRemoveLiquidityConcentratedHash'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getRemoveLiquidityConcentratedHash(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getRemoveLiquidityConcentratedHash'>>,
     getClaimIncentivesHash: (...args: ExtractArgs<Contract['calls']['getClaimIncentivesHash']>) =>
-      singleQuery(publicClient!, call.getClaimIncentivesHash(...args), {}, addressResolver) as Promise<
-        CallReturn<'getClaimIncentivesHash'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getClaimIncentivesHash(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getClaimIncentivesHash'>>,
     getBatchActionsHash: (...args: ExtractArgs<Contract['calls']['getBatchActionsHash']>) =>
-      singleQuery(publicClient!, call.getBatchActionsHash(...args), {}, addressResolver) as Promise<
+      singleQuery(publicClient!, call.getBatchActionsHash(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'getBatchActionsHash'>
       >,
 

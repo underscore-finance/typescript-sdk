@@ -5753,6 +5753,7 @@ export type SDK = {
 }
 
 export function toSdk(
+  deployAddress: Address,
   publicClient?: PublicClient,
   walletClient?: WalletClient,
   addressResolver?: AddressResolverFunction,
@@ -5785,84 +5786,94 @@ export function toSdk(
     },
     // Queries
     hasPendingOwnerChange: (...args: ExtractArgs<Contract['calls']['hasPendingOwnerChange']>) =>
-      singleQuery(publicClient!, call.hasPendingOwnerChange(...args), {}, addressResolver) as Promise<
+      singleQuery(publicClient!, call.hasPendingOwnerChange(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'hasPendingOwnerChange'>
       >,
     owner: (...args: ExtractArgs<Contract['calls']['owner']>) =>
-      singleQuery(publicClient!, call.owner(...args), {}, addressResolver) as Promise<CallReturn<'owner'>>,
+      singleQuery(publicClient!, call.owner(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'owner'>
+      >,
     ownershipTimeLock: (...args: ExtractArgs<Contract['calls']['ownershipTimeLock']>) =>
-      singleQuery(publicClient!, call.ownershipTimeLock(...args), {}, addressResolver) as Promise<
+      singleQuery(publicClient!, call.ownershipTimeLock(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'ownershipTimeLock'>
       >,
     pendingOwner: (...args: ExtractArgs<Contract['calls']['pendingOwner']>) =>
-      singleQuery(publicClient!, call.pendingOwner(...args), {}, addressResolver) as Promise<
+      singleQuery(publicClient!, call.pendingOwner(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'pendingOwner'>
       >,
     MIN_OWNERSHIP_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MIN_OWNERSHIP_TIMELOCK']>) =>
-      singleQuery(publicClient!, call.MIN_OWNERSHIP_TIMELOCK(...args), {}, addressResolver) as Promise<
-        CallReturn<'MIN_OWNERSHIP_TIMELOCK'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.MIN_OWNERSHIP_TIMELOCK(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'MIN_OWNERSHIP_TIMELOCK'>>,
     MAX_OWNERSHIP_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MAX_OWNERSHIP_TIMELOCK']>) =>
-      singleQuery(publicClient!, call.MAX_OWNERSHIP_TIMELOCK(...args), {}, addressResolver) as Promise<
-        CallReturn<'MAX_OWNERSHIP_TIMELOCK'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.MAX_OWNERSHIP_TIMELOCK(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'MAX_OWNERSHIP_TIMELOCK'>>,
     getNonce: (...args: ExtractArgs<Contract['calls']['getNonce']>) =>
-      singleQuery(publicClient!, call.getNonce(...args), {}, addressResolver) as Promise<CallReturn<'getNonce'>>,
+      singleQuery(publicClient!, call.getNonce(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'getNonce'>
+      >,
     currentNonce: (...args: ExtractArgs<Contract['calls']['currentNonce']>) =>
-      singleQuery(publicClient!, call.currentNonce(...args), {}, addressResolver) as Promise<
+      singleQuery(publicClient!, call.currentNonce(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'currentNonce'>
       >,
 
     // Mutations
     changeOwnership: (...args: ExtractArgs<Contract['mutations']['changeOwnership']>) =>
-      mutate(walletClient!, mutation.changeOwnership, { addressResolver })(...args),
+      mutate(walletClient!, mutation.changeOwnership, { address: deployAddress, addressResolver })(...args),
     confirmOwnershipChange: (...args: ExtractArgs<Contract['mutations']['confirmOwnershipChange']>) =>
-      mutate(walletClient!, mutation.confirmOwnershipChange, { addressResolver })(...args),
+      mutate(walletClient!, mutation.confirmOwnershipChange, { address: deployAddress, addressResolver })(...args),
     cancelOwnershipChange: (...args: ExtractArgs<Contract['mutations']['cancelOwnershipChange']>) =>
-      mutate(walletClient!, mutation.cancelOwnershipChange, { addressResolver })(...args),
+      mutate(walletClient!, mutation.cancelOwnershipChange, { address: deployAddress, addressResolver })(...args),
     setOwnershipTimeLock: (...args: ExtractArgs<Contract['mutations']['setOwnershipTimeLock']>) =>
-      mutate(walletClient!, mutation.setOwnershipTimeLock, { addressResolver })(...args),
+      mutate(walletClient!, mutation.setOwnershipTimeLock, { address: deployAddress, addressResolver })(...args),
     transferFunds: (...args: ExtractArgs<Contract['mutations']['transferFunds']>) =>
-      mutate(walletClient!, mutation.transferFunds, { addressResolver })(...args),
+      mutate(walletClient!, mutation.transferFunds, { address: deployAddress, addressResolver })(...args),
     createAndPayCheque: (...args: ExtractArgs<Contract['mutations']['createAndPayCheque']>) =>
-      mutate(walletClient!, mutation.createAndPayCheque, { addressResolver })(...args),
+      mutate(walletClient!, mutation.createAndPayCheque, { address: deployAddress, addressResolver })(...args),
     depositForYield: (...args: ExtractArgs<Contract['mutations']['depositForYield']>) =>
-      mutate(walletClient!, mutation.depositForYield, { addressResolver })(...args),
+      mutate(walletClient!, mutation.depositForYield, { address: deployAddress, addressResolver })(...args),
     withdrawFromYield: (...args: ExtractArgs<Contract['mutations']['withdrawFromYield']>) =>
-      mutate(walletClient!, mutation.withdrawFromYield, { addressResolver })(...args),
+      mutate(walletClient!, mutation.withdrawFromYield, { address: deployAddress, addressResolver })(...args),
     rebalanceYieldPosition: (...args: ExtractArgs<Contract['mutations']['rebalanceYieldPosition']>) =>
-      mutate(walletClient!, mutation.rebalanceYieldPosition, { addressResolver })(...args),
+      mutate(walletClient!, mutation.rebalanceYieldPosition, { address: deployAddress, addressResolver })(...args),
     swapTokens: (...args: ExtractArgs<Contract['mutations']['swapTokens']>) =>
-      mutate(walletClient!, mutation.swapTokens, { addressResolver })(...args),
+      mutate(walletClient!, mutation.swapTokens, { address: deployAddress, addressResolver })(...args),
     mintOrRedeemAsset: (...args: ExtractArgs<Contract['mutations']['mintOrRedeemAsset']>) =>
-      mutate(walletClient!, mutation.mintOrRedeemAsset, { addressResolver })(...args),
+      mutate(walletClient!, mutation.mintOrRedeemAsset, { address: deployAddress, addressResolver })(...args),
     confirmMintOrRedeemAsset: (...args: ExtractArgs<Contract['mutations']['confirmMintOrRedeemAsset']>) =>
-      mutate(walletClient!, mutation.confirmMintOrRedeemAsset, { addressResolver })(...args),
+      mutate(walletClient!, mutation.confirmMintOrRedeemAsset, { address: deployAddress, addressResolver })(...args),
     addCollateral: (...args: ExtractArgs<Contract['mutations']['addCollateral']>) =>
-      mutate(walletClient!, mutation.addCollateral, { addressResolver })(...args),
+      mutate(walletClient!, mutation.addCollateral, { address: deployAddress, addressResolver })(...args),
     removeCollateral: (...args: ExtractArgs<Contract['mutations']['removeCollateral']>) =>
-      mutate(walletClient!, mutation.removeCollateral, { addressResolver })(...args),
+      mutate(walletClient!, mutation.removeCollateral, { address: deployAddress, addressResolver })(...args),
     borrow: (...args: ExtractArgs<Contract['mutations']['borrow']>) =>
-      mutate(walletClient!, mutation.borrow, { addressResolver })(...args),
+      mutate(walletClient!, mutation.borrow, { address: deployAddress, addressResolver })(...args),
     repayDebt: (...args: ExtractArgs<Contract['mutations']['repayDebt']>) =>
-      mutate(walletClient!, mutation.repayDebt, { addressResolver })(...args),
+      mutate(walletClient!, mutation.repayDebt, { address: deployAddress, addressResolver })(...args),
     claimIncentives: (...args: ExtractArgs<Contract['mutations']['claimIncentives']>) =>
-      mutate(walletClient!, mutation.claimIncentives, { addressResolver })(...args),
+      mutate(walletClient!, mutation.claimIncentives, { address: deployAddress, addressResolver })(...args),
     convertWethToEth: (...args: ExtractArgs<Contract['mutations']['convertWethToEth']>) =>
-      mutate(walletClient!, mutation.convertWethToEth, { addressResolver })(...args),
+      mutate(walletClient!, mutation.convertWethToEth, { address: deployAddress, addressResolver })(...args),
     convertEthToWeth: (...args: ExtractArgs<Contract['mutations']['convertEthToWeth']>) =>
-      mutate(walletClient!, mutation.convertEthToWeth, { addressResolver })(...args),
+      mutate(walletClient!, mutation.convertEthToWeth, { address: deployAddress, addressResolver })(...args),
     addLiquidity: (...args: ExtractArgs<Contract['mutations']['addLiquidity']>) =>
-      mutate(walletClient!, mutation.addLiquidity, { addressResolver })(...args),
+      mutate(walletClient!, mutation.addLiquidity, { address: deployAddress, addressResolver })(...args),
     removeLiquidity: (...args: ExtractArgs<Contract['mutations']['removeLiquidity']>) =>
-      mutate(walletClient!, mutation.removeLiquidity, { addressResolver })(...args),
+      mutate(walletClient!, mutation.removeLiquidity, { address: deployAddress, addressResolver })(...args),
     addLiquidityConcentrated: (...args: ExtractArgs<Contract['mutations']['addLiquidityConcentrated']>) =>
-      mutate(walletClient!, mutation.addLiquidityConcentrated, { addressResolver })(...args),
+      mutate(walletClient!, mutation.addLiquidityConcentrated, { address: deployAddress, addressResolver })(...args),
     removeLiquidityConcentrated: (...args: ExtractArgs<Contract['mutations']['removeLiquidityConcentrated']>) =>
-      mutate(walletClient!, mutation.removeLiquidityConcentrated, { addressResolver })(...args),
+      mutate(walletClient!, mutation.removeLiquidityConcentrated, { address: deployAddress, addressResolver })(...args),
     performBatchActions: (...args: ExtractArgs<Contract['mutations']['performBatchActions']>) =>
-      mutate(walletClient!, mutation.performBatchActions, { addressResolver })(...args),
+      mutate(walletClient!, mutation.performBatchActions, { address: deployAddress, addressResolver })(...args),
     incrementNonce: (...args: ExtractArgs<Contract['mutations']['incrementNonce']>) =>
-      mutate(walletClient!, mutation.incrementNonce, { addressResolver })(...args),
+      mutate(walletClient!, mutation.incrementNonce, { address: deployAddress, addressResolver })(...args),
   }
 }

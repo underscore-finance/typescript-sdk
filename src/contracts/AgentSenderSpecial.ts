@@ -2736,6 +2736,7 @@ export type SDK = {
 }
 
 export function toSdk(
+  deployAddress: Address,
   publicClient?: PublicClient,
   walletClient?: WalletClient,
   addressResolver?: AddressResolverFunction,
@@ -2768,62 +2769,76 @@ export function toSdk(
     },
     // Queries
     hasPendingOwnerChange: (...args: ExtractArgs<Contract['calls']['hasPendingOwnerChange']>) =>
-      singleQuery(publicClient!, call.hasPendingOwnerChange(...args), {}, addressResolver) as Promise<
+      singleQuery(publicClient!, call.hasPendingOwnerChange(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'hasPendingOwnerChange'>
       >,
     owner: (...args: ExtractArgs<Contract['calls']['owner']>) =>
-      singleQuery(publicClient!, call.owner(...args), {}, addressResolver) as Promise<CallReturn<'owner'>>,
+      singleQuery(publicClient!, call.owner(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'owner'>
+      >,
     ownershipTimeLock: (...args: ExtractArgs<Contract['calls']['ownershipTimeLock']>) =>
-      singleQuery(publicClient!, call.ownershipTimeLock(...args), {}, addressResolver) as Promise<
+      singleQuery(publicClient!, call.ownershipTimeLock(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'ownershipTimeLock'>
       >,
     pendingOwner: (...args: ExtractArgs<Contract['calls']['pendingOwner']>) =>
-      singleQuery(publicClient!, call.pendingOwner(...args), {}, addressResolver) as Promise<
+      singleQuery(publicClient!, call.pendingOwner(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'pendingOwner'>
       >,
     MIN_OWNERSHIP_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MIN_OWNERSHIP_TIMELOCK']>) =>
-      singleQuery(publicClient!, call.MIN_OWNERSHIP_TIMELOCK(...args), {}, addressResolver) as Promise<
-        CallReturn<'MIN_OWNERSHIP_TIMELOCK'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.MIN_OWNERSHIP_TIMELOCK(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'MIN_OWNERSHIP_TIMELOCK'>>,
     MAX_OWNERSHIP_TIMELOCK: (...args: ExtractArgs<Contract['calls']['MAX_OWNERSHIP_TIMELOCK']>) =>
-      singleQuery(publicClient!, call.MAX_OWNERSHIP_TIMELOCK(...args), {}, addressResolver) as Promise<
-        CallReturn<'MAX_OWNERSHIP_TIMELOCK'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.MAX_OWNERSHIP_TIMELOCK(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'MAX_OWNERSHIP_TIMELOCK'>>,
     getNonce: (...args: ExtractArgs<Contract['calls']['getNonce']>) =>
-      singleQuery(publicClient!, call.getNonce(...args), {}, addressResolver) as Promise<CallReturn<'getNonce'>>,
+      singleQuery(publicClient!, call.getNonce(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'getNonce'>
+      >,
     currentNonce: (...args: ExtractArgs<Contract['calls']['currentNonce']>) =>
-      singleQuery(publicClient!, call.currentNonce(...args), {}, addressResolver) as Promise<
+      singleQuery(publicClient!, call.currentNonce(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'currentNonce'>
       >,
     UNDY_HQ: (...args: ExtractArgs<Contract['calls']['UNDY_HQ']>) =>
-      singleQuery(publicClient!, call.UNDY_HQ(...args), {}, addressResolver) as Promise<CallReturn<'UNDY_HQ'>>,
+      singleQuery(publicClient!, call.UNDY_HQ(...args).at(deployAddress), {}, addressResolver) as Promise<
+        CallReturn<'UNDY_HQ'>
+      >,
     RIPE_GREEN_TOKEN: (...args: ExtractArgs<Contract['calls']['RIPE_GREEN_TOKEN']>) =>
-      singleQuery(publicClient!, call.RIPE_GREEN_TOKEN(...args), {}, addressResolver) as Promise<
+      singleQuery(publicClient!, call.RIPE_GREEN_TOKEN(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'RIPE_GREEN_TOKEN'>
       >,
     RIPE_SAVINGS_GREEN: (...args: ExtractArgs<Contract['calls']['RIPE_SAVINGS_GREEN']>) =>
-      singleQuery(publicClient!, call.RIPE_SAVINGS_GREEN(...args), {}, addressResolver) as Promise<
+      singleQuery(publicClient!, call.RIPE_SAVINGS_GREEN(...args).at(deployAddress), {}, addressResolver) as Promise<
         CallReturn<'RIPE_SAVINGS_GREEN'>
       >,
 
     // Mutations
     changeOwnership: (...args: ExtractArgs<Contract['mutations']['changeOwnership']>) =>
-      mutate(walletClient!, mutation.changeOwnership, { addressResolver })(...args),
+      mutate(walletClient!, mutation.changeOwnership, { address: deployAddress, addressResolver })(...args),
     confirmOwnershipChange: (...args: ExtractArgs<Contract['mutations']['confirmOwnershipChange']>) =>
-      mutate(walletClient!, mutation.confirmOwnershipChange, { addressResolver })(...args),
+      mutate(walletClient!, mutation.confirmOwnershipChange, { address: deployAddress, addressResolver })(...args),
     cancelOwnershipChange: (...args: ExtractArgs<Contract['mutations']['cancelOwnershipChange']>) =>
-      mutate(walletClient!, mutation.cancelOwnershipChange, { addressResolver })(...args),
+      mutate(walletClient!, mutation.cancelOwnershipChange, { address: deployAddress, addressResolver })(...args),
     setOwnershipTimeLock: (...args: ExtractArgs<Contract['mutations']['setOwnershipTimeLock']>) =>
-      mutate(walletClient!, mutation.setOwnershipTimeLock, { addressResolver })(...args),
+      mutate(walletClient!, mutation.setOwnershipTimeLock, { address: deployAddress, addressResolver })(...args),
     addCollateralAndBorrow: (...args: ExtractArgs<Contract['mutations']['addCollateralAndBorrow']>) =>
-      mutate(walletClient!, mutation.addCollateralAndBorrow, { addressResolver })(...args),
+      mutate(walletClient!, mutation.addCollateralAndBorrow, { address: deployAddress, addressResolver })(...args),
     repayAndWithdraw: (...args: ExtractArgs<Contract['mutations']['repayAndWithdraw']>) =>
-      mutate(walletClient!, mutation.repayAndWithdraw, { addressResolver })(...args),
+      mutate(walletClient!, mutation.repayAndWithdraw, { address: deployAddress, addressResolver })(...args),
     rebalanceYieldPositionsWithSwap: (...args: ExtractArgs<Contract['mutations']['rebalanceYieldPositionsWithSwap']>) =>
-      mutate(walletClient!, mutation.rebalanceYieldPositionsWithSwap, { addressResolver })(...args),
+      mutate(walletClient!, mutation.rebalanceYieldPositionsWithSwap, { address: deployAddress, addressResolver })(
+        ...args,
+      ),
     claimIncentivesAndSwap: (...args: ExtractArgs<Contract['mutations']['claimIncentivesAndSwap']>) =>
-      mutate(walletClient!, mutation.claimIncentivesAndSwap, { addressResolver })(...args),
+      mutate(walletClient!, mutation.claimIncentivesAndSwap, { address: deployAddress, addressResolver })(...args),
     incrementNonce: (...args: ExtractArgs<Contract['mutations']['incrementNonce']>) =>
-      mutate(walletClient!, mutation.incrementNonce, { addressResolver })(...args),
+      mutate(walletClient!, mutation.incrementNonce, { address: deployAddress, addressResolver })(...args),
   }
 }

@@ -3102,6 +3102,7 @@ export type SDK = {
 }
 
 export function toSdk(
+  deployAddress: Address,
   publicClient?: PublicClient,
   walletClient?: WalletClient,
   addressResolver?: AddressResolverFunction,
@@ -3112,23 +3113,35 @@ export function toSdk(
 
     // Queries
     getAddCollateralAndBorrowHash: (...args: ExtractArgs<Contract['calls']['getAddCollateralAndBorrowHash']>) =>
-      singleQuery(publicClient!, call.getAddCollateralAndBorrowHash(...args), {}, addressResolver) as Promise<
-        CallReturn<'getAddCollateralAndBorrowHash'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getAddCollateralAndBorrowHash(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getAddCollateralAndBorrowHash'>>,
     getRepayAndWithdrawHash: (...args: ExtractArgs<Contract['calls']['getRepayAndWithdrawHash']>) =>
-      singleQuery(publicClient!, call.getRepayAndWithdrawHash(...args), {}, addressResolver) as Promise<
-        CallReturn<'getRepayAndWithdrawHash'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getRepayAndWithdrawHash(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getRepayAndWithdrawHash'>>,
     getRebalanceYieldPositionsWithSwapHash: (
       ...args: ExtractArgs<Contract['calls']['getRebalanceYieldPositionsWithSwapHash']>
     ) =>
-      singleQuery(publicClient!, call.getRebalanceYieldPositionsWithSwapHash(...args), {}, addressResolver) as Promise<
-        CallReturn<'getRebalanceYieldPositionsWithSwapHash'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getRebalanceYieldPositionsWithSwapHash(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getRebalanceYieldPositionsWithSwapHash'>>,
     getClaimIncentivesAndSwapHash: (...args: ExtractArgs<Contract['calls']['getClaimIncentivesAndSwapHash']>) =>
-      singleQuery(publicClient!, call.getClaimIncentivesAndSwapHash(...args), {}, addressResolver) as Promise<
-        CallReturn<'getClaimIncentivesAndSwapHash'>
-      >,
+      singleQuery(
+        publicClient!,
+        call.getClaimIncentivesAndSwapHash(...args).at(deployAddress),
+        {},
+        addressResolver,
+      ) as Promise<CallReturn<'getClaimIncentivesAndSwapHash'>>,
 
     // Mutations
   }

@@ -33,14 +33,37 @@ export default {
       address: '0x0E7064202c4F906Adc4D9F6D3C92470b62F624F1',
     },
     AgentWrapperV1: {
+      isTemplate: true,
       address: '0x9d3F593380875860cC18F5736373ae4B084Ba2F9',
     },
     AgentWrapperV2: {
+      isTemplate: true,
       address: '0x761fCDFfF8B187901eA11415237632A3F7E0203B',
     },
+    AgentWrapper: {
+      isTemplate: true,
+      ...Manifest.contracts.AgentWrapper,
+    },
     SignatureHelperV1: {
-      ...Manifest.contracts.SignatureHelper,
       address: '0x7a938DEd840172e89ef3B90039959E51C1dC6893',
+      isTemplate: true,
+      ...Manifest.contracts.SignatureHelper,
+    },
+    UserWalletSignatureHelper: {
+      isTemplate: true,
+      ...Manifest.contracts.UserWalletSignatureHelper,
+    },
+    AgentSenderSpecialSigHelper: {
+      isTemplate: true,
+      ...Manifest.contracts.AgentSenderSpecialSigHelper,
+    },
+    AgentSenderSpecial: {
+      isTemplate: true,
+      ...Manifest.contracts.AgentSenderSpecial,
+    },
+    AgentSenderGeneric: {
+      isTemplate: true,
+      ...Manifest.contracts.AgentSenderGeneric,
     },
     ERC20: {
       isTemplate: true,

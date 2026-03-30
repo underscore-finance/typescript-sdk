@@ -85,12 +85,12 @@ export type SDK = {
   AaveV3: AaveV3.SDK
   AeroClassic: AeroClassic.SDK
   AeroSlipstream: AeroSlipstream.SDK
-  AgentSenderGeneric: AgentSenderGeneric.SDK
-  AgentSenderSpecial: AgentSenderSpecial.SDK
-  AgentSenderSpecialSigHelper: AgentSenderSpecialSigHelper.SDK
-  AgentWrapper: AgentWrapper.SDK
-  AgentWrapperV1: AgentWrapperV1.SDK
-  AgentWrapperV2: AgentWrapperV2.SDK
+  AgentSenderGeneric: (address: `0x${string}`) => AgentSenderGeneric.SDK
+  AgentSenderSpecial: (address: `0x${string}`) => AgentSenderSpecial.SDK
+  AgentSenderSpecialSigHelper: (address: `0x${string}`) => AgentSenderSpecialSigHelper.SDK
+  AgentWrapper: (address: `0x${string}`) => AgentWrapper.SDK
+  AgentWrapperV1: (address: `0x${string}`) => AgentWrapperV1.SDK
+  AgentWrapperV2: (address: `0x${string}`) => AgentWrapperV2.SDK
   Appraiser: Appraiser.SDK
   Avantis: Avantis.SDK
   Billing: Billing.SDK
@@ -128,7 +128,7 @@ export type SDK = {
   RipeLego: RipeLego.SDK
   Sentinel: Sentinel.SDK
   SignatureHelper: SignatureHelper.SDK
-  SignatureHelperV1: SignatureHelperV1.SDK
+  SignatureHelperV1: (address: `0x${string}`) => SignatureHelperV1.SDK
   SkyPsm: SkyPsm.SDK
   Switchboard: Switchboard.SDK
   SwitchboardAlpha: SwitchboardAlpha.SDK
@@ -151,7 +151,7 @@ export type SDK = {
   UserWallet: (address: `0x${string}`) => UserWallet.SDK
   UserWalletConfig: (address: `0x${string}`) => UserWalletConfig.SDK
   UserWalletConfigV1: (address: `0x${string}`) => UserWalletConfigV1.SDK
-  UserWalletSignatureHelper: UserWalletSignatureHelper.SDK
+  UserWalletSignatureHelper: (address: `0x${string}`) => UserWalletSignatureHelper.SDK
   UserWalletV1: (address: `0x${string}`) => UserWalletV1.SDK
   VaultRegistry: VaultRegistry.SDK
   WalletBackpack: WalletBackpack.SDK
@@ -167,12 +167,17 @@ export default function createSdk(
     AaveV3: AaveV3.toSdk(publicClient, walletClient, addressResolver),
     AeroClassic: AeroClassic.toSdk(publicClient, walletClient, addressResolver),
     AeroSlipstream: AeroSlipstream.toSdk(publicClient, walletClient, addressResolver),
-    AgentSenderGeneric: AgentSenderGeneric.toSdk(publicClient, walletClient, addressResolver),
-    AgentSenderSpecial: AgentSenderSpecial.toSdk(publicClient, walletClient, addressResolver),
-    AgentSenderSpecialSigHelper: AgentSenderSpecialSigHelper.toSdk(publicClient, walletClient, addressResolver),
-    AgentWrapper: AgentWrapper.toSdk(publicClient, walletClient, addressResolver),
-    AgentWrapperV1: AgentWrapperV1.toSdk(publicClient, walletClient, addressResolver),
-    AgentWrapperV2: AgentWrapperV2.toSdk(publicClient, walletClient, addressResolver),
+    AgentSenderGeneric: (address: `0x${string}`) =>
+      AgentSenderGeneric.toSdk(address, publicClient, walletClient, addressResolver),
+    AgentSenderSpecial: (address: `0x${string}`) =>
+      AgentSenderSpecial.toSdk(address, publicClient, walletClient, addressResolver),
+    AgentSenderSpecialSigHelper: (address: `0x${string}`) =>
+      AgentSenderSpecialSigHelper.toSdk(address, publicClient, walletClient, addressResolver),
+    AgentWrapper: (address: `0x${string}`) => AgentWrapper.toSdk(address, publicClient, walletClient, addressResolver),
+    AgentWrapperV1: (address: `0x${string}`) =>
+      AgentWrapperV1.toSdk(address, publicClient, walletClient, addressResolver),
+    AgentWrapperV2: (address: `0x${string}`) =>
+      AgentWrapperV2.toSdk(address, publicClient, walletClient, addressResolver),
     Appraiser: Appraiser.toSdk(publicClient, walletClient, addressResolver),
     Avantis: Avantis.toSdk(publicClient, walletClient, addressResolver),
     Billing: Billing.toSdk(publicClient, walletClient, addressResolver),
@@ -211,7 +216,8 @@ export default function createSdk(
     RipeLego: RipeLego.toSdk(publicClient, walletClient, addressResolver),
     Sentinel: Sentinel.toSdk(publicClient, walletClient, addressResolver),
     SignatureHelper: SignatureHelper.toSdk(publicClient, walletClient, addressResolver),
-    SignatureHelperV1: SignatureHelperV1.toSdk(publicClient, walletClient, addressResolver),
+    SignatureHelperV1: (address: `0x${string}`) =>
+      SignatureHelperV1.toSdk(address, publicClient, walletClient, addressResolver),
     SkyPsm: SkyPsm.toSdk(publicClient, walletClient, addressResolver),
     Switchboard: Switchboard.toSdk(publicClient, walletClient, addressResolver),
     SwitchboardAlpha: SwitchboardAlpha.toSdk(publicClient, walletClient, addressResolver),
@@ -236,7 +242,8 @@ export default function createSdk(
       UserWalletConfig.toSdk(address, publicClient, walletClient, addressResolver),
     UserWalletConfigV1: (address: `0x${string}`) =>
       UserWalletConfigV1.toSdk(address, publicClient, walletClient, addressResolver),
-    UserWalletSignatureHelper: UserWalletSignatureHelper.toSdk(publicClient, walletClient, addressResolver),
+    UserWalletSignatureHelper: (address: `0x${string}`) =>
+      UserWalletSignatureHelper.toSdk(address, publicClient, walletClient, addressResolver),
     UserWalletV1: (address: `0x${string}`) => UserWalletV1.toSdk(address, publicClient, walletClient, addressResolver),
     VaultRegistry: VaultRegistry.toSdk(publicClient, walletClient, addressResolver),
     WalletBackpack: WalletBackpack.toSdk(publicClient, walletClient, addressResolver),
