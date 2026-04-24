@@ -1,18 +1,11 @@
 {
   "name": "@underscore-finance/sdk",
-  "version": "1.2.19",
+  "version": "1.2.20",
   "description": "SDK for interacting with Underscore Finance Smart Contracts with TypeScript",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
   "scripts": {
-    "build": "tsc",
-    "prettier": "prettier --write .",
-    "codegen": "dappql && npm run prettier",
-    "ship": "npm run build && npm run ship:no-build",
-    "ship:no-build": "npm publish --access public && bump patch --commit --push",
+    "dev": "dappql",
+    "pack": "dappql pack",
+    "ship": "npm run pack && cd dappql-package && npm publish --access public && cd .. && bump patch --commit --push",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -24,6 +17,7 @@
   "homepage": "https://github.com/underscore-finance/sdk#readme",
   "type": "module",
   "devDependencies": {
+    "dappql": "^2.1.2",
     "eslint": "^8.57.1",
     "eslint-config-universe": "^14.0.0",
     "prettier": "^3.5.3",
@@ -31,8 +25,7 @@
     "version-bump-prompt": "^6.1.0"
   },
   "dependencies": {
-    "@dappql/async": "^1.0.5",
-    "dappql": "^2.0.36",
+    "@dappql/async": "^1.1.3",
     "viem": "^2.23.7"
   }
 }
