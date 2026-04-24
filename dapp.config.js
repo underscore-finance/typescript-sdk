@@ -11,6 +11,15 @@ export default {
   chainId: 8453,
   isModule: true,
   isSdk: true,
+  package: {
+    source: './src',
+    protocol: {
+      name: 'Underscore Finance',
+      description: 'SDK for interacting with Underscore Finance smart contracts',
+      website: 'https://underscore.finance',
+      repo: 'https://github.com/underscore-finance/typescript-sdk',
+    },
+  },
   contracts: {
     ...rest,
     FortyAcres,

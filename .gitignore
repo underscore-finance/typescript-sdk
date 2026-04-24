@@ -41,7 +41,9 @@ yarn-error.log*
 
 
 dappql
+dappql-package
 dist
+src/contracts
 .turbo
 
 temp

@@ -67,7 +67,7 @@ class Underscore {
       (createPublicClient({
         chain: base,
         transport: http(config?.rpcUrl),
-      }) as PublicClient)
+      }) as unknown as PublicClient)
     this.addresses = {}
     this.walletClient = config?.walletClient
     this.contracts = createSdk(this.publicClient, this.walletClient, this.addressResolver)
@@ -144,7 +144,7 @@ class Underscore {
     options: { blockNumber?: bigint } = {},
   ) {
     const request = cb(CONTRACTS)
-    return query(this.publicClient, request, options, this.addressResolver)
+    return (query as any)(this.publicClient, request, options, this.addressResolver) as ReturnType<typeof query<T>>
   }
 
   async iterate<T>(
@@ -158,7 +158,9 @@ class Underscore {
     } = {},
   ) {
     const { total, getItem } = cb(CONTRACTS)
-    return iteratorQuery(this.publicClient, total, getItem, options, this.addressResolver)
+    return (iteratorQuery as any)(this.publicClient, total, getItem, options, this.addressResolver) as ReturnType<
+      typeof iteratorQuery<T>
+    >
   }
 
   async getSwapInstructionsAmountOut(payload: {
