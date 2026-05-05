@@ -2,6 +2,8 @@ import { createRequire } from 'module'
 
 const require = createRequire(import.meta.url)
 const Manifest = require('../underscore-protocol/migration_history/base-mainnet/v1.1/current-manifest.json')
+const ChequeBookAbi = require('../underscore-protocol/scripts/abis/ChequeBook.json')
+const UserWalletConfigAbi = require('../underscore-protocol/scripts/abis/UserWalletConfig.json')
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { LevgVaultHelper, '40Acres': FortyAcres, Yo, Tokemak, ...rest } = Manifest.contracts
 export default {
@@ -31,7 +33,11 @@ export default {
     UserWalletConfig: {
       isTemplate: true,
       address: Manifest.contracts.UserWalletConfig.address,
-      abi: Manifest.contracts.UserWalletConfig.abi,
+      abi: UserWalletConfigAbi,
+    },
+    ChequeBook: {
+      ...Manifest.contracts.ChequeBook,
+      abi: ChequeBookAbi,
     },
     UserWalletV1: {
       isTemplate: true,
