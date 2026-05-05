@@ -2,8 +2,18 @@ import { createRequire } from 'module'
 
 const require = createRequire(import.meta.url)
 const Manifest = require('../underscore-protocol/migration_history/base-mainnet/v1.1/current-manifest.json')
+const ChequeBookAbi = require('../underscore-protocol/scripts/abis/ChequeBook.json')
+const UserWalletConfigAbi = require('../underscore-protocol/scripts/abis/UserWalletConfig.json')
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { LevgVaultHelper, '40Acres': FortyAcres, Yo, Tokemak, ...rest } = Manifest.contracts
+
+function mergeAbi(baseAbi, extraAbi) {
+  const signature = (item) =>
+    `${item.type}:${item.name ?? ''}(${(item.inputs ?? []).map((input) => input.type).join(',')})`
+  const seen = new Set(baseAbi.map(signature))
+  return [...baseAbi, ...extraAbi.filter((item) => !seen.has(signature(item)))]
+}
+
 export default {
   name: 'Underscore Finance',
   description: 'Underscore Finance',
@@ -31,7 +41,11 @@ export default {
     UserWalletConfig: {
       isTemplate: true,
       address: Manifest.contracts.UserWalletConfig.address,
-      abi: Manifest.contracts.UserWalletConfig.abi,
+      abi: mergeAbi(Manifest.contracts.UserWalletConfig.abi, UserWalletConfigAbi),
+    },
+    ChequeBook: {
+      ...Manifest.contracts.ChequeBook,
+      abi: mergeAbi(Manifest.contracts.ChequeBook.abi, ChequeBookAbi),
     },
     UserWalletV1: {
       isTemplate: true,
