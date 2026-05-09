@@ -2,16 +2,56 @@ import { createRequire } from 'module'
 
 const require = createRequire(import.meta.url)
 const Manifest = require('../underscore-protocol/migration_history/base-mainnet/v1.1/current-manifest.json')
-const ChequeBookAbi = require('../underscore-protocol/scripts/abis/ChequeBook.json')
-const UserWalletConfigAbi = require('../underscore-protocol/scripts/abis/UserWalletConfig.json')
+
+// These manifest-only entries are not part of the generated SDK surface.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { LevgVaultHelper, '40Acres': FortyAcres, Yo, Tokemak, ...rest } = Manifest.contracts
 
-function mergeAbi(baseAbi, extraAbi) {
-  const signature = (item) =>
-    `${item.type}:${item.name ?? ''}(${(item.inputs ?? []).map((input) => input.type).join(',')})`
-  const seen = new Set(baseAbi.map(signature))
-  return [...baseAbi, ...extraAbi.filter((item) => !seen.has(signature(item)))]
+const PROTOCOL_ABI_ALIASES = {
+  ERC20: 'Erc20Token',
+  FortyAcres: '40Acres',
+}
+
+function protocolAbiPath(name) {
+  return `../underscore-protocol/scripts/abis/${name}.json`
+}
+
+function protocolAbi(name) {
+  return require(protocolAbiPath(name))
+}
+
+function protocolAbiNameFor(contractName) {
+  const protocolName = PROTOCOL_ABI_ALIASES[contractName] ?? contractName
+  try {
+    require.resolve(protocolAbiPath(protocolName))
+    return protocolName
+  } catch {
+    return undefined
+  }
+}
+
+function withProtocolAbi(contractName, baseContract = {}, protocolName = protocolAbiNameFor(contractName)) {
+  if (!protocolName) return baseContract
+  return {
+    ...baseContract,
+    abi: protocolAbi(protocolName),
+  }
+}
+
+function withCurrentProtocolAbis(contracts) {
+  return Object.fromEntries(
+    Object.entries(contracts).map(([contractName, contract]) => [
+      contractName,
+      withProtocolAbi(contractName, contract),
+    ]),
+  )
+}
+
+function protocolTemplate(name) {
+  return {
+    isTemplate: true,
+    abi: protocolAbi(name),
+  }
 }
 
 export default {
@@ -31,22 +71,32 @@ export default {
     },
   },
   contracts: {
-    ...rest,
-    FortyAcres,
-    UserWallet: {
+    ...withCurrentProtocolAbis(rest),
+    Addys: protocolTemplate('Addys'),
+    AgentSenderSpecialAdmin: protocolTemplate('AgentSenderSpecialAdmin'),
+    DefaultsLocal: protocolTemplate('DefaultsLocal'),
+    EarnVaultWallet: protocolTemplate('EarnVaultWallet'),
+    Erc20Token: protocolTemplate('Erc20Token'),
+    FortyAcres: withProtocolAbi('FortyAcres', FortyAcres),
+    LevgVaultWallet: protocolTemplate('LevgVaultWallet'),
+    LocalGov: protocolTemplate('LocalGov'),
+    Ownership: protocolTemplate('Ownership'),
+    UndyToken: protocolTemplate('UndyToken'),
+    VaultErc20Token: protocolTemplate('VaultErc20Token'),
+
+    // Keep the historical SDK export name while sourcing the current protocol ABI.
+    ERC20: protocolTemplate('Erc20Token'),
+
+    UserWallet: withProtocolAbi('UserWallet', {
       isTemplate: true,
       address: Manifest.contracts.UserWallet.address,
-      abi: Manifest.contracts.UserWallet.abi,
-    },
-    UserWalletConfig: {
+    }),
+    UserWalletConfig: withProtocolAbi('UserWalletConfig', {
       isTemplate: true,
       address: Manifest.contracts.UserWalletConfig.address,
-      abi: mergeAbi(Manifest.contracts.UserWalletConfig.abi, UserWalletConfigAbi),
-    },
-    ChequeBook: {
-      ...Manifest.contracts.ChequeBook,
-      abi: mergeAbi(Manifest.contracts.ChequeBook.abi, ChequeBookAbi),
-    },
+    }),
+    ChequeBook: withProtocolAbi('ChequeBook', Manifest.contracts.ChequeBook),
+
     UserWalletV1: {
       isTemplate: true,
       address: '0x880E453Ec494FB17bffba537BeaB4Cc6CD1B7C12',
@@ -63,306 +113,42 @@ export default {
       isTemplate: true,
       address: '0x761fCDFfF8B187901eA11415237632A3F7E0203B',
     },
-    AgentWrapper: {
+    AgentWrapper: withProtocolAbi('AgentWrapper', {
       isTemplate: true,
       ...Manifest.contracts.AgentWrapper,
-    },
+    }),
     SignatureHelperV1: {
       address: '0x7a938DEd840172e89ef3B90039959E51C1dC6893',
       isTemplate: true,
       ...Manifest.contracts.SignatureHelper,
     },
-    UserWalletSignatureHelper: {
+    UserWalletSignatureHelper: withProtocolAbi('UserWalletSignatureHelper', {
       isTemplate: true,
       ...Manifest.contracts.UserWalletSignatureHelper,
-    },
-    AgentSenderSpecialSigHelper: {
+    }),
+    AgentSenderSpecialSigHelper: withProtocolAbi('AgentSenderSpecialSigHelper', {
       isTemplate: true,
       ...Manifest.contracts.AgentSenderSpecialSigHelper,
-    },
-    AgentSenderSpecial: {
+    }),
+    AgentSenderSpecial: withProtocolAbi('AgentSenderSpecial', {
       isTemplate: true,
       ...Manifest.contracts.AgentSenderSpecial,
-    },
-    AgentSenderGeneric: {
+    }),
+    AgentSenderGeneric: withProtocolAbi('AgentSenderGeneric', {
       isTemplate: true,
       ...Manifest.contracts.AgentSenderGeneric,
-    },
-    ERC20: {
-      isTemplate: true,
-      abi: [
-        {
-          type: 'event',
-          name: 'Transfer',
-          inputs: [
-            {
-              name: 'sender',
-              type: 'address',
-              indexed: true,
-            },
-            {
-              name: 'receiver',
-              type: 'address',
-              indexed: true,
-            },
-            {
-              name: 'amount',
-              type: 'uint256',
-              indexed: false,
-            },
-          ],
-          anonymous: false,
-        },
-        {
-          type: 'event',
-          name: 'Approval',
-          inputs: [
-            {
-              name: 'owner',
-              type: 'address',
-              indexed: true,
-            },
-            {
-              name: 'spender',
-              type: 'address',
-              indexed: true,
-            },
-            {
-              name: 'amount',
-              type: 'uint256',
-              indexed: false,
-            },
-          ],
-          anonymous: false,
-        },
-        {
-          type: 'function',
-          name: 'name',
-          stateMutability: 'pure',
-          inputs: [],
-          outputs: [
-            {
-              name: '',
-              type: 'string',
-            },
-          ],
-        },
-        {
-          type: 'function',
-          name: 'symbol',
-          stateMutability: 'pure',
-          inputs: [],
-          outputs: [
-            {
-              name: '',
-              type: 'string',
-            },
-          ],
-        },
-        {
-          type: 'function',
-          name: 'decimals',
-          stateMutability: 'pure',
-          inputs: [],
-          outputs: [
-            {
-              name: '',
-              type: 'uint8',
-            },
-          ],
-        },
-        {
-          type: 'function',
-          name: 'transfer',
-          stateMutability: 'nonpayable',
-          inputs: [
-            {
-              name: '_recipient',
-              type: 'address',
-            },
-            {
-              name: '_amount',
-              type: 'uint256',
-            },
-          ],
-          outputs: [
-            {
-              name: '',
-              type: 'bool',
-            },
-          ],
-        },
-        {
-          type: 'function',
-          name: 'transferFrom',
-          stateMutability: 'nonpayable',
-          inputs: [
-            {
-              name: '_sender',
-              type: 'address',
-            },
-            {
-              name: '_recipient',
-              type: 'address',
-            },
-            {
-              name: '_amount',
-              type: 'uint256',
-            },
-          ],
-          outputs: [
-            {
-              name: '',
-              type: 'bool',
-            },
-          ],
-        },
-        {
-          type: 'function',
-          name: 'approve',
-          stateMutability: 'nonpayable',
-          inputs: [
-            {
-              name: '_spender',
-              type: 'address',
-            },
-            {
-              name: '_amount',
-              type: 'uint256',
-            },
-          ],
-          outputs: [
-            {
-              name: '',
-              type: 'bool',
-            },
-          ],
-        },
-        {
-          type: 'function',
-          name: 'permit',
-          stateMutability: 'nonpayable',
-          inputs: [
-            {
-              name: '_owner',
-              type: 'address',
-            },
-            {
-              name: '_spender',
-              type: 'address',
-            },
-            {
-              name: '_amount',
-              type: 'uint256',
-            },
-            {
-              name: '_expiry',
-              type: 'uint256',
-            },
-            {
-              name: '_signature',
-              type: 'bytes',
-            },
-          ],
-          outputs: [
-            {
-              name: '',
-              type: 'bool',
-            },
-          ],
-        },
-        {
-          type: 'function',
-          name: 'totalSupply',
-          stateMutability: 'view',
-          inputs: [],
-          outputs: [
-            {
-              name: '',
-              type: 'uint256',
-            },
-          ],
-        },
-        {
-          type: 'function',
-          name: 'balanceOf',
-          stateMutability: 'view',
-          inputs: [
-            {
-              name: 'arg0',
-              type: 'address',
-            },
-          ],
-          outputs: [
-            {
-              name: '',
-              type: 'uint256',
-            },
-          ],
-        },
-        {
-          type: 'function',
-          name: 'allowance',
-          stateMutability: 'view',
-          inputs: [
-            {
-              name: 'arg0',
-              type: 'address',
-            },
-            {
-              name: 'arg1',
-              type: 'address',
-            },
-          ],
-          outputs: [
-            {
-              name: '',
-              type: 'uint256',
-            },
-          ],
-        },
-        {
-          type: 'function',
-          name: 'nonces',
-          stateMutability: 'view',
-          inputs: [
-            {
-              name: 'arg0',
-              type: 'address',
-            },
-          ],
-          outputs: [
-            {
-              name: '',
-              type: 'uint256',
-            },
-          ],
-        },
-        {
-          type: 'function',
-          name: 'DOMAIN_SEPARATOR',
-          stateMutability: 'view',
-          inputs: [],
-          outputs: [
-            {
-              name: '',
-              type: 'bytes32',
-            },
-          ],
-        },
-      ],
-    },
-    EarnVault: {
+    }),
+    EarnVault: withProtocolAbi('EarnVault', {
       isTemplate: true,
       address: Manifest.contracts.UndyUsd.address,
-    },
-    LevgVault: {
+    }),
+    LevgVault: withProtocolAbi('LevgVault', {
       isTemplate: true,
       address: '0x936c3C493Dc45D0f4D2FA36C7640f3BCABd64B4B',
-    },
-    LevgVaultHelper: {
+    }),
+    LevgVaultHelper: withProtocolAbi('LevgVaultHelper', {
       ...LevgVaultHelper,
       isTemplate: true,
-    },
+    }),
   },
 }
