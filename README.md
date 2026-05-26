@@ -121,7 +121,7 @@ interface UnderscoreConfig {
 ## Support
 
 - GitHub Issues: Technical support and bug reports
-- Discord Community: [Join our Discord](https://discord.gg/Y6PWmndNaC)
+- Discord Community: [Join our Discord](https://discord.gg/hightop)
 - Developer Support: [Contact our team](https://underscore.fi)
 
 ## License
