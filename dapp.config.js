@@ -33,13 +33,13 @@ export default {
       address: Manifest.contracts.UserWalletConfig.address,
       abi: Manifest.contracts.UserWalletConfig.abi,
     },
+    UserWalletConfigV1: {
+      isTemplate: true,
+      address: '0xbF7bAdf4c71102cA49b3f82D50348256cE6C10Fb',
+    },
     UserWalletV1: {
       isTemplate: true,
       address: '0x880E453Ec494FB17bffba537BeaB4Cc6CD1B7C12',
-    },
-    UserWalletConfigV1: {
-      isTemplate: true,
-      address: '0x0E7064202c4F906Adc4D9F6D3C92470b62F624F1',
     },
     AgentWrapperV1: {
       isTemplate: true,
@@ -48,6 +48,10 @@ export default {
     AgentWrapperV2: {
       isTemplate: true,
       address: '0x761fCDFfF8B187901eA11415237632A3F7E0203B',
+    },
+    AgentWrapperV3: {
+      isTemplate: true,
+      address: '0x88C8fe579aE5880612447c1B493C7Dcb9aaa40DF',
     },
     AgentWrapper: {
       isTemplate: true,
@@ -58,17 +62,37 @@ export default {
       isTemplate: true,
       ...Manifest.contracts.SignatureHelper,
     },
+    SignatureHelperV2: {
+      address: '0x4586793C8a53bdcE44E8726d4eFeDAC35EdAbd4c',
+      isTemplate: true,
+    },
+    UserWalletSignatureHelperV1: {
+      address: '0xeB92CB0f7E7c8131F683CC521B572E10B88bFFe1',
+      isTemplate: true,
+    },
     UserWalletSignatureHelper: {
       isTemplate: true,
       ...Manifest.contracts.UserWalletSignatureHelper,
+    },
+    AgentSenderSpecialSigHelperV1: {
+      isTemplate: true,
+      address: '0xB9d44E8b964466A2bB1BE747F2e92CD03c4b6D9a',
     },
     AgentSenderSpecialSigHelper: {
       isTemplate: true,
       ...Manifest.contracts.AgentSenderSpecialSigHelper,
     },
+    AgentSenderSpecialV1: {
+      isTemplate: true,
+      address: '0xF02Bc5c9a1A57015C09c4e1B89A273a2849874D3',
+    },
     AgentSenderSpecial: {
       isTemplate: true,
       ...Manifest.contracts.AgentSenderSpecial,
+    },
+    AgentSenderGenericV1: {
+      isTemplate: true,
+      address: '0xcc36a56febb60b304735914649f3669f5102784b',
     },
     AgentSenderGeneric: {
       isTemplate: true,
