@@ -22,6 +22,8 @@ export const DEPARTMENT_IDS = {
   BILLING: 9n,
   VAULT_REGISTRY: 10n,
   HELPERS: 11n,
+  VENDOR_REGISTRY: 12n,
+  PAY_PROCESSOR: 13n,
 }
 
 export const LEGOS_IDS = {
