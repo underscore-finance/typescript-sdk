@@ -1,6 +1,6 @@
 {
   "name": "@underscore-finance/sdk",
-  "version": "1.2.23",
+  "version": "1.2.24",
   "description": "SDK for interacting with Underscore Finance Smart Contracts with TypeScript",
   "scripts": {
     "dev": "dappql",
